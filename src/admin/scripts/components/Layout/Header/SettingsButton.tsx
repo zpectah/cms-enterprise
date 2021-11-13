@@ -2,9 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { getElTestAttr } from '../../utils/tests';
+import { getElTestAttr } from '../../../utils/tests';
 
-import { ROUTES } from '../../constants';
+import { ROUTES } from '../../../constants';
 
 interface SettingsButtonProps {
 	dataAppId?: string;

@@ -24,7 +24,7 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 	const { t } = useTranslation(['common', 'page']);
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const [openSectionApp, setOpenSectionApp] = useState<boolean>(true);
+	// const [openSectionApp, setOpenSectionApp] = useState<boolean>(true);
 	const [openSectionCrm, setOpenSectionCrm] = useState<boolean>(false);
 	const [openSectionMarket, setOpenSectionMarket] = useState<boolean>(false);
 
@@ -32,11 +32,11 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 	const sectionCrmActive = false;
 	const sectionMarketActive = false;
 
-	const sectionAppToggle = () => setOpenSectionApp(!openSectionApp);
+	// const sectionAppToggle = () => setOpenSectionApp(!openSectionApp);
 	const sectionCrmToggle = () => setOpenSectionCrm(!openSectionCrm);
 	const sectionMarketToggle = () => setOpenSectionMarket(!openSectionMarket);
 
-	const isSelected = (path) => {
+	const isItemSelected = (path) => {
 		let selected = false;
 
 		if (
@@ -61,12 +61,21 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 				<ListItemButton
 					key={key}
 					onClick={() => linkTriggerHandler(item.path)}
-					selected={isSelected(item.path)}
+					selected={isItemSelected(item.path)}
 					{...getElTestAttr(`${dataAppId}.item.${item.name}`)}
 				>
 					<ListItemText primary={item.name} />
 				</ListItemButton>
 			);
+	};
+	const renderItems = (app: pageObjectProps['app']) => {
+		return (
+			<List component="nav" disablePadding>
+				{NAV_ITEMS[app].map((item: navItemProps, index) =>
+					renderNavItem(item, index),
+				)}
+			</List>
+		);
 	};
 	const renderList = (
 		app: pageObjectProps['app'],
@@ -84,11 +93,7 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 					{state ? <ExpandLess /> : <ExpandMore />}
 				</ListItemButton>
 				<Collapse in={state} timeout="auto" unmountOnExit>
-					<List component="nav" disablePadding>
-						{NAV_ITEMS[app].map((item: navItemProps, index) =>
-							renderNavItem(item, index),
-						)}
-					</List>
+					{renderItems(app)}
 				</Collapse>
 			</>
 		);
@@ -103,8 +108,7 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 				disablePadding
 				{...getElTestAttr(dataAppId)}
 			>
-				{sectionAppActive &&
-					renderList('app', sectionAppToggle, openSectionApp)}
+				{sectionAppActive && renderItems('app')}
 				{sectionCrmActive &&
 					renderList('crm', sectionCrmToggle, openSectionCrm)}
 				{sectionMarketActive &&

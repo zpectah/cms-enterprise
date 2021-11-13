@@ -6,7 +6,7 @@ export default {
 	spacer: '1.5rem',
 	ui: {
 		borderBase: 'rgba(150,150,150,.35)',
-		borderSecondary: 'rgba(150,150,150,.25)',
+		borderSecondary: 'rgba(150,150,150,.125)',
 	},
 	view: {
 		color: palette.dark,

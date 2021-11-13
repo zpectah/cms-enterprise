@@ -4,9 +4,9 @@ import { default as MuiBreadcrumbs } from '@mui/material/Breadcrumbs';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import config from '../../config';
-import { pageObjectProps } from '../../types/pages';
-import { Typography } from '../ui';
+import config from '../../../config';
+import { pageObjectProps } from '../../../types/pages';
+import { Typography } from '../../ui';
 
 const StyledText = styled(Typography.Paragraph)`
 	color: ${(props) => props.theme.content.breadcrumbs.color};

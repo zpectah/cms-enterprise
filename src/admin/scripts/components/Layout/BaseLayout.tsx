@@ -16,8 +16,8 @@ import {
 import Header from './Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
-import ContentHeading from './ContentHeading';
-import ContentTitle from './ContentTitle';
+import ContentHeading from './Content/ContentHeading';
+import ContentTitle from './Content/ContentTitle';
 import { getElTestAttr } from '../../utils/tests';
 import { useSelector } from 'react-redux';
 
@@ -64,6 +64,7 @@ interface BaseLayoutProps {
 	withFooter?: boolean;
 	containerMaxWidth?: ContainerProps['maxWidth'];
 	dataAppId?: string;
+	listIncluded?: boolean;
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({
@@ -74,6 +75,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 	withFooter = true,
 	containerMaxWidth = 'lg',
 	dataAppId = 'layout.base',
+	listIncluded = false,
 }) => {
 	const { sideBarOpen } = useSelector((store: storeProps) => store);
 
@@ -92,7 +94,10 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 						<ContentOuter>
 							<Content>
 								<ContentInner>
-									<ContentTitle title={titlePage} />
+									<ContentTitle
+										title={titlePage}
+										listPath={listIncluded && pageObject.route.path}
+									/>
 									{children}
 								</ContentInner>
 							</Content>

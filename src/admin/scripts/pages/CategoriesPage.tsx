@@ -22,6 +22,7 @@ const CategoriesPage = ({}: CategoriesPageProps) => {
 				titleMeta={t('page:Categories.meta.title')}
 				titlePage={t('page:Categories.page.title')}
 				pageObject={pageObject}
+				listIncluded
 			>
 				<>Categories page</>
 			</Layout.Base>

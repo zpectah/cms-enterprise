@@ -4,9 +4,8 @@ import { getElTestAttr } from '../../../utils/tests';
 
 interface FormBaseProps {
 	name?: string;
-	id?: string;
 	dataAppId?: string;
-	onSubmit?: (data: any) => void;
+	onSubmit?: () => void;
 }
 
 const FormBase: React.FC<FormBaseProps> = (props) => {

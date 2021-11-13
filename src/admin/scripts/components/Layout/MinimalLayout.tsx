@@ -12,7 +12,7 @@ import {
 	layoutContentInner,
 } from '../../styles/mixins';
 import Footer from './Footer';
-import ContentTitle from './ContentTitle';
+import ContentTitle from './Content/ContentTitle';
 import { getElTestAttr } from '../../utils/tests';
 
 const Wrapper = styled.div`

@@ -22,6 +22,7 @@ const MenuPage = ({}: MenuPageProps) => {
 				titleMeta={t('page:Menu.meta.title')}
 				titlePage={t('page:Menu.page.title')}
 				pageObject={pageObject}
+				listIncluded
 			>
 				<>Menu page</>
 			</Layout.Base>

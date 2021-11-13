@@ -8,9 +8,9 @@ import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-import { ROUTES } from '../../constants';
-import { Avatar } from '../ui';
-import { getElTestAttr } from '../../utils/tests';
+import { ROUTES } from '../../../constants';
+import { Avatar } from '../../ui';
+import { getElTestAttr } from '../../../utils/tests';
 
 interface UserDropdownProps {
 	dataAppId?: string;
@@ -62,7 +62,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 					<ListItemIcon>
 						<PersonIcon fontSize="small" />
 					</ListItemIcon>
-					sychrat@gmail.com
+					Profile
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={helpClickHandler}>

@@ -22,6 +22,7 @@ const UsersPage = ({}: UsersPageProps) => {
 				titleMeta={t('page:Users.meta.title')}
 				titlePage={t('page:Users.page.title')}
 				pageObject={pageObject}
+				listIncluded
 			>
 				<>Users page</>
 			</Layout.Base>

@@ -22,6 +22,7 @@ const UploadsPage = ({}: UploadsPageProps) => {
 				titleMeta={t('page:Uploads.meta.title')}
 				titlePage={t('page:Uploads.page.title')}
 				pageObject={pageObject}
+				listIncluded
 			>
 				<>Uploads page</>
 			</Layout.Base>

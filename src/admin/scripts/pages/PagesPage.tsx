@@ -22,6 +22,7 @@ const PagesPage = ({}: PagesPageProps) => {
 				titleMeta={t('page:Pages.meta.title')}
 				titlePage={t('page:Pages.page.title')}
 				pageObject={pageObject}
+				listIncluded
 			>
 				<>Pages page</>
 			</Layout.Base>

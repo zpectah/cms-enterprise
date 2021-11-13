@@ -2,7 +2,7 @@ import React from 'react';
 import Container, { ContainerProps } from '@mui/material/Container';
 import styled from 'styled-components';
 
-import { pageObjectProps } from '../../types/pages';
+import { pageObjectProps } from '../../../types/pages';
 import Breadcrumbs from './Breadcrumbs';
 
 const Wrapper = styled.header`

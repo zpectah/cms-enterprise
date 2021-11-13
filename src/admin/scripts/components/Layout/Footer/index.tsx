@@ -3,9 +3,9 @@ import Container, { ContainerProps } from '@mui/material/Container';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import config from '../../config';
-import { Typography } from '../ui';
-import { getElTestAttr } from '../../utils/tests';
+import config from '../../../config';
+import { Typography } from '../../ui';
+import { getElTestAttr } from '../../../utils/tests';
 
 const Wrapper = styled.footer`
 	width: 100%;

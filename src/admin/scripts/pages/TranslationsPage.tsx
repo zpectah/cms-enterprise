@@ -22,6 +22,7 @@ const TranslationsPage = ({}: TranslationsPageProps) => {
 				titleMeta={t('page:Translations.meta.title')}
 				titlePage={t('page:Translations.page.title')}
 				pageObject={pageObject}
+				listIncluded
 			>
 				<>Translations page</>
 			</Layout.Base>

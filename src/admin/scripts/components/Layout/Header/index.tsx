@@ -1,13 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import styled from 'styled-components';
 
-import config from '../../config';
-import { Typography } from '../ui';
+import config from '../../../config';
+import { ROUTES } from '../../../constants';
+import { Typography } from '../../ui';
 import SidebarToggle from './SidebarToggle';
 import UserDropdown from './UserDropdown';
 import SettingsButton from './SettingsButton';
-import { getElTestAttr } from '../../utils/tests';
+import { getElTestAttr } from '../../../utils/tests';
 
 const Wrapper = styled.header`
 	width: 100%;
@@ -31,6 +33,11 @@ const StyledTitle = styled(Typography.Paragraph)`
 	font-size: 1.25rem;
 	font-weight: 700;
 	letter-spacing: -0.05rem;
+	color: inherit;
+
+	& > span {
+		cursor: pointer;
+	}
 `;
 
 interface HeaderProps {
@@ -38,6 +45,12 @@ interface HeaderProps {
 }
 
 const Header = ({ dataAppId = 'header' }: HeaderProps) => {
+	const history = useHistory();
+
+	const titleClickHandler = () => {
+		history.push(ROUTES.app.dashboard.path);
+	};
+
 	return (
 		<Wrapper {...getElTestAttr(dataAppId)}>
 			<Block>
@@ -48,7 +61,9 @@ const Header = ({ dataAppId = 'header' }: HeaderProps) => {
 				</Tooltip>
 			</Block>
 			<Block>
-				<StyledTitle span>{config.project.admin.name}</StyledTitle>
+				<StyledTitle span>
+					<span onClick={titleClickHandler}>{config.project.admin.name}</span>
+				</StyledTitle>
 			</Block>
 			<Block>
 				<Tooltip title="Settings">
