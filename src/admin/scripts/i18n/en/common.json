@@ -1,0 +1,12 @@
+{
+  "button": {},
+  "label": {},
+  "common": {
+    "allRightsReserved": "All rights reserved"
+  },
+  "app": {
+    "app": "App",
+    "crm": "Crm",
+    "market": "Market"
+  }
+}

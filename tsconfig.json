@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react",
+		"resolveJsonModule": true,
+		"experimentalDecorators": true,
+		"module": "commonjs",
+		"removeComments": true,
+		"target": "es6"
+	},
+	"include": [
+		"./src/**/*"
+	],
+	"declaration": true,
+	"exclude": ["node_modules/", "dev/", "test/", "prod/"]
+}

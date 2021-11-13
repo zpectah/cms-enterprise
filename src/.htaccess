@@ -1,0 +1,9 @@
+RewriteEngine On
+
+RewriteRule ^admin                            - [L]
+RewriteRule ^api                              - [L]
+RewriteRule ^assets                           - [L]
+RewriteRule ^uploads                          - [L]
+
+RewriteCond %{REQUEST_URI}  !/web/www/        [NC]
+RewriteRule (.*)            /web/www/$1       [L]

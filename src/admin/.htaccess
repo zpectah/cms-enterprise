@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^scripts                    - [L]
+
+RewriteCond %{REQUEST_URI}  !/admin/www/        [NC]
+RewriteRule (.*)            /admin/www/$1       [L]

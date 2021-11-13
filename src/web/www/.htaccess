@@ -1,0 +1,19 @@
+RewriteEngine On
+RewriteBase /
+
+# HTTPS
+# RewriteCond %{HTTPS} !on
+# RewriteRule .? https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+
+RewriteRule ^ - [L]
+
+# parameters: param0, param1, param2, param3, param4, param5
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$ ?param0=$1&param1=$2&param2=$3&param3=$4&param4=$5&param5=$6 [L]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$ ?param0=$1&param1=$2&param2=$3&param3=$4&param4=$5 [L]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/([^/]+)$ ?param0=$1&param1=$2&param2=$3&param3=$4 [L]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)$ ?param0=$1&param1=$2&param2=$3 [L]
+RewriteRule ^([^/]+)/([^/]+)$ ?param0=$1&param1=$2 [L]
+RewriteRule ^(.*)$ ?param0=$1 [L]

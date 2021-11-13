@@ -1,0 +1,32 @@
+{
+  "development": {
+    "root": "http://cms2022/",
+    "admin": {
+      "scripts": "/admin/scripts/bundle.js"
+    },
+    "web": {
+      "styles": "/web/styles/index.css",
+      "scripts": "/web/scripts/bundle.js"
+    }
+  },
+  "test": {
+    "root": "http://test.cms2022/",
+    "admin": {
+      "scripts": "/admin/scripts/bundle.min.js"
+    },
+    "web": {
+      "styles": "/web/styles/index.min.css",
+      "scripts": "/web/scripts/bundle.min.js"
+    }
+  },
+  "production": {
+    "root": "...",
+    "admin": {
+      "scripts": "/admin/scripts/bundle.min.js"
+    },
+    "web": {
+      "styles": "/web/styles/index.min.css",
+      "scripts": "/web/scripts/bundle.min.js"
+    }
+  }
+}

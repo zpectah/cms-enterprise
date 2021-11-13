@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteRule ^scripts                    - [L]
+RewriteRule ^styles                     - [L]
+
+RewriteCond %{REQUEST_URI}  !/web/www/        [NC]
+RewriteRule (.*)            /web/www/$1       [L]

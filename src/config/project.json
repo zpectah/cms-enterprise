@@ -1,0 +1,58 @@
+{
+  "private": {
+    "mapboxToken": "pk.eyJ1IjoienBlY3RlciIsImEiOiJja3BhYm5qMDIwc2plMnVuMTUzb3cxdWl6In0.BmfujOqcuQklZDV3HB-JCA"
+  },
+  "admin": {
+    "name": "CMS Enterprise",
+    "version": "0.1.0",
+    "copyrightYear": 2022,
+    "meta": {
+      "title": "EnterpriseCMS",
+      "description": "Content Managing System",
+      "robots": "noindex,nofollow",
+      "author": "Tomas Sychra | zpecter.com",
+      "lang": "en",
+      "keywords": "zpecter,cms,crm,market,eshop",
+      "charset": "utf-8",
+      "viewport": "width=device-width, initial-scale=1"
+    },
+    "language": {
+      "default": "en",
+      "list": ["en", "cs"]
+    }
+  },
+  "web": {
+    "meta": {
+      "title": "Homepage",
+      "description": "Browser start page",
+      "robots": "noindex,nofollow",
+      "author": "Tomas Sychra | zpecter.com",
+      "lang": "en",
+      "keywords": "zpecter,homepage",
+      "charset": "utf-8",
+      "viewport": "width=device-width, initial-scale=1"
+    },
+    "language": {
+      "default": "en"
+    }
+  },
+  "path": {
+    "admin": "admin/",
+    "api": "api/",
+    "web": "web/",
+    "assets": "assets/",
+    "logs": "logs/",
+    "uploads": "uploads/"
+  },
+  "location": {
+    "dashboard": "admin/",
+    "login": "admin/login/",
+    "lostPassword": "admin/lost-password/"
+  },
+  "keys": {
+    "lang": "app_lang",
+    "theme": "app_theme",
+    "help": "app_help",
+    "sidebar": "app_sidebar"
+  }
+}
