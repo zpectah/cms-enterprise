@@ -3,14 +3,18 @@ import Stack, { StackProps } from '@mui/material/Stack';
 import styled from 'styled-components';
 
 import media from '../../../styles/responsive';
+import { getElTestAttr } from '../../../utils/tests';
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
 	width: 100%;
 	height: auto;
+	display: flex;
+	flex-direction: column;
 `;
 const ColumnBlock = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	flex-direction: row;
 `;
 const MainBlock = styled.div<{ withSidebar: boolean }>`
 	padding: ${(props) => props.theme.spacer};
@@ -39,6 +43,8 @@ interface FormDetailLayoutProps {
 	sidebarChildren?: React.ReactElement | React.ReactElement[];
 	footerChildren?: React.ReactElement | React.ReactElement[];
 	footerStackProps?: StackProps;
+	onSubmit?: (data: any) => void;
+	dataAppId?: string;
 }
 
 const FormDetailLayout: React.FC<FormDetailLayoutProps> = ({
@@ -46,6 +52,8 @@ const FormDetailLayout: React.FC<FormDetailLayoutProps> = ({
 	sidebarChildren,
 	footerChildren,
 	footerStackProps,
+	onSubmit,
+	dataAppId = 'form.detail.layout',
 }) => {
 	const stackProps: StackProps = {
 		spacing: 2,
@@ -56,7 +64,11 @@ const FormDetailLayout: React.FC<FormDetailLayoutProps> = ({
 	};
 
 	return (
-		<Wrapper>
+		<Wrapper
+			name="FormDetailLayout"
+			onSubmit={onSubmit}
+			{...getElTestAttr(dataAppId)}
+		>
 			<ColumnBlock>
 				<MainBlock withSidebar={sidebarChildren}>{children}</MainBlock>
 				{sidebarChildren && <SidebarBlock>{sidebarChildren}</SidebarBlock>}
