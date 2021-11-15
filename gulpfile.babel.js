@@ -1,4 +1,4 @@
-import { src, dest, series, parallel, watch as gulpWatch } from 'gulp';
+import { src, dest, series, watch as gulpWatch } from 'gulp';
 import colors from 'colors';
 import del from 'del';
 import browserify from 'browserify';
@@ -397,7 +397,7 @@ const taskWatch = (cb) => {
 
 const dev = series(
 	Tasks.Clean.DEV,
-	parallel(
+	series(
 		Tasks.Php.DEV,
 		Tasks.Json.DEV,
 		Tasks.Images.DEV,
@@ -410,7 +410,7 @@ const dev = series(
 );
 export const test = series(
 	Tasks.Clean.TEST,
-	parallel(
+	series(
 		Tasks.Php.TEST,
 		Tasks.Json.TEST,
 		Tasks.Images.TEST,
@@ -423,7 +423,7 @@ export const test = series(
 );
 export const prod = series(
 	Tasks.Clean.PROD,
-	parallel(
+	series(
 		Tasks.Php.PROD,
 		Tasks.Json.PROD,
 		Tasks.Images.PROD,
