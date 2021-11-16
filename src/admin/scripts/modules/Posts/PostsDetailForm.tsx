@@ -3,29 +3,41 @@ import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../constants';
+import { postsItemProps } from './types';
 import { Form, Button, ButtonCreate, Section } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
+import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import { getElTestAttr } from '../../utils/tests';
 
 interface PostsDetailFormProps {
-	detailData: any; // TODO
+	detailData: postsItemProps;
 	onSubmit: (data: any, e: any) => void;
 	onSubmitError?: (error: any, e: any) => void;
+	detailOptions: {};
 }
 
 const PostsDetailForm = ({
 	detailData,
 	onSubmit,
 	onSubmitError,
+	detailOptions,
 }: PostsDetailFormProps) => {
+	const { t } = useTranslation(['common', 'form']);
 	const { control, handleSubmit, reset, register } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 		},
 	});
+
+	const formOptions = {
+		model: 'Posts',
+		route: ROUTES.app.posts,
+		...detailOptions,
+	};
 
 	const submitHandler = (data, e) => onSubmit(data, e);
 	const errorSubmitHandler = (errors, e) => {
@@ -36,9 +48,13 @@ const PostsDetailForm = ({
 
 	return (
 		<>
+			<ContentTitle
+				title={'Posts ....detail'}
+				listPath={formOptions.route.path}
+			/>
 			<ModuleViewHeading alignOverride="flex-end">
-				<ButtonCreate pathPrefix={ROUTES.app.posts.path}>
-					Create new
+				<ButtonCreate pathPrefix={formOptions.route.path}>
+					{t(`buttonNew.Posts`)}
 				</ButtonCreate>
 			</ModuleViewHeading>
 			<Form.DetailLayout
@@ -47,7 +63,7 @@ const PostsDetailForm = ({
 				sidebarChildren={
 					<>
 						{/*  ============ Form sidebar  ============ */}
-						<div>
+						<Section>
 							<Controller
 								name="active"
 								control={control}
@@ -71,7 +87,7 @@ const PostsDetailForm = ({
 									</Form.Row>
 								)}
 							/>
-						</div>
+						</Section>
 					</>
 				}
 				footerChildren={

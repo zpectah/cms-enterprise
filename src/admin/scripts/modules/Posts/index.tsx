@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
-import { Button, Typography } from '../../components/ui';
+import { moduleObjectProps } from '../../types/modules';
+import { postsItemProps } from './types';
 import DataTable from '../../components/DataTable';
 import PostsDetailForm from './PostsDetailForm';
 
-const mockData = [
+const mockData: postsItemProps[] = [
 	{
 		id: 1,
 		name: 'item 1 name',
@@ -35,7 +37,7 @@ const mockData = [
 	},
 ];
 
-const blankDetailData = {
+const blankDetailData: postsItemProps = {
 	id: 'new',
 	name: '',
 	active: true,
@@ -46,17 +48,22 @@ interface PostsModuleProps {}
 const PostsModule = ({}: PostsModuleProps) => {
 	const params: any = useParams();
 	const history = useHistory();
+	const { t } = useTranslation(['common', 'messages']);
 	const [detail, setDetail] = useState<string>(null);
 	const [detailData, setDetailData] = useState<any>(null);
 	const [selectedItems, setSelectedItems] = useState<string[] | number[]>([]);
 
-	const moduleObject: any = {
+	// Module object data & options
+	const moduleObject: moduleObjectProps = {
 		model: 'Posts',
 		route: ROUTES.app.posts,
 		detail: {},
-		table: {},
+		table: {
+			layout: {},
+		},
 	};
 
+	// Returns detail object by id
 	const getDetail = (id: number | string) => {
 		let item;
 
@@ -69,6 +76,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 		return item;
 	};
 
+	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		console.log('openDetailHandler', {});
 
@@ -78,6 +86,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
+
+	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		console.log('closeDetailHandler', {});
 
@@ -86,17 +96,38 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 		history.push(moduleObject.route.path);
 	};
+
+	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: string[] | number[]) =>
 		setSelectedItems(selected);
-	const detailSubmitHandler = (data: any) => {
+
+	// When detail is submitted (create/update)
+	const detailSubmitHandler = (data: any, e: any) => {
 		console.log('detailSubmitHandler', {});
 
 		const master = _.cloneDeep(data);
 
 		console.log('detailSubmitHandler master', master);
 	};
-	const detailToggleHandler = () => {
-		console.log('detailToggleHandler', {});
+
+	// When error returns from submit
+	const detailSubmitErrorHandler = (error: any, e: any) => {
+		console.log('detailSubmitErrorHandler', error);
+	};
+
+	// When item/row is active/disable toggled
+	const itemToggleHandler = (ids: string[]) => {
+		console.log('itemToggleHandler', []);
+	};
+
+	// When item/row opens confirm dialog
+	const itemDeleteHandler = (ids: string[]) => {
+		console.log('itemDeleteHandler', []);
+	};
+
+	// When item/row is confirmed to delete
+	const itemDeleteConfirmHandler = (ids: string[]) => {
+		console.log('itemDeleteConfirmHandler', []);
 	};
 
 	useEffect(() => setDetail(params.id), [params.id]);
@@ -111,21 +142,18 @@ const PostsModule = ({}: PostsModuleProps) => {
 	return (
 		<>
 			{detail && detailData ? (
-				<>
-					<PostsDetailForm
-						detailData={detailData}
-						onSubmit={(data) => {
-							console.log('submitted data ', data);
-						}}
-						onSubmitError={(error) => {
-							console.log('submitted error ', error);
-						}}
-					/>
-				</>
+				<PostsDetailForm
+					detailData={detailData}
+					onSubmit={detailSubmitHandler}
+					onSubmitError={detailSubmitErrorHandler}
+					detailOptions={moduleObject.detail}
+				/>
 			) : (
-				<>
-					<DataTable routeObject={ROUTES.app.posts} />
-				</>
+				<DataTable
+					model={moduleObject.model}
+					routeObject={ROUTES.app.posts}
+					tableOptions={moduleObject.table}
+				/>
 			)}
 		</>
 	);

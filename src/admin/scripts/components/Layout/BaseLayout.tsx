@@ -94,10 +94,12 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 						<ContentOuter>
 							<Content>
 								<ContentInner>
-									<ContentTitle
-										title={titlePage}
-										listPath={listIncluded && pageObject.route.path}
-									/>
+									{titlePage && (
+										<ContentTitle
+											title={titlePage}
+											listPath={listIncluded && pageObject.route.path}
+										/>
+									)}
 									{children}
 								</ContentInner>
 							</Content>

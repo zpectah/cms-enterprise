@@ -1,5 +1,16 @@
 {
   "button": {},
+  "buttonNew": {
+    "Categories": "New category",
+    "Menu": "New menu",
+    "MenuItems": "New menu item",
+    "Pages": "New page",
+    "Posts": "New post",
+    "Tags": "New tag",
+    "Translations": "New translation",
+    "Uploads": "New upload",
+    "Users": "New user"
+  },
   "label": {},
   "common": {
     "allRightsReserved": "All rights reserved"
