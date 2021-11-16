@@ -1,9 +1,12 @@
 import palette from '../palette';
 
 export default {
-	color: palette,
+	palette: palette,
 	fontSizeBase: '14px',
 	spacer: '1.5rem',
+	transition: {
+		duration: '.125s',
+	},
 	ui: {
 		borderBase: 'rgba(150,150,150,.35)',
 		borderSecondary: 'rgba(150,150,150,.125)',
@@ -15,8 +18,9 @@ export default {
 	header: {
 		height: '50px',
 		color: palette.dark,
-		bg: palette.light,
+		bg: palette._light,
 		zIndex: 1100,
+		backdropBlur: '.5rem',
 	},
 	footer: {
 		height: '2.25rem',

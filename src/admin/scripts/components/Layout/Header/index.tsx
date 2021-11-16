@@ -26,6 +26,7 @@ const Wrapper = styled.header`
 	background-color: ${(props) => props.theme.header.bg};
 	border-bottom: 1px solid ${(props) => props.theme.ui.borderBase};
 	z-index: ${(props) => props.theme.header.zIndex};
+	backdrop-filter: blur(${(props) => props.theme.header.backdropBlur});
 `;
 const Block = styled.div``;
 const StyledTitle = styled(Typography.Paragraph)`
@@ -57,7 +58,12 @@ const Header = ({ dataAppId = 'header' }: HeaderProps) => {
 			</Block>
 			<Block>
 				<StyledTitle span>
-					<span onClick={titleClickHandler}>{config.project.admin.name}</span>
+					<span
+						onClick={titleClickHandler}
+						{...getElTestAttr(`${dataAppId}.trigger.home`)}
+					>
+						{config.project.admin.name}
+					</span>
 				</StyledTitle>
 			</Block>
 			<Block>

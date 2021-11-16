@@ -34,6 +34,8 @@ const WrapperInner = styled.div<{ sideBarOpen: boolean }>`
 	flex-direction: column;
 	position: relative;
 	left: 0;
+	transition: width ${(props) => props.theme.transition.duration} ease-in-out 0s,
+		left ${(props) => props.theme.transition.duration} ease-in-out 0s;
 
 	${media.min.md} {
 		width: ${(props) =>

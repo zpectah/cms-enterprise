@@ -41,6 +41,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 				lastName={'Sychra'}
 				// image={''}
 				onClick={dropdownOpenHandler}
+				dataAppId={`${dataAppId}.avatar`}
 			/>
 			<Menu
 				anchorEl={anchorEl}
@@ -49,27 +50,37 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 				onClick={dropdownCloseHandler}
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-				{...getElTestAttr(dataAppId)}
 			>
-				<MenuItem onClick={profileClickHandler}>
-					<ListItemIcon>
-						<PersonIcon fontSize="small" />
-					</ListItemIcon>
-					{t('components:Header.UserDropdown.profile')}
-				</MenuItem>
-				<Divider />
-				<MenuItem onClick={helpClickHandler}>
-					<ListItemIcon>
-						<MenuBookIcon fontSize="small" />
-					</ListItemIcon>
-					{t('components:Header.UserDropdown.help')}
-				</MenuItem>
-				<MenuItem onClick={logoutClickHandler}>
-					<ListItemIcon>
-						<LogoutIcon fontSize="small" />
-					</ListItemIcon>
-					{t('components:Header.UserDropdown.logOut')}
-				</MenuItem>
+				<div {...getElTestAttr(dataAppId)}>
+					<MenuItem
+						onClick={profileClickHandler}
+						{...getElTestAttr(`${dataAppId}.item.profile`)}
+					>
+						<ListItemIcon>
+							<PersonIcon fontSize="small" />
+						</ListItemIcon>
+						{t('components:Header.UserDropdown.profile')}
+					</MenuItem>
+					<Divider />
+					<MenuItem
+						onClick={helpClickHandler}
+						{...getElTestAttr(`${dataAppId}.item.help`)}
+					>
+						<ListItemIcon>
+							<MenuBookIcon fontSize="small" />
+						</ListItemIcon>
+						{t('components:Header.UserDropdown.help')}
+					</MenuItem>
+					<MenuItem
+						onClick={logoutClickHandler}
+						{...getElTestAttr(`${dataAppId}.item.logOut`)}
+					>
+						<ListItemIcon>
+							<LogoutIcon fontSize="small" />
+						</ListItemIcon>
+						{t('components:Header.UserDropdown.logOut')}
+					</MenuItem>
+				</div>
 			</Menu>
 			<ConfirmDialog
 				isOpen={confirmDialog}

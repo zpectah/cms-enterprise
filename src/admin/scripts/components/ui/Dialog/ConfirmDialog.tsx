@@ -129,6 +129,7 @@ const ConfirmDialog = ({
 											color="secondary"
 											onClick={onClose}
 											dataAppId={`${dataAppId}.button.cancel`}
+											size="large"
 										>
 											{t('button.no')}
 										</Button>
@@ -137,6 +138,7 @@ const ConfirmDialog = ({
 											color="primary"
 											onClick={onConfirm}
 											dataAppId={`${dataAppId}.button.confirm`}
+											size="large"
 										>
 											{t('button.yes')}
 										</Button>

@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import styled from 'styled-components';
 
 import { Typography } from '../../ui';
+import { getElTestAttr } from '../../../utils/tests';
 
 const Wrapper = styled.div<{ textAlign: ContentTitleProps['textAlign'] }>`
 	min-height: 80px;
@@ -23,6 +24,7 @@ interface ContentTitleProps {
 	textAlign?: 'inherit' | 'center';
 	listPath?: string;
 	clickCallback?: () => void;
+	backButtonDataAppId?: string;
 }
 
 const ContentTitle: React.FC<ContentTitleProps> = ({
@@ -31,6 +33,7 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 	textAlign = 'inherit',
 	listPath,
 	clickCallback,
+	backButtonDataAppId = 'page.title.button.back',
 }) => {
 	const history = useHistory();
 	const params: any = useParams();
@@ -55,6 +58,7 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 					aria-label="delete"
 					onClick={backButtonHandler}
 					style={{ marginRight: '0.75rem' }}
+					{...getElTestAttr(backButtonDataAppId)}
 				>
 					<ArrowBackIcon />
 				</IconButton>

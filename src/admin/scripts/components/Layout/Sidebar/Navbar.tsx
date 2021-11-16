@@ -10,11 +10,18 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
+import styled from 'styled-components';
 
 import { NAV_ITEMS, ROUTES } from '../../../constants';
 import { navItemProps, pageObjectProps } from '../../../types/pages';
 import { sidebarToggle } from '../../../store/actions';
 import { getElTestAttr } from '../../../utils/tests';
+
+const StyledItem = styled(ListItemButton)`
+	&.Mui-selected {
+		color: ${(props) => props.theme.palette.white};
+	}
+`;
 
 interface NavbarProps {
 	dataAppId?: string;
@@ -55,24 +62,24 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 		history.push(path);
 	};
 
-	const renderNavItem = (item: navItemProps, key: number) => {
+	const renderItem = (item: navItemProps, key: number) => {
 		if (item.active)
 			return (
-				<ListItemButton
+				<StyledItem
 					key={key}
 					onClick={() => linkTriggerHandler(item.path)}
 					selected={isItemSelected(item.path)}
 					{...getElTestAttr(`${dataAppId}.item.${item.name}`)}
 				>
 					<ListItemText primary={item.name} />
-				</ListItemButton>
+				</StyledItem>
 			);
 	};
 	const renderItems = (app: pageObjectProps['app']) => {
 		return (
 			<List component="nav" disablePadding>
 				{NAV_ITEMS[app].map((item: navItemProps, index) =>
-					renderNavItem(item, index),
+					renderItem(item, index),
 				)}
 			</List>
 		);

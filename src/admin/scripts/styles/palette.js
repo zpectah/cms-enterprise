@@ -22,4 +22,6 @@ export default {
 	black: 'rgb(2,2,2)',
 	light: 'rgb(250,250,250)',
 	dark: 'rgb(25,25,25)',
+	_light: 'rgba(250,250,250, .85)',
+	_dark: 'rgba(25,25,25, .85)',
 };

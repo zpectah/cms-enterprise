@@ -18,6 +18,8 @@ const Wrapper = styled.aside<{ sideBarOpen: boolean }>`
 	background-color: ${(props) => props.theme.sidebar.bg};
 	border-right: 1px solid ${(props) => props.theme.ui.borderBase};
 	z-index: ${(props) => props.theme.sidebar.zIndex};
+	transition: width ${(props) => props.theme.transition.duration} ease-in-out 0s,
+		left ${(props) => props.theme.transition.duration} ease-in-out 0s;
 
 	${media.min.md} {
 		width: ${(props) => props.theme.sidebar.width};

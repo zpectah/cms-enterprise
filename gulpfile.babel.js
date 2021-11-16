@@ -42,10 +42,10 @@ const printMessage = (development, taskName, end = false, app = 'all') => {
 	let dev = `[` + `${development}`.cyan + `]`;
 	let application = `[` + `${app.toUpperCase()}`.cyan + `]`;
 	let task = `[` + `${taskName}`.magenta + `]`;
-	let f = timer + dev + application + task + ` ... `;
+	let f = timer + dev + application + task + ` ... ok `;
 
 	if (end) {
-		f = f + `done`.green;
+		f = f + `✔`.green;
 	}
 
 	console.log(f);

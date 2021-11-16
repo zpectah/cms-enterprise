@@ -9,6 +9,7 @@ import MediaQuery from 'react-responsive';
 import { RESPONSIVE_BREAKPOINTS, UI_VIEW_TOLERANCE } from '../../../constants';
 import media from '../../../styles/responsive';
 import { Scrollable, Typography } from '../../ui';
+import { getElTestAttr } from '../../../utils/tests';
 
 const DrawerElement = styled.div`
 	width: 100vw;
@@ -57,6 +58,7 @@ interface DrawerBaseProps {
 	onClose: () => void;
 	title?: string;
 	size?: 'md' | 'lg' | 'xl';
+	dataAppId?: string;
 }
 
 const Drawer: React.FC<DrawerBaseProps> = ({
@@ -65,6 +67,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 	onClose,
 	title,
 	size = 'md',
+	dataAppId = 'drawer.default',
 }) => {
 	const [open, setOpen] = useState<boolean>(isOpen);
 	const handleClose = () => {
@@ -88,7 +91,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 	return (
 		<>
 			<MuiDrawer anchor={'right'} onClose={handleClose} open={open}>
-				<InnerComponent>
+				<InnerComponent {...getElTestAttr(dataAppId)}>
 					<DrawerHeading>
 						<HeadingBlock>
 							<IconButton
@@ -99,6 +102,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 									height: '50px',
 									color: (theme) => theme.palette.grey[500],
 								}}
+								{...getElTestAttr(`${dataAppId}.button.close`)}
 							>
 								<MediaQuery minWidth={RESPONSIVE_BREAKPOINTS[minWidth[size]]}>
 									{(matches) => (matches ? <ArrowBackIcon /> : <CloseIcon />)}

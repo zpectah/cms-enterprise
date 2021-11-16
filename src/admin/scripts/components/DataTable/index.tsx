@@ -49,6 +49,7 @@ const DataTable = ({
 						color="success"
 						onClick={buttonCreateHandler}
 						startIcon={<AddIcon />}
+						dataAppId={`button.create.new.${model}`}
 					>
 						{t(`buttonNew.${model}`)}
 					</Button>

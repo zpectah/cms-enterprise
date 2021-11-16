@@ -70,6 +70,7 @@ const PostsDetailForm = ({
 					color="success"
 					onClick={buttonCreateCallback}
 					startIcon={<AddIcon />}
+					dataAppId={`button.create.new.Posts`}
 				>
 					{t(`buttonNew.Posts`)}
 				</Button>
