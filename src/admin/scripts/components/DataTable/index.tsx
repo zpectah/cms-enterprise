@@ -1,10 +1,12 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import AddIcon from '@mui/icons-material/Add';
 
 import { ROUTE_SUFFIX } from '../../constants';
 import { routeItemProps } from '../../types/pages';
 import { appModelProps } from '../../types/app';
-import { Section, Button, ButtonCreate, Typography } from '../ui';
+import { Section, Button, Typography } from '../ui';
 import ModuleViewHeading from '../ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 
@@ -27,7 +29,11 @@ const DataTable = ({
 	onDelete,
 	onSelect,
 }: DataTableProps) => {
+	const history = useHistory();
 	const { t } = useTranslation(['common', 'page']);
+
+	const buttonCreateHandler = () =>
+		history.push(`${routeObject.path}${ROUTE_SUFFIX.detail}/new`);
 
 	return (
 		<>
@@ -38,9 +44,14 @@ const DataTable = ({
 			<ModuleViewHeading
 				secondaryChildren={<div>data table options ...</div>}
 				tertiaryChildren={
-					<ButtonCreate pathPrefix={routeObject.path}>
+					<Button
+						variant="contained"
+						color="success"
+						onClick={buttonCreateHandler}
+						startIcon={<AddIcon />}
+					>
 						{t(`buttonNew.${model}`)}
-					</ButtonCreate>
+					</Button>
 				}
 			>
 				<div>searchbar ...</div>

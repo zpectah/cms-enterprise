@@ -7,7 +7,10 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "create": "Create",
-    "return": "Return"
+    "return": "Return",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
   },
   "buttonNew": {
     "Categories": "New category",

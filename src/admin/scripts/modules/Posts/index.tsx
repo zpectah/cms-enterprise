@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -146,11 +146,11 @@ const PostsModule = ({}: PostsModuleProps) => {
 	};
 
 	// When confirm dialog closes
-	const closeConfirmHandler = () => {
+	const closeConfirmHandler = useCallback(() => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
-	};
+	}, []);
 
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: (number | string)[]) => {
@@ -219,12 +219,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 				onClose={closeConfirmHandler}
 				confirmMethod={confirmDialogType}
 				onConfirm={dialogConfirmHandler}
-			>
-				<>
-					Confirm data by type ... {JSON.stringify(confirmDialogType)}...{' '}
-					{JSON.stringify(confirmDialogData)}
-				</>
-			</ConfirmDialog>
+				confirmData={confirmDialogData}
+			/>
 		</>
 	);
 };

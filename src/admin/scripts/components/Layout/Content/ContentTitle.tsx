@@ -22,6 +22,7 @@ interface ContentTitleProps {
 	title?: string;
 	textAlign?: 'inherit' | 'center';
 	listPath?: string;
+	clickCallback?: () => void;
 }
 
 const ContentTitle: React.FC<ContentTitleProps> = ({
@@ -29,14 +30,18 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 	title,
 	textAlign = 'inherit',
 	listPath,
+	clickCallback,
 }) => {
 	const history = useHistory();
 	const params: any = useParams();
 	const [detail, setDetail] = useState(null);
 
 	const backButtonHandler = () => {
-		// history.goBack();
-		history.push(listPath);
+		if (clickCallback) {
+			clickCallback();
+		} else {
+			history.push(listPath);
+		}
 	};
 
 	useEffect(() => {

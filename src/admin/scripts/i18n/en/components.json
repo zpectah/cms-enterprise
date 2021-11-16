@@ -1,0 +1,17 @@
+{
+  "Header": {
+    "UserDropdown": {
+      "profile": "Profile",
+      "help": "Help",
+      "logOut": "Log out"
+    }
+  },
+  "DialogConfirm": {
+    "title": {
+      "delete": "Are you sure you want delete this item?",
+      "delete_plural": "Are you sure you want delete this items?",
+      "formDirty": "You have unsaved changes, are you sure you want continue?",
+      "logOut": "Do you want to log out?"
+    }
+  }
+}

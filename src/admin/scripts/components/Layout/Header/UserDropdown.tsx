@@ -7,9 +7,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../../constants';
-import { Avatar } from '../../ui';
+import { Avatar, ConfirmDialog } from '../../ui';
 import { getElTestAttr } from '../../../utils/tests';
 
 interface UserDropdownProps {
@@ -18,27 +19,19 @@ interface UserDropdownProps {
 
 const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 	const history = useHistory();
+	const { t } = useTranslation(['common', 'components']);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [confirmDialog, setConfirmDialog] = useState<boolean>(false);
 	const open = Boolean(anchorEl);
-	const dropdownOpenHandler = (event: React.MouseEvent<HTMLElement>) => {
-		console.log('...handleClick');
+
+	const dropdownOpenHandler = (event: React.MouseEvent<HTMLElement>) =>
 		setAnchorEl(event.currentTarget);
-	};
-	const dropdownCloseHandler = () => {
-		setAnchorEl(null);
-	};
-
+	const dropdownCloseHandler = () => setAnchorEl(null);
 	const profileClickHandler = () => history.push(ROUTES.app.profile.path);
-
 	const helpClickHandler = () => history.push(ROUTES.app.help.path);
-
-	const logoutClickHandler = () => {
-		console.log('logoutClickHandler');
-
-		// TODO: after confirm !!!
-
-		history.push(ROUTES.app.login.path);
-	};
+	const logoutClickHandler = () => setConfirmDialog(true);
+	const logoutConfirmHandler = () => history.push(ROUTES.app.login.path);
+	const closeConfirmDialog = () => setConfirmDialog(false);
 
 	return (
 		<>
@@ -62,22 +55,28 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 					<ListItemIcon>
 						<PersonIcon fontSize="small" />
 					</ListItemIcon>
-					Profile
+					{t('components:Header.UserDropdown.profile')}
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={helpClickHandler}>
 					<ListItemIcon>
 						<MenuBookIcon fontSize="small" />
 					</ListItemIcon>
-					Help
+					{t('components:Header.UserDropdown.help')}
 				</MenuItem>
 				<MenuItem onClick={logoutClickHandler}>
 					<ListItemIcon>
 						<LogoutIcon fontSize="small" />
 					</ListItemIcon>
-					Logout
+					{t('components:Header.UserDropdown.logOut')}
 				</MenuItem>
 			</Menu>
+			<ConfirmDialog
+				isOpen={confirmDialog}
+				onClose={closeConfirmDialog}
+				confirmMethod={'logOut'}
+				onConfirm={logoutConfirmHandler}
+			/>
 		</>
 	);
 };

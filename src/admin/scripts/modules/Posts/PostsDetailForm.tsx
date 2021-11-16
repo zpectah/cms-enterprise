@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 
-import { ROUTES } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { PostsItemProps } from '../../types/app';
-import { Form, Button, ButtonCreate, Section } from '../../components/ui';
+import { Form, Button, Section } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import { getElTestAttr } from '../../utils/tests';
@@ -29,6 +31,7 @@ const PostsDetailForm = ({
 	onCancel,
 	onDelete,
 }: PostsDetailFormProps) => {
+	const history = useHistory();
 	const { t } = useTranslation(['common', 'form']);
 	const { control, handleSubmit, reset, register, formState } = useForm({
 		mode: 'all',
@@ -37,7 +40,6 @@ const PostsDetailForm = ({
 		},
 	});
 	const { isDirty, isValid } = formState;
-
 	const formOptions = {
 		model: 'Posts',
 		route: ROUTES.app.posts,
@@ -50,26 +52,34 @@ const PostsDetailForm = ({
 	};
 	const deleteHandler = () => onDelete(detailData.id);
 	const cancelHandler = () => onCancel(isDirty);
+	const buttonCreateCallback = () =>
+		history.push(`${formOptions.route.path}${ROUTE_SUFFIX.detail}/new`);
 
-	useEffect(() => reset(detailData), [detailData, reset]); // Important, must be for reloading form model ...
+	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
 	return (
 		<>
 			<ContentTitle
 				title={'Posts ....detail'}
 				listPath={formOptions.route.path}
+				clickCallback={cancelHandler}
 			/>
 			<ModuleViewHeading alignOverride="flex-end">
-				<ButtonCreate pathPrefix={formOptions.route.path} variant="outlined">
+				<Button
+					variant="outlined"
+					color="success"
+					onClick={buttonCreateCallback}
+					startIcon={<AddIcon />}
+				>
 					{t(`buttonNew.Posts`)}
-				</ButtonCreate>
+				</Button>
 			</ModuleViewHeading>
 			<Form.DetailLayout
 				formName="PostsDetailForm"
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 				sidebarChildren={
 					<>
-						{/*  ============ Form sidebar  ============ */}
+						{/*  ============ Form sidebar ============ */}
 						<Section>
 							<Controller
 								name="active"
@@ -99,7 +109,7 @@ const PostsDetailForm = ({
 				}
 				footerChildren={
 					<>
-						{/*  ============ Form actions button  ============ */}
+						{/*  ============ Form actions button ============ */}
 						<Button type="submit" variant="contained" disabled={!isValid}>
 							{detailData.id == 'new' ? t('button.create') : t('button.update')}
 						</Button>
@@ -119,7 +129,7 @@ const PostsDetailForm = ({
 				}
 				dataAppId={'PostsDetailForm'}
 			>
-				{/*  ============ Main form body  ============ */}
+				{/*  ============ Main form body ============ */}
 				<div>
 					<input
 						type="hidden"
