@@ -112,7 +112,6 @@ const PostsDetailForm = ({
 							variant="outlined"
 							color="secondary"
 							onClick={cancelHandler}
-							disabled={!isDirty}
 						>
 							{t('button.return')}
 						</Button>

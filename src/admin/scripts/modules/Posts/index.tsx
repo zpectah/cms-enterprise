@@ -169,11 +169,11 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 			console.log('AJAX ... delete ...', master);
 
+			closeConfirmHandler();
 			if (confirmDialogData.length == 1) history.push(moduleObject.route.path);
-			closeConfirmHandler();
 		} else if (confirmDialogType == 'formDirty') {
-			history.push(moduleObject.route.path);
 			closeConfirmHandler();
+			history.push(moduleObject.route.path);
 		}
 	};
 
