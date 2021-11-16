@@ -33,4 +33,9 @@ export default {
 		bg: palette.light,
 		zIndex: 1050,
 	},
+	drawer: {
+		header: {
+			height: '60px',
+		},
+	},
 };
