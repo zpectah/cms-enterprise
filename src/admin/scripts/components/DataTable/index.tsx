@@ -11,10 +11,22 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 interface DataTableProps {
 	model: appModelProps;
 	routeObject: routeItemProps;
+	tableData: any[];
 	tableOptions: {};
+	onToggle: (id: (number | string)[]) => void;
+	onDelete: (id: (number | string)[]) => void;
+	onSelect: (selected: readonly string[]) => void;
 }
 
-const DataTable = ({ model, routeObject, tableOptions }: DataTableProps) => {
+const DataTable = ({
+	model,
+	routeObject,
+	tableData,
+	tableOptions,
+	onToggle,
+	onDelete,
+	onSelect,
+}: DataTableProps) => {
 	const { t } = useTranslation(['common', 'page']);
 
 	return (
@@ -37,9 +49,16 @@ const DataTable = ({ model, routeObject, tableOptions }: DataTableProps) => {
 				data table list
 				<br />
 				<br />
-				<Typography.Link to={routeObject.path + ROUTE_SUFFIX.detail + '/5'}>
-					Link to detail (5)
-				</Typography.Link>
+				{tableData.map((item) => (
+					<Typography.Link
+						key={item.id}
+						to={routeObject.path + ROUTE_SUFFIX.detail + '/' + item.id}
+					>
+						Link to detail: {item.name}
+					</Typography.Link>
+				))}
+				<br />
+				<br />
 			</Section>
 		</>
 	);

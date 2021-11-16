@@ -1,4 +1,7 @@
 {
-  "form": {},
-  "input": {}
+  "input": {
+    "name": "Name",
+    "active": "Item is active"
+  },
+  "form": {}
 }

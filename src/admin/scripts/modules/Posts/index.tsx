@@ -4,12 +4,12 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
-import { moduleObjectProps } from '../../types/modules';
-import { postsItemProps } from './types';
+import { moduleObjectProps, PostsItemProps } from '../../types/app';
+import { ConfirmDialog } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PostsDetailForm from './PostsDetailForm';
 
-const mockData: postsItemProps[] = [
+const mockData: PostsItemProps[] = [
 	{
 		id: 1,
 		name: 'item 1 name',
@@ -37,7 +37,7 @@ const mockData: postsItemProps[] = [
 	},
 ];
 
-const blankDetailData: postsItemProps = {
+const blankDetailData: PostsItemProps = {
 	id: 'new',
 	name: '',
 	active: true,
@@ -51,7 +51,16 @@ const PostsModule = ({}: PostsModuleProps) => {
 	const { t } = useTranslation(['common', 'messages']);
 	const [detail, setDetail] = useState<string>(null);
 	const [detailData, setDetailData] = useState<any>(null);
-	const [selectedItems, setSelectedItems] = useState<string[] | number[]>([]);
+	const [selectedItems, setSelectedItems] = useState<
+		readonly (number | string)[]
+	>([]);
+	const [confirmDialog, setConfirmDialog] = useState<boolean>(false);
+	const [confirmDialogType, setConfirmDialogType] = useState<
+		'delete' | 'formDirty' | null
+	>(null);
+	const [confirmDialogData, setConfirmDialogData] = useState<
+		(number | string)[]
+	>([]);
 
 	// Module object data & options
 	const moduleObject: moduleObjectProps = {
@@ -78,8 +87,6 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		console.log('openDetailHandler', {});
-
 		setDetail(id);
 		setDetailData(getDetail(id));
 
@@ -89,8 +96,6 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
-		console.log('closeDetailHandler', {});
-
 		setDetail(null);
 		setDetailData(null);
 
@@ -98,16 +103,14 @@ const PostsModule = ({}: PostsModuleProps) => {
 	};
 
 	// When item/row is selected in DataTable
-	const itemSelectHandler = (selected: string[] | number[]) =>
+	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
 
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: any, e: any) => {
-		console.log('detailSubmitHandler', {});
-
 		const master = _.cloneDeep(data);
 
-		console.log('detailSubmitHandler master', master);
+		console.log('AJAX ... create/save ...', master);
 	};
 
 	// When error returns from submit
@@ -115,19 +118,63 @@ const PostsModule = ({}: PostsModuleProps) => {
 		console.log('detailSubmitErrorHandler', error);
 	};
 
-	// When item/row is active/disable toggled
-	const itemToggleHandler = (ids: string[]) => {
-		console.log('itemToggleHandler', []);
+	const detailCancelHandler = (dirty: boolean) => {
+		if (dirty) {
+			setConfirmDialog(true);
+			setConfirmDialogType('formDirty');
+		} else {
+			closeDetailHandler();
+		}
+	};
+
+	// When detail opens confirm dialog
+	const detailDeleteHandler = (id: number | string) => {
+		const master = [id];
+
+		setConfirmDialog(true);
+		setConfirmDialogType('delete');
+		setConfirmDialogData(master);
 	};
 
 	// When item/row opens confirm dialog
-	const itemDeleteHandler = (ids: string[]) => {
-		console.log('itemDeleteHandler', []);
+	const itemDeleteHandler = (ids: (number | string)[] = []) => {
+		const master = [...ids, ...selectedItems];
+
+		setConfirmDialog(true);
+		setConfirmDialogType('delete');
+		setConfirmDialogData(master);
 	};
 
-	// When item/row is confirmed to delete
-	const itemDeleteConfirmHandler = (ids: string[]) => {
-		console.log('itemDeleteConfirmHandler', []);
+	// When confirm dialog closes
+	const closeConfirmHandler = () => {
+		setConfirmDialog(false);
+		setConfirmDialogType(null);
+		setConfirmDialogData([]);
+	};
+
+	// When item/row is active/disable toggled
+	const itemToggleHandler = (ids: (number | string)[]) => {
+		const master = [...ids, ...selectedItems];
+
+		console.log('AJAX ... toggle ...', master);
+	};
+
+	// When item/row is confirmed to submit confirm dialog
+	const dialogConfirmHandler = () => {
+		if (confirmDialogType == 'delete') {
+			// proceed delete
+			// close and redirect back as callback
+
+			const master = [...confirmDialogData];
+
+			console.log('AJAX ... delete ...', master);
+
+			if (confirmDialogData.length == 1) history.push(moduleObject.route.path);
+			closeConfirmHandler();
+		} else if (confirmDialogType == 'formDirty') {
+			history.push(moduleObject.route.path);
+			closeConfirmHandler();
+		}
 	};
 
 	useEffect(() => setDetail(params.id), [params.id]);
@@ -144,17 +191,40 @@ const PostsModule = ({}: PostsModuleProps) => {
 			{detail && detailData ? (
 				<PostsDetailForm
 					detailData={detailData}
+					detailOptions={moduleObject.detail}
 					onSubmit={detailSubmitHandler}
 					onSubmitError={detailSubmitErrorHandler}
-					detailOptions={moduleObject.detail}
+					onCancel={detailCancelHandler}
+					onDelete={detailDeleteHandler}
 				/>
 			) : (
-				<DataTable
-					model={moduleObject.model}
-					routeObject={ROUTES.app.posts}
-					tableOptions={moduleObject.table}
-				/>
+				<>
+					{mockData ? (
+						<DataTable
+							model={moduleObject.model}
+							routeObject={ROUTES.app.posts}
+							tableData={mockData}
+							tableOptions={moduleObject.table}
+							onToggle={itemToggleHandler}
+							onDelete={itemDeleteHandler}
+							onSelect={itemSelectHandler}
+						/>
+					) : (
+						<div>Loading</div>
+					)}
+				</>
 			)}
+			<ConfirmDialog
+				isOpen={confirmDialog}
+				onClose={closeConfirmHandler}
+				confirmMethod={confirmDialogType}
+				onConfirm={dialogConfirmHandler}
+			>
+				<>
+					Confirm data by type ... {JSON.stringify(confirmDialogType)}...{' '}
+					{JSON.stringify(confirmDialogData)}
+				</>
+			</ConfirmDialog>
 		</>
 	);
 };

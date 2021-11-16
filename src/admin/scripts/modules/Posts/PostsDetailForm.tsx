@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
@@ -6,17 +6,19 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../constants';
-import { postsItemProps } from './types';
+import { PostsItemProps } from '../../types/app';
 import { Form, Button, ButtonCreate, Section } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import { getElTestAttr } from '../../utils/tests';
 
 interface PostsDetailFormProps {
-	detailData: postsItemProps;
+	detailData: PostsItemProps;
 	onSubmit: (data: any, e: any) => void;
-	onSubmitError?: (error: any, e: any) => void;
+	onSubmitError: (error: any, e: any) => void;
 	detailOptions: {};
+	onCancel: (dirty: boolean) => void;
+	onDelete: (id: number | string) => void;
 }
 
 const PostsDetailForm = ({
@@ -24,14 +26,17 @@ const PostsDetailForm = ({
 	onSubmit,
 	onSubmitError,
 	detailOptions,
+	onCancel,
+	onDelete,
 }: PostsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
-	const { control, handleSubmit, reset, register } = useForm({
+	const { control, handleSubmit, reset, register, formState } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 		},
 	});
+	const { isDirty, isValid } = formState;
 
 	const formOptions = {
 		model: 'Posts',
@@ -39,10 +44,12 @@ const PostsDetailForm = ({
 		...detailOptions,
 	};
 
-	const submitHandler = (data, e) => onSubmit(data, e);
-	const errorSubmitHandler = (errors, e) => {
+	const submitHandler = (data: PostsItemProps, e: any) => onSubmit(data, e);
+	const errorSubmitHandler = (errors: any, e: any) => {
 		if (onSubmitError) onSubmitError(errors, e);
 	};
+	const deleteHandler = () => onDelete(detailData.id);
+	const cancelHandler = () => onCancel(isDirty);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important, must be for reloading form model ...
 
@@ -53,7 +60,7 @@ const PostsDetailForm = ({
 				listPath={formOptions.route.path}
 			/>
 			<ModuleViewHeading alignOverride="flex-end">
-				<ButtonCreate pathPrefix={formOptions.route.path}>
+				<ButtonCreate pathPrefix={formOptions.route.path} variant="outlined">
 					{t(`buttonNew.Posts`)}
 				</ButtonCreate>
 			</ModuleViewHeading>
@@ -82,7 +89,7 @@ const PostsDetailForm = ({
 													{...getElTestAttr('PostsDetailForm.checkbox.active')}
 												/>
 											}
-											label="Checkbox Label"
+											label={t('form:input.active')}
 										/>
 									</Form.Row>
 								)}
@@ -93,14 +100,21 @@ const PostsDetailForm = ({
 				footerChildren={
 					<>
 						{/*  ============ Form actions button  ============ */}
-						<Button type="submit" variant="contained">
-							Submit
+						<Button type="submit" variant="contained" disabled={!isValid}>
+							{detailData.id == 'new' ? t('button.create') : t('button.update')}
 						</Button>
-						<Button variant="outlined" color="error">
-							Delete
-						</Button>
-						<Button variant="outlined" color="secondary">
-							Cancel
+						{detailData.id !== 'new' && (
+							<Button variant="outlined" color="error" onClick={deleteHandler}>
+								{t('button.delete')}
+							</Button>
+						)}
+						<Button
+							variant="outlined"
+							color="secondary"
+							onClick={cancelHandler}
+							disabled={!isDirty}
+						>
+							{t('button.return')}
 						</Button>
 					</>
 				}
@@ -127,7 +141,7 @@ const PostsDetailForm = ({
 									value={value}
 									name={name}
 									id="PostsDetailForm__name"
-									label="Name"
+									label={t('form:input.name')}
 									variant="outlined"
 									size="small"
 									style={{ width: '100%' }}

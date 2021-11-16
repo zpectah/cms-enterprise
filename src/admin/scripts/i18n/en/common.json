@@ -1,5 +1,14 @@
 {
-  "button": {},
+  "button": {
+    "ok": "Ok",
+    "submit": "Submit",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "create": "Create",
+    "return": "Return"
+  },
   "buttonNew": {
     "Categories": "New category",
     "Menu": "New menu",

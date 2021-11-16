@@ -6,3 +6,5 @@ export { default as Avatar } from './Avatar';
 export { default as Preloader } from './Preloader';
 export { default as Section } from './Section';
 export { default as Form } from './Form';
+export { default as Dialog } from './Dialog';
+export { default as ConfirmDialog } from './Dialog/ConfirmDialog';
