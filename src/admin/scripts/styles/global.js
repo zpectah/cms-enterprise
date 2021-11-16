@@ -17,4 +17,11 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: 1rem;
 		color: ${(props) => props.theme.view.color};
 	}
+	
+	/* Fixes and alignment */
+	
+	.MuiFormControlLabel-label{
+	    padding-left: calc(${(props) => props.theme.spacer} / 2);
+	}
+	
 `;

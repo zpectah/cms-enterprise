@@ -35,11 +35,15 @@ const SidebarBlock = styled.div`
 		border-left: 1px solid ${(props) => props.theme.ui.borderSecondary};
 	}
 `;
+const SecondaryBlock = styled.footer`
+	padding-top: ${(props) => props.theme.spacer};
+`;
 const FooterBlock = styled.footer`
 	padding-top: ${(props) => props.theme.spacer};
 `;
 
 interface FormDetailLayoutProps {
+	secondaryChildren?: React.ReactElement | React.ReactElement[];
 	sidebarChildren?: React.ReactElement | React.ReactElement[];
 	footerChildren?: React.ReactElement | React.ReactElement[];
 	footerStackProps?: StackProps;
@@ -50,6 +54,7 @@ interface FormDetailLayoutProps {
 
 const FormDetailLayout: React.FC<FormDetailLayoutProps> = ({
 	children,
+	secondaryChildren,
 	sidebarChildren,
 	footerChildren,
 	footerStackProps,
@@ -71,6 +76,9 @@ const FormDetailLayout: React.FC<FormDetailLayoutProps> = ({
 				<MainBlock withSidebar={sidebarChildren}>{children}</MainBlock>
 				{sidebarChildren && <SidebarBlock>{sidebarChildren}</SidebarBlock>}
 			</ColumnBlock>
+			{secondaryChildren && (
+				<SecondaryBlock>{secondaryChildren}</SecondaryBlock>
+			)}
 			{footerChildren && (
 				<FooterBlock>
 					<Stack {...stackProps}>{footerChildren}</Stack>

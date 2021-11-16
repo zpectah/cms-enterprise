@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Typography } from '../../ui';
 
 const Wrapper = styled.div<{ textAlign: ContentTitleProps['textAlign'] }>`
+	min-height: 80px;
 	margin-bottom: ${(props) => props.theme.spacer};
 	padding-top: ${(props) => props.theme.spacer};
 	padding-bottom: ${(props) => props.theme.spacer};

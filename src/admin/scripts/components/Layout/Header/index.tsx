@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Tooltip from '@mui/material/Tooltip';
 import styled from 'styled-components';
 
 import config from '../../../config';
@@ -54,11 +53,7 @@ const Header = ({ dataAppId = 'header' }: HeaderProps) => {
 	return (
 		<Wrapper {...getElTestAttr(dataAppId)}>
 			<Block>
-				<Tooltip title="Sidebar toggle">
-					<span>
-						<SidebarToggle />
-					</span>
-				</Tooltip>
+				<SidebarToggle />
 			</Block>
 			<Block>
 				<StyledTitle span>
@@ -66,11 +61,7 @@ const Header = ({ dataAppId = 'header' }: HeaderProps) => {
 				</StyledTitle>
 			</Block>
 			<Block>
-				<Tooltip title="Settings">
-					<span>
-						<SettingsButton />
-					</span>
-				</Tooltip>
+				<SettingsButton />
 				<UserDropdown />
 			</Block>
 		</Wrapper>

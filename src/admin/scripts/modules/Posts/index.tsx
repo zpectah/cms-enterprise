@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import _ from 'lodash';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
-import { Typography } from '../../components/ui';
+import { Button, Typography } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PostsDetailForm from './PostsDetailForm';
 
@@ -110,51 +110,23 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 	return (
 		<>
-			<div>
-				{detail && detailData ? (
-					<div>
-						<div>
-							<Typography.Link to={ROUTES.app.posts.path}>
-								Link to list
-							</Typography.Link>
-							<Typography.Link
-								to={ROUTES.app.posts.path + ROUTE_SUFFIX.detail + '/new'}
-							>
-								Link to new
-							</Typography.Link>
-						</div>
-						<div>
-							<PostsDetailForm
-								detailData={detailData}
-								onSubmit={(data) => {
-									console.log('submitted data ', data);
-								}}
-								onSubmitError={(error) => {
-									console.log('submitted error ', error);
-								}}
-							/>
-						</div>
-					</div>
-				) : (
-					<div>
-						<div>
-							<Typography.Link
-								to={ROUTES.app.posts.path + ROUTE_SUFFIX.detail + '/5'}
-							>
-								Link to detail (5)
-							</Typography.Link>
-							<Typography.Link
-								to={ROUTES.app.posts.path + ROUTE_SUFFIX.detail + '/new'}
-							>
-								Link to new
-							</Typography.Link>
-						</div>
-						<div>
-							<DataTable />
-						</div>
-					</div>
-				)}
-			</div>
+			{detail && detailData ? (
+				<>
+					<PostsDetailForm
+						detailData={detailData}
+						onSubmit={(data) => {
+							console.log('submitted data ', data);
+						}}
+						onSubmitError={(error) => {
+							console.log('submitted error ', error);
+						}}
+					/>
+				</>
+			) : (
+				<>
+					<DataTable routeObject={ROUTES.app.posts} />
+				</>
+			)}
 		</>
 	);
 };
