@@ -9,7 +9,8 @@ import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
-import { PostsItemProps, formDetailObjectProps } from '../../types/app';
+import { formLayoutObjectProps } from '../../types/app';
+import { PostsItemProps } from '../../types/model';
 import { Form, Button, Section } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
@@ -41,7 +42,7 @@ const PostsDetailForm = ({
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
 
-	const formOptions: formDetailObjectProps = {
+	const formOptions: formLayoutObjectProps = {
 		model: 'Posts',
 		id: 'PostsDetailForm',
 		route: ROUTES.app.posts,
@@ -64,13 +65,13 @@ const PostsDetailForm = ({
 	const buttonCreateCallback = () =>
 		history.push(`${formOptions.route.path}${ROUTE_SUFFIX.detail}/new`);
 
-	const renderTitle = useCallback(() => {
+	const renderTitle = () => {
 		let title = t('new.Posts');
 		if (detailData.id !== 'new') title = detailData.name;
 
 		return title;
-	}, [detailData]);
-	const renderFooter = useCallback(() => {
+	};
+	const renderFooter = () => {
 		return (
 			<>
 				<Button type="submit" variant="contained" disabled={!isValid}>
@@ -86,7 +87,7 @@ const PostsDetailForm = ({
 				</Button>
 			</>
 		);
-	}, [detailData]);
+	};
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -121,7 +122,7 @@ const PostsDetailForm = ({
 					/>
 				</>
 			</ModuleViewHeading>
-			<Form.DetailLayout
+			<Form.Layout
 				formName={formOptions.id}
 				dataAppId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
@@ -187,7 +188,7 @@ const PostsDetailForm = ({
 				</Section>
 				<Section>...form...{JSON.stringify(detailData)}...</Section>
 				{/*  ============ \\ Main form body ============ */}
-			</Form.DetailLayout>
+			</Form.Layout>
 		</>
 	);
 };

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
+import HelpModule from '../modules/Help';
 
 interface HelpPageProps {}
 
@@ -23,7 +24,7 @@ const HelpPage = ({}: HelpPageProps) => {
 				titlePage={t('page:Help.page.title')}
 				pageObject={pageObject}
 			>
-				<>Help page</>
+				<HelpModule />
 			</Layout.Base>
 		</>
 	);

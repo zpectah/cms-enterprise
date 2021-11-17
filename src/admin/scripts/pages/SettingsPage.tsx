@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
+import SettingsModule from '../modules/Settings';
 
 interface SettingsPageProps {}
 
@@ -23,7 +24,7 @@ const SettingsPage = ({}: SettingsPageProps) => {
 				titlePage={t('page:Settings.page.title')}
 				pageObject={pageObject}
 			>
-				<>Settings page</>
+				<SettingsModule />
 			</Layout.Base>
 		</>
 	);

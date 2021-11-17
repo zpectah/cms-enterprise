@@ -17,20 +17,19 @@ const ColumnBlock = styled.div`
 	flex-direction: row;
 `;
 const MainBlock = styled.div<{ withSidebar: boolean }>`
-	padding: ${(props) => props.theme.spacer};
 	flex: 100%;
 
 	${media.min.md} {
-		padding-left: 0;
+		padding-right: ${(props) =>
+			props.withSidebar ? props.theme.spacer : '0px'};
 		flex: ${(props) => (props.withSidebar ? '75%' : '100%')};
 	}
 `;
 const SidebarBlock = styled.div`
-	padding: ${(props) => props.theme.spacer};
 	flex: 100%;
 
 	${media.min.md} {
-		padding-right: 0;
+		padding-left: ${(props) => props.theme.spacer};
 		flex: 25%;
 		border-left: 1px solid ${(props) => props.theme.ui.borderSecondary};
 	}
@@ -42,7 +41,7 @@ const FooterBlock = styled.footer`
 	padding-top: ${(props) => props.theme.spacer};
 `;
 
-interface FormDetailLayoutProps {
+interface FormLayoutProps {
 	secondaryChildren?: React.ReactElement | React.ReactElement[];
 	sidebarChildren?: React.ReactElement | React.ReactElement[];
 	footerChildren?: React.ReactElement | React.ReactElement[];
@@ -52,7 +51,7 @@ interface FormDetailLayoutProps {
 	formName?: string;
 }
 
-const FormDetailLayout: React.FC<FormDetailLayoutProps> = ({
+const FormLayout: React.FC<FormLayoutProps> = ({
 	children,
 	secondaryChildren,
 	sidebarChildren,
@@ -87,4 +86,4 @@ const FormDetailLayout: React.FC<FormDetailLayoutProps> = ({
 		</Wrapper>
 	);
 };
-export default FormDetailLayout;
+export default FormLayout;

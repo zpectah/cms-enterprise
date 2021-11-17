@@ -1,9 +1,9 @@
 import FormBase from './FormBase';
 import FormRow from './FormRow';
-import FormDetailLayout from './FormDetailLayout';
+import FormLayout from './FormLayout';
 
 export default {
 	Base: FormBase,
 	Row: FormRow,
-	DetailLayout: FormDetailLayout,
+	Layout: FormLayout,
 };

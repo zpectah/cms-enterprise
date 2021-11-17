@@ -1,4 +1,5 @@
-import { PostsItemProps, appModelProps } from '../types/app';
+import { appModelProps } from '../types/app';
+import { PostsItemProps } from '../types/model';
 
 export const blankDataItem = {
 	Categories: {},

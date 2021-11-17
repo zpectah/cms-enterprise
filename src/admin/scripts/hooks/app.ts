@@ -1,7 +1,7 @@
 import useSWR, { mutate } from 'swr';
 
 import { get, post, postRaw } from '../utils/api';
-import { PostsItemProps } from '../types/app';
+import { PostsItemProps } from '../types/model';
 
 export function usePosts() {
 	return {

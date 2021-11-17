@@ -21,7 +21,7 @@ const StyledItem = styled(ListItemButton)`
 	&.Mui-selected {
 		&::after {
 			content: '';
-			width: 0.5rem;
+			width: 2px;
 			height: 100%;
 			position: absolute;
 			top: 0;

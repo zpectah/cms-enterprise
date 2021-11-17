@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div<{ align: ModuleViewHeadingProps['alignOverride'] }>`
 	width: 100%;
+	min-height: 56px;
+	margin-bottom: calc(${(props) => props.theme.spacer} / 2);
 	padding-bottom: ${(props) => props.theme.spacer};
 	display: flex;
 	align-items: center;
@@ -11,6 +13,7 @@ const Wrapper = styled.div<{ align: ModuleViewHeadingProps['alignOverride'] }>`
 const Block = styled.div`
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 `;
 
 interface ModuleViewHeadingProps {

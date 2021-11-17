@@ -72,7 +72,7 @@ const DashboardPage = ({}: DashboardPageProps) => {
 
 					<br />
 
-					<Form.DetailLayout
+					<Form.Layout
 						sidebarChildren={<>sidebar</>}
 						footerChildren={
 							<>
@@ -112,7 +112,7 @@ const DashboardPage = ({}: DashboardPageProps) => {
 						}
 					>
 						form detail content
-					</Form.DetailLayout>
+					</Form.Layout>
 				</Section>
 				<Section>
 					<Button

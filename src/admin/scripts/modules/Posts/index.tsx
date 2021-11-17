@@ -4,7 +4,8 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
-import { moduleObjectProps, PostsItemProps } from '../../types/app';
+import { moduleObjectProps } from '../../types/app';
+import { PostsItemProps } from '../../types/model';
 import { usePosts } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';

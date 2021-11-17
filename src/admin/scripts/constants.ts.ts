@@ -9,14 +9,14 @@ export const APP_MODEL_TYPES = [
 	'Translations',
 	'Uploads',
 	'Users',
+	'Settings',
+	'Profile',
+	'Login',
+	'LostPassword',
 ] as const;
 export const APP_PAGE_TYPES = [
 	'Dashboard',
-	'Settings',
-	'Profile',
 	'Help',
 	'Error404',
-	'Login',
-	'LostPassword',
 	...APP_MODEL_TYPES,
 ] as const;
