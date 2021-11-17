@@ -221,3 +221,11 @@ export const NAV_ITEMS = {
 	crm: [],
 	market: [],
 };
+export const MAPBOX_DEFAULTS = {
+	// token is in: config.project.private.mapboxToken
+	defaultLocation: {
+		longitude: 14.501273600376752,
+		latitude: 50.08322927731517,
+		zoom: 10,
+	},
+};
