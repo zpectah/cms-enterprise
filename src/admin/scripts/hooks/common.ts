@@ -7,7 +7,15 @@ export function useSystem() {
 }
 
 export function useProfile() {
-	return {};
+	return {
+		Profile: {},
+		profile_loading: false,
+		profile_error: false,
+		reloadProfile: () => {},
+		updateProfile: (data: any) => {
+			console.log(`update `, data);
+		},
+	};
 }
 
 export function useSettings() {

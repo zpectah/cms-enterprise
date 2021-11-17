@@ -133,7 +133,7 @@ const AppModule = () => {
 			/>
 
 			<AuthRoute
-				path={routesApp.help.path}
+				path={[routesApp.help.path, routesApp.help.path + ROUTE_SUFFIX.panel]}
 				component={HelpPage}
 				auth={routesApp.help.auth}
 				exact

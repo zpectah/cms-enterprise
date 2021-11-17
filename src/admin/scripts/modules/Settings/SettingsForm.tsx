@@ -9,11 +9,9 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 import config from '../../config';
-import { formLayoutObjectProps } from '../../types/app';
-import ModuleViewHeading from '../../components/ModuleViewHeading';
-import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
-import { Button, Form, Section } from '../../components/ui';
 import { ROUTES } from '../../constants';
+import { formLayoutObjectProps } from '../../types/app';
+import { Button, Form, Section } from '../../components/ui';
 
 interface SettingsFormProps {
 	formData: any;
@@ -63,9 +61,7 @@ const SettingsForm = ({
 	const { isDirty, isValid } = formState;
 
 	const submitHandler = (data: any, e: any) => onSubmit(data, e);
-	const errorSubmitHandler = (errors: any, e: any) => {
-		if (onSubmitError) onSubmitError(errors, e);
-	};
+	const errorSubmitHandler = (errors: any, e: any) => onSubmitError(errors, e);
 	const panelChangeHandler = (event: React.SyntheticEvent, panel: string) => {
 		setPanel(panel);
 		history.push(`${ROUTES.app.settings.path}/${panel}`);
@@ -87,18 +83,6 @@ const SettingsForm = ({
 
 	return (
 		<>
-			{/*
-			<ModuleViewHeading>
-				<>
-					<ModuleLanguageToggle
-						language={lang}
-						languageList={languageList}
-						onChange={(lng) => setLang(lng)}
-						style={{ marginRight: '.75rem' }}
-					/>
-				</>
-			</ModuleViewHeading>
-			*/}
 			<Form.Layout
 				formName={formOptions.id}
 				dataAppId={formOptions.id}

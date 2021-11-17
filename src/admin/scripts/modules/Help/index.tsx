@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -8,19 +9,22 @@ import TabPanel from '@mui/lab/TabPanel';
 import styled from 'styled-components';
 
 import { Section } from '../../components/ui';
+import { ROUTES } from '../../constants';
 
 const Wrapper = styled.div``;
 
 interface HelpModuleProps {}
 
 const HelpModule = ({}: HelpModuleProps) => {
+	const params: any = useParams();
+	const history = useHistory();
 	const { t } = useTranslation(['common']);
-	const [panel, setPanel] = React.useState('global');
+	const [panel, setPanel] = React.useState('about');
 
 	const panels = {
-		global: {
-			key: 'global',
-			label: 'Global',
+		about: {
+			key: 'about',
+			label: 'About',
 		},
 		content: {
 			key: 'content',
@@ -34,7 +38,12 @@ const HelpModule = ({}: HelpModuleProps) => {
 
 	const panelChangeHandler = (event: React.SyntheticEvent, panel: string) => {
 		setPanel(panel);
+		history.push(`${ROUTES.app.help.path}/${panel}`);
 	};
+
+	useEffect(() => {
+		if (params.panel) setPanel(params.panel);
+	}, [params.panel]);
 
 	return (
 		<>
@@ -47,7 +56,7 @@ const HelpModule = ({}: HelpModuleProps) => {
 								aria-label={`Help tabs-list`}
 							>
 								{/*  ============ Main form items ============ */}
-								<Tab label={panels.global.label} value={panels.global.key} />
+								<Tab label={panels.about.label} value={panels.about.key} />
 								<Tab label={panels.content.label} value={panels.content.key} />
 								<Tab label={panels.modules.label} value={panels.modules.key} />
 								{/*  ============ \\ Main form items ============ */}
@@ -55,10 +64,10 @@ const HelpModule = ({}: HelpModuleProps) => {
 						</Box>
 						{/*  ============ Main form panels ============ */}
 						<TabPanel
-							value={panels.global.key}
+							value={panels.about.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>Item global</Section>
+							<Section>Item about</Section>
 						</TabPanel>
 						<TabPanel
 							value={panels.content.key}

@@ -28,7 +28,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 		setAnchorEl(event.currentTarget);
 	const dropdownCloseHandler = () => setAnchorEl(null);
 	const profileClickHandler = () => history.push(ROUTES.app.profile.path);
-	const helpClickHandler = () => history.push(ROUTES.app.help.path);
+	const helpClickHandler = () => history.push(ROUTES.app.help.path + '/about');
 	const logoutClickHandler = () => setConfirmDialog(true);
 	const logoutConfirmHandler = () => history.push(ROUTES.app.login.path);
 	const closeConfirmDialog = () => setConfirmDialog(false);
@@ -51,7 +51,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
-				<div {...getElTestAttr(dataAppId)}>
+				<div style={{ minWidth: '170px' }} {...getElTestAttr(dataAppId)}>
 					<MenuItem
 						onClick={profileClickHandler}
 						{...getElTestAttr(`${dataAppId}.item.profile`)}
@@ -61,7 +61,6 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 						</ListItemIcon>
 						{t('components:Header.UserDropdown.profile')}
 					</MenuItem>
-					<Divider />
 					<MenuItem
 						onClick={helpClickHandler}
 						{...getElTestAttr(`${dataAppId}.item.help`)}
@@ -71,6 +70,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 						</ListItemIcon>
 						{t('components:Header.UserDropdown.help')}
 					</MenuItem>
+					<Divider />
 					<MenuItem
 						onClick={logoutClickHandler}
 						{...getElTestAttr(`${dataAppId}.item.logOut`)}

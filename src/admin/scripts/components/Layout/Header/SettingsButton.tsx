@@ -17,7 +17,8 @@ const SettingsButton = ({
 }: SettingsButtonProps) => {
 	const history = useHistory();
 
-	const settingsClickHandler = () => history.push(ROUTES.app.settings.path);
+	const settingsClickHandler = () =>
+		history.push(ROUTES.app.settings.path + '/global');
 
 	return (
 		<>

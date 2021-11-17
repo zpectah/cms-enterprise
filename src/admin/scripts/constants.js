@@ -74,8 +74,8 @@ export const DATA_TABLE = {
 	rowsDefault: 25,
 };
 export const ROUTE_SUFFIX = {
-	detail: '/detail',
-	detailId: '/detail/:id',
+	detail: '/id',
+	detailId: '/id/:id',
 	panel: '/:panel',
 	token: '/:token',
 };

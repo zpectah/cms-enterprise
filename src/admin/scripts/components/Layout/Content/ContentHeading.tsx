@@ -6,6 +6,7 @@ import { pageObjectProps } from '../../../types/pages';
 import Breadcrumbs from './Breadcrumbs';
 
 const Wrapper = styled.header`
+	min-height: 45px;
 	padding-top: calc(${(props) => props.theme.spacer} / 2);
 	padding-bottom: calc(${(props) => props.theme.spacer} / 2);
 	border-bottom: 1px solid ${(props) => props.theme.ui.borderSecondary};
