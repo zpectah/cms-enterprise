@@ -17,3 +17,14 @@ export interface formLayoutObjectProps {
 	route?: routeItemProps;
 	detailOptions?: {};
 }
+
+export interface utilsDateObjectProps {
+	year: number;
+	month: number;
+	day: number;
+	hour: string;
+	minute: string;
+	second: string;
+	dayOfTheWeek: number;
+	dayOfTheYear: number;
+}

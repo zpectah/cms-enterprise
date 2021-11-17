@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Container, { ContainerProps } from '@mui/material/Container';
+import { isDesktop } from 'react-device-detect';
 import styled from 'styled-components';
 
 import config from '../../config';
@@ -91,7 +92,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 			<Wrapper {...getElTestAttr(dataAppId)} data-layout-page={pageObject.name}>
 				<Sidebar dataAppId={`${dataAppId}.sidebar`} />
 				<WrapperInner sideBarOpen={sideBarOpen}>
-					<ContentHeading pageObject={pageObject} />
+					{isDesktop && <ContentHeading pageObject={pageObject} />}
 					<Container maxWidth={containerMaxWidth}>
 						<ContentOuter>
 							<Content>

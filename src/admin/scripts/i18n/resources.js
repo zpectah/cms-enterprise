@@ -4,6 +4,7 @@ import en_form from './en/form.json';
 import en_messages from './en/messages.json';
 import en_components from './en/components.json';
 import en_types from './en/types.json';
+import en_calendar from './en/calendar.json';
 
 export default {
 	en: {
@@ -13,6 +14,7 @@ export default {
 		messages: en_messages,
 		components: en_components,
 		types: en_types,
+		calendar: en_calendar,
 	},
 	cs: {
 		common: en_common,
@@ -21,5 +23,6 @@ export default {
 		messages: en_messages,
 		components: en_components,
 		types: en_types,
+		calendar: en_calendar,
 	},
 };

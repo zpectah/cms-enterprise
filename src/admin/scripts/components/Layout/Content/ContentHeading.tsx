@@ -4,12 +4,19 @@ import styled from 'styled-components';
 
 import { pageObjectProps } from '../../../types/pages';
 import Breadcrumbs from './Breadcrumbs';
+import Time from './Time';
 
 const Wrapper = styled.header`
 	min-height: 46px;
 	padding-top: calc(${(props) => props.theme.spacer} / 2);
 	padding-bottom: calc(${(props) => props.theme.spacer} / 2);
 	border-bottom: 1px solid ${(props) => props.theme.ui.borderSecondary};
+`;
+const WrapperInner = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 `;
 
 interface ContentHeadingProps {
@@ -25,7 +32,11 @@ const ContentHeading: React.FC<ContentHeadingProps> = ({
 	return (
 		<Wrapper>
 			<Container maxWidth={containerMaxWidth}>
-				{children ? <>{children}</> : <Breadcrumbs pageObject={pageObject} />}
+				<WrapperInner>
+					<Breadcrumbs pageObject={pageObject} />
+					{children && <div>{children}</div>}
+					<Time />
+				</WrapperInner>
 			</Container>
 		</Wrapper>
 	);
