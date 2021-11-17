@@ -56,7 +56,6 @@ export const IMAGE_CROP_OPTIONS = [
 		label: '16:9',
 		value: 16 / 9,
 	},
-	//
 	{
 		label: '2:3',
 		value: 2 / 3,
@@ -81,6 +80,8 @@ export const ROUTE_SUFFIX = {
 	token: '/:token',
 };
 export const ROUTE_PATH_ROOT = '/admin';
+export const ROUTE_PATH_CRM = '/crm';
+export const ROUTE_PATH_MARKET = '/market';
 export const ROUTES = {
 	app: {
 		error404: {
@@ -159,8 +160,60 @@ export const ROUTES = {
 			auth: USER_LEVEL.chief_redactor.id,
 		},
 	},
-	crm: {},
-	market: {},
+	crm: {
+		crmDashboard: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_CRM + '/',
+			name: 'CrmDashboard',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		members: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_CRM + '/members',
+			name: 'Members',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+	},
+	market: {
+		marketDashboard: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/',
+			name: 'MarketDashboard',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		deliveries: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/deliveries',
+			name: 'Deliveries',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		distributors: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/distributors',
+			name: 'Distributors',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		orders: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/orders',
+			name: 'Orders',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		payments: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/payments',
+			name: 'Payments',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		producers: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/producers',
+			name: 'Producers',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		products: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/products',
+			name: 'Products',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		stores: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/stores',
+			name: 'Stores',
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+	},
 };
 export const NAV_ITEMS = {
 	app: [
@@ -169,6 +222,12 @@ export const NAV_ITEMS = {
 			path: ROUTES.app.dashboard.path,
 			active: true,
 			auth: USER_LEVEL.redactor.id,
+		},
+		{
+			name: ROUTES.app.settings.name,
+			path: ROUTES.app.settings.path + '/global',
+			active: true,
+			auth: USER_LEVEL.admin.id,
 		},
 		{
 			name: ROUTES.app.users.name,
@@ -219,8 +278,70 @@ export const NAV_ITEMS = {
 			auth: USER_LEVEL.chief_redactor.id,
 		},
 	],
-	crm: [],
-	market: [],
+	crm: [
+		{
+			name: ROUTES.crm.crmDashboard.name,
+			path: ROUTES.crm.crmDashboard.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.crm.members.name,
+			path: ROUTES.crm.members.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+	],
+	market: [
+		{
+			name: ROUTES.market.marketDashboard.name,
+			path: ROUTES.market.marketDashboard.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.market.deliveries.name,
+			path: ROUTES.market.deliveries.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.market.distributors.name,
+			path: ROUTES.market.distributors.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.market.orders.name,
+			path: ROUTES.market.orders.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.market.payments.name,
+			path: ROUTES.market.payments.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.market.producers.name,
+			path: ROUTES.market.producers.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.market.products.name,
+			path: ROUTES.market.products.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+		{
+			name: ROUTES.market.stores.name,
+			path: ROUTES.market.stores.path,
+			active: true,
+			auth: USER_LEVEL.chief_redactor.id,
+		},
+	],
 };
 export const MAPBOX_DEFAULTS = {
 	// token is in: config.project.private.mapboxToken

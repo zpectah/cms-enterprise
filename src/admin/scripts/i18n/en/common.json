@@ -21,7 +21,16 @@
     "Tags": "New tag",
     "Translations": "New translation",
     "Uploads": "New upload",
-    "Users": "New user"
+    "Users": "New user",
+    "Members": "New member",
+    "Deliveries": "New delivery",
+    "Distributors": "New distributor",
+    "Payments": "New payment",
+    "Producers": "New producer",
+    "Products": "New product",
+    "ProductsOptions": "New product option",
+    "Stores": "New store",
+    "Orders": "New order"
   },
   "label": {
     "lostPassword": "Lost password",
@@ -34,5 +43,11 @@
     "app": "App",
     "crm": "Crm",
     "market": "Market"
+  },
+  "panel": {
+    "global": "Global",
+    "content": "Content",
+    "modules": "Modules",
+    "about": "About"
   }
 }

@@ -7,7 +7,6 @@ import { ROUTES } from '../../../constants';
 import { Typography } from '../../ui';
 import SidebarToggle from './SidebarToggle';
 import UserDropdown from './UserDropdown';
-import SettingsButton from './SettingsButton';
 import { getElTestAttr } from '../../../utils/tests';
 
 const Wrapper = styled.header`
@@ -67,7 +66,6 @@ const Header = ({ dataAppId = 'header' }: HeaderProps) => {
 				</StyledTitle>
 			</Block>
 			<Block>
-				<SettingsButton />
 				<UserDropdown />
 			</Block>
 		</Wrapper>

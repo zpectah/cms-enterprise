@@ -90,7 +90,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 				</title>
 			</Helmet>
 			<Wrapper {...getElTestAttr(dataAppId)} data-layout-page={pageObject.name}>
-				<Sidebar dataAppId={`${dataAppId}.sidebar`} />
+				<Sidebar app={pageObject.app} dataAppId={`${dataAppId}.sidebar`} />
 				<WrapperInner sideBarOpen={sideBarOpen}>
 					{isDesktop && <ContentHeading pageObject={pageObject} />}
 					<Container maxWidth={containerMaxWidth}>

@@ -27,8 +27,10 @@ const Breadcrumbs = ({ pageObject }: BreadcrumbsProps) => {
 				<StyledText small>{t(`app.${pageObject.app}`)}</StyledText>
 			)}
 			<StyledText small>{t(`page:${pageObject.route.name}.label`)}</StyledText>
-			{params.id && <StyledText small>ID: {params.id}</StyledText>}
-			{params.panel && <StyledText small>Panel: {params.panel}</StyledText>}
+			{params.id && <StyledText small># {params.id}</StyledText>}
+			{params.panel && (
+				<StyledText small>{t(`panel.${params.panel}`)}</StyledText>
+			)}
 		</MuiBreadcrumbs>
 	);
 };

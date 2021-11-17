@@ -7,6 +7,7 @@ import { Scrollable } from '../../ui';
 import Navbar from './Navbar';
 import { getElTestAttr } from '../../../utils/tests';
 import { useSelector } from 'react-redux';
+import { pageObjectProps } from '../../../types/pages';
 
 const Wrapper = styled.aside<{ sideBarOpen: boolean }>`
 	width: 100%;
@@ -29,16 +30,17 @@ const Wrapper = styled.aside<{ sideBarOpen: boolean }>`
 `;
 
 interface SidebarProps {
+	app: pageObjectProps['app'];
 	dataAppId?: string;
 }
 
-const Sidebar = ({ dataAppId = 'sidebar' }: SidebarProps) => {
+const Sidebar = ({ dataAppId = 'sidebar', app }: SidebarProps) => {
 	const { sideBarOpen } = useSelector((store: storeProps) => store);
 
 	return (
 		<Wrapper sideBarOpen={sideBarOpen} {...getElTestAttr(dataAppId)}>
 			<Scrollable>
-				<Navbar />
+				<Navbar app={app} />
 			</Scrollable>
 		</Wrapper>
 	);

@@ -13,10 +13,23 @@ export const APP_MODEL_TYPES = [
 	'Profile',
 	'Login',
 	'LostPassword',
+	'Requests',
+	// TODO
+	'Members',
+	'Deliveries',
+	'Distributors',
+	'Orders',
+	'Payments',
+	'Producers',
+	'Products',
+	'ProductsOptions',
+	'Stores',
 ] as const;
 export const APP_PAGE_TYPES = [
 	'Dashboard',
 	'Help',
 	'Error404',
+	'CrmDashboard',
+	'MarketDashboard',
 	...APP_MODEL_TYPES,
 ] as const;

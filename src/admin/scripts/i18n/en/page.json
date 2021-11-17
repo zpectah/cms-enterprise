@@ -132,5 +132,80 @@
       "title": "Menu"
     },
     "label": "Menu"
+  },
+
+  "Members": {
+    "meta": {
+      "title": "Members"
+    },
+    "page": {
+      "title": "Members"
+    },
+    "label": "Members"
+  },
+
+  "Deliveries": {
+    "meta": {
+      "title": "Deliveries"
+    },
+    "page": {
+      "title": "Deliveries"
+    },
+    "label": "Deliveries"
+  },
+  "Distributors": {
+    "meta": {
+      "title": "Distributors"
+    },
+    "page": {
+      "title": "Distributors"
+    },
+    "label": "Distributors"
+  },
+  "Orders": {
+    "meta": {
+      "title": "Orders"
+    },
+    "page": {
+      "title": "Orders"
+    },
+    "label": "Orders"
+  },
+  "Payments": {
+    "meta": {
+      "title": "Payments"
+    },
+    "page": {
+      "title": "Payments"
+    },
+    "label": "Payments"
+  },
+  "Producers": {
+    "meta": {
+      "title": "Producers"
+    },
+    "page": {
+      "title": "Producers"
+    },
+    "label": "Producers"
+  },
+  "Products": {
+    "meta": {
+      "title": "Products"
+    },
+    "page": {
+      "title": "Products"
+    },
+    "label": "Products"
+  },
+  "Stores": {
+    "meta": {
+      "title": "Stores"
+    },
+    "page": {
+      "title": "Stores"
+    },
+    "label": "Stores"
   }
+
 }

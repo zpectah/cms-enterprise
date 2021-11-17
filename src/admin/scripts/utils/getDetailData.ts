@@ -8,6 +8,14 @@ import {
 	TranslationsItemProps,
 	UploadsItemProps,
 	UsersItemProps,
+	MembersItemProps,
+	DeliveriesItemProps,
+	OrdersItemProps,
+	PaymentsItemProps,
+	ProducersItemProps,
+	ProductsItemProps,
+	StoresItemProps,
+	DistributorsItemProps,
 } from '../types/model';
 
 export const blankDataItem = {
@@ -51,6 +59,47 @@ export const blankDataItem = {
 		name: '',
 		active: true,
 	} as UsersItemProps,
+
+	Members: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as MembersItemProps,
+	Deliveries: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as DeliveriesItemProps,
+	Distributors: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as DistributorsItemProps,
+	Orders: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as OrdersItemProps,
+	Payments: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as PaymentsItemProps,
+	Producers: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as ProducersItemProps,
+	Products: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as ProductsItemProps,
+	Stores: {
+		id: 'new',
+		name: '',
+		active: true,
+	} as StoresItemProps,
 };
 
 export default (id: number | string, model: appModelProps, items: any[]) => {

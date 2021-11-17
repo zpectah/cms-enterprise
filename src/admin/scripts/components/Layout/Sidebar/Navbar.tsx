@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -32,24 +32,42 @@ const StyledItem = styled(ListItemButton)`
 `;
 
 interface NavbarProps {
+	app: pageObjectProps['app'];
 	dataAppId?: string;
 }
 
-const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
+const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 	const { t } = useTranslation(['common', 'page']);
 	const dispatch = useDispatch();
 	const history = useHistory();
 	// const [openSectionApp, setOpenSectionApp] = useState<boolean>(true);
 	const [openSectionCrm, setOpenSectionCrm] = useState<boolean>(false);
 	const [openSectionMarket, setOpenSectionMarket] = useState<boolean>(false);
-
 	const sectionAppActive = true;
-	const sectionCrmActive = false;
-	const sectionMarketActive = false;
-
+	const sectionCrmActive = true;
+	const sectionMarketActive = true;
 	// const sectionAppToggle = () => setOpenSectionApp(!openSectionApp);
 	const sectionCrmToggle = () => setOpenSectionCrm(!openSectionCrm);
 	const sectionMarketToggle = () => setOpenSectionMarket(!openSectionMarket);
+
+	useEffect(() => {
+		switch (app) {
+			case 'app':
+				setOpenSectionCrm(false);
+				setOpenSectionMarket(false);
+				return;
+
+			case 'crm':
+				setOpenSectionCrm(true);
+				setOpenSectionMarket(false);
+				return;
+
+			case 'market':
+				setOpenSectionCrm(false);
+				setOpenSectionMarket(true);
+				return;
+		}
+	}, [app]);
 
 	const isItemSelected = (path) => {
 		let selected = false;
@@ -100,7 +118,6 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 	) => {
 		return (
 			<>
-				{app !== 'app' && <Divider />}
 				<ListItemButton
 					onClick={callback}
 					{...getElTestAttr(`${dataAppId}.toggle.${app}`)}
@@ -108,6 +125,7 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 					<ListItemText primary={t(`app.${app}`)} />
 					{state ? <ExpandLess /> : <ExpandMore />}
 				</ListItemButton>
+				<Divider />
 				<Collapse in={state} timeout="auto" unmountOnExit>
 					{renderItems(app)}
 				</Collapse>
@@ -120,7 +138,7 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 			<List
 				sx={{ width: '100%' }}
 				component="div"
-				aria-label="Navbar"
+				aria-label={dataAppId}
 				disablePadding
 				{...getElTestAttr(dataAppId)}
 			>

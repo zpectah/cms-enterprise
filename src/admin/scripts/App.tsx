@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,8 +13,6 @@ import ThemeService from './services/Theme.service';
 import HelpService from './services/Help.service';
 import LanguageService from './services/Language.service';
 import AppModule from './modules/App';
-import CrmModule from './modules/Crm';
-import MarketModule from './modules/Market';
 import ToastsModule from './modules/Toasts';
 
 const App = () => {
@@ -35,8 +33,6 @@ const App = () => {
 			<ThemeProvider theme={muiTheme}>
 				<Router>
 					<AppModule />
-					<CrmModule />
-					<MarketModule />
 				</Router>
 				<ToastsModule />
 			</ThemeProvider>
