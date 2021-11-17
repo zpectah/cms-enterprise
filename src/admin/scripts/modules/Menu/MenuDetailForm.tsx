@@ -158,6 +158,11 @@ const MenuDetailForm = ({
 						{/*  ============ \\ Form sidebar ============ */}
 					</>
 				}
+				secondaryChildren={
+					<>
+						<div>Menu items manager ...</div>
+					</>
+				}
 			>
 				{/*  ============ Main form body ============ */}
 				<div>

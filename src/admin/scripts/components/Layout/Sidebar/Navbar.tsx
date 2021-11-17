@@ -77,6 +77,7 @@ const Navbar = ({ dataAppId = 'navbar.primary' }: NavbarProps) => {
 					key={key}
 					onClick={() => linkTriggerHandler(item.path)}
 					selected={isItemSelected(item.path)}
+					divider
 					{...getElTestAttr(`${dataAppId}.item.${item.name}`)}
 				>
 					<ListItemText primary={item.name} />

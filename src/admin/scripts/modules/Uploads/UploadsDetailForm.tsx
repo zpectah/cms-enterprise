@@ -158,6 +158,11 @@ const UploadsDetailForm = ({
 						{/*  ============ \\ Form sidebar ============ */}
 					</>
 				}
+				secondaryChildren={
+					<>
+						<div>Uploader manager ...</div>
+					</>
+				}
 			>
 				{/*  ============ Main form body ============ */}
 				<div>
