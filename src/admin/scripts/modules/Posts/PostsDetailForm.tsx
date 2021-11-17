@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
@@ -7,20 +7,24 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 
+import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
-import { PostsItemProps } from '../../types/app';
+import { PostsItemProps, formDetailObjectProps } from '../../types/app';
 import { Form, Button, Section } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
+import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 
 interface PostsDetailFormProps {
 	detailData: PostsItemProps;
-	onSubmit: (data: any, e: any) => void;
+	onSubmit: (data: PostsItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
 	detailOptions: {};
 	onCancel: (dirty: boolean) => void;
 	onDelete: (id: number | string) => void;
+	languageList: string[];
+	languageDefault: string;
 }
 
 const PostsDetailForm = ({
@@ -30,9 +34,19 @@ const PostsDetailForm = ({
 	detailOptions,
 	onCancel,
 	onDelete,
+	languageList = config.tmp.languageList,
+	languageDefault = config.tmp.languageDefault,
 }: PostsDetailFormProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'form']);
+	const [lang, setLang] = useState(languageDefault);
+
+	const formOptions: formDetailObjectProps = {
+		model: 'Posts',
+		id: 'PostsDetailForm',
+		route: ROUTES.app.posts,
+		...detailOptions,
+	};
 	const { control, handleSubmit, reset, register, formState } = useForm({
 		mode: 'all',
 		defaultValues: {
@@ -40,11 +54,6 @@ const PostsDetailForm = ({
 		},
 	});
 	const { isDirty, isValid } = formState;
-	const formOptions = {
-		model: 'Posts',
-		route: ROUTES.app.posts,
-		...detailOptions,
-	};
 
 	const submitHandler = (data: PostsItemProps, e: any) => onSubmit(data, e);
 	const errorSubmitHandler = (errors: any, e: any) => {
@@ -55,29 +64,68 @@ const PostsDetailForm = ({
 	const buttonCreateCallback = () =>
 		history.push(`${formOptions.route.path}${ROUTE_SUFFIX.detail}/new`);
 
+	const renderTitle = useCallback(() => {
+		let title = t('new.Posts');
+		if (detailData.id !== 'new') title = detailData.name;
+
+		return title;
+	}, [detailData]);
+	const renderFooter = useCallback(() => {
+		return (
+			<>
+				<Button type="submit" variant="contained" disabled={!isValid}>
+					{detailData.id == 'new' ? t('button.create') : t('button.update')}
+				</Button>
+				{detailData.id !== 'new' && (
+					<Button variant="outlined" color="error" onClick={deleteHandler}>
+						{t('button.delete')}
+					</Button>
+				)}
+				<Button variant="outlined" color="secondary" onClick={cancelHandler}>
+					{t('button.return')}
+				</Button>
+			</>
+		);
+	}, [detailData]);
+
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
 	return (
 		<>
 			<ContentTitle
-				title={'Posts ....detail'}
+				title={renderTitle()}
 				listPath={formOptions.route.path}
 				clickCallback={cancelHandler}
 			/>
-			<ModuleViewHeading alignOverride="flex-end">
-				<Button
-					variant="outlined"
-					color="success"
-					onClick={buttonCreateCallback}
-					startIcon={<AddIcon />}
-					dataAppId={`button.create.new.Posts`}
-				>
-					{t(`buttonNew.Posts`)}
-				</Button>
+			<ModuleViewHeading
+				tertiaryChildren={
+					<>
+						<Button
+							variant="outlined"
+							color="success"
+							onClick={buttonCreateCallback}
+							startIcon={<AddIcon />}
+							dataAppId={`button.create.new.Posts`}
+						>
+							{t(`new.Posts`)}
+						</Button>
+					</>
+				}
+			>
+				<>
+					<ModuleLanguageToggle
+						language={lang}
+						languageList={languageList}
+						onChange={(lng) => setLang(lng)}
+						style={{ marginRight: '.75rem' }}
+					/>
+				</>
 			</ModuleViewHeading>
 			<Form.DetailLayout
-				formName="PostsDetailForm"
+				formName={formOptions.id}
+				dataAppId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
+				footerChildren={renderFooter()}
 				sidebarChildren={
 					<>
 						{/*  ============ Form sidebar ============ */}
@@ -95,9 +143,9 @@ const PostsDetailForm = ({
 													onBlur={onBlur}
 													checked={value}
 													name={name}
-													id="PostsDetailForm__active"
+													id={`${formOptions.id}__active`}
 													size="small"
-													{...getElTestAttr('PostsDetailForm.checkbox.active')}
+													{...getElTestAttr(`${formOptions.id}.switch.active`)}
 												/>
 											}
 											label={t('form:input.active')}
@@ -106,37 +154,13 @@ const PostsDetailForm = ({
 								)}
 							/>
 						</Section>
+						{/*  ============ \\ Form sidebar ============ */}
 					</>
 				}
-				footerChildren={
-					<>
-						{/*  ============ Form actions button ============ */}
-						<Button type="submit" variant="contained" disabled={!isValid}>
-							{detailData.id == 'new' ? t('button.create') : t('button.update')}
-						</Button>
-						{detailData.id !== 'new' && (
-							<Button variant="outlined" color="error" onClick={deleteHandler}>
-								{t('button.delete')}
-							</Button>
-						)}
-						<Button
-							variant="outlined"
-							color="secondary"
-							onClick={cancelHandler}
-						>
-							{t('button.return')}
-						</Button>
-					</>
-				}
-				dataAppId={'PostsDetailForm'}
 			>
 				{/*  ============ Main form body ============ */}
 				<div>
-					<input
-						type="hidden"
-						// name="id"
-						{...register('id', { required: true })}
-					/>
+					<input type="hidden" {...register('id', { required: true })} />
 				</div>
 				<Section>
 					<Controller
@@ -150,18 +174,19 @@ const PostsDetailForm = ({
 									onBlur={onBlur}
 									value={value}
 									name={name}
-									id="PostsDetailForm__name"
+									id={`${formOptions.id}__name`}
 									label={t('form:input.name')}
 									variant="outlined"
 									size="small"
 									style={{ width: '100%' }}
-									{...getElTestAttr('PostsDetailForm.input.name')}
+									{...getElTestAttr(`${formOptions.id}.input.name`)}
 								/>
 							</Form.Row>
 						)}
 					/>
 				</Section>
 				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				{/*  ============ \\ Main form body ============ */}
 			</Form.DetailLayout>
 		</>
 	);

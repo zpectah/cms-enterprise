@@ -5,43 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { moduleObjectProps, PostsItemProps } from '../../types/app';
+import { usePosts } from '../../hooks/app';
+import getDetailData from '../../utils/getDetailData';
+import { useSettings } from '../../hooks/common';
 import { ConfirmDialog } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PostsDetailForm from './PostsDetailForm';
-
-const mockData: PostsItemProps[] = [
-	{
-		id: 1,
-		name: 'item 1 name',
-		active: true,
-	},
-	{
-		id: 2,
-		name: 'item 2 name',
-		active: false,
-	},
-	{
-		id: 3,
-		name: 'item 3 name',
-		active: true,
-	},
-	{
-		id: 4,
-		name: 'item 4 name',
-		active: true,
-	},
-	{
-		id: 5,
-		name: 'item 5 name',
-		active: true,
-	},
-];
-
-const blankDetailData: PostsItemProps = {
-	id: 'new',
-	name: '',
-	active: true,
-};
 
 interface PostsModuleProps {}
 
@@ -62,6 +31,10 @@ const PostsModule = ({}: PostsModuleProps) => {
 		(number | string)[]
 	>([]);
 
+	const { Settings } = useSettings();
+	const { Posts, createPosts, updatePosts, togglePosts, deletePosts } =
+		usePosts();
+
 	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Posts',
@@ -72,23 +45,10 @@ const PostsModule = ({}: PostsModuleProps) => {
 		},
 	};
 
-	// Returns detail object by id
-	const getDetail = (id: number | string) => {
-		let item;
-
-		if (detail == 'new') {
-			item = blankDetailData;
-		} else {
-			item = mockData.find((item) => item.id == id);
-		}
-
-		return item;
-	};
-
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
-		setDetailData(getDetail(id));
+		setDetailData(getDetailData(id, 'Posts', Posts));
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -111,6 +71,16 @@ const PostsModule = ({}: PostsModuleProps) => {
 		const master = _.cloneDeep(data);
 
 		console.log('AJAX ... create/save ...', master);
+
+		if (master.id == 'new') {
+			updatePosts(master); // .then((response) => { /* response */ })
+
+			closeDetailHandler();
+		} else {
+			createPosts(master); // .then((response) => { /* response */ })
+
+			closeDetailHandler();
+		}
 	};
 
 	// When error returns from submit
@@ -146,17 +116,19 @@ const PostsModule = ({}: PostsModuleProps) => {
 	};
 
 	// When confirm dialog closes
-	const closeConfirmHandler = useCallback(() => {
+	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
-	}, []);
+	};
 
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: (number | string)[]) => {
 		const master = [...ids, ...selectedItems];
 
 		console.log('AJAX ... toggle ...', master);
+
+		togglePosts(master); // .then((response) => { /* response */ })
 	};
 
 	// When item/row is confirmed to submit confirm dialog
@@ -168,6 +140,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 			const master = [...confirmDialogData];
 
 			console.log('AJAX ... delete ...', master);
+
+			deletePosts(master); // .then((response) => { /* response */ })
 
 			closeConfirmHandler();
 			if (confirmDialogData.length == 1) history.push(moduleObject.route.path);
@@ -196,18 +170,22 @@ const PostsModule = ({}: PostsModuleProps) => {
 					onSubmitError={detailSubmitErrorHandler}
 					onCancel={detailCancelHandler}
 					onDelete={detailDeleteHandler}
+					languageList={Settings.language_active}
+					languageDefault={Settings.language_default}
 				/>
 			) : (
 				<>
-					{mockData ? (
+					{Posts ? (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={ROUTES.app.posts}
-							tableData={mockData}
+							tableData={Posts}
 							tableOptions={moduleObject.table}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
 						/>
 					) : (
 						<div>Loading</div>

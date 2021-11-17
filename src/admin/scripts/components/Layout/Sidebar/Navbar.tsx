@@ -19,7 +19,15 @@ import { getElTestAttr } from '../../../utils/tests';
 
 const StyledItem = styled(ListItemButton)`
 	&.Mui-selected {
-		color: ${(props) => props.theme.palette.white};
+		&::after {
+			content: '';
+			width: 0.5rem;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
+			background-color: ${(props) => props.theme.palette.lightBlue};
+		}
 	}
 `;
 

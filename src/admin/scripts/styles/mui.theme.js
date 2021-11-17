@@ -25,7 +25,7 @@ export default createTheme({
 			contrastText: palette.white,
 		},
 		action: {
-			selectedOpacity: 0.75,
+			// selectedOpacity: 0.75,
 		},
 	},
 });

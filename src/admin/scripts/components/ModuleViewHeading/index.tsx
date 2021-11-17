@@ -8,7 +8,10 @@ const Wrapper = styled.div<{ align: ModuleViewHeadingProps['alignOverride'] }>`
 	align-items: center;
 	justify-content: ${(props) => props.align};
 `;
-const Block = styled.div``;
+const Block = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
 
 interface ModuleViewHeadingProps {
 	secondaryChildren?: React.ReactElement | React.ReactElement[];

@@ -17,6 +17,13 @@ export interface commonItemProps {
 	active: boolean;
 }
 
+export interface formDetailObjectProps {
+	model: appModelProps;
+	id: string;
+	route: routeItemProps;
+	detailOptions?: {};
+}
+
 export interface CategoriesItemProps extends commonItemProps {}
 
 export interface MenuItemProps extends commonItemProps {}
