@@ -1,5 +1,6 @@
 import project from '../../config/project.json';
 import environmental from '../../config/environmental.json';
+import options from '../../config/options.json';
 
 export default {
 	// Environment name (development, test, production)
@@ -10,6 +11,9 @@ export default {
 
 	// Project configuration object
 	project: project,
+
+	// Project options object
+	options: options,
 
 	// Environmental configuration object
 	environmental: environmental[window.APPENV],

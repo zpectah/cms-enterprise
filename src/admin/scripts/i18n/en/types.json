@@ -1,0 +1,18 @@
+{
+  "default": "Default",
+  "primary": "Primary",
+  "secondary": "Secondary",
+  "tertiary": "Tertiary",
+  "article": "Article",
+  "blog": "Blog",
+  "media": "Media",
+  "reference": "Reference",
+  "testimonial": "Testimonial",
+  "image": "Image",
+  "audio": "Audio",
+  "video": "Video",
+  "document": "Document",
+  "archive": "Archive",
+  "redactor": "Redactor",
+  "admin": "Admin"
+}
