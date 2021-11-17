@@ -10,6 +10,7 @@ const UiStoreState: storeProps = {
 	theme: ThemeService.get(),
 	help: HelpService.get(),
 	sideBarOpen: storage.get(CFG.project.keys.sidebar) === 'true',
+	toasts: [],
 };
 
 export default UiStoreState;

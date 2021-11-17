@@ -15,6 +15,7 @@ import LanguageService from './services/Language.service';
 import AppModule from './modules/App';
 import CrmModule from './modules/Crm';
 import MarketModule from './modules/Market';
+import ToastsModule from './modules/Toasts';
 
 const App = () => {
 	const { theme } = useSelector((store: storeProps) => store);
@@ -37,6 +38,7 @@ const App = () => {
 					<CrmModule />
 					<MarketModule />
 				</Router>
+				<ToastsModule />
 			</ThemeProvider>
 		</ThemeProviderSC>
 	);

@@ -1,5 +1,6 @@
 import useSWR, { mutate } from 'swr';
 
+import { addToast } from '../store/actions';
 import { get, post, postRaw } from '../utils/api';
 
 export function useSystem() {
@@ -40,6 +41,8 @@ export function useSettings() {
 	};
 }
 
-export function useToasts() {
-	return {};
+export function useToasts(dispatch) {
+	return {
+		createToasts: (data: any) => dispatch(addToast(data)),
+	};
 }

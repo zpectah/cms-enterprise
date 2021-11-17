@@ -2,3 +2,5 @@ export const LANGUAGE_TOGGLE = 'LANGUAGE_TOGGLE';
 export const THEME_TOGGLE = 'THEME_TOGGLE';
 export const SIDEBAR_TOGGLE = 'SIDEBAR_TOGGLE';
 export const HELP_TOGGLE = 'HELP_TOGGLE';
+export const ADD_TOAST = 'ADD_TOAST';
+export const REMOVE_TOAST = 'REMOVE_TOAST';

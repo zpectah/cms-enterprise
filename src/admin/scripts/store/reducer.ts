@@ -9,9 +9,13 @@ import {
 	SIDEBAR_TOGGLE,
 	THEME_TOGGLE,
 	HELP_TOGGLE,
+	ADD_TOAST,
+	REMOVE_TOAST,
 } from './types';
 
 function Reducer(state = UiStoreState, action) {
+	let newToast;
+
 	switch (action.type) {
 		case LANGUAGE_TOGGLE:
 			LangService.set(action.payload);
@@ -36,6 +40,22 @@ function Reducer(state = UiStoreState, action) {
 			storage.set(CFG.project.keys.sidebar, action.payload);
 			return Object.assign({}, state, {
 				sideBarOpen: action.payload,
+			});
+
+		case ADD_TOAST:
+			newToast = {
+				...action.payload,
+				id: string.getToken(3, ''),
+			};
+			return Object.assign({}, state, {
+				toasts: [newToast, ...state.toasts],
+			});
+
+		case REMOVE_TOAST:
+			return Object.assign({}, state, {
+				toasts: state.toasts.filter((item) => {
+					return item.id !== action.payload;
+				}),
 			});
 	}
 
