@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
+import MenuModule from '../modules/Menu';
 
 interface MenuPageProps {}
 
@@ -20,11 +21,10 @@ const MenuPage = ({}: MenuPageProps) => {
 		<>
 			<Layout.Base
 				titleMeta={t('page:Menu.meta.title')}
-				titlePage={t('page:Menu.page.title')}
 				pageObject={pageObject}
 				listIncluded
 			>
-				<>Menu page</>
+				<MenuModule />
 			</Layout.Base>
 		</>
 	);

@@ -179,7 +179,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 					{Posts ? (
 						<DataTable
 							model={moduleObject.model}
-							routeObject={ROUTES.app.posts}
+							routeObject={moduleObject.route}
 							tableData={Posts}
 							tableOptions={moduleObject.table}
 							onToggle={itemToggleHandler}

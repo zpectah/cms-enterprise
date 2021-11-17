@@ -21,7 +21,6 @@ const PostsPage = ({}: PostsPageProps) => {
 		<>
 			<Layout.Base
 				titleMeta={t('page:Posts.meta.title')}
-				// titlePage={t('page:Posts.page.title')}
 				pageObject={pageObject}
 				listIncluded
 			>

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
+import TagsModule from '../modules/Tags';
 
 interface TagsPageProps {}
 
@@ -20,11 +21,10 @@ const TagsPage = ({}: TagsPageProps) => {
 		<>
 			<Layout.Base
 				titleMeta={t('page:Tags.meta.title')}
-				titlePage={t('page:Tags.page.title')}
 				pageObject={pageObject}
 				listIncluded
 			>
-				<>Tags page</>
+				<TagsModule />
 			</Layout.Base>
 		</>
 	);

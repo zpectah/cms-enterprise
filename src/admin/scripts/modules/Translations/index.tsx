@@ -5,17 +5,17 @@ import { useTranslation } from 'react-i18next';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { CategoriesItemProps } from '../../types/model';
-import { useCategories } from '../../hooks/app';
+import { TranslationsItemProps } from '../../types/model';
+import { useTranslations } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
 import { ConfirmDialog } from '../../components/ui';
 import DataTable from '../../components/DataTable';
-import CategoriesDetailForm from './CategoriesDetailForm';
+import TranslationsDetailForm from './TranslationsDetailForm';
 
-interface CategoriesModuleProps {}
+interface TranslationsModuleProps {}
 
-const CategoriesModule = ({}: CategoriesModuleProps) => {
+const TranslationsModule = ({}: TranslationsModuleProps) => {
 	const params: any = useParams();
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'messages']);
@@ -34,17 +34,17 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 	const { Settings } = useSettings();
 	const {
-		Categories,
-		createCategories,
-		updateCategories,
-		toggleCategories,
-		deleteCategories,
-	} = useCategories();
+		Translations,
+		createTranslations,
+		updateTranslations,
+		toggleTranslations,
+		deleteTranslations,
+	} = useTranslations();
 
 	// Module object data & options
 	const moduleObject: moduleObjectProps = {
-		model: 'Categories',
-		route: ROUTES.app.categories,
+		model: 'Translations',
+		route: ROUTES.app.translations,
 		detail: {},
 		table: {
 			layout: {},
@@ -54,7 +54,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Categories', Categories));
+		setDetailData(getDetailData(id, 'Translations', Translations));
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -79,11 +79,11 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateCategories(master); // .then((response) => { /* response */ })
+			updateTranslations(master); // .then((response) => { /* response */ })
 
 			closeDetailHandler();
 		} else {
-			createCategories(master); // .then((response) => { /* response */ })
+			createTranslations(master); // .then((response) => { /* response */ })
 
 			closeDetailHandler();
 		}
@@ -134,7 +134,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 		console.log('AJAX ... toggle ...', master);
 
-		toggleCategories(master); // .then((response) => { /* response */ })
+		toggleTranslations(master); // .then((response) => { /* response */ })
 	};
 
 	// When item/row is confirmed to submit confirm dialog
@@ -147,7 +147,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 			console.log('AJAX ... delete ...', master);
 
-			deleteCategories(master); // .then((response) => { /* response */ })
+			deleteTranslations(master); // .then((response) => { /* response */ })
 
 			closeConfirmHandler();
 			if (confirmDialogData.length == 1) history.push(moduleObject.route.path);
@@ -169,7 +169,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	return (
 		<>
 			{detail && detailData ? (
-				<CategoriesDetailForm
+				<TranslationsDetailForm
 					detailData={detailData}
 					detailOptions={moduleObject.detail}
 					onSubmit={detailSubmitHandler}
@@ -181,11 +181,11 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 				/>
 			) : (
 				<>
-					{Categories ? (
+					{Translations ? (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
-							tableData={Categories}
+							tableData={Translations}
 							tableOptions={moduleObject.table}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
@@ -209,4 +209,4 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	);
 };
 
-export default CategoriesModule;
+export default TranslationsModule;

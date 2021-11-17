@@ -5,17 +5,17 @@ import { useTranslation } from 'react-i18next';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { CategoriesItemProps } from '../../types/model';
-import { useCategories } from '../../hooks/app';
+import { UploadsItemProps } from '../../types/model';
+import { useUploads } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
 import { ConfirmDialog } from '../../components/ui';
 import DataTable from '../../components/DataTable';
-import CategoriesDetailForm from './CategoriesDetailForm';
+import UploadsDetailForm from './UploadsDetailForm';
 
-interface CategoriesModuleProps {}
+interface UploadsModuleProps {}
 
-const CategoriesModule = ({}: CategoriesModuleProps) => {
+const UploadsModule = ({}: UploadsModuleProps) => {
 	const params: any = useParams();
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'messages']);
@@ -34,17 +34,17 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 	const { Settings } = useSettings();
 	const {
-		Categories,
-		createCategories,
-		updateCategories,
-		toggleCategories,
-		deleteCategories,
-	} = useCategories();
+		Uploads,
+		createUploads,
+		updateUploads,
+		toggleUploads,
+		deleteUploads,
+	} = useUploads();
 
 	// Module object data & options
 	const moduleObject: moduleObjectProps = {
-		model: 'Categories',
-		route: ROUTES.app.categories,
+		model: 'Uploads',
+		route: ROUTES.app.uploads,
 		detail: {},
 		table: {
 			layout: {},
@@ -54,7 +54,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Categories', Categories));
+		setDetailData(getDetailData(id, 'Uploads', Uploads));
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -79,11 +79,11 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateCategories(master); // .then((response) => { /* response */ })
+			updateUploads(master); // .then((response) => { /* response */ })
 
 			closeDetailHandler();
 		} else {
-			createCategories(master); // .then((response) => { /* response */ })
+			createUploads(master); // .then((response) => { /* response */ })
 
 			closeDetailHandler();
 		}
@@ -134,7 +134,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 		console.log('AJAX ... toggle ...', master);
 
-		toggleCategories(master); // .then((response) => { /* response */ })
+		toggleUploads(master); // .then((response) => { /* response */ })
 	};
 
 	// When item/row is confirmed to submit confirm dialog
@@ -147,7 +147,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 			console.log('AJAX ... delete ...', master);
 
-			deleteCategories(master); // .then((response) => { /* response */ })
+			deleteUploads(master); // .then((response) => { /* response */ })
 
 			closeConfirmHandler();
 			if (confirmDialogData.length == 1) history.push(moduleObject.route.path);
@@ -169,7 +169,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	return (
 		<>
 			{detail && detailData ? (
-				<CategoriesDetailForm
+				<UploadsDetailForm
 					detailData={detailData}
 					detailOptions={moduleObject.detail}
 					onSubmit={detailSubmitHandler}
@@ -181,11 +181,11 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 				/>
 			) : (
 				<>
-					{Categories ? (
+					{Uploads ? (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
-							tableData={Categories}
+							tableData={Uploads}
 							tableOptions={moduleObject.table}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
@@ -209,4 +209,4 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	);
 };
 
-export default CategoriesModule;
+export default UploadsModule;
