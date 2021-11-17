@@ -22,6 +22,7 @@ interface SectionProps {
 	title?: string;
 	beforeChildren?: React.ReactElement | React.ReactElement[];
 	afterChildren?: React.ReactElement | React.ReactElement[];
+	style?: {};
 }
 
 const Section: React.FC<SectionProps> = ({
@@ -29,9 +30,10 @@ const Section: React.FC<SectionProps> = ({
 	children,
 	beforeChildren,
 	afterChildren,
+	style,
 }) => {
 	return (
-		<Wrapper>
+		<Wrapper style={style}>
 			{title && (
 				<TitleBlock>
 					<Typography.Title h2>{title}</Typography.Title>

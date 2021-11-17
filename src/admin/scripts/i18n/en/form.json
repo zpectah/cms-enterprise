@@ -1,7 +1,10 @@
 {
   "input": {
     "name": "Name",
-    "active": "Item is active"
+    "active": "Item is active",
+    "email": "E-mail",
+    "password": "Password",
+    "password_again": "Password again"
   },
   "form": {}
 }

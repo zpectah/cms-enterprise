@@ -15,6 +15,12 @@ export function useProfile() {
 		updateProfile: (data: any) => {
 			console.log(`update `, data);
 		},
+		userLogin: (data: any) => {
+			console.log(`userLogin `, data);
+		},
+		userLostPassword: (data: any) => {
+			console.log(`userLostPassword `, data);
+		},
 	};
 }
 

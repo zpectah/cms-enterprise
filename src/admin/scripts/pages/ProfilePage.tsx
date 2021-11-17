@@ -6,9 +6,7 @@ import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
 import ProfileModule from '../modules/Profile';
 
-interface ProfilePageProps {}
-
-const ProfilePage = ({}: ProfilePageProps) => {
+const ProfilePage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {

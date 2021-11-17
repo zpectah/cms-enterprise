@@ -6,9 +6,7 @@ import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
 import HelpModule from '../modules/Help';
 
-interface HelpPageProps {}
-
-const HelpPage = ({}: HelpPageProps) => {
+const HelpPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {

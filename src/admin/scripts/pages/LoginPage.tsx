@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
+import LoginForm from '../modules/Login/LoginForm';
 
-interface LoginPageProps {}
-
-const LoginPage = ({}: LoginPageProps) => {
+const LoginPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {
@@ -22,8 +21,9 @@ const LoginPage = ({}: LoginPageProps) => {
 				titleMeta={t('page:Login.meta.title')}
 				titlePage={t('page:Login.page.title')}
 				pageObject={pageObject}
+				withFooter
 			>
-				<>Login page</>
+				<LoginForm />
 			</Layout.Minimal>
 		</>
 	);

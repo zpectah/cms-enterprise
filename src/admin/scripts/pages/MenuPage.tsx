@@ -6,9 +6,7 @@ import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
 import MenuModule from '../modules/Menu';
 
-interface MenuPageProps {}
-
-const MenuPage = ({}: MenuPageProps) => {
+const MenuPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {

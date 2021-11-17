@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
+import LostPasswordForm from '../modules/LostPassword/LostPasswordForm';
 
-interface LostPasswordPageProps {}
-
-const LostPasswordPage = ({}: LostPasswordPageProps) => {
+const LostPasswordPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {
@@ -22,8 +21,9 @@ const LostPasswordPage = ({}: LostPasswordPageProps) => {
 				titleMeta={t('page:LostPassword.meta.title')}
 				titlePage={t('page:LostPassword.page.title')}
 				pageObject={pageObject}
+				withFooter
 			>
-				<>LostPassword page</>
+				<LostPasswordForm />
 			</Layout.Minimal>
 		</>
 	);

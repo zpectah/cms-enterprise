@@ -6,9 +6,7 @@ import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
 import UploadsModule from '../modules/Uploads';
 
-interface UploadsPageProps {}
-
-const UploadsPage = ({}: UploadsPageProps) => {
+const UploadsPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {

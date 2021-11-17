@@ -4,7 +4,9 @@
       "title": "Error 404"
     },
     "page": {
-      "title": "Error 404 page"
+      "title": "Error 404 page",
+      "description": "The page was not found, you either entered the wrong url, or the page was deleted",
+      "button": "Return to dashboard"
     }
   },
   "Login": {
@@ -12,7 +14,7 @@
       "title": "Login"
     },
     "page": {
-      "title": "Login page"
+      "title": "Login to system"
     }
   },
   "LostPassword": {
@@ -20,7 +22,7 @@
       "title": "Lost Password"
     },
     "page": {
-      "title": "Lost Password page"
+      "title": "Recover lost password"
     }
   },
   "Dashboard": {
@@ -28,7 +30,7 @@
       "title": "Dashboard"
     },
     "page": {
-      "title": "Dashboard page"
+      "title": "Welcome"
     },
     "label": "Dashboard"
   },
@@ -37,7 +39,7 @@
       "title": "Settings"
     },
     "page": {
-      "title": "Settings page"
+      "title": "Settings"
     },
     "label": "Settings"
   },
@@ -46,7 +48,7 @@
       "title": "Profile"
     },
     "page": {
-      "title": "Profile page"
+      "title": "My profile"
     },
     "label": "Profile"
   },
@@ -55,7 +57,7 @@
       "title": "Help"
     },
     "page": {
-      "title": "Help page"
+      "title": "Help"
     },
     "label": "Help"
   },
@@ -64,7 +66,7 @@
       "title": "Posts"
     },
     "page": {
-      "title": "Posts page"
+      "title": "Posts"
     },
     "label": "Posts"
   },
@@ -73,7 +75,7 @@
       "title": "Users"
     },
     "page": {
-      "title": "Users page"
+      "title": "Users"
     },
     "label": "Users"
   },
@@ -82,7 +84,7 @@
       "title": "Tags"
     },
     "page": {
-      "title": "Tags page"
+      "title": "Tags"
     },
     "label": "Tags"
   },
@@ -91,7 +93,7 @@
       "title": "Translations"
     },
     "page": {
-      "title": "Translations page"
+      "title": "Translations"
     },
     "label": "Translations"
   },
@@ -100,7 +102,7 @@
       "title": "Categories"
     },
     "page": {
-      "title": "Categories page"
+      "title": "Categories"
     },
     "label": "Categories"
   },
@@ -109,7 +111,7 @@
       "title": "Pages"
     },
     "page": {
-      "title": "Pages page"
+      "title": "Pages"
     },
     "label": "Pages"
   },
@@ -118,7 +120,7 @@
       "title": "Uploads"
     },
     "page": {
-      "title": "Uploads page"
+      "title": "Uploads"
     },
     "label": "Uploads"
   },
@@ -127,7 +129,7 @@
       "title": "Menu"
     },
     "page": {
-      "title": "Menu page"
+      "title": "Menu"
     },
     "label": "Menu"
   }

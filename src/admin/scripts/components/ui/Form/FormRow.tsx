@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+	margin-bottom: ${(props) => props.theme.spacer};
+`;
 const InputBlock = styled.div``;
 const ErrorsBlock = styled.div``;
 const ErrorItem = styled.div``;

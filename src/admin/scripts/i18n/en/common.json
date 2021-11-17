@@ -23,7 +23,10 @@
     "Uploads": "New upload",
     "Users": "New user"
   },
-  "label": {},
+  "label": {
+    "lostPassword": "Lost password",
+    "backToLogin": "Back to login page"
+  },
   "common": {
     "allRightsReserved": "All rights reserved"
   },

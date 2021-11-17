@@ -6,9 +6,7 @@ import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
 import CategoriesModule from '../modules/Categories';
 
-interface CategoriesPageProps {}
-
-const CategoriesPage = ({}: CategoriesPageProps) => {
+const CategoriesPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {

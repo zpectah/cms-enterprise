@@ -7,9 +7,7 @@ import { pageObjectProps } from '../types/pages';
 import { Button, Typography, Section, Form, Drawer } from '../components/ui';
 import Layout from '../components/Layout';
 
-interface DashboardPageProps {}
-
-const DashboardPage = ({}: DashboardPageProps) => {
+const DashboardPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 	const [drawerOpen, setDrawerOpen] = useState(false);
 

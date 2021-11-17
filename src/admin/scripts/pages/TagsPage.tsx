@@ -6,9 +6,7 @@ import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
 import TagsModule from '../modules/Tags';
 
-interface TagsPageProps {}
-
-const TagsPage = ({}: TagsPageProps) => {
+const TagsPage = () => {
 	const { t } = useTranslation(['common', 'page']);
 
 	const pageObject: pageObjectProps = {
