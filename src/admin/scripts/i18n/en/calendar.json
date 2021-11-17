@@ -10,28 +10,16 @@
   },
   "month": {
     "1": "Ledna",
-    "1_plural": "Leden",
     "2": "Února",
-    "2_plural": "Únor",
     "3": "Března",
-    "3_plural": "Březen",
     "4": "Dubna",
-    "4_plural": "Duben",
     "5": "Května",
-    "5_plural": "Květen",
     "6": "Června",
-    "6_plural": "Červen",
     "7": "Července",
-    "7_plural": "Červenec",
     "8": "Srpna",
-    "8_plural": "Srpen",
     "9": "Září",
-    "9_plural": "Září",
     "10": "Října",
-    "10_plural": "Říjen",
     "11": "Listopadu",
-    "11_plural": "Listopad",
-    "12": "Prosince",
-    "12_plural": "Prosinec"
+    "12": "Prosince"
   }
 }

@@ -134,6 +134,15 @@
     "label": "Menu"
   },
 
+  "CrmDashboard": {
+    "meta": {
+      "title": "Crm Dashboard"
+    },
+    "page": {
+      "title": "Crm Dashboard"
+    },
+    "label": "Crm Dashboard"
+  },
   "Members": {
     "meta": {
       "title": "Members"
@@ -144,6 +153,15 @@
     "label": "Members"
   },
 
+  "MarketDashboard": {
+    "meta": {
+      "title": "Market Dashboard"
+    },
+    "page": {
+      "title": "Market Dashboard"
+    },
+    "label": "Market Dashboard"
+  },
   "Deliveries": {
     "meta": {
       "title": "Deliveries"

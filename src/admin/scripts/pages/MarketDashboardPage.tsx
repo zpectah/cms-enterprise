@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
-import DashboardModule from '../modules/Dashboard';
+import MarketDashboardModule from '../modules/MarketDashboard';
 
 const MarketDashboardPage = () => {
 	const { t } = useTranslation(['common', 'page']);
@@ -21,7 +21,7 @@ const MarketDashboardPage = () => {
 				titlePage={t('page:MarketDashboard.page.title')}
 				pageObject={pageObject}
 			>
-				<DashboardModule />
+				<MarketDashboardModule />
 			</Layout.Base>
 		</>
 	);

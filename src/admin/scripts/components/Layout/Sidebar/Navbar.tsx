@@ -98,7 +98,7 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 					divider
 					{...getElTestAttr(`${dataAppId}.item.${item.name}`)}
 				>
-					<ListItemText primary={item.name} />
+					<ListItemText primary={t(`page:${item.name}.label`)} />
 				</StyledItem>
 			);
 	};

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
-import DashboardModule from '../modules/Dashboard';
+import CrmDashboardModule from '../modules/CrmDashboard';
 
 const CrmDashboardPage = () => {
 	const { t } = useTranslation(['common', 'page']);
@@ -21,7 +21,7 @@ const CrmDashboardPage = () => {
 				titlePage={t('page:CrmDashboard.page.title')}
 				pageObject={pageObject}
 			>
-				<DashboardModule />
+				<CrmDashboardModule />
 			</Layout.Base>
 		</>
 	);

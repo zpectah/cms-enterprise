@@ -24,8 +24,6 @@ export interface UsersItemProps extends commonItemProps {}
 
 export interface RequestsItemProps extends commonItemProps {}
 
-// TODO
-
 export interface MembersItemProps extends commonItemProps {}
 
 export interface DeliveriesItemProps extends commonItemProps {}

@@ -75,9 +75,13 @@ export const DATA_TABLE = {
 };
 export const ROUTE_SUFFIX = {
 	detail: '/id',
-	detailId: '/id/:id',
-	panel: '/:panel',
-	token: '/:token',
+	panel: '',
+	token: '',
+};
+export const ROUTE_PATH_PARAMS = {
+	detail: ROUTE_SUFFIX.detail + '/:id',
+	panel: ROUTE_SUFFIX.panel + '/:panel',
+	token: ROUTE_SUFFIX.token + '/:token',
 };
 export const ROUTE_PATH_ROOT = '/admin';
 export const ROUTE_PATH_CRM = '/crm';
