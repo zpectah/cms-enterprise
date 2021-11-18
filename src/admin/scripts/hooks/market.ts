@@ -13,6 +13,8 @@ import {
 } from '../types/model';
 
 export function useProducts() {
+	const { data, error } = useSWR(`/api/get_products`, get);
+
 	return {
 		Products: [
 			{
@@ -41,25 +43,23 @@ export function useProducts() {
 				active: true,
 			},
 		],
-		products_loading: false,
-		products_error: false,
-		reloadProducts: () => {},
-		createProducts: (data: ProductsItemProps) => {
-			console.log(`create Products`, data);
-		},
-		updateProducts: (data: ProductsItemProps) => {
-			console.log(`update Products`, data);
-		},
-		toggleProducts: (data: (number | string)[]) => {
-			console.log(`toggle Products`, data);
-		},
-		deleteProducts: (data: (number | string)[]) => {
-			console.log(`delete Products`, data);
-		},
+		products_loading: !data && !error,
+		products_error: error,
+		reloadProducts: () => mutate(`/api/get_products`),
+		createProducts: (data: ProductsItemProps) =>
+			post('/api/create_products', data),
+		updateProducts: (data: ProductsItemProps) =>
+			post('/api/update_products', data),
+		toggleProducts: (data: (number | string)[]) =>
+			post('/api/toggle_products', data),
+		deleteProducts: (data: (number | string)[]) =>
+			post('/api/delete_products', data),
 	};
 }
 
 export function useProductsOptions() {
+	const { data, error } = useSWR(`/api/get_productsOptions`, get);
+
 	return {
 		ProductsOptions: [
 			{
@@ -88,25 +88,23 @@ export function useProductsOptions() {
 				active: true,
 			},
 		],
-		productsOptions_loading: false,
-		productsOptions_error: false,
-		reloadProductsOptions: () => {},
-		createProductsOptions: (data: ProductsOptionsItemProps) => {
-			console.log(`create ProductsOptions`, data);
-		},
-		updateProductsOptions: (data: ProductsOptionsItemProps) => {
-			console.log(`update ProductsOptions`, data);
-		},
-		toggleProductsOptions: (data: (number | string)[]) => {
-			console.log(`toggle ProductsOptions`, data);
-		},
-		deleteProductsOptions: (data: (number | string)[]) => {
-			console.log(`delete ProductsOptions`, data);
-		},
+		productsOptions_loading: !data && !error,
+		productsOptions_error: error,
+		reloadProductsOptions: () => mutate(`/api/get_productsOptions`),
+		createProductsOptions: (data: ProductsOptionsItemProps) =>
+			post('/api/create_productsOptions', data),
+		updateProductsOptions: (data: ProductsOptionsItemProps) =>
+			post('/api/update_productsOptions', data),
+		toggleProductsOptions: (data: (number | string)[]) =>
+			post('/api/toggle_productsOptions', data),
+		deleteProductsOptions: (data: (number | string)[]) =>
+			post('/api/delete_productsOptions', data),
 	};
 }
 
 export function useStores() {
+	const { data, error } = useSWR(`/api/get_stores`, get);
+
 	return {
 		Stores: [
 			{
@@ -135,25 +133,21 @@ export function useStores() {
 				active: true,
 			},
 		],
-		stores_loading: false,
-		stores_error: false,
-		reloadStores: () => {},
-		createStores: (data: StoresItemProps) => {
-			console.log(`create Stores`, data);
-		},
-		updateStores: (data: StoresItemProps) => {
-			console.log(`update Stores`, data);
-		},
-		toggleStores: (data: (number | string)[]) => {
-			console.log(`toggle Stores`, data);
-		},
-		deleteStores: (data: (number | string)[]) => {
-			console.log(`delete Stores`, data);
-		},
+		stores_loading: !data && !error,
+		stores_error: error,
+		reloadStores: () => mutate(`/api/get_stores`),
+		createStores: (data: StoresItemProps) => post('/api/create_stores', data),
+		updateStores: (data: StoresItemProps) => post('/api/update_stores', data),
+		toggleStores: (data: (number | string)[]) =>
+			post('/api/toggle_stores', data),
+		deleteStores: (data: (number | string)[]) =>
+			post('/api/delete_stores', data),
 	};
 }
 
 export function useProducers() {
+	const { data, error } = useSWR(`/api/get_producers`, get);
+
 	return {
 		Producers: [
 			{
@@ -182,25 +176,23 @@ export function useProducers() {
 				active: true,
 			},
 		],
-		producers_loading: false,
-		producers_error: false,
-		reloadProducers: () => {},
-		createProducers: (data: ProducersItemProps) => {
-			console.log(`create Producers`, data);
-		},
-		updateProducers: (data: ProducersItemProps) => {
-			console.log(`update Producers`, data);
-		},
-		toggleProducers: (data: (number | string)[]) => {
-			console.log(`toggle Producers`, data);
-		},
-		deleteProducers: (data: (number | string)[]) => {
-			console.log(`delete Producers`, data);
-		},
+		producers_loading: !data && !error,
+		producers_error: error,
+		reloadProducers: () => mutate(`/api/get_producers`),
+		createProducers: (data: ProducersItemProps) =>
+			post('/api/create_producers', data),
+		updateProducers: (data: ProducersItemProps) =>
+			post('/api/update_producers', data),
+		toggleProducers: (data: (number | string)[]) =>
+			post('/api/toggle_producers', data),
+		deleteProducers: (data: (number | string)[]) =>
+			post('/api/delete_producers', data),
 	};
 }
 
 export function usePayments() {
+	const { data, error } = useSWR(`/api/get_payments`, get);
+
 	return {
 		Payments: [
 			{
@@ -229,25 +221,23 @@ export function usePayments() {
 				active: true,
 			},
 		],
-		payments_loading: false,
-		payments_error: false,
-		reloadPayments: () => {},
-		createPayments: (data: PaymentsItemProps) => {
-			console.log(`create Payments`, data);
-		},
-		updatePayments: (data: PaymentsItemProps) => {
-			console.log(`update Payments`, data);
-		},
-		togglePayments: (data: (number | string)[]) => {
-			console.log(`toggle Payments`, data);
-		},
-		deletePayments: (data: (number | string)[]) => {
-			console.log(`delete Payments`, data);
-		},
+		payments_loading: !data && !error,
+		payments_error: error,
+		reloadPayments: () => mutate(`/api/get_payments`),
+		createPayments: (data: PaymentsItemProps) =>
+			post('/api/create_payments', data),
+		updatePayments: (data: PaymentsItemProps) =>
+			post('/api/update_payments', data),
+		togglePayments: (data: (number | string)[]) =>
+			post('/api/toggle_payments', data),
+		deletePayments: (data: (number | string)[]) =>
+			post('/api/delete_payments', data),
 	};
 }
 
 export function useDistributors() {
+	const { data, error } = useSWR(`/api/get_distributors`, get);
+
 	return {
 		Distributors: [
 			{
@@ -276,25 +266,23 @@ export function useDistributors() {
 				active: true,
 			},
 		],
-		distributors_loading: false,
-		distributors_error: false,
-		reloadDistributors: () => {},
-		createDistributors: (data: DistributorsItemProps) => {
-			console.log(`create Distributors`, data);
-		},
-		updateDistributors: (data: DistributorsItemProps) => {
-			console.log(`update Distributors`, data);
-		},
-		toggleDistributors: (data: (number | string)[]) => {
-			console.log(`toggle Distributors`, data);
-		},
-		deleteDistributors: (data: (number | string)[]) => {
-			console.log(`delete Distributors`, data);
-		},
+		distributors_loading: !data && !error,
+		distributors_error: error,
+		reloadDistributors: () => mutate(`/api/get_distributors`),
+		createDistributors: (data: DistributorsItemProps) =>
+			post('/api/create_distributors', data),
+		updateDistributors: (data: DistributorsItemProps) =>
+			post('/api/update_distributors', data),
+		toggleDistributors: (data: (number | string)[]) =>
+			post('/api/toggle_distributors', data),
+		deleteDistributors: (data: (number | string)[]) =>
+			post('/api/delete_distributors', data),
 	};
 }
 
 export function useDeliveries() {
+	const { data, error } = useSWR(`/api/get_deliveries`, get);
+
 	return {
 		Deliveries: [
 			{
@@ -323,25 +311,23 @@ export function useDeliveries() {
 				active: true,
 			},
 		],
-		deliveries_loading: false,
-		deliveries_error: false,
-		reloadDeliveries: () => {},
-		createDeliveries: (data: DeliveriesItemProps) => {
-			console.log(`create Deliveries`, data);
-		},
-		updateDeliveries: (data: DeliveriesItemProps) => {
-			console.log(`update Deliveries`, data);
-		},
-		toggleDeliveries: (data: (number | string)[]) => {
-			console.log(`toggle Deliveries`, data);
-		},
-		deleteDeliveries: (data: (number | string)[]) => {
-			console.log(`delete Deliveries`, data);
-		},
+		deliveries_loading: !data && !error,
+		deliveries_error: error,
+		reloadDeliveries: () => mutate(`/api/get_deliveries`),
+		createDeliveries: (data: DeliveriesItemProps) =>
+			post('/api/create_deliveries', data),
+		updateDeliveries: (data: DeliveriesItemProps) =>
+			post('/api/update_deliveries', data),
+		toggleDeliveries: (data: (number | string)[]) =>
+			post('/api/toggle_deliveries', data),
+		deleteDeliveries: (data: (number | string)[]) =>
+			post('/api/delete_deliveries', data),
 	};
 }
 
 export function useOrders() {
+	const { data, error } = useSWR(`/api/get_orders`, get);
+
 	return {
 		Orders: [
 			{
@@ -370,20 +356,14 @@ export function useOrders() {
 				active: true,
 			},
 		],
-		orders_loading: false,
-		orders_error: false,
-		reloadOrders: () => {},
-		createOrders: (data: OrdersItemProps) => {
-			console.log(`create Orders`, data);
-		},
-		updateOrders: (data: OrdersItemProps) => {
-			console.log(`update Orders`, data);
-		},
-		toggleOrders: (data: (number | string)[]) => {
-			console.log(`toggle Orders`, data);
-		},
-		deleteOrders: (data: (number | string)[]) => {
-			console.log(`delete Orders`, data);
-		},
+		orders_loading: !data && !error,
+		orders_error: error,
+		reloadOrders: () => mutate(`/api/get_orders`),
+		createOrders: (data: OrdersItemProps) => post('/api/create_orders', data),
+		updateOrders: (data: OrdersItemProps) => post('/api/update_orders', data),
+		toggleOrders: (data: (number | string)[]) =>
+			post('/api/toggle_orders', data),
+		deleteOrders: (data: (number | string)[]) =>
+			post('/api/delete_orders', data),
 	};
 }

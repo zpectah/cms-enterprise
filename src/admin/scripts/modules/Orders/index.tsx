@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
 import { OrdersItemProps } from '../../types/model';
 import { useOrders } from '../../hooks/market';
@@ -12,12 +13,14 @@ import { useSettings } from '../../hooks/common';
 import { ConfirmDialog } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import OrdersDetailForm from './OrdersDetailForm';
+import { useToasts } from '../../hooks/common';
 
 interface OrdersModuleProps {}
 
 const OrdersModule = ({}: OrdersModuleProps) => {
 	const params: any = useParams();
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const { t } = useTranslation(['common', 'messages']);
 	const [detail, setDetail] = useState<string>(null);
 	const [detailData, setDetailData] = useState<any>(null);
@@ -32,6 +35,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		(number | string)[]
 	>([]);
 
+	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const { Orders, createOrders, updateOrders, toggleOrders, deleteOrders } =
 		useOrders();
@@ -74,20 +78,37 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateOrders(master); // .then((response) => { /* response */ })
+			updateOrders(master).then((response) => {
+				console.log('update response', response);
 
-			closeDetailHandler();
+				closeDetailHandler();
+				createToasts({
+					title: t('messages:success.itemCreated'),
+					context: 'success',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+			});
 		} else {
-			createOrders(master); // .then((response) => { /* response */ })
+			createOrders(master).then((response) => {
+				console.log('create response', response);
 
-			closeDetailHandler();
+				closeDetailHandler();
+				createToasts({
+					title: t('messages:success.itemUpdated'),
+					context: 'success',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+			});
 		}
 	};
 
 	// When error returns from submit
-	const detailSubmitErrorHandler = (error: any, e: any) => {
-		console.log('detailSubmitErrorHandler', error);
-	};
+	const detailSubmitErrorHandler = (error: any, e: any) =>
+		createToasts({
+			title: error,
+			context: 'error',
+			timeout: TOASTS_TIMEOUT_DEFAULT,
+		});
 
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
@@ -129,7 +150,15 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 
 		console.log('AJAX ... toggle ...', master);
 
-		toggleOrders(master); // .then((response) => { /* response */ })
+		toggleOrders(master).then((response) => {
+			console.log('toggle response', response);
+
+			createToasts({
+				title: t('messages:success.itemUpdated', { value: master.length }),
+				context: 'success',
+				timeout: TOASTS_TIMEOUT_DEFAULT,
+			});
+		});
 	};
 
 	// When item/row is confirmed to submit confirm dialog
@@ -142,10 +171,18 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 
 			console.log('AJAX ... delete ...', master);
 
-			deleteOrders(master); // .then((response) => { /* response */ })
+			deleteOrders(master).then((response) => {
+				console.log('delete response', response);
 
-			closeConfirmHandler();
-			if (confirmDialogData.length == 1) history.push(moduleObject.route.path);
+				closeConfirmHandler();
+				createToasts({
+					title: t('messages:success.itemDeleted', { value: master.length }),
+					context: 'success',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+				if (confirmDialogData.length == 1)
+					history.push(moduleObject.route.path);
+			});
 		} else if (confirmDialogType == 'formDirty') {
 			closeConfirmHandler();
 			history.push(moduleObject.route.path);

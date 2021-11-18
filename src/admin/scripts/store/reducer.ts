@@ -44,8 +44,8 @@ function Reducer(state = UiStoreState, action) {
 
 		case ADD_TOAST:
 			newToast = {
-				...action.payload,
 				id: string.getToken(3, ''),
+				...action.payload,
 			};
 			return Object.assign({}, state, {
 				toasts: [newToast, ...state.toasts],

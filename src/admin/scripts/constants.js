@@ -7,7 +7,7 @@ export const RESPONSIVE_BREAKPOINTS = {
 	xl: 1200,
 	xxl: 1400,
 };
-export const MESSAGE_ERROR_DURATION = 5000;
+export const TOASTS_TIMEOUT_DEFAULT = 3500;
 export const UI_VIEW_TOLERANCE = 50;
 export const EMAIL_REGEX =
 	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;

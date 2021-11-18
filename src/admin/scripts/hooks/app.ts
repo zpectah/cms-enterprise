@@ -4,6 +4,8 @@ import { get, post, postRaw } from '../utils/api';
 import { PostsItemProps, CategoriesItemProps } from '../types/model';
 
 export function usePosts() {
+	const { data, error } = useSWR(`/api/get_posts`, get);
+
 	return {
 		Posts: [
 			{
@@ -32,25 +34,19 @@ export function usePosts() {
 				active: true,
 			},
 		],
-		posts_loading: false,
-		posts_error: false,
-		reloadPosts: () => {},
-		createPosts: (data: PostsItemProps) => {
-			console.log(`create Posts`, data);
-		},
-		updatePosts: (data: PostsItemProps) => {
-			console.log(`update Posts`, data);
-		},
-		togglePosts: (data: (number | string)[]) => {
-			console.log(`toggle Posts`, data);
-		},
-		deletePosts: (data: (number | string)[]) => {
-			console.log(`delete Posts`, data);
-		},
+		posts_loading: !data && !error,
+		posts_error: error,
+		reloadPosts: () => mutate(`/api/get_posts`),
+		createPosts: (data: PostsItemProps) => post('/api/create_posts', data),
+		updatePosts: (data: PostsItemProps) => post('/api/update_posts', data),
+		togglePosts: (data: (number | string)[]) => post('/api/toggle_posts', data),
+		deletePosts: (data: (number | string)[]) => post('/api/delete_posts', data),
 	};
 }
 
 export function useCategories() {
+	const { data, error } = useSWR(`/api/get_categories`, get);
+
 	return {
 		Categories: [
 			{
@@ -79,25 +75,23 @@ export function useCategories() {
 				active: true,
 			},
 		],
-		categories_loading: false,
-		categories_error: false,
-		reloadCategories: () => {},
-		createCategories: (data: CategoriesItemProps) => {
-			console.log(`create Categories`, data);
-		},
-		updateCategories: (data: CategoriesItemProps) => {
-			console.log(`update Categories`, data);
-		},
-		toggleCategories: (data: (number | string)[]) => {
-			console.log(`toggle Categories`, data);
-		},
-		deleteCategories: (data: (number | string)[]) => {
-			console.log(`delete Categories`, data);
-		},
+		categories_loading: !data && !error,
+		categories_error: error,
+		reloadCategories: () => mutate(`/api/get_categories`),
+		createCategories: (data: CategoriesItemProps) =>
+			post('/api/create_categories', data),
+		updateCategories: (data: CategoriesItemProps) =>
+			post('/api/update_categories', data),
+		toggleCategories: (data: (number | string)[]) =>
+			post('/api/toggle_categories', data),
+		deleteCategories: (data: (number | string)[]) =>
+			post('/api/delete_categories', data),
 	};
 }
 
 export function useMenu() {
+	const { data, error } = useSWR(`/api/get_menu`, get);
+
 	return {
 		Menu: [
 			{
@@ -126,25 +120,19 @@ export function useMenu() {
 				active: true,
 			},
 		],
-		menu_loading: false,
-		menu_error: false,
-		reloadMenu: () => {},
-		createMenu: (data: CategoriesItemProps) => {
-			console.log(`create Menu`, data);
-		},
-		updateMenu: (data: CategoriesItemProps) => {
-			console.log(`update Menu`, data);
-		},
-		toggleMenu: (data: (number | string)[]) => {
-			console.log(`toggle Menu`, data);
-		},
-		deleteMenu: (data: (number | string)[]) => {
-			console.log(`delete Menu`, data);
-		},
+		menu_loading: !data && !error,
+		menu_error: error,
+		reloadMenu: () => mutate(`/api/get_menu`),
+		createMenu: (data: CategoriesItemProps) => post('/api/create_menu', data),
+		updateMenu: (data: CategoriesItemProps) => post('/api/update_menu', data),
+		toggleMenu: (data: (number | string)[]) => post('/api/toggle_menu', data),
+		deleteMenu: (data: (number | string)[]) => post('/api/delete_menu', data),
 	};
 }
 
 export function useMenuItems() {
+	const { data, error } = useSWR(`/api/get_menuItems`, get);
+
 	return {
 		MenuItems: [
 			{
@@ -173,25 +161,23 @@ export function useMenuItems() {
 				active: true,
 			},
 		],
-		menuItems_loading: false,
-		menuItems_error: false,
-		reloadMenuItems: () => {},
-		createMenuItems: (data: CategoriesItemProps) => {
-			console.log(`create MenuItems`, data);
-		},
-		updateMenuItems: (data: CategoriesItemProps) => {
-			console.log(`update MenuItems`, data);
-		},
-		toggleMenuItems: (data: (number | string)[]) => {
-			console.log(`toggle MenuItems`, data);
-		},
-		deleteMenuItems: (data: (number | string)[]) => {
-			console.log(`delete MenuItems`, data);
-		},
+		menuItems_loading: !data && !error,
+		menuItems_error: error,
+		reloadMenuItems: () => mutate(`/api/get_menuItems`),
+		createMenuItems: (data: CategoriesItemProps) =>
+			post('/api/create_menuItems', data),
+		updateMenuItems: (data: CategoriesItemProps) =>
+			post('/api/update_menuItems', data),
+		toggleMenuItems: (data: (number | string)[]) =>
+			post('/api/toggle_menuItems', data),
+		deleteMenuItems: (data: (number | string)[]) =>
+			post('/api/delete_menuItems', data),
 	};
 }
 
 export function usePages() {
+	const { data, error } = useSWR(`/api/get_pages`, get);
+
 	return {
 		Pages: [
 			{
@@ -220,25 +206,19 @@ export function usePages() {
 				active: true,
 			},
 		],
-		pages_loading: false,
-		pages_error: false,
-		reloadPages: () => {},
-		createPages: (data: CategoriesItemProps) => {
-			console.log(`create Pages`, data);
-		},
-		updatePages: (data: CategoriesItemProps) => {
-			console.log(`update Pages`, data);
-		},
-		togglePages: (data: (number | string)[]) => {
-			console.log(`toggle Pages`, data);
-		},
-		deletePages: (data: (number | string)[]) => {
-			console.log(`delete Pages`, data);
-		},
+		pages_loading: !data && !error,
+		pages_error: error,
+		reloadPages: () => mutate(`/api/get_pages`),
+		createPages: (data: CategoriesItemProps) => post('/api/create_pages', data),
+		updatePages: (data: CategoriesItemProps) => post('/api/update_pages', data),
+		togglePages: (data: (number | string)[]) => post('/api/toggle_pages', data),
+		deletePages: (data: (number | string)[]) => post('/api/delete_pages', data),
 	};
 }
 
 export function useTags() {
+	const { data, error } = useSWR(`/api/get_tags`, get);
+
 	return {
 		Tags: [
 			{
@@ -267,25 +247,19 @@ export function useTags() {
 				active: true,
 			},
 		],
-		tags_loading: false,
-		tags_error: false,
-		reloadTags: () => {},
-		createTags: (data: CategoriesItemProps) => {
-			console.log(`create Tags`, data);
-		},
-		updateTags: (data: CategoriesItemProps) => {
-			console.log(`update Tags`, data);
-		},
-		toggleTags: (data: (number | string)[]) => {
-			console.log(`toggle Tags`, data);
-		},
-		deleteTags: (data: (number | string)[]) => {
-			console.log(`delete Tags`, data);
-		},
+		tags_loading: !data && !error,
+		tags_error: error,
+		reloadTags: () => mutate(`/api/get_tags`),
+		createTags: (data: CategoriesItemProps) => post('/api/create_tags', data),
+		updateTags: (data: CategoriesItemProps) => post('/api/update_tags', data),
+		toggleTags: (data: (number | string)[]) => post('/api/toggle_tags', data),
+		deleteTags: (data: (number | string)[]) => post('/api/delete_tags', data),
 	};
 }
 
 export function useTranslations() {
+	const { data, error } = useSWR(`/api/get_translations`, get);
+
 	return {
 		Translations: [
 			{
@@ -314,25 +288,23 @@ export function useTranslations() {
 				active: true,
 			},
 		],
-		translations_loading: false,
-		translations_error: false,
-		reloadTranslations: () => {},
-		createTranslations: (data: CategoriesItemProps) => {
-			console.log(`create Translations`, data);
-		},
-		updateTranslations: (data: CategoriesItemProps) => {
-			console.log(`update Translations`, data);
-		},
-		toggleTranslations: (data: (number | string)[]) => {
-			console.log(`toggle Translations`, data);
-		},
-		deleteTranslations: (data: (number | string)[]) => {
-			console.log(`delete Translations`, data);
-		},
+		translations_loading: !data && !error,
+		translations_error: error,
+		reloadTranslations: () => mutate(`/api/get_translations`),
+		createTranslations: (data: CategoriesItemProps) =>
+			post('/api/create_translations', data),
+		updateTranslations: (data: CategoriesItemProps) =>
+			post('/api/update_translations', data),
+		toggleTranslations: (data: (number | string)[]) =>
+			post('/api/toggle_translations', data),
+		deleteTranslations: (data: (number | string)[]) =>
+			post('/api/delete_translations', data),
 	};
 }
 
 export function useUploads() {
+	const { data, error } = useSWR(`/api/get_uploads`, get);
+
 	return {
 		Uploads: [
 			{
@@ -361,25 +333,23 @@ export function useUploads() {
 				active: true,
 			},
 		],
-		uploads_loading: false,
-		uploads_error: false,
-		reloadUploads: () => {},
-		createUploads: (data: CategoriesItemProps) => {
-			console.log(`create Uploads`, data);
-		},
-		updateUploads: (data: CategoriesItemProps) => {
-			console.log(`update Uploads`, data);
-		},
-		toggleUploads: (data: (number | string)[]) => {
-			console.log(`toggle Uploads`, data);
-		},
-		deleteUploads: (data: (number | string)[]) => {
-			console.log(`delete Uploads`, data);
-		},
+		uploads_loading: !data && !error,
+		uploads_error: error,
+		reloadUploads: () => mutate(`/api/get_uploads`),
+		createUploads: (data: CategoriesItemProps) =>
+			post('/api/create_uploads', data),
+		updateUploads: (data: CategoriesItemProps) =>
+			post('/api/update_uploads', data),
+		toggleUploads: (data: (number | string)[]) =>
+			post('/api/toggle_uploads', data),
+		deleteUploads: (data: (number | string)[]) =>
+			post('/api/delete_uploads', data),
 	};
 }
 
 export function useUsers() {
+	const { data, error } = useSWR(`/api/get_users`, get);
+
 	return {
 		Users: [
 			{
@@ -408,20 +378,12 @@ export function useUsers() {
 				active: true,
 			},
 		],
-		users_loading: false,
-		users_error: false,
-		reloadUsers: () => {},
-		createUsers: (data: CategoriesItemProps) => {
-			console.log(`create Users`, data);
-		},
-		updateUsers: (data: CategoriesItemProps) => {
-			console.log(`update Users`, data);
-		},
-		toggleUsers: (data: (number | string)[]) => {
-			console.log(`toggle Users`, data);
-		},
-		deleteUsers: (data: (number | string)[]) => {
-			console.log(`delete Users`, data);
-		},
+		users_loading: !data && !error,
+		users_error: error,
+		reloadUsers: () => mutate(`/api/get_users`),
+		createUsers: (data: CategoriesItemProps) => post('/api/create_users', data),
+		updateUsers: (data: CategoriesItemProps) => post('/api/update_users', data),
+		toggleUsers: (data: (number | string)[]) => post('/api/toggle_users', data),
+		deleteUsers: (data: (number | string)[]) => post('/api/delete_users', data),
 	};
 }

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Stack from '@mui/material/Stack';
 import { useTranslation } from 'react-i18next';
 
-import { MESSAGE_ERROR_DURATION } from '../../constants';
+import { TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { useToasts } from '../../hooks/common';
 import {
 	Button,
@@ -63,7 +63,7 @@ const CrmDashboardModule = ({}: CrmDashboardModuleProps) => {
 								createToasts({
 									title: 'Test error message with autoclose',
 									context: 'error',
-									timeout: MESSAGE_ERROR_DURATION,
+									timeout: TOASTS_TIMEOUT_DEFAULT,
 								});
 							}}
 						>

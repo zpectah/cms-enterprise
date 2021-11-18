@@ -4,6 +4,8 @@ import { get, post, postRaw } from '../utils/api';
 import { MembersItemProps } from '../types/model';
 
 export function useMembers() {
+	const { data, error } = useSWR(`/api/get_members`, get);
+
 	return {
 		Members: [
 			{
@@ -32,20 +34,16 @@ export function useMembers() {
 				active: true,
 			},
 		],
-		members_loading: false,
-		posts_error: false,
-		reloadMembers: () => {},
-		createMembers: (data: MembersItemProps) => {
-			console.log(`create Members`, data);
-		},
-		updateMembers: (data: MembersItemProps) => {
-			console.log(`update Members`, data);
-		},
-		toggleMembers: (data: (number | string)[]) => {
-			console.log(`toggle Members`, data);
-		},
-		deleteMembers: (data: (number | string)[]) => {
-			console.log(`delete Members`, data);
-		},
+		members_loading: !data && !error,
+		posts_error: error,
+		reloadMembers: () => mutate(`/api/get_members`),
+		createMembers: (data: MembersItemProps) =>
+			post('/api/create_members', data),
+		updateMembers: (data: MembersItemProps) =>
+			post('/api/update_members', data),
+		toggleMembers: (data: (number | string)[]) =>
+			post('/api/toggle_members', data),
+		deleteMembers: (data: (number | string)[]) =>
+			post('/api/delete_members', data),
 	};
 }

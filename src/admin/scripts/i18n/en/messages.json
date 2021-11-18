@@ -1,5 +1,11 @@
 {
-  "success": {},
+  "success": {
+    "itemCreated": "Item has been created",
+    "itemUpdated": "Item has been updated",
+    "itemUpdated_plural": "{value} Items has been updated",
+    "itemDeleted": "Item has been deleted",
+    "itemDeleted_plural": "{value} Items has been deleted"
+  },
   "error": {},
   "info": {}
 }

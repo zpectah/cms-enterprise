@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
 import { PaymentsItemProps } from '../../types/model';
 import { usePayments } from '../../hooks/market';
@@ -12,12 +13,14 @@ import { useSettings } from '../../hooks/common';
 import { ConfirmDialog } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PaymentsDetailForm from './PaymentsDetailForm';
+import { useToasts } from '../../hooks/common';
 
 interface PaymentsModuleProps {}
 
 const PaymentsModule = ({}: PaymentsModuleProps) => {
 	const params: any = useParams();
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const { t } = useTranslation(['common', 'messages']);
 	const [detail, setDetail] = useState<string>(null);
 	const [detailData, setDetailData] = useState<any>(null);
@@ -32,6 +35,7 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 		(number | string)[]
 	>([]);
 
+	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const {
 		Payments,
@@ -79,20 +83,37 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updatePayments(master); // .then((response) => { /* response */ })
+			updatePayments(master).then((response) => {
+				console.log('update response', response);
 
-			closeDetailHandler();
+				closeDetailHandler();
+				createToasts({
+					title: t('messages:success.itemCreated'),
+					context: 'success',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+			});
 		} else {
-			createPayments(master); // .then((response) => { /* response */ })
+			createPayments(master).then((response) => {
+				console.log('create response', response);
 
-			closeDetailHandler();
+				closeDetailHandler();
+				createToasts({
+					title: t('messages:success.itemUpdated'),
+					context: 'success',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+			});
 		}
 	};
 
 	// When error returns from submit
-	const detailSubmitErrorHandler = (error: any, e: any) => {
-		console.log('detailSubmitErrorHandler', error);
-	};
+	const detailSubmitErrorHandler = (error: any, e: any) =>
+		createToasts({
+			title: error,
+			context: 'error',
+			timeout: TOASTS_TIMEOUT_DEFAULT,
+		});
 
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
@@ -134,7 +155,15 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 
 		console.log('AJAX ... toggle ...', master);
 
-		togglePayments(master); // .then((response) => { /* response */ })
+		togglePayments(master).then((response) => {
+			console.log('toggle response', response);
+
+			createToasts({
+				title: t('messages:success.itemUpdated', { value: master.length }),
+				context: 'success',
+				timeout: TOASTS_TIMEOUT_DEFAULT,
+			});
+		});
 	};
 
 	// When item/row is confirmed to submit confirm dialog
@@ -147,10 +176,18 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 
 			console.log('AJAX ... delete ...', master);
 
-			deletePayments(master); // .then((response) => { /* response */ })
+			deletePayments(master).then((response) => {
+				console.log('delete response', response);
 
-			closeConfirmHandler();
-			if (confirmDialogData.length == 1) history.push(moduleObject.route.path);
+				closeConfirmHandler();
+				createToasts({
+					title: t('messages:success.itemDeleted', { value: master.length }),
+					context: 'success',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+				if (confirmDialogData.length == 1)
+					history.push(moduleObject.route.path);
+			});
 		} else if (confirmDialogType == 'formDirty') {
 			closeConfirmHandler();
 			history.push(moduleObject.route.path);
