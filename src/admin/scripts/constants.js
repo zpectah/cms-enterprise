@@ -229,7 +229,7 @@ export const NAV_ITEMS = {
 		},
 		{
 			name: ROUTES.app.settings.name,
-			path: ROUTES.app.settings.path + '/global',
+			path: ROUTES.app.settings.path,
 			active: true,
 			auth: USER_LEVEL.admin.id,
 		},

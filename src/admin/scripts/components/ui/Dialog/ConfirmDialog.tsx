@@ -156,7 +156,7 @@ const ConfirmDialog = ({
 							top: 8,
 							color: (theme) => theme.palette.grey[500],
 						}}
-						{...getElTestAttr('modal.close')}
+						{...getElTestAttr('dialog.confirm.close')}
 					>
 						<CloseIcon />
 					</IconButton>

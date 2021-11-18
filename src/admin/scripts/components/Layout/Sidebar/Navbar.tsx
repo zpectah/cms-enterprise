@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isMobileOnly } from 'react-device-detect';
 import List from '@mui/material/List';
@@ -40,6 +40,7 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 	const { t } = useTranslation(['common', 'page']);
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const location = useLocation();
 	// const [openSectionApp, setOpenSectionApp] = useState<boolean>(true);
 	const [openSectionCrm, setOpenSectionCrm] = useState<boolean>(false);
 	const [openSectionMarket, setOpenSectionMarket] = useState<boolean>(false);
@@ -73,8 +74,12 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 		let selected = false;
 
 		if (
-			(!(path == ROUTES.app.dashboard.path) &&
-				location.pathname.includes(path + '/')) ||
+			(!(
+				path == ROUTES.app.dashboard.path ||
+				path == ROUTES.crm.crmDashboard.path ||
+				path == ROUTES.market.marketDashboard.path
+			) &&
+				location.pathname.includes(path)) ||
 			location.pathname == path ||
 			location.pathname == path + '/'
 		)
@@ -85,6 +90,9 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 
 	const linkTriggerHandler = (path: string) => {
 		isMobileOnly && dispatch(sidebarToggle(false));
+
+		if (path == ROUTES.app.settings.path) path = path + '/global'; // correct path to settings panels
+
 		history.push(path);
 	};
 
