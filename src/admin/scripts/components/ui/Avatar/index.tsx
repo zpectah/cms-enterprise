@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { getElTestAttr } from '../../../utils/tests';
 
 const StyledText = styled.span`
-	font-size: 1.05rem;
+	font-size: 1rem;
 	text-transform: uppercase;
 `;
 

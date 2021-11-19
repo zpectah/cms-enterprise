@@ -42,6 +42,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 				// image={''}
 				onClick={dropdownOpenHandler}
 				dataAppId={`${dataAppId}.avatar`}
+				size={'28px'}
 			/>
 			<Menu
 				anchorEl={anchorEl}

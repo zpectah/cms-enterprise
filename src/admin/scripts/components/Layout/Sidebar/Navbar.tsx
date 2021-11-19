@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -41,34 +41,16 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const location = useLocation();
-	// const [openSectionApp, setOpenSectionApp] = useState<boolean>(true);
-	const [openSectionCrm, setOpenSectionCrm] = useState<boolean>(false);
-	const [openSectionMarket, setOpenSectionMarket] = useState<boolean>(false);
+	const [openSectionCrm, setOpenSectionCrm] = useState<boolean>(app == 'crm');
+	const [openSectionMarket, setOpenSectionMarket] = useState<boolean>(
+		app == 'market',
+	);
 	const sectionAppActive = true;
 	const sectionCrmActive = true;
 	const sectionMarketActive = true;
-	// const sectionAppToggle = () => setOpenSectionApp(!openSectionApp);
 	const sectionCrmToggle = () => setOpenSectionCrm(!openSectionCrm);
 	const sectionMarketToggle = () => setOpenSectionMarket(!openSectionMarket);
-
-	useEffect(() => {
-		switch (app) {
-			case 'app':
-				setOpenSectionCrm(false);
-				setOpenSectionMarket(false);
-				return;
-
-			case 'crm':
-				setOpenSectionCrm(true);
-				setOpenSectionMarket(false);
-				return;
-
-			case 'market':
-				setOpenSectionCrm(false);
-				setOpenSectionMarket(true);
-				return;
-		}
-	}, [app]);
+	const selectedItem = useRef(null);
 
 	const isItemSelected = (path) => {
 		let selected = false;
@@ -105,6 +87,7 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 					selected={isItemSelected(item.path)}
 					divider
 					{...getElTestAttr(`${dataAppId}.item.${item.name}`)}
+					ref={isItemSelected(item.path) ? selectedItem : null}
 				>
 					<ListItemText primary={t(`page:${item.name}.label`)} />
 				</StyledItem>
@@ -140,6 +123,10 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 			</>
 		);
 	};
+
+	useEffect(() => {
+		if (selectedItem.current) selectedItem.current.scrollIntoView();
+	}, [selectedItem.current]);
 
 	return (
 		<>
