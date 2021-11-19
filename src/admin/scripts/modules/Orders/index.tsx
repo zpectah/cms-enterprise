@@ -46,7 +46,11 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		route: ROUTES.market.orders,
 		detail: {},
 		table: {
-			layout: {},
+			tableCells: {
+				name: ['left', 'auto'],
+				active: ['right', '125px'],
+			},
+			tableSearchProps: ['name'],
 		},
 	};
 
@@ -218,7 +222,8 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
 							tableData={Orders}
-							tableOptions={moduleObject.table}
+							tableCells={moduleObject.table.tableCells}
+							tableSearchProps={moduleObject.table.tableSearchProps}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}

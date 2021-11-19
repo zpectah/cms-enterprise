@@ -51,7 +51,11 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		route: ROUTES.market.producers,
 		detail: {},
 		table: {
-			layout: {},
+			tableCells: {
+				name: ['left', 'auto'],
+				active: ['right', '125px'],
+			},
+			tableSearchProps: ['name'],
 		},
 	};
 
@@ -223,7 +227,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
 							tableData={Producers}
-							tableOptions={moduleObject.table}
+							tableCells={moduleObject.table.tableCells}
+							tableSearchProps={moduleObject.table.tableSearchProps}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}

@@ -11,30 +11,35 @@ import { Section, Button, Typography } from '../ui';
 import ModuleViewHeading from '../ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../ModuleLanguageToggle';
+import EnhancedTable from './Table';
 import { getElTestAttr } from '../../utils/tests';
 
 interface DataTableProps {
 	model: appModelProps;
 	routeObject: routeItemProps;
 	tableData: any[];
-	tableOptions: {};
+	tableCells: {}; // TODO
+	tableSearchProps?: string[];
 	onToggle: (id: (number | string)[]) => void;
 	onDelete: (id: (number | string)[]) => void;
 	onSelect: (selected: readonly string[]) => void;
 	languageList: string[];
 	languageDefault: string;
+	dataAppId?: string;
 }
 
 const DataTable = ({
 	model,
 	routeObject,
 	tableData,
-	tableOptions,
+	tableCells,
+	tableSearchProps = [],
 	onToggle,
 	onDelete,
 	onSelect,
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
+	dataAppId = `dataTable.${model}`,
 }: DataTableProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'page']);
@@ -76,19 +81,16 @@ const DataTable = ({
 				</>
 			</ModuleViewHeading>
 			<Section>
-				data table list
-				<br />
-				<br />
-				{tableData.map((item) => (
-					<Typography.Link
-						key={item.id}
-						to={routeObject.path + ROUTE_SUFFIX.detail + '/' + item.id}
-					>
-						Link to detail: {item.name}
-					</Typography.Link>
-				))}
-				<br />
-				<br />
+				<div {...getElTestAttr(dataAppId)}>
+					<EnhancedTable
+						tableData={tableData}
+						tableCells={tableCells}
+						rowPathPrefix={routeObject.path + ROUTE_SUFFIX.detail}
+						onSelect={(selected) => onSelect(selected)}
+						onToggle={(id) => onToggle([id])}
+						onDelete={(id) => onDelete([id])}
+					/>
+				</div>
 			</Section>
 		</>
 	);

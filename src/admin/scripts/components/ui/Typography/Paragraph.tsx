@@ -15,6 +15,7 @@ interface ParagraphProps {
 	bold?: true;
 	strong?: true;
 	className?: string;
+	onClick?: (e: any) => void;
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({
@@ -26,10 +27,12 @@ const Paragraph: React.FC<ParagraphProps> = ({
 	bold,
 	strong,
 	className,
+	onClick,
 }) => {
 	const componentProps = {
 		children: children,
 		className: className,
+		onClick: onClick,
 	};
 
 	const getComponent = () => {

@@ -46,7 +46,11 @@ const PagesModule = ({}: PagesModuleProps) => {
 		route: ROUTES.app.pages,
 		detail: {},
 		table: {
-			layout: {},
+			tableCells: {
+				name: ['left', 'auto'],
+				active: ['right', '125px'],
+			},
+			tableSearchProps: ['name'],
 		},
 	};
 
@@ -218,7 +222,8 @@ const PagesModule = ({}: PagesModuleProps) => {
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
 							tableData={Pages}
-							tableOptions={moduleObject.table}
+							tableCells={moduleObject.table.tableCells}
+							tableSearchProps={moduleObject.table.tableSearchProps}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}

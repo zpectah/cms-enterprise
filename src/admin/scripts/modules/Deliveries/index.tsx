@@ -51,7 +51,11 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 		route: ROUTES.market.deliveries,
 		detail: {},
 		table: {
-			layout: {},
+			tableCells: {
+				name: ['left', 'auto'],
+				active: ['right', '125px'],
+			},
+			tableSearchProps: ['name'],
 		},
 	};
 
@@ -223,7 +227,8 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
 							tableData={Deliveries}
-							tableOptions={moduleObject.table}
+							tableCells={moduleObject.table.tableCells}
+							tableSearchProps={moduleObject.table.tableSearchProps}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}

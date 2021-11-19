@@ -46,7 +46,11 @@ const PostsModule = ({}: PostsModuleProps) => {
 		route: ROUTES.app.posts,
 		detail: {},
 		table: {
-			layout: {},
+			tableCells: {
+				name: ['left', 'auto'],
+				active: ['right', '125px'],
+			},
+			tableSearchProps: ['name'],
 		},
 	};
 
@@ -218,7 +222,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
 							tableData={Posts}
-							tableOptions={moduleObject.table}
+							tableCells={moduleObject.table.tableCells}
+							tableSearchProps={moduleObject.table.tableSearchProps}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}

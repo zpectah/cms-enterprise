@@ -48,6 +48,7 @@ interface TitleProps {
 	h5?: true;
 	h6?: true;
 	className?: string;
+	onClick?: (e: any) => void;
 }
 
 const Title: React.FC<TitleProps> = ({
@@ -59,10 +60,12 @@ const Title: React.FC<TitleProps> = ({
 	h5,
 	h6,
 	className,
+	onClick,
 }) => {
 	const componentProps = {
 		children: children,
 		className: className,
+		onClick: onClick,
 	};
 
 	const getComponent = () => {

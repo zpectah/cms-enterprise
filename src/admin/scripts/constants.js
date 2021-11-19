@@ -72,6 +72,8 @@ export const IMAGE_CROP_OPTIONS = [
 export const DATA_TABLE = {
 	rowsPerPage: [5, 10, 25, 50, 100],
 	rowsDefault: 25,
+	rowHeightDefault: 55,
+	sortDefault: 'asc',
 };
 export const ROUTE_SUFFIX = {
 	detail: '/id',
