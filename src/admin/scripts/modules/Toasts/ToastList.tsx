@@ -6,18 +6,27 @@ import styled from 'styled-components';
 import { toastItemProps } from '../../types/store';
 import { getElTestAttr } from '../../utils/tests';
 
-interface ToastItemProps {
-	data: toastItemProps;
-	onRemove: (id: string) => void;
-}
 interface ToastListProps {
 	items: toastItemProps[];
 	onRemove: (id: string) => void;
 }
+interface ToastItemProps {
+	data: toastItemProps;
+	onRemove: (id: string) => void;
+}
 
+const ListWrapper = styled.div`
+	width: 300px;
+	position: fixed;
+	overflow: visible;
+	bottom: calc(${(props) => props.theme.spacer} / 2);
+	right: calc(${(props) => props.theme.spacer} / 2);
+	z-index: ${(props) => props.theme.toasts.zIndex};
+`;
+const ListInner = styled.div``;
 const ItemWrapper = styled.article<{ context: toastItemProps['context'] }>`
 	height: auto;
-	padding: 1rem;
+	padding: ${(props) => props.theme.spacer};
 	margin: 0 0 0.35rem;
 	display: flex;
 	position: relative;
@@ -42,16 +51,6 @@ const ItemWrapper = styled.article<{ context: toastItemProps['context'] }>`
 		background-color: ${props.theme.toasts.error.bg};
 	`}
 `;
-const ListWrapper = styled.div`
-	width: 300px;
-	height: 0;
-	position: fixed;
-	overflow: visible;
-	top: calc(${(props) => props.theme.header.height} + 0.35rem);
-	right: 0.35rem;
-	z-index: ${(props) => props.theme.toasts.zIndex};
-`;
-const ListInner = styled.div``;
 
 const ToastItem = ({ data, onRemove }: ToastItemProps) => {
 	useEffect(() => {
