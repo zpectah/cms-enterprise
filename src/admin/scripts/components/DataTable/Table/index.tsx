@@ -59,7 +59,7 @@ const Table = ({
 	minWidth = 750,
 }: TableProps) => {
 	const history = useHistory();
-	const { t } = useTranslation(['common', 'components']);
+	const { t } = useTranslation(['common', 'components', 'types']);
 	const [order, setOrder] = useState<sortType>('desc');
 	const [orderBy, setOrderBy] = useState<keyof any>('id'); // TODO
 	const [selected, setSelected] =
@@ -153,6 +153,19 @@ const Table = ({
 					</StyledRowLink>
 				),
 			});
+
+		// --
+
+		if (tableCells.type)
+			cells.push({
+				key: 'type',
+				padding: 'none',
+				align: tableCells.type[0],
+				width: tableCells.type[1],
+				content: <div>{t(`types:${row.type}`)}</div>,
+			});
+
+		// --
 
 		if (tableCells.active)
 			cells.push({

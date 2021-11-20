@@ -4,9 +4,12 @@ export type sortType = 'asc' | 'desc';
 
 export type tableCellAlignType = 'left' | 'center' | 'right';
 
+export type cellTypeItemProps = [tableCellAlignType, string];
+
 export interface cellsTypesProps {
-	name?: [tableCellAlignType, string];
-	active?: [tableCellAlignType, string];
+	name?: cellTypeItemProps;
+	active?: cellTypeItemProps;
+	type?: cellTypeItemProps;
 }
 
 export interface tableHeaderCellItemProps {

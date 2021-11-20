@@ -36,7 +36,8 @@ const TableHeader = ({
 	const { t } = useTranslation(['common', 'components', 'table']);
 
 	const getHeadCells = () => {
-		const cellTypes: string[] = ['name', 'active']; // TODO: new cells
+		// !!! Keep same order as getBodyCells(row) in Table/index.ts !!!
+		const cellTypes: string[] = ['name', 'type', 'active']; // TODO: new cells
 		const cells = [] as tableHeaderCellItemProps[];
 
 		cellTypes.map((type) => {

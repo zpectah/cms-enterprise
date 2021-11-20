@@ -2,6 +2,7 @@
   "label": {
     "id": "ID",
     "name": "Name",
+    "type": "Type",
     "active": "Active",
     "actions": "Actions"
   },

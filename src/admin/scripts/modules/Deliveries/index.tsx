@@ -53,6 +53,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 		table: {
 			tableCells: {
 				name: ['left', 'auto'],
+				type: ['left', '150px'],
 				active: ['right', '125px'],
 			},
 			tableSearchProps: ['name'],
