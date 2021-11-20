@@ -16,11 +16,11 @@ interface ToastItemProps {
 }
 
 const ListWrapper = styled.div`
-	width: 300px;
+	width: ${(props) => props.theme.toasts.width};
 	position: fixed;
 	overflow: visible;
-	bottom: calc(${(props) => props.theme.spacer} / 2);
-	right: calc(${(props) => props.theme.spacer} / 2);
+	bottom: ${(props) => props.theme.spacer};
+	left: calc(50vw - (${(props) => props.theme.toasts.width} / 2));
 	z-index: ${(props) => props.theme.toasts.zIndex};
 `;
 const ListInner = styled.div``;

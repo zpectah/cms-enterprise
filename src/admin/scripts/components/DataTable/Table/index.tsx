@@ -16,6 +16,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
+import Chip from '@mui/material/Chip';
 import styled from 'styled-components';
 
 import { DATA_TABLE } from '../../../constants';
@@ -162,7 +163,15 @@ const Table = ({
 				padding: 'none',
 				align: tableCells.type[0],
 				width: tableCells.type[1],
-				content: <div>{t(`types:${row.type}`)}</div>,
+				content: (
+					<div>
+						<Chip
+							label={t(`types:${row.type}`)}
+							variant="outlined"
+							size="small"
+						/>
+					</div>
+				),
 			});
 
 		// --

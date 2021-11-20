@@ -6,11 +6,13 @@ import { date } from '../../../../../../utils/utils';
 import { utilsDateObjectProps } from '../../../types/app';
 
 const Wrapper = styled.div`
+	min-height: 21px;
+	padding-top: 0.125rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: row;
-	font-size: 0.85rem;
+	font-size: 0.825rem;
 	color: ${(props) => props.theme.content.breadcrumbs.color};
 `;
 const TimeText = styled.div`

@@ -44,6 +44,7 @@ export default {
 	},
 	toasts: {
 		zIndex: 1995,
+		width: '300px',
 		default: {
 			color: palette.white,
 			bg: palette.grey,
