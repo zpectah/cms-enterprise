@@ -21,6 +21,7 @@ import { getComparator, stableSort } from '../utils';
 import { cellsTypesProps, sortType, tableBodyCellItemProps } from '../types';
 import { Typography } from '../../ui';
 import TableHeader from './TableHeader';
+import { getElTestAttr } from '../../../utils/tests';
 
 const StyledRowLink = styled(Typography.Title)`
 	cursor: pointer;
@@ -33,6 +34,7 @@ export interface TableProps {
 	onSelect: (selected: any) => void;
 	onToggle: (id: number) => void;
 	onDelete: (id: number) => void;
+	dataAppId?: string;
 }
 
 const Table = ({
@@ -42,6 +44,7 @@ const Table = ({
 	onSelect,
 	onToggle,
 	onDelete,
+	dataAppId,
 }: TableProps) => {
 	const history = useHistory();
 	const [order, setOrder] = React.useState<sortType>('desc');
@@ -154,7 +157,7 @@ const Table = ({
 	useEffect(() => onSelect(selected), [selected]);
 
 	return (
-		<Box sx={{ width: '100%' }}>
+		<Box sx={{ width: '100%' }} {...getElTestAttr(dataAppId)}>
 			<TableContainer>
 				<MuiTable
 					sx={{ minWidth: 750 }}

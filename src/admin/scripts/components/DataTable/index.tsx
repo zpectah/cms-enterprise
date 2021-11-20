@@ -11,7 +11,7 @@ import { Section, Button, Typography } from '../ui';
 import ModuleViewHeading from '../ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../ModuleLanguageToggle';
-import EnhancedTable from './Table';
+import Table from './Table';
 import { getElTestAttr } from '../../utils/tests';
 
 interface DataTableProps {
@@ -81,16 +81,15 @@ const DataTable = ({
 				</>
 			</ModuleViewHeading>
 			<Section>
-				<div {...getElTestAttr(dataAppId)}>
-					<EnhancedTable
-						tableData={tableData}
-						tableCells={tableCells}
-						rowPathPrefix={routeObject.path + ROUTE_SUFFIX.detail}
-						onSelect={(selected) => onSelect(selected)}
-						onToggle={(id) => onToggle([id])}
-						onDelete={(id) => onDelete([id])}
-					/>
-				</div>
+				<Table
+					tableData={tableData}
+					tableCells={tableCells}
+					rowPathPrefix={routeObject.path + ROUTE_SUFFIX.detail}
+					onSelect={(selected) => onSelect(selected)}
+					onToggle={(id) => onToggle([id])}
+					onDelete={(id) => onDelete([id])}
+					dataAppId={dataAppId}
+				/>
 			</Section>
 		</>
 	);
