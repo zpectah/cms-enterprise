@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -23,16 +24,16 @@ interface TableHeaderProps {
 	tableCells: cellsTypesProps;
 }
 
-const TableHeader = (props: TableHeaderProps) => {
-	const {
-		onSelectAllClick,
-		order,
-		orderBy,
-		numSelected,
-		rowCount,
-		onRequestSort,
-		tableCells,
-	} = props;
+const TableHeader = ({
+	onSelectAllClick,
+	order,
+	orderBy,
+	numSelected,
+	rowCount,
+	onRequestSort,
+	tableCells,
+}: TableHeaderProps) => {
+	const { t } = useTranslation(['common', 'components']);
 
 	const getHeadCells = () => {
 		const cells = [] as tableHeaderCellItemProps[];

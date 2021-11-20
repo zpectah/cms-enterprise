@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { default as MuiTable } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -32,8 +33,8 @@ export interface TableProps {
 	tableData: any[];
 	tableCells: cellsTypesProps;
 	rowPathPrefix: string;
-	selectedRows: any[];
-	onSelect: (selected: any[]) => void;
+	selectedRows: readonly (number | string)[];
+	onSelect: (selected: readonly (number | string)[]) => void;
 	onToggle: (id: number) => void;
 	onDelete: (id: number) => void;
 	dataAppId?: string;
@@ -50,9 +51,11 @@ const Table = ({
 	dataAppId,
 }: TableProps) => {
 	const history = useHistory();
+	const { t } = useTranslation(['common', 'components']);
 	const [order, setOrder] = useState<sortType>('desc');
 	const [orderBy, setOrderBy] = useState<keyof any>('id'); // TODO
-	const [selected, setSelected] = useState<any[]>(selectedRows);
+	const [selected, setSelected] =
+		useState<readonly (number | string)[]>(selectedRows);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(DATA_TABLE.rowsDefault);
 
@@ -158,6 +161,8 @@ const Table = ({
 		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
 	useEffect(() => onSelect(selected), [selected]);
+
+	useEffect(() => setSelected(selectedRows), [selectedRows]);
 
 	return (
 		<Box sx={{ width: '100%' }} {...getElTestAttr(dataAppId)}>

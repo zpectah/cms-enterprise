@@ -156,6 +156,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 		toggleTags(master).then((response) => {
 			console.log('toggle response', response);
 
+			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { value: master.length }),
 				context: 'success',
@@ -177,6 +178,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 			deleteTags(master).then((response) => {
 				console.log('delete response', response);
 
+				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({
 					title: t('messages:success.itemDeleted', { value: master.length }),
@@ -223,6 +225,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 							tableData={Tags}
 							tableCells={moduleObject.table.tableCells}
 							tableSearchProps={moduleObject.table.tableSearchProps}
+							selectedItems={selectedItems}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}

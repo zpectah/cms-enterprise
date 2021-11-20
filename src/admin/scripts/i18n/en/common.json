@@ -9,6 +9,8 @@
     "create": "Create",
     "return": "Return",
     "confirm": "Confirm",
+    "reset": "Reset",
+    "toggle": "Toggle",
     "yes": "Yes",
     "no": "No"
   },

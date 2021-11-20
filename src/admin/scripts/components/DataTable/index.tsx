@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
@@ -33,6 +33,7 @@ interface DataTableProps {
 	tableData: any[];
 	tableCells: {}; // TODO
 	tableSearchProps?: string[];
+	selectedItems: readonly (number | string)[];
 	onToggle: (id: (number | string)[]) => void;
 	onDelete: (id: (number | string)[]) => void;
 	onSelect: (selected: readonly string[]) => void;
@@ -47,6 +48,7 @@ const DataTable = ({
 	tableData,
 	tableCells,
 	tableSearchProps = [],
+	selectedItems,
 	onToggle,
 	onDelete,
 	onSelect,
@@ -55,18 +57,14 @@ const DataTable = ({
 	dataAppId = `dataTable.${model}`,
 }: DataTableProps) => {
 	const history = useHistory();
-	const { t } = useTranslation(['common', 'page']);
+	const { t } = useTranslation(['common', 'components']);
 	const [lang, setLang] = useState(languageDefault);
-	const [selectedRows, setSelectedRows] = useState([]);
+	const [selectedRows, setSelectedRows] = useState(selectedItems);
+	const [searchInput, setSearchInput] = useState('');
+	const [filterType, setFilterType] = useState('all');
 
 	const buttonCreateHandler = () =>
 		history.push(`${routeObject.path}${ROUTE_SUFFIX.detail}/new`);
-
-	const [age, setAge] = React.useState('');
-
-	const handleChange = (event: SelectChangeEvent) => {
-		setAge(event.target.value as string);
-	};
 
 	const onRowSelectCallback = (selected) => {
 		onSelect(selected);
@@ -86,9 +84,12 @@ const DataTable = ({
 		onDelete([...selectedRows]);
 	};
 
-	const resetFilterCallback = () => {
-		console.log('resetFilterCallback');
+	const resetFilterHandler = () => {
+		setSearchInput('');
+		setFilterType('all');
 	};
+
+	useEffect(() => setSelectedRows(selectedItems), [selectedItems]);
 
 	return (
 		<>
@@ -121,6 +122,8 @@ const DataTable = ({
 									size="small"
 									style={{ width: '250px' }}
 									placeholder="Search in table"
+									value={searchInput}
+									onChange={(e) => setSearchInput(e.target.value)}
 									InputProps={{
 										startAdornment: (
 											<InputAdornment position="start">
@@ -131,24 +134,22 @@ const DataTable = ({
 								/>
 							</FormControl>
 							<FormControl size="small">
-								<InputLabel id="demo-simple-select-label">Type</InputLabel>
 								<Select
 									labelId="demo-simple-select-label"
 									id="demo-simple-select"
-									value={age}
-									label="Age"
-									onChange={handleChange}
 									size="small"
 									style={{ width: '150px' }}
 									placeholder="Filter by type"
+									value={filterType}
+									onChange={(e) => setFilterType(e.target.value)}
 								>
-									<MenuItem value={10}>All</MenuItem>
-									<MenuItem value={20}>Default</MenuItem>
-									<MenuItem value={30}>Thirty</MenuItem>
+									<MenuItem value={'all'}>All</MenuItem>
+									<MenuItem value={'default'}>Default</MenuItem>
+									<MenuItem value={'...other'}>Thirty</MenuItem>
 								</Select>
 							</FormControl>
-							<Button size="small" onClick={resetFilterCallback}>
-								Reset
+							<Button size="small" onClick={resetFilterHandler}>
+								{t(`button.reset`)}
 							</Button>
 						</Stack>
 						<Stack spacing={2} direction="row">
@@ -164,7 +165,7 @@ const DataTable = ({
 									disabled={selectedRows.length == 0}
 									onClick={onSelectedToggleCallback}
 								>
-									Toggle&nbsp;&nbsp;<b>{selectedRows.length}</b>
+									{t(`button.toggle`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
 								</Button>
 								<Button
 									aria-label={`delete ${selectedRows.length}`}
@@ -173,7 +174,7 @@ const DataTable = ({
 									disabled={selectedRows.length == 0}
 									onClick={onSelectedDeleteCallback}
 								>
-									Delete&nbsp;&nbsp;<b>{selectedRows.length}</b>
+									{t(`button.delete`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
 								</Button>
 							</ButtonGroup>
 						</Stack>

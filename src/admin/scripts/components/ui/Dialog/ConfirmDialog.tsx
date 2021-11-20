@@ -88,10 +88,6 @@ const ConfirmDialog = ({
 
 	useEffect(() => setOpen(isOpen), [isOpen]);
 
-	useEffect(() => {
-		console.log('confirmData', confirmData);
-	}, [confirmData]);
-
 	return (
 		<>
 			<MuiDialog

@@ -162,6 +162,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 		toggleDistributors(master).then((response) => {
 			console.log('toggle response', response);
 
+			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { value: master.length }),
 				context: 'success',
@@ -183,6 +184,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 			deleteDistributors(master).then((response) => {
 				console.log('delete response', response);
 
+				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({
 					title: t('messages:success.itemDeleted', { value: master.length }),
@@ -229,6 +231,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 							tableData={Distributors}
 							tableCells={moduleObject.table.tableCells}
 							tableSearchProps={moduleObject.table.tableSearchProps}
+							selectedItems={selectedItems}
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}
