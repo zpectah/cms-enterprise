@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { default as MuiTable } from '@mui/material/Table';
@@ -11,6 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
@@ -31,7 +32,8 @@ export interface TableProps {
 	tableData: any[];
 	tableCells: cellsTypesProps;
 	rowPathPrefix: string;
-	onSelect: (selected: any) => void;
+	selectedRows: any[];
+	onSelect: (selected: any[]) => void;
 	onToggle: (id: number) => void;
 	onDelete: (id: number) => void;
 	dataAppId?: string;
@@ -41,17 +43,18 @@ const Table = ({
 	tableData,
 	tableCells,
 	rowPathPrefix,
+	selectedRows,
 	onSelect,
 	onToggle,
 	onDelete,
 	dataAppId,
 }: TableProps) => {
 	const history = useHistory();
-	const [order, setOrder] = React.useState<sortType>('desc');
-	const [orderBy, setOrderBy] = React.useState<keyof any>('id'); // TODO
-	const [selected, setSelected] = React.useState<readonly any[]>([]);
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(DATA_TABLE.rowsDefault);
+	const [order, setOrder] = useState<sortType>('desc');
+	const [orderBy, setOrderBy] = useState<keyof any>('id'); // TODO
+	const [selected, setSelected] = useState<any[]>(selectedRows);
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(DATA_TABLE.rowsDefault);
 
 	const tableRowHeight = DATA_TABLE.rowHeightDefault;
 
@@ -75,7 +78,7 @@ const Table = ({
 
 	const rowSelectHandler = (event: React.MouseEvent<unknown>, id: string) => {
 		const selectedIndex = selected.indexOf(id);
-		let newSelected: readonly string[] = [];
+		let newSelected: any[] = [];
 
 		if (selectedIndex === -1) {
 			newSelected = newSelected.concat(selected, id);
@@ -224,7 +227,7 @@ const Table = ({
 													onClick={() => onRowDeleteHandler(row.id)}
 													size="small"
 												>
-													<DeleteIcon />
+													<DeleteOutlineIcon />
 												</IconButton>
 											</Stack>
 										</TableCell>
