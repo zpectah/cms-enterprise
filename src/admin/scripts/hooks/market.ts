@@ -19,26 +19,31 @@ export function useProducts() {
 		Products: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Product 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Product 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Product 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Product 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Product 5 name',
 				active: true,
 			},
@@ -64,26 +69,31 @@ export function useProductsOptions() {
 		ProductsOptions: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'ProductsOption 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'ProductsOption 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'ProductsOption 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'ProductsOption 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'ProductsOption 5 name',
 				active: true,
 			},
@@ -109,26 +119,31 @@ export function useStores() {
 		Stores: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Store 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Store 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Store 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Store 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Store 5 name',
 				active: true,
 			},
@@ -152,26 +167,31 @@ export function useProducers() {
 		Producers: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Producer 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Producer 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Producer 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Producer 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Producer 5 name',
 				active: true,
 			},
@@ -197,26 +217,31 @@ export function usePayments() {
 		Payments: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Payment 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Payment 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Payment 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Payment 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Payment 5 name',
 				active: true,
 			},
@@ -242,26 +267,31 @@ export function useDistributors() {
 		Distributors: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Distributor 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Distributor 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Distributor 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Distributor 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Distributor 5 name',
 				active: true,
 			},
@@ -287,26 +317,31 @@ export function useDeliveries() {
 		Deliveries: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Delivery 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Delivery 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Delivery 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Delivery 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Delivery 5 name',
 				active: true,
 			},
@@ -332,26 +367,31 @@ export function useOrders() {
 		Orders: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Order 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Order 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Order 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Order 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Order 5 name',
 				active: true,
 			},

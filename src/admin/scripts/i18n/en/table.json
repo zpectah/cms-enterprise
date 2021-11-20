@@ -4,5 +4,9 @@
     "name": "Name",
     "active": "Active",
     "actions": "Actions"
+  },
+  "options": {
+    "searchInTable": "Search in table",
+    "filterByType": "Filter by type"
   }
 }

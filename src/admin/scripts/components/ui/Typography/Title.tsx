@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { getElTestAttr } from '../../../utils/tests';
+
 const titleBaseStyle = css`
 	margin: 0;
 	padding: 0;
@@ -49,6 +51,7 @@ interface TitleProps {
 	h6?: true;
 	className?: string;
 	onClick?: (e: any) => void;
+	dataAppId?: string;
 }
 
 const Title: React.FC<TitleProps> = ({
@@ -61,6 +64,7 @@ const Title: React.FC<TitleProps> = ({
 	h6,
 	className,
 	onClick,
+	dataAppId = 'typography.title.default',
 }) => {
 	const componentProps = {
 		children: children,
@@ -91,7 +95,7 @@ const Title: React.FC<TitleProps> = ({
 
 	const ComponentName = getComponent();
 
-	return <ComponentName {...componentProps} />;
+	return <ComponentName {...componentProps} {...getElTestAttr(dataAppId)} />;
 };
 
 export default Title;

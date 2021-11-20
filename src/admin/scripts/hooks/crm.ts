@@ -10,26 +10,31 @@ export function useMembers() {
 		Members: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Member 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Post 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Post 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Post 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Post 5 name',
 				active: true,
 			},

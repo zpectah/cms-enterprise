@@ -1,5 +1,6 @@
 export interface commonItemProps {
 	id: number | string;
+	type: string;
 	name: string;
 	active: boolean;
 }

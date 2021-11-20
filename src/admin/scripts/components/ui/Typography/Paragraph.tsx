@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { getElTestAttr } from '../../../utils/tests';
+
 const StyledP = styled.p``;
 const StyledSpan = styled.span``;
 const StyledLabel = styled.label``;
@@ -16,6 +18,7 @@ interface ParagraphProps {
 	strong?: true;
 	className?: string;
 	onClick?: (e: any) => void;
+	dataAppId?: string;
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({
@@ -28,6 +31,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
 	strong,
 	className,
 	onClick,
+	dataAppId = 'typography.paragraph.default',
 }) => {
 	const componentProps = {
 		children: children,
@@ -53,7 +57,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
 
 	const ComponentName = getComponent();
 
-	return <ComponentName {...componentProps} />;
+	return <ComponentName {...componentProps} {...getElTestAttr(dataAppId)} />;
 };
 
 export default Paragraph;

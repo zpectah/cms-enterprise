@@ -22,11 +22,83 @@
       "type": ["default"]
     },
     "Uploads": {
-      "type": ["image", "audio", "video", "document", "archive"]
+      "type": ["image", "audio", "video", "document", "archive"],
+      "audio": {
+        "extension": ["mp3", "aac"]
+      },
+      "video": {
+        "extension": ["mpeg", "mp4"]
+      },
+      "document": {
+        "extension": ["doc", "docs", "xls", "xlsx", "ppt", "pptx", "pps", "ppsx", "pages", "numbers", "pdf"]
+      },
+      "archive": {
+        "extension": ["zip", "rar"]
+      },
+      "image": {
+        "extension": ["jpg", "jpeg", "png"],
+        "format": [
+          {
+            "key": "thumbnail",
+            "width": 100,
+            "height": 100,
+            "quality": 50,
+            "crop": true
+          },
+          {
+            "key": "medium",
+            "width": 1280,
+            "height": 720,
+            "quality": 80,
+            "crop": true
+          },
+          {
+            "key": "large",
+            "width": 1920,
+            "height": 1080,
+            "quality": 100,
+            "crop": false
+          },
+          {
+            "key": "custom_1",
+            "width": 1920,
+            "height": 640,
+            "quality": 75,
+            "crop": true
+          }
+        ]
+      }
     },
     "Users": {
-      "type": ["default"],
+      "type": ["demo","redactor","chief_redactor","admin","super_admin"],
       "group": ["redactor", "admin"]
+    },
+    "Members": {
+      "type": ["default"]
+    },
+    "Deliveries": {
+      "type": ["default"]
+    },
+    "Distributors": {
+      "type": ["default"]
+    },
+    "Orders": {
+      "type": ["default"]
+    },
+    "Payments": {
+      "type": ["default"]
+    },
+    "Producers": {
+      "type": ["default"]
+    },
+    "Products": {
+      "type": ["default"]
+    },
+    "ProductsOptions": {
+      "type": ["default"]
+    },
+    "Stores": {
+      "type": ["default"]
     }
   },
   "module": {},

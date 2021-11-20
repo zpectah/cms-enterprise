@@ -31,3 +31,26 @@ export function stableSort<T>(
 	});
 	return stabilizedThis.map((el) => el[0]);
 }
+
+export const getSearchAttrs = (attrs, lang) => {
+	let na = [];
+
+	attrs.map((attr) => {
+		let ni = attr.replace('[lang]', lang);
+		na.push(ni);
+	});
+
+	return na;
+};
+
+export const getTypesFromData = (data: any[]) => {
+	let list = [];
+
+	data.map((item) => {
+		let type = item.type;
+
+		if (list.indexOf(type) < 0) list.push(type);
+	});
+
+	return list;
+};

@@ -21,7 +21,7 @@ const Link: React.FC<LinkProps> = ({
 	activeClassName = 'is-active',
 	onClick,
 	exact = false,
-	dataAppId = 'link.default',
+	dataAppId = 'typography.link.default',
 	ariaLabel = 'link',
 }) => {
 	return (

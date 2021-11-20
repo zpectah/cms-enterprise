@@ -15,5 +15,8 @@
   "document": "Document",
   "archive": "Archive",
   "redactor": "Redactor",
-  "admin": "Admin"
+  "chief_redactor": "Chief Redactor",
+  "admin": "Admin",
+  "super_admin": "Super Admin",
+  "demo": "Demo"
 }

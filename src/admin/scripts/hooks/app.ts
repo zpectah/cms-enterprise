@@ -10,27 +10,38 @@ export function usePosts() {
 		Posts: [
 			{
 				id: 1,
+				type: 'article',
 				name: 'Post 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'blog',
 				name: 'Post 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'article',
 				name: 'Post 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'reference',
 				name: 'Post 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'testimonial',
 				name: 'Post 5 name',
+				active: true,
+			},
+			{
+				id: 6,
+				type: 'article',
+				name: 'Post 6 name',
 				active: true,
 			},
 		],
@@ -51,26 +62,31 @@ export function useCategories() {
 		Categories: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Category 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Category 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Category 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Category 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Category 5 name',
 				active: true,
 			},
@@ -96,27 +112,20 @@ export function useMenu() {
 		Menu: [
 			{
 				id: 1,
+				type: 'primary',
 				name: 'Menu 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'secondary',
 				name: 'Menu 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'custom',
 				name: 'Menu 3 name',
-				active: true,
-			},
-			{
-				id: 4,
-				name: 'Menu 4 name',
-				active: true,
-			},
-			{
-				id: 5,
-				name: 'Menu 5 name',
 				active: true,
 			},
 		],
@@ -137,26 +146,31 @@ export function useMenuItems() {
 		MenuItems: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'MenuItem 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'MenuItem 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'MenuItem 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'MenuItem 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'MenuItem 5 name',
 				active: true,
 			},
@@ -182,26 +196,31 @@ export function usePages() {
 		Pages: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Page 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Page 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Page 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Page 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Page 5 name',
 				active: true,
 			},
@@ -223,26 +242,31 @@ export function useTags() {
 		Tags: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Tag 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Tag 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Tag 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Tag 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Tag 5 name',
 				active: true,
 			},
@@ -264,26 +288,31 @@ export function useTranslations() {
 		Translations: [
 			{
 				id: 1,
+				type: 'default',
 				name: 'Translation 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'default',
 				name: 'Translation 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'default',
 				name: 'Translation 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'default',
 				name: 'Translation 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'default',
 				name: 'Translation 5 name',
 				active: true,
 			},
@@ -309,26 +338,31 @@ export function useUploads() {
 		Uploads: [
 			{
 				id: 1,
+				type: 'image',
 				name: 'Upload 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'audio',
 				name: 'Upload 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'image',
 				name: 'Upload 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'document',
 				name: 'Upload 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'image',
 				name: 'Upload 5 name',
 				active: true,
 			},
@@ -354,26 +388,31 @@ export function useUsers() {
 		Users: [
 			{
 				id: 1,
+				type: 'demo',
 				name: 'User 1 name',
 				active: true,
 			},
 			{
 				id: 2,
+				type: 'redactor',
 				name: 'User 2 name',
 				active: false,
 			},
 			{
 				id: 3,
+				type: 'chief_redactor',
 				name: 'User 3 name',
 				active: true,
 			},
 			{
 				id: 4,
+				type: 'redactor',
 				name: 'User 4 name',
 				active: true,
 			},
 			{
 				id: 5,
+				type: 'admin',
 				name: 'User 5 name',
 				active: true,
 			},

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
@@ -26,7 +26,13 @@ import TableHeader from './TableHeader';
 import { getElTestAttr } from '../../../utils/tests';
 
 const StyledRowLink = styled(Typography.Title)`
+	display: inline-flex;
 	cursor: pointer;
+	border-bottom: 1px solid transparent;
+
+	&:hover {
+		border-bottom-color: ${(props) => props.theme.ui.borderBase};
+	}
 `;
 
 export interface TableProps {
@@ -38,6 +44,7 @@ export interface TableProps {
 	onToggle: (id: number) => void;
 	onDelete: (id: number) => void;
 	dataAppId?: string;
+	minWidth?: number;
 }
 
 const Table = ({
@@ -49,6 +56,7 @@ const Table = ({
 	onToggle,
 	onDelete,
 	dataAppId,
+	minWidth = 750,
 }: TableProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components']);
@@ -60,12 +68,15 @@ const Table = ({
 	const [rowsPerPage, setRowsPerPage] = useState(DATA_TABLE.rowsDefault);
 
 	const tableRowHeight = DATA_TABLE.rowHeightDefault;
+	const emptyRows =
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
 	const sortRequestHandler = (
 		event: React.MouseEvent<unknown>,
 		property: keyof any, // TODO
 	) => {
 		const isAsc = orderBy === property && order === 'asc';
+
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
 	};
@@ -76,6 +87,7 @@ const Table = ({
 			setSelected(ns);
 			return;
 		}
+
 		setSelected([]);
 	};
 
@@ -112,7 +124,7 @@ const Table = ({
 
 	const isRowSelected = (id: number | string) => selected.indexOf(id) !== -1;
 
-	const clickDetailHandler = (id: number) => {
+	const clickDetailHandler = (id: number | string) => {
 		history.push(`${rowPathPrefix}/${id}`);
 	};
 
@@ -126,39 +138,53 @@ const Table = ({
 		if (tableCells.name)
 			cells.push({
 				key: 'name',
+				padding: 'none',
+				scope: 'row',
+				element: 'th',
 				align: tableCells.name[0],
+				width: tableCells.name[1],
 				content: (
-					<StyledRowLink h6 onClick={() => clickDetailHandler(row.id)}>
+					<StyledRowLink
+						h6
+						onClick={() => clickDetailHandler(row.id)}
+						dataAppId={`${dataAppId}.cell.name.link.${row.id}`}
+					>
 						{row.name}
 					</StyledRowLink>
 				),
-				scope: 'row',
-				element: 'th',
-				padding: 'none',
-				width: tableCells.name[1],
 			});
 
 		if (tableCells.active)
 			cells.push({
 				key: 'active',
+				padding: 'none',
 				align: tableCells.active[0],
+				width: tableCells.active[1],
 				content: (
 					<Switch
-						inputProps={{ 'aria-label': 'Item active' }}
+						inputProps={{ 'aria-label': 'Item toggle' }}
 						size="small"
 						checked={row.active}
 						onClick={() => onRowToggleHandler(row.id)}
+						{...getElTestAttr(`${dataAppId}.cell.active.switch.${row.id}`)}
 					/>
 				),
-				padding: 'none',
-				width: tableCells.active[1],
 			});
+
+		// TODO: new cells
 
 		return cells;
 	};
 
-	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
+	const getCellsInRow = useCallback(() => {
+		const cells = [] as string[];
+
+		if (tableCells.name) cells.push('name');
+		if (tableCells.active) cells.push('active');
+		// TODO: new cells
+
+		return cells;
+	}, [tableCells]);
 
 	useEffect(() => onSelect(selected), [selected]);
 
@@ -168,7 +194,7 @@ const Table = ({
 		<Box sx={{ width: '100%' }} {...getElTestAttr(dataAppId)}>
 			<TableContainer>
 				<MuiTable
-					sx={{ minWidth: 750 }}
+					sx={{ minWidth: minWidth }}
 					aria-labelledby="tableTitle"
 					size={'medium'}
 				>
@@ -206,6 +232,9 @@ const Table = ({
 												inputProps={{
 													'aria-labelledby': labelId,
 												}}
+												{...getElTestAttr(
+													`${dataAppId}.cell.checkbox.${row.id}`,
+												)}
 											/>
 										</TableCell>
 										{getBodyCells(row).map((cell) => (
@@ -231,6 +260,9 @@ const Table = ({
 													color="secondary"
 													onClick={() => onRowDeleteHandler(row.id)}
 													size="small"
+													{...getElTestAttr(
+														`${dataAppId}.cell.delete.button.${row.id}`,
+													)}
 												>
 													<DeleteOutlineIcon />
 												</IconButton>
@@ -245,7 +277,7 @@ const Table = ({
 									height: tableRowHeight * emptyRows,
 								}}
 							>
-								<TableCell colSpan={6} />
+								<TableCell colSpan={getCellsInRow().length + 2} />
 							</TableRow>
 						)}
 					</TableBody>
