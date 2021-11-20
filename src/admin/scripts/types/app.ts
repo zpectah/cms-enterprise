@@ -1,14 +1,14 @@
 import { APP_MODEL_TYPES } from '../constants.ts';
 
 import { routeItemProps } from './pages';
-import { cellsTypesProps } from '../components/DataTable/types';
+import { cellsTypesProps } from './table';
 
 export type appModelProps = typeof APP_MODEL_TYPES[number];
 
 export interface moduleObjectProps {
 	model: appModelProps;
 	route: routeItemProps;
-	detail: {};
+	detail: any;
 	table: {
 		tableCells: cellsTypesProps;
 		tableSearchProps: string[];

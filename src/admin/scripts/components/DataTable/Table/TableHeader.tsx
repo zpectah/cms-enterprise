@@ -9,7 +9,11 @@ import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 
 import { DATA_TABLE } from '../../../constants';
-import { cellsTypesProps, sortType, tableHeaderCellItemProps } from '../types';
+import {
+	cellsTypesProps,
+	sortType,
+	tableHeaderCellItemProps,
+} from '../../../types/table';
 
 interface TableHeaderProps {
 	numSelected: number;
@@ -37,7 +41,7 @@ const TableHeader = ({
 
 	const getHeadCells = () => {
 		// !!! Keep same order as getBodyCells(row) in Table/index.ts !!!
-		const cellTypes: string[] = ['name', 'type', 'active']; // TODO: new cells
+		const cellTypes: string[] = ['name', 'email', 'type', 'active']; // TODO: new cells
 		const cells = [] as tableHeaderCellItemProps[];
 
 		cellTypes.map((type) => {

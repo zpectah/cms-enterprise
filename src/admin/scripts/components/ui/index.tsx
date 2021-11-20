@@ -9,3 +9,4 @@ export { default as Form } from './Form';
 export { default as Dialog } from './Dialog';
 export { default as ConfirmDialog } from './Dialog/ConfirmDialog';
 export { default as Drawer } from './Drawer';
+export { default as Input } from './Input';

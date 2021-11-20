@@ -8,6 +8,7 @@ export type cellTypeItemProps = [tableCellAlignType, string];
 
 export interface cellsTypesProps {
 	name?: cellTypeItemProps;
+	email?: cellTypeItemProps;
 	active?: cellTypeItemProps;
 	type?: cellTypeItemProps;
 }

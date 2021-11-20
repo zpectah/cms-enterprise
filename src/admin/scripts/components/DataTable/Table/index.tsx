@@ -21,7 +21,11 @@ import styled from 'styled-components';
 
 import { DATA_TABLE } from '../../../constants';
 import { getComparator, stableSort } from '../utils';
-import { cellsTypesProps, sortType, tableBodyCellItemProps } from '../types';
+import {
+	cellsTypesProps,
+	sortType,
+	tableBodyCellItemProps,
+} from '../../../types/table';
 import { Typography } from '../../ui';
 import TableHeader from './TableHeader';
 import { getElTestAttr } from '../../../utils/tests';
@@ -151,6 +155,25 @@ const Table = ({
 						dataAppId={`${dataAppId}.cell.name.link.${row.id}`}
 					>
 						{row.name}
+					</StyledRowLink>
+				),
+			});
+
+		if (tableCells.email)
+			cells.push({
+				key: 'email',
+				padding: 'none',
+				scope: 'row',
+				element: 'th',
+				align: tableCells.email[0],
+				width: tableCells.email[1],
+				content: (
+					<StyledRowLink
+						h6
+						onClick={() => clickDetailHandler(row.id)}
+						dataAppId={`${dataAppId}.cell.email.link.${row.id}`}
+					>
+						(avatar) {row.email}
 					</StyledRowLink>
 				),
 			});

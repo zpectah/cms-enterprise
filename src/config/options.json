@@ -70,8 +70,9 @@
       }
     },
     "Users": {
-      "type": ["demo","redactor","chief_redactor","admin","super_admin"],
-      "group": ["redactor", "admin"]
+      "type": ["demo", "default"],
+      "level": ["demo", "redactor", "chief_redactor", "admin", "super_admin"],
+      "group": ["default", "redactor", "admin"]
     },
     "Members": {
       "type": ["default"]

@@ -47,11 +47,17 @@ const UsersModule = ({}: UsersModuleProps) => {
 		detail: {},
 		table: {
 			tableCells: {
-				name: ['left', 'auto'],
+				email: ['left', 'auto'],
 				type: ['left', '150px'],
 				active: ['right', '125px'],
 			},
-			tableSearchProps: ['name'],
+			tableSearchProps: [
+				'email',
+				'nick_name',
+				'first_name',
+				'middle_name',
+				'last_name',
+			],
 		},
 	};
 

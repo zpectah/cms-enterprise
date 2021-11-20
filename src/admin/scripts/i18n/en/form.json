@@ -1,10 +1,18 @@
 {
   "input": {
     "name": "Name",
+    "type": "Type",
     "active": "Item is active",
     "email": "E-mail",
     "password": "Password",
-    "password_again": "Password again"
+    "password_confirm": "Password again",
+    "nick_name": "Nickname",
+    "first_name": "First name",
+    "middle_name": "Middle name",
+    "last_name": "Last name",
+    "level": "Level",
+    "group": "Group",
+    "avatar": "Avatar"
   },
   "form": {}
 }

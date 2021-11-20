@@ -2,6 +2,7 @@
   "label": {
     "id": "ID",
     "name": "Name",
+    "email": "E-mail",
     "type": "Type",
     "active": "Active",
     "actions": "Actions"

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import AddIcon from '@mui/icons-material/Add';
@@ -11,7 +10,7 @@ import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { UsersItemProps } from '../../types/model';
-import { Form, Button, Section } from '../../components/ui';
+import { Form, Button, Section, Input } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
@@ -67,7 +66,7 @@ const UsersDetailForm = ({
 
 	const renderTitle = () => {
 		let title = t('new.Users');
-		if (detailData.id !== 'new') title = detailData.name;
+		if (detailData.id !== 'new') title = detailData.email;
 
 		return title;
 	};
@@ -132,23 +131,108 @@ const UsersDetailForm = ({
 						{/*  ============ Form sidebar ============ */}
 						<Section>
 							<Controller
+								name="type"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Select
+											id={`${formOptions.id}__type.label`}
+											labelId={`${formOptions.id}__type.label`}
+											label={t('form:input.type')}
+											style={{ width: '100%' }}
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											options={[
+												{
+													label: 'Default',
+													value: 'default',
+												},
+												{
+													label: 'Other',
+													value: 'other',
+												},
+											]}
+											dataAppId={`${formOptions.id}.select.type`}
+										/>
+									</Form.Row>
+								)}
+							/>
+							<Controller
+								name="user_level"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Select
+											id={`${formOptions.id}__level.label`}
+											labelId={`${formOptions.id}__level.label`}
+											label={t('form:input.level')}
+											style={{ width: '100%' }}
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											options={[
+												{
+													label: 'Default',
+													value: '0',
+												},
+												{
+													label: 'Other',
+													value: '2',
+												},
+											]}
+											dataAppId={`${formOptions.id}.select.level`}
+										/>
+									</Form.Row>
+								)}
+							/>
+							<Controller
+								name="user_group"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Select
+											id={`${formOptions.id}__group.label`}
+											labelId={`${formOptions.id}__group.label`}
+											label={t('form:input.group')}
+											style={{ width: '100%' }}
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											options={[
+												{
+													label: 'Default',
+													value: 'default',
+												},
+												{
+													label: 'Other',
+													value: 'other',
+												},
+											]}
+											dataAppId={`${formOptions.id}.select.group`}
+										/>
+									</Form.Row>
+								)}
+							/>
+							<Controller
 								name="active"
 								control={control}
 								rules={{}}
 								render={({ field: { onChange, onBlur, value, ref, name } }) => (
 									<Form.Row errors={[]}>
-										<FormControlLabel
-											control={
-												<Switch
-													onChange={onChange}
-													onBlur={onBlur}
-													checked={value}
-													name={name}
-													id={`${formOptions.id}__active`}
-													size="small"
-													{...getElTestAttr(`${formOptions.id}.switch.active`)}
-												/>
-											}
+										<Input.Switch
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__active`}
+											dataAppId={`${formOptions.id}.switch.active`}
 											label={t('form:input.active')}
 										/>
 									</Form.Row>
@@ -165,28 +249,142 @@ const UsersDetailForm = ({
 				</div>
 				<Section>
 					<Controller
-						name="name"
+						name="email"
 						control={control}
 						rules={{ required: true }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
-								<TextField
+								<Input.Text
+									type="email"
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
-									id={`${formOptions.id}__name`}
-									label={t('form:input.name')}
-									variant="outlined"
-									size="small"
-									style={{ width: '100%' }}
-									{...getElTestAttr(`${formOptions.id}.input.name`)}
+									id={`${formOptions.id}__email`}
+									label={t('form:input.email')}
+									responsiveWidth={'75%'}
+									dataAppId={`${formOptions.id}.input.email`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="password"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__password`}
+									label={t('form:input.password')}
+									responsiveWidth={'50%'}
+									dataAppId={`${formOptions.id}.input.password`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="password_confirm"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__password_confirm`}
+									label={t('form:input.password_confirm')}
+									responsiveWidth={'50%'}
+									dataAppId={`${formOptions.id}.input.password_confirm`}
 								/>
 							</Form.Row>
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				<Section>
+					<Controller
+						name="nick_name"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__nick_name`}
+									label={t('form:input.nick_name')}
+									responsiveWidth={'75%'}
+									dataAppId={`${formOptions.id}.input.nick_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="first_name"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__first_name`}
+									label={t('form:input.first_name')}
+									responsiveWidth={'75%'}
+									dataAppId={`${formOptions.id}.input.first_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="middle_name"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__middle_name`}
+									label={t('form:input.middle_name')}
+									responsiveWidth={'75%'}
+									dataAppId={`${formOptions.id}.input.middle_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="last_name"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__last_name`}
+									label={t('form:input.last_name')}
+									responsiveWidth={'75%'}
+									dataAppId={`${formOptions.id}.input.last_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>
