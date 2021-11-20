@@ -134,7 +134,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 
 	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: (number | string)[] = []) => {
-		const master = [...ids, ...selectedItems];
+		const master = [...ids];
 
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
@@ -150,7 +150,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: (number | string)[]) => {
-		const master = [...ids, ...selectedItems];
+		const master = [...ids];
 
 		console.log('AJAX ... toggle ...', master);
 

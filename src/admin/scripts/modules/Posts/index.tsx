@@ -150,7 +150,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: (number | string)[]) => {
-		const master = [...ids, ...selectedItems];
+		const master = [...ids];
 
 		console.log('AJAX ... toggle ...', master);
 
