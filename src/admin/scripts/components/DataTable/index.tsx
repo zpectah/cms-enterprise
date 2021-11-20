@@ -57,7 +57,7 @@ const DataTable = ({
 	dataAppId = `dataTable.${model}`,
 }: DataTableProps) => {
 	const history = useHistory();
-	const { t } = useTranslation(['common', 'components']);
+	const { t } = useTranslation(['common', 'components', 'types']);
 	const [lang, setLang] = useState(languageDefault);
 	const [selectedRows, setSelectedRows] = useState(selectedItems);
 	const [searchInput, setSearchInput] = useState('');
@@ -87,6 +87,10 @@ const DataTable = ({
 	const resetFilterHandler = () => {
 		setSearchInput('');
 		setFilterType('all');
+	};
+
+	const getTypesFromList = () => {
+		return ['default'];
 	};
 
 	useEffect(() => setSelectedRows(selectedItems), [selectedItems]);
@@ -143,9 +147,12 @@ const DataTable = ({
 									value={filterType}
 									onChange={(e) => setFilterType(e.target.value)}
 								>
-									<MenuItem value={'all'}>All</MenuItem>
-									<MenuItem value={'default'}>Default</MenuItem>
-									<MenuItem value={'...other'}>Thirty</MenuItem>
+									<MenuItem value={'all'}>{t(`types:all`)}</MenuItem>
+									{getTypesFromList().map((type) => (
+										<MenuItem key={type} value={type}>
+											{t(`types:${type}`)}
+										</MenuItem>
+									))}
 								</Select>
 							</FormControl>
 							<Button size="small" onClick={resetFilterHandler}>
@@ -165,7 +172,7 @@ const DataTable = ({
 									disabled={selectedRows.length == 0}
 									onClick={onSelectedToggleCallback}
 								>
-									{t(`button.toggle`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
+									{t(`button.toggle`)}&nbsp;&nbsp;(<b>{selectedRows.length}</b>)
 								</Button>
 								<Button
 									aria-label={`delete ${selectedRows.length}`}
@@ -174,7 +181,7 @@ const DataTable = ({
 									disabled={selectedRows.length == 0}
 									onClick={onSelectedDeleteCallback}
 								>
-									{t(`button.delete`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
+									{t(`button.delete`)}&nbsp;&nbsp;(<b>{selectedRows.length}</b>)
 								</Button>
 							</ButtonGroup>
 						</Stack>

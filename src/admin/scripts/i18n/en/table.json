@@ -1,0 +1,8 @@
+{
+  "label": {
+    "id": "ID",
+    "name": "Name",
+    "active": "Active",
+    "actions": "Actions"
+  }
+}

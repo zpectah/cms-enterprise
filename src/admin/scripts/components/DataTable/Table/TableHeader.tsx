@@ -33,30 +33,21 @@ const TableHeader = ({
 	onRequestSort,
 	tableCells,
 }: TableHeaderProps) => {
-	const { t } = useTranslation(['common', 'components']);
+	const { t } = useTranslation(['common', 'components', 'table']);
 
 	const getHeadCells = () => {
+		const cellTypes: string[] = ['name', 'active'];
 		const cells = [] as tableHeaderCellItemProps[];
 
-		if (tableCells.name)
-			cells.push({
-				id: 'name',
-				numeric: false,
-				disablePadding: true,
-				label: 'Name',
-				align: tableCells.name[0],
-				width: tableCells.name[1],
-			});
-
-		if (tableCells.active)
-			cells.push({
-				id: 'active',
-				numeric: true,
-				disablePadding: true,
-				label: 'Active',
-				align: tableCells.active[0],
-				width: tableCells.name[1],
-			});
+		cellTypes.map((type) => {
+			if (tableCells[type])
+				cells.push({
+					id: type,
+					label: t(`table:label.${type}`),
+					align: tableCells[type][0],
+					width: tableCells[type][1],
+				});
+		});
 
 		return cells;
 	};
@@ -84,7 +75,7 @@ const TableHeader = ({
 					<TableCell
 						key={cell.id}
 						align={cell.align}
-						padding={cell.disablePadding ? 'none' : 'normal'}
+						padding={'none'}
 						sortDirection={orderBy === cell.id ? order : false}
 						width={cell.width}
 					>
@@ -96,19 +87,19 @@ const TableHeader = ({
 							{cell.label}
 							{orderBy === cell.id ? (
 								<Box component="span" sx={visuallyHidden}>
-									{order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+									{order === 'desc' ? 'Descending' : 'Ascending'}
 								</Box>
 							) : null}
 						</TableSortLabel>
 					</TableCell>
 				))}
 				<TableCell
-					key={'actions'}
-					align={'right'}
-					padding={'normal'}
+					key="actions"
+					align="right"
+					padding="normal"
 					style={{ width: '125px' }}
 				>
-					<span>Actions</span>
+					<span>{t('table:label.actions')}</span>
 				</TableCell>
 			</TableRow>
 		</TableHead>

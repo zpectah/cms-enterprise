@@ -11,8 +11,6 @@ export interface cellsTypesProps {
 
 export interface tableHeaderCellItemProps {
 	id: string;
-	numeric: boolean;
-	disablePadding: boolean;
 	label: string;
 	align: tableCellAlignType;
 	width: string;

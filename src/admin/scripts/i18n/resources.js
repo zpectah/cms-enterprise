@@ -5,6 +5,7 @@ import en_messages from './en/messages.json';
 import en_components from './en/components.json';
 import en_types from './en/types.json';
 import en_calendar from './en/calendar.json';
+import en_table from './en/table.json';
 
 export default {
 	en: {
@@ -15,6 +16,7 @@ export default {
 		components: en_components,
 		types: en_types,
 		calendar: en_calendar,
+		table: en_table,
 	},
 	cs: {
 		common: en_common,
@@ -24,5 +26,6 @@ export default {
 		components: en_components,
 		types: en_types,
 		calendar: en_calendar,
+		table: en_table,
 	},
 };
