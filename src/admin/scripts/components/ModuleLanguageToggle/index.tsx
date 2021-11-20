@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-import { getElTestAttr } from '../../utils/tests';
+import { Input } from '../ui';
 
 interface ModuleLanguageToggleProps {
 	language: string;
@@ -27,26 +25,30 @@ const ModuleLanguageToggle = ({
 		onChange(value);
 	};
 
+	const getOptions = () => {
+		let options = [];
+
+		languageList.map((lang) => {
+			options.push({
+				label: lang,
+				value: lang,
+			});
+		});
+
+		return options;
+	};
+
 	return (
-		<ToggleButtonGroup
+		<Input.Toggle
 			value={lang}
 			exclusive
 			onChange={changeHandler}
 			aria-label="module-language-toggle"
 			size="small"
 			style={style}
-		>
-			{languageList.map((lng) => (
-				<ToggleButton
-					key={lng}
-					value={lng}
-					aria-label={lng}
-					{...getElTestAttr(`button.languageToggle.${lng}`)}
-				>
-					{lng}
-				</ToggleButton>
-			))}
-		</ToggleButtonGroup>
+			options={getOptions()}
+			dataAppId={`button.languageToggle`}
+		/>
 	);
 };
 

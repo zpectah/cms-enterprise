@@ -25,7 +25,7 @@ interface SelectInputProps {
 const SelectInput = (props: SelectInputProps & SelectProps) => {
 	const {
 		dataAppId = 'select.input.default',
-		options,
+		options = [],
 		responsiveWidth,
 		label,
 		labelId,
@@ -35,7 +35,7 @@ const SelectInput = (props: SelectInputProps & SelectProps) => {
 
 	return (
 		<FormControl fullWidth size={size}>
-			<InputLabel id={labelId}>{label}</InputLabel>
+			{label && <InputLabel id={labelId}>{label}</InputLabel>}
 			<StyledInput
 				labelId={labelId}
 				label={label}
