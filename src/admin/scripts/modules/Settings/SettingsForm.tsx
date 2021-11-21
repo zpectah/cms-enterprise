@@ -47,6 +47,10 @@ const SettingsForm = ({
 			key: 'content',
 			label: 'Content',
 		},
+		language: {
+			key: 'language',
+			label: 'Language',
+		},
 		modules: {
 			key: 'modules',
 			label: 'Modules',
@@ -99,6 +103,10 @@ const SettingsForm = ({
 								{/*  ============ Main form items ============ */}
 								<Tab label={panels.global.label} value={panels.global.key} />
 								<Tab label={panels.content.label} value={panels.content.key} />
+								<Tab
+									label={panels.language.label}
+									value={panels.language.key}
+								/>
 								<Tab label={panels.modules.label} value={panels.modules.key} />
 								{/*  ============ \\ Main form items ============ */}
 							</TabList>
@@ -115,6 +123,12 @@ const SettingsForm = ({
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>Item content</Section>
+						</TabPanel>
+						<TabPanel
+							value={panels.language.key}
+							style={{ paddingLeft: 0, paddingRight: 0 }}
+						>
+							<Section>Item language</Section>
 						</TabPanel>
 						<TabPanel
 							value={panels.modules.key}

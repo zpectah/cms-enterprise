@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { default as MuiBreadcrumbs } from '@mui/material/Breadcrumbs';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { date } from '../../../../../../utils/utils';
 import { utilsDateObjectProps } from '../../../types/app';
+import { Typography } from '../../ui';
+import config from '../../../config';
 
-const Wrapper = styled.div`
-	min-height: 21px;
-	padding-top: 0.125rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: row;
-	font-size: 0.825rem;
+const StyledText = styled(Typography.Paragraph)`
 	color: ${(props) => props.theme.content.breadcrumbs.color};
 `;
-const TimeText = styled.div`
-	margin-left: ${(props) => props.theme.spacer};
-
-	> span {
-	}
-`;
-const DateText = styled.div``;
 
 interface TimeProps {}
 
@@ -43,19 +32,19 @@ const Time = ({}: TimeProps) => {
 
 	return (
 		<>
-			<Wrapper>
-				<DateText>
+			<MuiBreadcrumbs aria-label="breadcrumbs">
+				<StyledText small>
 					{t(`calendar:day.${time.dayOfTheWeek}`)} {time.day}.{' '}
 					{t(`calendar:month.${time.month}`)} {time.year}
-				</DateText>
-				<TimeText>
+				</StyledText>
+				<StyledText small>
 					{time.hour}
 					<span>:</span>
 					{time.minute}
 					<span>:</span>
 					{time.second}
-				</TimeText>
-			</Wrapper>
+				</StyledText>
+			</MuiBreadcrumbs>
 		</>
 	);
 };
