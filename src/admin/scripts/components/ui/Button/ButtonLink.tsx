@@ -1,16 +1,18 @@
 import React, { forwardRef } from 'react';
+import Button, { ButtonProps } from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
 
-import Button, { ButtonBaseProps } from './index';
 import { getElTestAttr } from '../../../utils/tests';
 
-export interface LinkButtonProps extends ButtonBaseProps {
+export interface LinkButtonProps {
 	to?: string;
 	href?: string;
+	dataAppId?: string;
 }
 
-const LinkButton = forwardRef((props: LinkButtonProps, ref) => {
-	const { dataAppId = 'linkButton.default', to, href, ...rest } = props;
+const ButtonLink = forwardRef((props: LinkButtonProps & ButtonProps, ref) => {
+	const { dataAppId = 'button.link', to, href, ...rest } = props;
+
 	const history = useHistory();
 
 	const onClickHandler = (e) => {
@@ -20,6 +22,8 @@ const LinkButton = forwardRef((props: LinkButtonProps, ref) => {
 			history.push(to);
 		} else if (href) {
 			window.location.href = href;
+		} else {
+			props.onClick(e);
 		}
 	};
 
@@ -28,4 +32,4 @@ const LinkButton = forwardRef((props: LinkButtonProps, ref) => {
 	);
 });
 
-export default LinkButton;
+export default ButtonLink;

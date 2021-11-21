@@ -1,14 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX, USER_LEVEL } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { UsersItemProps } from '../../types/model';
-import { Form, Button, Section, Input } from '../../components/ui';
+import {
+	Form,
+	Button,
+	ButtonCreate,
+	Section,
+	Input,
+} from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
@@ -24,6 +28,7 @@ interface UsersDetailFormProps {
 	onDelete: (id: number | string) => void;
 	languageList: string[];
 	languageDefault: string;
+	onCreateCallback: () => void;
 }
 
 const UsersDetailForm = ({
@@ -35,8 +40,8 @@ const UsersDetailForm = ({
 	onDelete,
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
+	onCreateCallback,
 }: UsersDetailFormProps) => {
-	const history = useHistory();
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
 
@@ -61,8 +66,6 @@ const UsersDetailForm = ({
 	};
 	const deleteHandler = () => onDelete(detailData.id);
 	const cancelHandler = () => onCancel(isDirty);
-	const buttonCreateCallback = () =>
-		history.push(`${formOptions.route.path}${ROUTE_SUFFIX.detail}/new`);
 
 	const renderTitle = () => {
 		let title = t('new.Users');
@@ -111,8 +114,8 @@ const UsersDetailForm = ({
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
+	// Passwords match state & messages
 	const watchPasswordMatch = watch(['password', 'password_confirm']);
-
 	const isPasswordsMatching = useMemo(() => {
 		if (detailData.id == 'new') {
 			const p1 = watchPasswordMatch[0];
@@ -149,17 +152,13 @@ const UsersDetailForm = ({
 			/>
 			<ModuleViewHeading
 				tertiaryChildren={
-					<>
-						<Button
-							variant="outlined"
-							color="success"
-							onClick={buttonCreateCallback}
-							startIcon={<AddIcon />}
-							dataAppId={`button.create.new.Users`}
-						>
-							{t(`new.Users`)}
-						</Button>
-					</>
+					<ButtonCreate
+						variant="outlined"
+						onClick={onCreateCallback}
+						dataAppId={`button.create.new.Users`}
+					>
+						{t(`new.Users`)}
+					</ButtonCreate>
 				}
 			>
 				<></>

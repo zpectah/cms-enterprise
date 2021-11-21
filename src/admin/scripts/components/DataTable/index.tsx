@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -15,7 +14,7 @@ import { routeItemProps } from '../../types/pages';
 import { appModelProps } from '../../types/app';
 import { cellsTypesProps } from '../../types/table';
 import { oneOfModelItemProps } from '../../types/model';
-import { Section, Button, Typography, Input } from '../ui';
+import { Section, Button, ButtonCreate, Input } from '../ui';
 import ModuleViewHeading from '../ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../ModuleLanguageToggle';
@@ -36,6 +35,7 @@ interface DataTableProps {
 	languageDefault: string;
 	dataAppId?: string;
 	withoutLanguageToggle?: boolean;
+	onCreateCallback: () => void;
 }
 
 const DataTable = ({
@@ -52,16 +52,14 @@ const DataTable = ({
 	languageDefault = config.tmp.languageDefault,
 	dataAppId = `dataTable.${model}`,
 	withoutLanguageToggle = false,
+	onCreateCallback,
 }: DataTableProps) => {
-	const history = useHistory();
 	const { t } = useTranslation(['common', 'components', 'types']);
 	const [lang, setLang] = useState(languageDefault);
 	const [selectedRows, setSelectedRows] = useState(selectedItems);
 	const [searchInput, setSearchInput] = useState('');
 	const [filterType, setFilterType] = useState('all');
 
-	const buttonCreateHandler = () =>
-		history.push(`${routeObject.path}${ROUTE_SUFFIX.detail}/new`);
 	const onRowSelectCallback = (selected) => {
 		onSelect(selected);
 		setSelectedRows(selected);
@@ -128,15 +126,12 @@ const DataTable = ({
 			<ModuleViewHeading
 				tertiaryChildren={
 					<>
-						<Button
-							variant="contained"
-							color="success"
-							onClick={buttonCreateHandler}
-							startIcon={<AddIcon />}
+						<ButtonCreate
+							onClick={onCreateCallback}
 							dataAppId={`button.create.new.${model}`}
 						>
 							{t(`new.${model}`)}
-						</Button>
+						</ButtonCreate>
 					</>
 				}
 				additionalChildren={

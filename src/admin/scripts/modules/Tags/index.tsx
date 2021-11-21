@@ -54,6 +54,10 @@ const TagsModule = ({}: TagsModuleProps) => {
 		},
 	};
 
+	// Trigger callback for detail
+	const createNewCallback = () =>
+		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
+
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
@@ -203,6 +207,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 					onDelete={(id) => itemDeleteHandler([id])}
 					languageList={Settings.language_active}
 					languageDefault={Settings.language_default}
+					onCreateCallback={createNewCallback}
 				/>
 			) : (
 				<>
@@ -219,6 +224,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 							onSelect={itemSelectHandler}
 							languageList={Settings.language_active}
 							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
 						/>
 					) : (
 						<div>Loading</div>

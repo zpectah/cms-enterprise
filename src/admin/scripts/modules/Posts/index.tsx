@@ -55,6 +55,10 @@ const PostsModule = ({}: PostsModuleProps) => {
 		},
 	};
 
+	// Trigger callback for detail
+	const createNewCallback = () =>
+		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
+
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
@@ -204,6 +208,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 					onDelete={(id) => itemDeleteHandler([id])}
 					languageList={Settings.language_active}
 					languageDefault={Settings.language_default}
+					onCreateCallback={createNewCallback}
 				/>
 			) : (
 				<>
@@ -220,6 +225,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 							onSelect={itemSelectHandler}
 							languageList={Settings.language_active}
 							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
 						/>
 					) : (
 						<div>Loading</div>

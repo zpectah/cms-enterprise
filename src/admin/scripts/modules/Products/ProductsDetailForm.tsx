@@ -1,14 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { ProductsItemProps } from '../../types/model';
-import { Form, Button, Section, Input } from '../../components/ui';
+import {
+	Form,
+	Button,
+	ButtonCreate,
+	Section,
+	Input,
+} from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
@@ -23,6 +27,7 @@ interface ProductsDetailFormProps {
 	onDelete: (id: number | string) => void;
 	languageList: string[];
 	languageDefault: string;
+	onCreateCallback: () => void;
 }
 
 const ProductsDetailForm = ({
@@ -34,8 +39,8 @@ const ProductsDetailForm = ({
 	onDelete,
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
+	onCreateCallback,
 }: ProductsDetailFormProps) => {
-	const history = useHistory();
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
 
@@ -59,8 +64,6 @@ const ProductsDetailForm = ({
 	};
 	const deleteHandler = () => onDelete(detailData.id);
 	const cancelHandler = () => onCancel(isDirty);
-	const buttonCreateCallback = () =>
-		history.push(`${formOptions.route.path}${ROUTE_SUFFIX.detail}/new`);
 
 	const renderTitle = () => {
 		let title = t('new.Products');
@@ -97,27 +100,21 @@ const ProductsDetailForm = ({
 			/>
 			<ModuleViewHeading
 				tertiaryChildren={
-					<>
-						<Button
-							variant="outlined"
-							color="success"
-							onClick={buttonCreateCallback}
-							startIcon={<AddIcon />}
-							dataAppId={`button.create.new.Products`}
-						>
-							{t(`new.Products`)}
-						</Button>
-					</>
+					<ButtonCreate
+						variant="outlined"
+						onClick={onCreateCallback}
+						dataAppId={`button.create.new.Products`}
+					>
+						{t(`new.Products`)}
+					</ButtonCreate>
 				}
 			>
-				<>
-					<ModuleLanguageToggle
-						language={lang}
-						languageList={languageList}
-						onChange={(lng) => setLang(lng)}
-						style={{ marginRight: '.75rem' }}
-					/>
-				</>
+				<ModuleLanguageToggle
+					language={lang}
+					languageList={languageList}
+					onChange={(lng) => setLang(lng)}
+					style={{ marginRight: '.75rem' }}
+				/>
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}

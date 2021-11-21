@@ -1,5 +1,6 @@
 export { default as Button } from './Button';
-export { default as LinkButton } from './Button/LinkButton';
+export { default as ButtonLink } from './Button/ButtonLink';
+export { default as ButtonCreate } from './Button/ButtonCreate';
 export { default as Scrollable } from './Scrollable';
 export { default as Typography } from './Typography';
 export { default as Avatar } from './Avatar';
