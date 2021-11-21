@@ -1,21 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import AddIcon from '@mui/icons-material/Add';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { TagsItemProps } from '../../types/model';
-import { Form, Button, Section } from '../../components/ui';
+import { Form, Button, Section, Input } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
@@ -141,18 +134,13 @@ const TagsDetailForm = ({
 								rules={{}}
 								render={({ field: { onChange, onBlur, value, ref, name } }) => (
 									<Form.Row errors={[]}>
-										<FormControlLabel
-											control={
-												<Switch
-													onChange={onChange}
-													onBlur={onBlur}
-													checked={value}
-													name={name}
-													id={`${formOptions.id}__active`}
-													size="small"
-													{...getElTestAttr(`${formOptions.id}.switch.active`)}
-												/>
-											}
+										<Input.Switch
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__active`}
+											dataAppId={`${formOptions.id}.switch.active`}
 											label={t('form:input.active')}
 										/>
 									</Form.Row>
@@ -174,17 +162,16 @@ const TagsDetailForm = ({
 						rules={{ required: true }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
-								<TextField
+								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
 									id={`${formOptions.id}__name`}
 									label={t('form:input.name')}
-									variant="outlined"
-									size="small"
-									style={{ width: '100%' }}
-									{...getElTestAttr(`${formOptions.id}.input.name`)}
+									responsiveWidth={'75%'}
+									dataAppId={`${formOptions.id}.input.name`}
+									required
 								/>
 							</Form.Row>
 						)}

@@ -3,15 +3,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 
 import { ROUTES, EMAIL_REGEX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
-import { Form, Button, Section } from '../../components/ui';
+import { Form, Button, Section, Input } from '../../components/ui';
 import { useProfile } from '../../hooks/common';
-import { getElTestAttr } from '../../utils/tests';
 
 interface LostPasswordFormProps {}
 
@@ -74,7 +72,7 @@ const LostPasswordForm = ({}: LostPasswordFormProps) => {
 					rules={{ required: true, pattern: EMAIL_REGEX }}
 					render={({ field: { onChange, onBlur, value, ref, name } }) => (
 						<Form.Row errors={[]}>
-							<TextField
+							<Input.Text
 								type="email"
 								onChange={onChange}
 								onBlur={onBlur}
@@ -82,10 +80,8 @@ const LostPasswordForm = ({}: LostPasswordFormProps) => {
 								name={name}
 								id={`${formOptions.id}__email`}
 								label={t('form:input.email')}
-								variant="outlined"
-								size="small"
-								style={{ width: '100%' }}
-								{...getElTestAttr(`${formOptions.id}.input.email`)}
+								dataAppId={`${formOptions.id}.input.email`}
+								required
 							/>
 						</Form.Row>
 					)}

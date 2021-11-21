@@ -3,15 +3,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 
 import { ROUTES, EMAIL_REGEX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
-import { Form, Button, Section } from '../../components/ui';
+import { Form, Button, Section, Input } from '../../components/ui';
 import { useProfile } from '../../hooks/common';
-import { getElTestAttr } from '../../utils/tests';
 
 interface LoginFormProps {}
 
@@ -70,7 +68,7 @@ const LoginForm = ({}: LoginFormProps) => {
 					rules={{ required: true, pattern: EMAIL_REGEX }}
 					render={({ field: { onChange, onBlur, value, ref, name } }) => (
 						<Form.Row errors={[]}>
-							<TextField
+							<Input.Text
 								type="email"
 								onChange={onChange}
 								onBlur={onBlur}
@@ -78,10 +76,8 @@ const LoginForm = ({}: LoginFormProps) => {
 								name={name}
 								id={`${formOptions.id}__email`}
 								label={t('form:input.email')}
-								variant="outlined"
-								size="small"
-								style={{ width: '100%' }}
-								{...getElTestAttr(`${formOptions.id}.input.email`)}
+								dataAppId={`${formOptions.id}.input.email`}
+								required
 							/>
 						</Form.Row>
 					)}
@@ -92,7 +88,7 @@ const LoginForm = ({}: LoginFormProps) => {
 					rules={{ required: true }}
 					render={({ field: { onChange, onBlur, value, ref, name } }) => (
 						<Form.Row errors={[]}>
-							<TextField
+							<Input.Text
 								type="password"
 								onChange={onChange}
 								onBlur={onBlur}
@@ -100,10 +96,8 @@ const LoginForm = ({}: LoginFormProps) => {
 								name={name}
 								id={`${formOptions.id}__password`}
 								label={t('form:input.password')}
-								variant="outlined"
-								size="small"
-								style={{ width: '100%' }}
-								{...getElTestAttr(`${formOptions.id}.input.password`)}
+								dataAppId={`${formOptions.id}.input.password`}
+								required
 							/>
 						</Form.Row>
 					)}
