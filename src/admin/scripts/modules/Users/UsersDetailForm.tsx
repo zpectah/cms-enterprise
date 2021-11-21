@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import Switch from '@mui/material/Switch';
@@ -48,13 +48,14 @@ const UsersDetailForm = ({
 		route: ROUTES.app.users,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const { control, handleSubmit, reset, register, formState, watch } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 		},
 	});
 	const { isDirty, isValid } = formState;
+	const passwordMinLength = 5;
 
 	const submitHandler = (data: UsersItemProps, e: any) => onSubmit(data, e);
 	const errorSubmitHandler = (errors: any, e: any) => {
@@ -111,6 +112,35 @@ const UsersDetailForm = ({
 	}, [detailData]);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
+
+	const watchPasswordMatch = watch(['password', 'password_confirm']);
+
+	const isPasswordsMatching = useMemo(() => {
+		if (detailData.id == 'new') {
+			const p1 = watchPasswordMatch[0];
+			const p2 = watchPasswordMatch[1];
+
+			if (p1 == p2) {
+				return {
+					match: true,
+					p1: p1,
+					p2: p2,
+				};
+			} else {
+				return {
+					match: false,
+					p1: p1,
+					p2: p2,
+				};
+			}
+		} else {
+			return {
+				match: true,
+				p1: null,
+				p2: null,
+			};
+		}
+	}, [watchPasswordMatch]);
 
 	return (
 		<>
@@ -256,14 +286,18 @@ const UsersDetailForm = ({
 									label={t('form:input.email')}
 									responsiveWidth={'75%'}
 									dataAppId={`${formOptions.id}.input.email`}
+									disabled={detailData.id !== 'new'}
+									required
 								/>
 							</Form.Row>
 						)}
 					/>
+				</Section>
+				<Section>
 					<Controller
 						name="password"
 						control={control}
-						rules={{ required: true }}
+						rules={{ required: detailData.id == 'new' }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text
@@ -272,9 +306,14 @@ const UsersDetailForm = ({
 									value={value}
 									name={name}
 									id={`${formOptions.id}__password`}
-									label={t('form:input.password')}
+									label={
+										detailData.id == 'new'
+											? t('form:input.password')
+											: t('form:input.password_new')
+									}
 									responsiveWidth={'75%'}
 									dataAppId={`${formOptions.id}.input.password`}
+									required={detailData.id == 'new'}
 								/>
 							</Form.Row>
 						)}
@@ -283,11 +322,23 @@ const UsersDetailForm = ({
 						<Controller
 							name="password_confirm"
 							control={control}
-							rules={{ required: true }}
+							rules={{ required: detailData.id == 'new' }}
 							render={({ field: { onChange, onBlur, value, ref, name } }) => (
 								<Form.Row
-									errors={['Password wont match!']}
-									success={['Password match!']}
+									errors={
+										!isPasswordsMatching.match &&
+										isPasswordsMatching.p1.length >= passwordMinLength &&
+										isPasswordsMatching.p2.length >= passwordMinLength
+											? ['Password wont match!']
+											: []
+									}
+									success={
+										isPasswordsMatching.match &&
+										isPasswordsMatching.p1.length >= passwordMinLength &&
+										isPasswordsMatching.p2.length >= passwordMinLength
+											? ['Password match']
+											: []
+									}
 									responsiveMessages={'75%'}
 								>
 									<Input.Text
@@ -299,6 +350,7 @@ const UsersDetailForm = ({
 										label={t('form:input.password_confirm')}
 										responsiveWidth={'75%'}
 										dataAppId={`${formOptions.id}.input.password_confirm`}
+										required={detailData.id == 'new'}
 									/>
 								</Form.Row>
 							)}
@@ -321,6 +373,7 @@ const UsersDetailForm = ({
 									label={t('form:input.nick_name')}
 									responsiveWidth={'75%'}
 									dataAppId={`${formOptions.id}.input.nick_name`}
+									required
 								/>
 							</Form.Row>
 						)}
@@ -328,7 +381,7 @@ const UsersDetailForm = ({
 					<Controller
 						name="first_name"
 						control={control}
-						rules={{ required: true }}
+						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text
@@ -347,7 +400,7 @@ const UsersDetailForm = ({
 					<Controller
 						name="middle_name"
 						control={control}
-						rules={{ required: true }}
+						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text
@@ -366,7 +419,7 @@ const UsersDetailForm = ({
 					<Controller
 						name="last_name"
 						control={control}
-						rules={{ required: true }}
+						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text

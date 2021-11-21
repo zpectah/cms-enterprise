@@ -6,6 +6,7 @@
     "email": "E-mail",
     "password": "Password",
     "password_confirm": "Password again",
+    "password_new": "New password",
     "nick_name": "Nickname",
     "first_name": "First name",
     "middle_name": "Middle name",
