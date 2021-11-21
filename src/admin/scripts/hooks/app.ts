@@ -1,7 +1,17 @@
 import useSWR, { mutate } from 'swr';
 
 import { get, post, postRaw } from '../utils/api';
-import { PostsItemProps, CategoriesItemProps } from '../types/model';
+import {
+	PostsItemProps,
+	CategoriesItemProps,
+	MenuItemProps,
+	MenuItemItemProps,
+	PagesItemProps,
+	TagsItemProps,
+	TranslationsItemProps,
+	UploadsItemProps,
+	UsersItemProps,
+} from '../types/model';
 
 export function usePosts() {
 	const { data, error } = useSWR(`/api/get_posts`, get);
@@ -132,8 +142,8 @@ export function useMenu() {
 		menu_loading: !data && !error,
 		menu_error: error,
 		reloadMenu: () => mutate(`/api/get_menu`),
-		createMenu: (data: CategoriesItemProps) => post('/api/create_menu', data),
-		updateMenu: (data: CategoriesItemProps) => post('/api/update_menu', data),
+		createMenu: (data: MenuItemProps) => post('/api/create_menu', data),
+		updateMenu: (data: MenuItemProps) => post('/api/update_menu', data),
 		toggleMenu: (data: (number | string)[]) => post('/api/toggle_menu', data),
 		deleteMenu: (data: (number | string)[]) => post('/api/delete_menu', data),
 	};
@@ -178,9 +188,9 @@ export function useMenuItems() {
 		menuItems_loading: !data && !error,
 		menuItems_error: error,
 		reloadMenuItems: () => mutate(`/api/get_menuItems`),
-		createMenuItems: (data: CategoriesItemProps) =>
+		createMenuItems: (data: MenuItemItemProps) =>
 			post('/api/create_menuItems', data),
-		updateMenuItems: (data: CategoriesItemProps) =>
+		updateMenuItems: (data: MenuItemItemProps) =>
 			post('/api/update_menuItems', data),
 		toggleMenuItems: (data: (number | string)[]) =>
 			post('/api/toggle_menuItems', data),
@@ -228,8 +238,8 @@ export function usePages() {
 		pages_loading: !data && !error,
 		pages_error: error,
 		reloadPages: () => mutate(`/api/get_pages`),
-		createPages: (data: CategoriesItemProps) => post('/api/create_pages', data),
-		updatePages: (data: CategoriesItemProps) => post('/api/update_pages', data),
+		createPages: (data: PagesItemProps) => post('/api/create_pages', data),
+		updatePages: (data: PagesItemProps) => post('/api/update_pages', data),
 		togglePages: (data: (number | string)[]) => post('/api/toggle_pages', data),
 		deletePages: (data: (number | string)[]) => post('/api/delete_pages', data),
 	};
@@ -274,8 +284,8 @@ export function useTags() {
 		tags_loading: !data && !error,
 		tags_error: error,
 		reloadTags: () => mutate(`/api/get_tags`),
-		createTags: (data: CategoriesItemProps) => post('/api/create_tags', data),
-		updateTags: (data: CategoriesItemProps) => post('/api/update_tags', data),
+		createTags: (data: TagsItemProps) => post('/api/create_tags', data),
+		updateTags: (data: TagsItemProps) => post('/api/update_tags', data),
 		toggleTags: (data: (number | string)[]) => post('/api/toggle_tags', data),
 		deleteTags: (data: (number | string)[]) => post('/api/delete_tags', data),
 	};
@@ -320,9 +330,9 @@ export function useTranslations() {
 		translations_loading: !data && !error,
 		translations_error: error,
 		reloadTranslations: () => mutate(`/api/get_translations`),
-		createTranslations: (data: CategoriesItemProps) =>
+		createTranslations: (data: TranslationsItemProps) =>
 			post('/api/create_translations', data),
-		updateTranslations: (data: CategoriesItemProps) =>
+		updateTranslations: (data: TranslationsItemProps) =>
 			post('/api/update_translations', data),
 		toggleTranslations: (data: (number | string)[]) =>
 			post('/api/toggle_translations', data),
@@ -370,9 +380,9 @@ export function useUploads() {
 		uploads_loading: !data && !error,
 		uploads_error: error,
 		reloadUploads: () => mutate(`/api/get_uploads`),
-		createUploads: (data: CategoriesItemProps) =>
+		createUploads: (data: UploadsItemProps) =>
 			post('/api/create_uploads', data),
-		updateUploads: (data: CategoriesItemProps) =>
+		updateUploads: (data: UploadsItemProps) =>
 			post('/api/update_uploads', data),
 		toggleUploads: (data: (number | string)[]) =>
 			post('/api/toggle_uploads', data),
@@ -465,8 +475,8 @@ export function useUsers() {
 		users_loading: !data && !error,
 		users_error: error,
 		reloadUsers: () => mutate(`/api/get_users`),
-		createUsers: (data: CategoriesItemProps) => post('/api/create_users', data),
-		updateUsers: (data: CategoriesItemProps) => post('/api/update_users', data),
+		createUsers: (data: UsersItemProps) => post('/api/create_users', data),
+		updateUsers: (data: UsersItemProps) => post('/api/update_users', data),
 		toggleUsers: (data: (number | string)[]) => post('/api/toggle_users', data),
 		deleteUsers: (data: (number | string)[]) => post('/api/delete_users', data),
 	};

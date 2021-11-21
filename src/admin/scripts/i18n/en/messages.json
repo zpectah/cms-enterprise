@@ -1,10 +1,10 @@
 {
   "success": {
     "itemCreated": "Item has been created",
-    "itemUpdated": "Item has been updated",
-    "itemUpdated_plural": "{value} Items has been updated",
-    "itemDeleted": "Item has been deleted",
-    "itemDeleted_plural": "{value} Items has been deleted"
+    "itemUpdated_one": "Item has been updated",
+    "itemUpdated_other": "{{count}} Items has been updated",
+    "itemDeleted_one": "Item has been deleted",
+    "itemDeleted_other": "{{count}} Items has been deleted"
   },
   "error": {},
   "info": {}

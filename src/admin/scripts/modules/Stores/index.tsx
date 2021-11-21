@@ -78,7 +78,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: any, e: any) => {
-		const master = _.cloneDeep(data);
+		const master: StoresItemProps = _.cloneDeep(data);
 
 		console.log('AJAX ... create/save ...', master);
 
@@ -126,7 +126,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 	// When detail opens confirm dialog
 	const detailDeleteHandler = (id: number | string) => {
-		const master = [id];
+		const master: (number | string)[] = [id];
 
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
@@ -135,7 +135,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: (number | string)[] = []) => {
-		const master = [...ids];
+		const master: (number | string)[] = [...ids];
 
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
@@ -151,7 +151,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: (number | string)[]) => {
-		const master = [...ids];
+		const master: (number | string)[] = [...ids];
 
 		console.log('AJAX ... toggle ...', master);
 
@@ -160,7 +160,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 			setSelectedItems([]);
 			createToasts({
-				title: t('messages:success.itemUpdated', { value: master.length }),
+				title: t('messages:success.itemUpdated', { count: master.length }),
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
@@ -170,10 +170,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
-			// proceed delete
-			// close and redirect back as callback
-
-			const master = [...confirmDialogData];
+			const master: (number | string)[] = [...confirmDialogData];
 
 			console.log('AJAX ... delete ...', master);
 
@@ -183,12 +180,11 @@ const StoresModule = ({}: StoresModuleProps) => {
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({
-					title: t('messages:success.itemDeleted', { value: master.length }),
+					title: t('messages:success.itemDeleted', { count: master.length }),
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
-				if (confirmDialogData.length == 1)
-					history.push(moduleObject.route.path);
+				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
 			closeConfirmHandler();
