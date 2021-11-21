@@ -10,6 +10,7 @@ import { getElTestAttr } from '../../../utils/tests';
 
 const StyledInput = styled(Select)<{ responsive: string }>`
 	width: 100%;
+	background-color: white;
 
 	${media.min.md} {
 		width: ${(props) => (props.responsive ? props.responsive : '100%')};

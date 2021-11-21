@@ -162,7 +162,6 @@ const UsersDetailForm = ({
 											id={`${formOptions.id}__type.label`}
 											labelId={`${formOptions.id}__type.label`}
 											label={t('form:input.type')}
-											style={{ width: '100%' }}
 											onChange={onChange}
 											onBlur={onBlur}
 											value={value}
@@ -183,7 +182,6 @@ const UsersDetailForm = ({
 											id={`${formOptions.id}__level.label`}
 											labelId={`${formOptions.id}__level.label`}
 											label={t('form:input.level')}
-											style={{ width: '100%' }}
 											onChange={onChange}
 											onBlur={onBlur}
 											value={value}
@@ -204,7 +202,6 @@ const UsersDetailForm = ({
 											id={`${formOptions.id}__group.label`}
 											labelId={`${formOptions.id}__group.label`}
 											label={t('form:input.group')}
-											style={{ width: '100%' }}
 											onChange={onChange}
 											onBlur={onBlur}
 											value={value}
@@ -276,31 +273,37 @@ const UsersDetailForm = ({
 									name={name}
 									id={`${formOptions.id}__password`}
 									label={t('form:input.password')}
-									responsiveWidth={'50%'}
+									responsiveWidth={'75%'}
 									dataAppId={`${formOptions.id}.input.password`}
 								/>
 							</Form.Row>
 						)}
 					/>
-					<Controller
-						name="password_confirm"
-						control={control}
-						rules={{ required: true }}
-						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
-								<Input.Text
-									onChange={onChange}
-									onBlur={onBlur}
-									value={value}
-									name={name}
-									id={`${formOptions.id}__password_confirm`}
-									label={t('form:input.password_confirm')}
-									responsiveWidth={'50%'}
-									dataAppId={`${formOptions.id}.input.password_confirm`}
-								/>
-							</Form.Row>
-						)}
-					/>
+					{detailData.id == 'new' && (
+						<Controller
+							name="password_confirm"
+							control={control}
+							rules={{ required: true }}
+							render={({ field: { onChange, onBlur, value, ref, name } }) => (
+								<Form.Row
+									errors={['Password wont match!']}
+									success={['Password match!']}
+									responsiveMessages={'75%'}
+								>
+									<Input.Text
+										onChange={onChange}
+										onBlur={onBlur}
+										value={value}
+										name={name}
+										id={`${formOptions.id}__password_confirm`}
+										label={t('form:input.password_confirm')}
+										responsiveWidth={'75%'}
+										dataAppId={`${formOptions.id}.input.password_confirm`}
+									/>
+								</Form.Row>
+							)}
+						/>
+					)}
 				</Section>
 				<Section>
 					<Controller
