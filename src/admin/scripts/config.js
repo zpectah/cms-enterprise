@@ -9,6 +9,9 @@ export default {
 	// Build timestamp
 	timestamp: window.APPTIMESTAMP,
 
+	// Temporary token
+	tmp_token: window.TMP_TOKEN,
+
 	// Project configuration object
 	project: project,
 

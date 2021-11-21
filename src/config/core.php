@@ -7,11 +7,12 @@ $JSON_ENV = json_decode(file_get_contents(PATH_ROOT . 'config/environmental.json
 $JSON_OPTIONS = json_decode(file_get_contents(PATH_ROOT . 'config/options.json'), true);
 $JSON_PROJECT = json_decode(file_get_contents(PATH_ROOT . 'config/project.json'), true);
 
+$utils = new Utils;
 
 
-
-const ENV =                                               BUILD['env'];
-const TIMESTAMP =                                         BUILD['timestamp'];
+const ENV =                                               BUILD['env'];                                                 // Environment
+const TIMESTAMP =                                         BUILD['timestamp'];                                           // Build timestamp
+define("TMP_TOKEN",                                       $utils -> getRandomString(16, 'lower'));          // Temporary view token
 const PASS_CRYPT =                                        PASSWORD_ARGON2I;
 const PASS_CRYPT_OPTIONS = [
     'memory_cost' =>                                      2048,

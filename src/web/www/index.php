@@ -17,6 +17,7 @@ require PATH_ROOT . 'core/index.php';
     <script>
         window.APPENV = window.APPENV || '<?=(ENV)?>';
         window.APPTIMESTAMP = window.APPTIMESTAMP || '<?=(TIMESTAMP)?>';
+        window.TMP_TOKEN = window.TMP_TOKEN || '<?=(TMP_TOKEN)?>';
     </script>
 </head>
 <body class="page">
