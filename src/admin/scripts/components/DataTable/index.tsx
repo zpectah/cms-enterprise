@@ -35,6 +35,7 @@ interface DataTableProps {
 	languageList: string[];
 	languageDefault: string;
 	dataAppId?: string;
+	withoutLanguageToggle?: boolean;
 }
 
 const DataTable = ({
@@ -50,6 +51,7 @@ const DataTable = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	dataAppId = `dataTable.${model}`,
+	withoutLanguageToggle = false,
 }: DataTableProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components', 'types']);
@@ -212,12 +214,14 @@ const DataTable = ({
 				}
 			>
 				<>
-					<ModuleLanguageToggle
-						language={lang}
-						languageList={languageList}
-						onChange={(lng) => setLang(lng)}
-						style={{ marginRight: '.75rem' }}
-					/>
+					{!withoutLanguageToggle && (
+						<ModuleLanguageToggle
+							language={lang}
+							languageList={languageList}
+							onChange={(lng) => setLang(lng)}
+							style={{ marginRight: '.75rem' }}
+						/>
+					)}
 				</>
 			</ModuleViewHeading>
 			<Section>

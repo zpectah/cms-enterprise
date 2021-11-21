@@ -1,118 +1,46 @@
 import { appModelProps } from '../types/app';
-import {
-	PostsItemProps,
-	CategoriesItemProps,
-	MenuItemProps,
-	PagesItemProps,
-	TagsItemProps,
-	TranslationsItemProps,
-	UploadsItemProps,
-	UsersItemProps,
-	MembersItemProps,
-	DeliveriesItemProps,
-	OrdersItemProps,
-	PaymentsItemProps,
-	ProducersItemProps,
-	ProductsItemProps,
-	StoresItemProps,
-	DistributorsItemProps,
-} from '../types/model';
+import { oneOfModelItemProps } from '../types/model';
+import CategoriesNew from '../modules/Categories/Categories.new';
+import MenuNew from '../modules/Menu/Menu.new';
+import PostsNew from '../modules/Posts/Posts.new';
+import PagesNew from '../modules/Pages/Pages.new';
+import TagsNew from '../modules/Tags/Tags.new';
+import TranslationsNew from '../modules/Translations/Translations.new';
+import UploadsNew from '../modules/Uploads/Uploads.new';
+import UsersNew from '../modules/Users/Users.new';
+import MembersNew from '../modules/Members/Members.new';
+import DeliveriesNew from '../modules/Deliveries/Deliveries.new';
+import DistributorsNew from '../modules/Distributors/Distributors.new';
+import OrdersNew from '../modules/Orders/Orders.new';
+import PaymentsNew from '../modules/Payments/Payments.new';
+import ProducersNew from '../modules/Producers/Producers.new';
+import ProductsNew from '../modules/Products/Products.new';
+import StoresNew from '../modules/Stores/Stores.new';
 
 export const blankDataItem = {
-	Categories: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as CategoriesItemProps,
-	Menu: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as MenuItemProps,
-	Posts: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as PostsItemProps,
-	Pages: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as PagesItemProps,
-	Tags: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as TagsItemProps,
-	Translations: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as TranslationsItemProps,
-	Uploads: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as UploadsItemProps,
-	Users: {
-		id: 'new',
-		type: 'default',
-		email: '',
-		password: '',
-		password_confirm: '',
-		nick_name: '',
-		first_name: '',
-		middle_name: '',
-		last_name: '',
-		user_level: 2,
-		user_group: '',
-		img_avatar: '',
-		active: true,
-	} as UsersItemProps,
-
-	Members: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as MembersItemProps,
-	Deliveries: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as DeliveriesItemProps,
-	Distributors: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as DistributorsItemProps,
-	Orders: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as OrdersItemProps,
-	Payments: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as PaymentsItemProps,
-	Producers: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as ProducersItemProps,
-	Products: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as ProductsItemProps,
-	Stores: {
-		id: 'new',
-		name: '',
-		active: true,
-	} as StoresItemProps,
+	Categories: CategoriesNew,
+	Menu: MenuNew,
+	Posts: PostsNew,
+	Pages: PagesNew,
+	Tags: TagsNew,
+	Translations: TranslationsNew,
+	Uploads: UploadsNew,
+	Users: UsersNew,
+	Members: MembersNew,
+	Deliveries: DeliveriesNew,
+	Distributors: DistributorsNew,
+	Orders: OrdersNew,
+	Payments: PaymentsNew,
+	Producers: ProducersNew,
+	Products: ProductsNew,
+	Stores: StoresNew,
 };
 
-export default (id: number | string, model: appModelProps, items: any[]) => {
+export default (
+	id: number | string,
+	model: appModelProps,
+	items: oneOfModelItemProps[],
+) => {
 	let item;
 
 	if (id == 'new') {

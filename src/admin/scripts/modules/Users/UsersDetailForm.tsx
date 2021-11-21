@@ -15,7 +15,7 @@ import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import getOptionsList from '../../utils/getOptionsList';
-import { getElTestAttr } from '../../utils/tests';
+import AvatarPicker from '../../components/AvatarPicker';
 
 interface UsersDetailFormProps {
 	detailData: UsersItemProps;
@@ -164,14 +164,7 @@ const UsersDetailForm = ({
 					</>
 				}
 			>
-				<>
-					<ModuleLanguageToggle
-						language={lang}
-						languageList={languageList}
-						onChange={(lng) => setLang(lng)}
-						style={{ marginRight: '.75rem' }}
-					/>
-				</>
+				<></>
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}
@@ -435,6 +428,9 @@ const UsersDetailForm = ({
 							</Form.Row>
 						)}
 					/>
+				</Section>
+				<Section>
+					<AvatarPicker />
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>

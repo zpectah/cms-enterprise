@@ -226,6 +226,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 							onSelect={itemSelectHandler}
 							languageList={Settings.language_active}
 							languageDefault={Settings.language_default}
+							withoutLanguageToggle
 						/>
 					) : (
 						<div>Loading</div>

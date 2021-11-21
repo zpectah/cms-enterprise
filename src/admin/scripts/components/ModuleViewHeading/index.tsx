@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div<{ align: ModuleViewHeadingProps['alignOverride'] }>`
 	width: 100%;
-	min-height: 56px;
+	min-height: 58px;
 	margin-bottom: calc(${(props) => props.theme.spacer} / 2);
 	padding-bottom: ${(props) => props.theme.spacer};
 	display: flex;
