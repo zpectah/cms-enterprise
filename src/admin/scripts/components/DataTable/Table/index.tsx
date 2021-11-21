@@ -26,6 +26,7 @@ import {
 	sortType,
 	tableBodyCellItemProps,
 } from '../../../types/table';
+import { oneOfModelItemProps } from '../../../types/model';
 import { Typography } from '../../ui';
 import TableHeader from './TableHeader';
 import { getElTestAttr } from '../../../utils/tests';
@@ -41,7 +42,7 @@ const StyledRowLink = styled(Typography.Title)`
 `;
 
 export interface TableProps {
-	tableData: any[];
+	tableData: oneOfModelItemProps[];
 	tableCells: cellsTypesProps;
 	rowPathPrefix: string;
 	selectedRows: readonly (number | string)[];
@@ -66,7 +67,7 @@ const Table = ({
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components', 'types']);
 	const [order, setOrder] = useState<sortType>('desc');
-	const [orderBy, setOrderBy] = useState<keyof any>('id'); // TODO
+	const [orderBy, setOrderBy] = useState<keyof oneOfModelItemProps>('id');
 	const [selected, setSelected] =
 		useState<readonly (number | string)[]>(selectedRows);
 	const [page, setPage] = useState(0);
@@ -78,7 +79,7 @@ const Table = ({
 
 	const sortRequestHandler = (
 		event: React.MouseEvent<unknown>,
-		property: keyof any, // TODO
+		property: keyof oneOfModelItemProps, // TODO
 	) => {
 		const isAsc = orderBy === property && order === 'asc';
 
@@ -98,7 +99,7 @@ const Table = ({
 
 	const rowSelectHandler = (event: React.MouseEvent<unknown>, id: string) => {
 		const selectedIndex = selected.indexOf(id);
-		let newSelected: any[] = [];
+		let newSelected: (number | string)[] = [];
 
 		if (selectedIndex === -1) {
 			newSelected = newSelected.concat(selected, id);

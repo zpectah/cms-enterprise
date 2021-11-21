@@ -4,6 +4,12 @@ export interface commonItemProps {
 	active: boolean;
 }
 
+export interface RequestsItemProps {
+	id: number | string;
+	type: string;
+	status: number;
+}
+
 export interface CategoriesItemProps extends commonItemProps {
 	name: string;
 }
@@ -49,10 +55,6 @@ export interface UsersItemProps extends commonItemProps {
 	img_avatar?: string;
 }
 
-export interface RequestsItemProps extends commonItemProps {
-	name: string;
-}
-
 export interface MembersItemProps extends commonItemProps {
 	name: string;
 }
@@ -88,3 +90,21 @@ export interface ProductsOptionsItemProps extends commonItemProps {
 export interface StoresItemProps extends commonItemProps {
 	name: string;
 }
+
+export type oneOfModelItemProps =
+	| CategoriesItemProps
+	| MenuItemProps
+	| PagesItemProps
+	| PostsItemProps
+	| TagsItemProps
+	| TranslationsItemProps
+	| UploadsItemProps
+	| UsersItemProps
+	| MembersItemProps
+	| DeliveriesItemProps
+	| DistributorsItemProps
+	| OrdersItemProps
+	| PaymentsItemProps
+	| ProducersItemProps
+	| ProductsItemProps
+	| StoresItemProps;
