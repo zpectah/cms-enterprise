@@ -22,8 +22,8 @@ const UsersModule = ({}: UsersModuleProps) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const { t } = useTranslation(['common', 'messages']);
-	const [detail, setDetail] = useState<string>(null);
-	const [detailData, setDetailData] = useState<any>(null);
+	const [detail, setDetail] = useState<string | number>(null);
+	const [detailData, setDetailData] = useState<UsersItemProps>(null);
 	const [selectedItems, setSelectedItems] = useState<
 		readonly (number | string)[]
 	>([]);
@@ -83,7 +83,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 		setSelectedItems(selected);
 
 	// When detail is submitted (create/update)
-	const detailSubmitHandler = (data: any, e: any) => {
+	const detailSubmitHandler = (data: UsersItemProps) => {
 		const master: UsersItemProps = _.cloneDeep(data);
 
 		console.log('AJAX ... create/save ...', master);
@@ -114,7 +114,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 	};
 
 	// When error returns from submit
-	const detailSubmitErrorHandler = (error: any, e: any) =>
+	const detailSubmitErrorHandler = (error: string) =>
 		createToasts({
 			title: error,
 			context: 'error',
@@ -130,17 +130,8 @@ const UsersModule = ({}: UsersModuleProps) => {
 		}
 	};
 
-	// When detail opens confirm dialog
-	const detailDeleteHandler = (id: number | string) => {
-		const master: (number | string)[] = [id];
-
-		setConfirmDialog(true);
-		setConfirmDialogType('delete');
-		setConfirmDialogData(master);
-	};
-
 	// When item/row opens confirm dialog
-	const itemDeleteHandler = (ids: (number | string)[] = []) => {
+	const itemDeleteHandler = (ids: (number | string)[]) => {
 		const master: (number | string)[] = [...ids];
 
 		setConfirmDialog(true);
@@ -216,7 +207,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 					onSubmit={detailSubmitHandler}
 					onSubmitError={detailSubmitErrorHandler}
 					onCancel={detailCancelHandler}
-					onDelete={detailDeleteHandler}
+					onDelete={(id) => itemDeleteHandler([id])}
 					languageList={Settings.language_active}
 					languageDefault={Settings.language_default}
 				/>
