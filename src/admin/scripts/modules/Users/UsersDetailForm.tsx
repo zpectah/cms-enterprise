@@ -7,13 +7,14 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, USER_LEVEL } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { UsersItemProps } from '../../types/model';
 import { Form, Button, Section, Input } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
+import getOptionsList from '../../utils/getOptionsList';
 import { getElTestAttr } from '../../utils/tests';
 
 interface UsersDetailFormProps {
@@ -88,6 +89,27 @@ const UsersDetailForm = ({
 		);
 	};
 
+	const getTypeOptions = useCallback(
+		() => getOptionsList(config.options.model.Users.type, t),
+		[detailData],
+	);
+	const getGroupOptions = useCallback(
+		() => getOptionsList(config.options.model.Users.group, t),
+		[detailData],
+	);
+	const getLevelOptions = useCallback(() => {
+		let options = [];
+
+		config.options.model.Users.level.map((type) => {
+			options.push({
+				label: t(`types:${type}`),
+				value: USER_LEVEL[type].id,
+			});
+		});
+
+		return options;
+	}, [detailData]);
+
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
 	return (
@@ -145,16 +167,7 @@ const UsersDetailForm = ({
 											onBlur={onBlur}
 											value={value}
 											name={name}
-											options={[
-												{
-													label: 'Default',
-													value: 'default',
-												},
-												{
-													label: 'Other',
-													value: 'other',
-												},
-											]}
+											options={getTypeOptions()}
 											dataAppId={`${formOptions.id}.select.type`}
 										/>
 									</Form.Row>
@@ -175,16 +188,7 @@ const UsersDetailForm = ({
 											onBlur={onBlur}
 											value={value}
 											name={name}
-											options={[
-												{
-													label: 'Default',
-													value: '0',
-												},
-												{
-													label: 'Other',
-													value: '2',
-												},
-											]}
+											options={getLevelOptions()}
 											dataAppId={`${formOptions.id}.select.level`}
 										/>
 									</Form.Row>
@@ -205,16 +209,7 @@ const UsersDetailForm = ({
 											onBlur={onBlur}
 											value={value}
 											name={name}
-											options={[
-												{
-													label: 'Default',
-													value: 'default',
-												},
-												{
-													label: 'Other',
-													value: 'other',
-												},
-											]}
+											options={getGroupOptions()}
 											dataAppId={`${formOptions.id}.select.group`}
 										/>
 									</Form.Row>
