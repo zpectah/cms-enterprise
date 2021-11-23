@@ -168,7 +168,6 @@ const PostsDetailForm = ({
 									label={t('form:input.name')}
 									responsiveWidth={'75%'}
 									dataAppId={`${formOptions.id}.input.name`}
-									disabled={detailData.id !== 'new'}
 									required
 								/>
 							</Form.Row>

@@ -20,7 +20,7 @@ import Chip from '@mui/material/Chip';
 import styled from 'styled-components';
 
 import { DATA_TABLE } from '../../../constants';
-import { getComparator, stableSort } from '../utils';
+import { getComparator, stableSort } from '../../../utils/table';
 import {
 	cellsTypesProps,
 	sortType,

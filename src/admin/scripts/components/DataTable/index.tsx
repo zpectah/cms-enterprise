@@ -9,6 +9,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import config from '../../config';
 import { array, file } from '../../../../../utils/utils';
+import { getSearchAttrs, getTypesFromData } from '../../utils/table';
 import { ROUTE_SUFFIX } from '../../constants';
 import { routeItemProps } from '../../types/pages';
 import { appModelProps } from '../../types/app';
@@ -19,7 +20,6 @@ import ModuleViewHeading from '../ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../ModuleLanguageToggle';
 import Table from './Table';
-import { getSearchAttrs, getTypesFromData } from './utils';
 
 interface DataTableProps {
 	model: appModelProps;

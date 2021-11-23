@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX, USER_LEVEL } from '../../constants';
+import { ROUTES, EMAIL_REGEX, USER_LEVEL } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { UsersItemProps } from '../../types/model';
 import {
@@ -263,7 +263,7 @@ const UsersDetailForm = ({
 					<Controller
 						name="email"
 						control={control}
-						rules={{ required: true }}
+						rules={{ required: true, pattern: EMAIL_REGEX }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text
