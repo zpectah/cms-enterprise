@@ -8,14 +8,14 @@ import FormLabel from '@mui/material/FormLabel';
 import { getElTestAttr } from '../../../utils/tests';
 
 interface RadioInputProps {
-	dataAppId?: string;
+	dataTestId?: string;
 	options: { label: string; value: string | number }[];
 	label?: string;
 }
 
 const RadioInput = (props: RadioInputProps & RadioGroupProps) => {
 	const {
-		dataAppId = 'radio.input.default',
+		dataTestId = 'radio.input.default',
 		options = [],
 		label,
 		...rest
@@ -24,13 +24,13 @@ const RadioInput = (props: RadioInputProps & RadioGroupProps) => {
 	return (
 		<FormControl component="fieldset">
 			{label && <FormLabel component="legend">{label}</FormLabel>}
-			<RadioGroup {...rest} {...getElTestAttr(dataAppId)}>
+			<RadioGroup {...rest} {...getElTestAttr(dataTestId)}>
 				{options.map((option) => (
 					<FormControlLabel
 						key={option.value}
 						value={option.value}
 						control={
-							<Radio {...getElTestAttr(`${dataAppId}.item.${option.value}`)} />
+							<Radio {...getElTestAttr(`${dataTestId}.item.${option.value}`)} />
 						}
 						label={option.label}
 					/>

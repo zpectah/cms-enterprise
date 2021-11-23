@@ -155,7 +155,7 @@ const UsersDetailForm = ({
 					<ButtonCreate
 						variant="outlined"
 						onClick={onCreateCallback}
-						dataAppId={`button.create.new.Users`}
+						dataTestId={`button.create.new.Users`}
 					>
 						{t(`new.Users`)}
 					</ButtonCreate>
@@ -165,7 +165,7 @@ const UsersDetailForm = ({
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}
-				dataAppId={formOptions.id}
+				dataTestId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 				footerChildren={renderFooter()}
 				sidebarChildren={
@@ -187,7 +187,7 @@ const UsersDetailForm = ({
 											value={value}
 											name={name}
 											options={getTypeOptions()}
-											dataAppId={`${formOptions.id}.select.type`}
+											dataTestId={`${formOptions.id}.select.type`}
 										/>
 									</Form.Row>
 								)}
@@ -207,7 +207,7 @@ const UsersDetailForm = ({
 											value={value}
 											name={name}
 											options={getLevelOptions()}
-											dataAppId={`${formOptions.id}.select.level`}
+											dataTestId={`${formOptions.id}.select.level`}
 										/>
 									</Form.Row>
 								)}
@@ -227,7 +227,7 @@ const UsersDetailForm = ({
 											value={value}
 											name={name}
 											options={getGroupOptions()}
-											dataAppId={`${formOptions.id}.select.group`}
+											dataTestId={`${formOptions.id}.select.group`}
 										/>
 									</Form.Row>
 								)}
@@ -244,7 +244,7 @@ const UsersDetailForm = ({
 											checked={value}
 											name={name}
 											id={`${formOptions.id}__active`}
-											dataAppId={`${formOptions.id}.switch.active`}
+											dataTestId={`${formOptions.id}.switch.active`}
 											label={t('form:input.active')}
 										/>
 									</Form.Row>
@@ -275,7 +275,7 @@ const UsersDetailForm = ({
 									id={`${formOptions.id}__email`}
 									label={t('form:input.email')}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.email`}
+									dataTestId={`${formOptions.id}.input.email`}
 									disabled={detailData.id !== 'new'}
 									required
 								/>
@@ -302,7 +302,7 @@ const UsersDetailForm = ({
 											: t('form:input.password_new')
 									}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.password`}
+									dataTestId={`${formOptions.id}.input.password`}
 									required={detailData.id == 'new'}
 								/>
 							</Form.Row>
@@ -339,7 +339,7 @@ const UsersDetailForm = ({
 										id={`${formOptions.id}__password_confirm`}
 										label={t('form:input.password_confirm')}
 										responsiveWidth={'75%'}
-										dataAppId={`${formOptions.id}.input.password_confirm`}
+										dataTestId={`${formOptions.id}.input.password_confirm`}
 										required={detailData.id == 'new'}
 									/>
 								</Form.Row>
@@ -362,7 +362,7 @@ const UsersDetailForm = ({
 									id={`${formOptions.id}__nick_name`}
 									label={t('form:input.nick_name')}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.nick_name`}
+									dataTestId={`${formOptions.id}.input.nick_name`}
 									required
 								/>
 							</Form.Row>
@@ -382,7 +382,7 @@ const UsersDetailForm = ({
 									id={`${formOptions.id}__first_name`}
 									label={t('form:input.first_name')}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.first_name`}
+									dataTestId={`${formOptions.id}.input.first_name`}
 								/>
 							</Form.Row>
 						)}
@@ -401,7 +401,7 @@ const UsersDetailForm = ({
 									id={`${formOptions.id}__middle_name`}
 									label={t('form:input.middle_name')}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.middle_name`}
+									dataTestId={`${formOptions.id}.input.middle_name`}
 								/>
 							</Form.Row>
 						)}
@@ -420,7 +420,7 @@ const UsersDetailForm = ({
 									id={`${formOptions.id}__last_name`}
 									label={t('form:input.last_name')}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.last_name`}
+									dataTestId={`${formOptions.id}.input.last_name`}
 								/>
 							</Form.Row>
 						)}

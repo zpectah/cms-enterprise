@@ -4,14 +4,14 @@ import { getElTestAttr } from '../../../utils/tests';
 
 interface FormBaseProps {
 	name?: string;
-	dataAppId?: string;
+	dataTestId?: string;
 	onSubmit?: () => void;
 }
 
 const FormBase: React.FC<FormBaseProps> = (props) => {
-	const { dataAppId = 'form.base', ...rest } = props;
+	const { dataTestId = 'form.base', ...rest } = props;
 
-	return <form {...rest} {...getElTestAttr(dataAppId)} />;
+	return <form {...rest} {...getElTestAttr(dataTestId)} />;
 };
 
 export default FormBase;

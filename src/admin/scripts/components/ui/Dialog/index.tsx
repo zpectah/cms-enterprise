@@ -22,7 +22,7 @@ export interface DialogProps {
 	size?: MuiDialogProps['maxWidth'];
 	scroll?: MuiDialogProps['scroll'];
 	dividers?: boolean;
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const Transition = React.forwardRef(function Transition(props: any, ref) {
@@ -40,7 +40,7 @@ const Dialog: React.FC<DialogProps> = ({
 	size = 'md',
 	scroll = 'paper',
 	dividers,
-	dataAppId = 'dialog.default',
+	dataTestId = 'dialog.default',
 }) => {
 	const [open, setOpen] = useState<boolean>(isOpen);
 	const handleClose = () => {
@@ -62,7 +62,7 @@ const Dialog: React.FC<DialogProps> = ({
 				aria-labelledby={labeledBy}
 				fullWidth
 			>
-				<div {...getElTestAttr(dataAppId)}>
+				<div {...getElTestAttr(dataTestId)}>
 					{titleChildren && (
 						<DialogTitle>
 							<>{titleChildren}</>

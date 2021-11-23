@@ -9,14 +9,14 @@ import { storeProps } from '../../../types/store';
 import { getElTestAttr } from '../../../utils/tests';
 
 interface SidebarToggleProps extends IconButtonProps {
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const SidebarToggle = (props: SidebarToggleProps) => {
 	const { sideBarOpen } = useSelector((store: storeProps) => store);
 	const dispatch = useDispatch();
 	const [sidebarOpen, setSidebarOpen] = useState<boolean>(sideBarOpen);
-	const { dataAppId = 'toggle.sidebar', ...rest } = props;
+	const { dataTestId = 'toggle.sidebar', ...rest } = props;
 
 	const toggleSidebar = () => {
 		let ns = !sidebarOpen;
@@ -30,7 +30,7 @@ const SidebarToggle = (props: SidebarToggleProps) => {
 			onClick={toggleSidebar}
 			aria-label="sidebar toggle"
 			{...rest}
-			{...getElTestAttr(dataAppId)}
+			{...getElTestAttr(dataTestId)}
 		>
 			{sidebarOpen ? (
 				<MenuOpenIcon fontSize="inherit" />

@@ -28,19 +28,19 @@ const StyledText = styled(Typography.Paragraph)`
 interface FooterProps {
 	align?: 'space-between' | 'center';
 	containerMaxWidth?: ContainerProps['maxWidth'];
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const Footer: React.FC<FooterProps> = ({
 	children,
 	align = 'space-between',
 	containerMaxWidth = 'lg',
-	dataAppId = 'footer',
+	dataTestId = 'footer',
 }) => {
 	const { t } = useTranslation(['common']);
 
 	return (
-		<Wrapper {...getElTestAttr(dataAppId)}>
+		<Wrapper {...getElTestAttr(dataTestId)}>
 			<Container maxWidth={containerMaxWidth}>
 				<WrapperInner align={align}>
 					<Block>

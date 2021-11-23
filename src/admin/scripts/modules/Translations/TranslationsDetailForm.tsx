@@ -104,7 +104,7 @@ const TranslationsDetailForm = ({
 					<ButtonCreate
 						variant="outlined"
 						onClick={onCreateCallback}
-						dataAppId={`button.create.new.Translations`}
+						dataTestId={`button.create.new.Translations`}
 					>
 						{t(`new.Translations`)}
 					</ButtonCreate>
@@ -119,7 +119,7 @@ const TranslationsDetailForm = ({
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}
-				dataAppId={formOptions.id}
+				dataTestId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 				footerChildren={renderFooter()}
 				sidebarChildren={
@@ -138,7 +138,7 @@ const TranslationsDetailForm = ({
 											checked={value}
 											name={name}
 											id={`${formOptions.id}__active`}
-											dataAppId={`${formOptions.id}.switch.active`}
+											dataTestId={`${formOptions.id}.switch.active`}
 											label={t('form:input.active')}
 										/>
 									</Form.Row>
@@ -168,7 +168,7 @@ const TranslationsDetailForm = ({
 									id={`${formOptions.id}__name`}
 									label={t('form:input.name')}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.name`}
+									dataTestId={`${formOptions.id}.input.name`}
 									required
 								/>
 							</Form.Row>

@@ -51,7 +51,7 @@ interface TitleProps {
 	h6?: true;
 	className?: string;
 	onClick?: (e: any) => void;
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const Title: React.FC<TitleProps> = ({
@@ -64,7 +64,7 @@ const Title: React.FC<TitleProps> = ({
 	h6,
 	className,
 	onClick,
-	dataAppId = 'typography.title.default',
+	dataTestId = 'typography.title.default',
 }) => {
 	const componentProps = {
 		children: children,
@@ -95,7 +95,7 @@ const Title: React.FC<TitleProps> = ({
 
 	const ComponentName = getComponent();
 
-	return <ComponentName {...componentProps} {...getElTestAttr(dataAppId)} />;
+	return <ComponentName {...componentProps} {...getElTestAttr(dataTestId)} />;
 };
 
 export default Title;

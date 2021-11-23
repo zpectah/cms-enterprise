@@ -66,7 +66,7 @@ interface BaseLayoutProps {
 	titlePage?: string;
 	withFooter?: boolean;
 	containerMaxWidth?: ContainerProps['maxWidth'];
-	dataAppId?: string;
+	dataTestId?: string;
 	listIncluded?: boolean;
 }
 
@@ -77,7 +77,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 	titlePage,
 	withFooter = true,
 	containerMaxWidth = 'lg',
-	dataAppId = 'layout.base',
+	dataTestId = 'layout.base',
 	listIncluded = false,
 }) => {
 	const { sideBarOpen } = useSelector((store: storeProps) => store);
@@ -89,8 +89,11 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 					{config.project.admin.name} {titleMeta && `| ${titleMeta}`}
 				</title>
 			</Helmet>
-			<Wrapper {...getElTestAttr(dataAppId)} data-layout-page={pageObject.name}>
-				<Sidebar app={pageObject.app} dataAppId={`${dataAppId}.sidebar`} />
+			<Wrapper
+				{...getElTestAttr(dataTestId)}
+				data-layout-page={pageObject.name}
+			>
+				<Sidebar app={pageObject.app} dataTestId={`${dataTestId}.sidebar`} />
 				<WrapperInner sideBarOpen={sideBarOpen}>
 					{isDesktop && <ContentHeading pageObject={pageObject} />}
 					<Container maxWidth={containerMaxWidth}>
@@ -108,9 +111,9 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 							</Content>
 						</ContentOuter>
 					</Container>
-					{withFooter && <Footer dataAppId={`${dataAppId}.footer`} />}
+					{withFooter && <Footer dataTestId={`${dataTestId}.footer`} />}
 				</WrapperInner>
-				<Header dataAppId={`${dataAppId}.header`} />
+				<Header dataTestId={`${dataTestId}.header`} />
 			</Wrapper>
 		</>
 	);

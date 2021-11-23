@@ -18,7 +18,7 @@ interface ParagraphProps {
 	strong?: true;
 	className?: string;
 	onClick?: (e: any) => void;
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({
@@ -31,7 +31,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
 	strong,
 	className,
 	onClick,
-	dataAppId = 'typography.paragraph.default',
+	dataTestId = 'typography.paragraph.default',
 }) => {
 	const componentProps = {
 		children: children,
@@ -57,7 +57,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
 
 	const ComponentName = getComponent();
 
-	return <ComponentName {...componentProps} {...getElTestAttr(dataAppId)} />;
+	return <ComponentName {...componentProps} {...getElTestAttr(dataTestId)} />;
 };
 
 export default Paragraph;

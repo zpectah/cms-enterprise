@@ -16,7 +16,7 @@ export const DEFAULT_UNITS = {
 	weight: 'Kg',
 	length: 'mm',
 };
-export const ELEMENT_DATA_TEST_ATTR = 'data-app-id';
+export const ELEMENT_DATA_TEST_ATTR = 'data-test-id';
 export const USER_LEVEL = {
 	demo: {
 		id: 0,

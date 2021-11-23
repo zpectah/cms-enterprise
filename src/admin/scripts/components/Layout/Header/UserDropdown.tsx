@@ -14,10 +14,10 @@ import { Avatar, ConfirmDialog } from '../../ui';
 import { getElTestAttr } from '../../../utils/tests';
 
 interface UserDropdownProps {
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
-const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
+const UserDropdown = ({ dataTestId = 'user.dropdown' }: UserDropdownProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components']);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -41,7 +41,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 				lastName={'Sychra'}
 				// image={''}
 				onClick={dropdownOpenHandler}
-				dataAppId={`${dataAppId}.avatar`}
+				dataTestId={`${dataTestId}.avatar`}
 				size={'28px'}
 			/>
 			<Menu
@@ -52,10 +52,10 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
-				<div style={{ minWidth: '170px' }} {...getElTestAttr(dataAppId)}>
+				<div style={{ minWidth: '170px' }} {...getElTestAttr(dataTestId)}>
 					<MenuItem
 						onClick={profileClickHandler}
-						{...getElTestAttr(`${dataAppId}.item.profile`)}
+						{...getElTestAttr(`${dataTestId}.item.profile`)}
 					>
 						<ListItemIcon>
 							<PersonIcon fontSize="small" />
@@ -64,7 +64,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 					</MenuItem>
 					<MenuItem
 						onClick={helpClickHandler}
-						{...getElTestAttr(`${dataAppId}.item.help`)}
+						{...getElTestAttr(`${dataTestId}.item.help`)}
 					>
 						<ListItemIcon>
 							<MenuBookIcon fontSize="small" />
@@ -74,7 +74,7 @@ const UserDropdown = ({ dataAppId = 'user.dropdown' }: UserDropdownProps) => {
 					<Divider />
 					<MenuItem
 						onClick={logoutClickHandler}
-						{...getElTestAttr(`${dataAppId}.item.logOut`)}
+						{...getElTestAttr(`${dataTestId}.item.logOut`)}
 					>
 						<ListItemIcon>
 							<LogoutIcon fontSize="small" />

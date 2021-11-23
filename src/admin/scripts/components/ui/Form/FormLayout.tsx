@@ -47,7 +47,7 @@ interface FormLayoutProps {
 	footerChildren?: React.ReactElement | React.ReactElement[];
 	footerStackProps?: StackProps;
 	onSubmit?: () => void;
-	dataAppId?: string;
+	dataTestId?: string;
 	formName?: string;
 }
 
@@ -58,7 +58,7 @@ const FormLayout: React.FC<FormLayoutProps> = ({
 	footerChildren,
 	footerStackProps,
 	onSubmit,
-	dataAppId = 'form.detail.layout',
+	dataTestId = 'form.detail.layout',
 	formName = 'FormDetailLayout',
 }) => {
 	const stackProps: StackProps = {
@@ -70,7 +70,7 @@ const FormLayout: React.FC<FormLayoutProps> = ({
 	};
 
 	return (
-		<Wrapper name={formName} onSubmit={onSubmit} {...getElTestAttr(dataAppId)}>
+		<Wrapper name={formName} onSubmit={onSubmit} {...getElTestAttr(dataTestId)}>
 			<ColumnBlock>
 				<MainBlock withSidebar={sidebarChildren}>{children}</MainBlock>
 				{sidebarChildren && <SidebarBlock>{sidebarChildren}</SidebarBlock>}

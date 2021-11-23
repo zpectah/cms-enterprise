@@ -17,7 +17,7 @@ interface AvatarProps {
 	lastName?: string;
 	nickName: string;
 	onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-	dataAppId?: string;
+	dataTestId?: string;
 	iconButtonProps?: IconButtonProps;
 }
 
@@ -28,7 +28,7 @@ const Avatar = ({
 	firstName,
 	lastName,
 	onClick,
-	dataAppId = 'avatar.default',
+	dataTestId = 'avatar.default',
 	iconButtonProps,
 }: AvatarProps) => {
 	const clickHandler = (e) => {
@@ -43,7 +43,7 @@ const Avatar = ({
 				sx={{ ml: 2 }}
 				aria-label="user dropdown"
 				{...iconButtonProps}
-				{...getElTestAttr(dataAppId)}
+				{...getElTestAttr(dataTestId)}
 			>
 				<MuiAvatar
 					src={image}

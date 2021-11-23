@@ -23,7 +23,7 @@ interface ContentTitleProps {
 	textAlign?: 'inherit' | 'center';
 	listPath?: string;
 	clickCallback?: () => void;
-	backButtonDataAppId?: string;
+	backButtondataTestId?: string;
 }
 
 const ContentTitle: React.FC<ContentTitleProps> = ({
@@ -32,7 +32,7 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 	textAlign = 'inherit',
 	listPath,
 	clickCallback,
-	backButtonDataAppId = 'page.title.button.back',
+	backButtondataTestId = 'page.title.button.back',
 }) => {
 	const history = useHistory();
 	const params: any = useParams();
@@ -57,7 +57,7 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 					aria-label="delete"
 					onClick={backButtonHandler}
 					style={{ marginRight: '0.75rem' }}
-					{...getElTestAttr(backButtonDataAppId)}
+					{...getElTestAttr(backButtondataTestId)}
 				>
 					<ArrowBackIcon />
 				</IconButton>

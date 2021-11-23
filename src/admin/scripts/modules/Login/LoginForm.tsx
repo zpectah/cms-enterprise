@@ -58,7 +58,7 @@ const LoginForm = ({}: LoginFormProps) => {
 	return (
 		<Form.Base
 			name={formOptions.id}
-			dataAppId={formOptions.id}
+			dataTestId={formOptions.id}
 			onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 		>
 			<Section style={{ width: '300px' }}>
@@ -76,7 +76,7 @@ const LoginForm = ({}: LoginFormProps) => {
 								name={name}
 								id={`${formOptions.id}__email`}
 								label={t('form:input.email')}
-								dataAppId={`${formOptions.id}.input.email`}
+								dataTestId={`${formOptions.id}.input.email`}
 								required
 							/>
 						</Form.Row>
@@ -96,7 +96,7 @@ const LoginForm = ({}: LoginFormProps) => {
 								name={name}
 								id={`${formOptions.id}__password`}
 								label={t('form:input.password')}
-								dataAppId={`${formOptions.id}.input.password`}
+								dataTestId={`${formOptions.id}.input.password`}
 								required
 							/>
 						</Form.Row>

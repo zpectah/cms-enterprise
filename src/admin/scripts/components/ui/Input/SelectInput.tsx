@@ -18,14 +18,14 @@ const StyledInput = styled(Select)<{ responsive: string }>`
 `;
 
 interface SelectInputProps {
-	dataAppId?: string;
+	dataTestId?: string;
 	options: { label: string; value: string | number }[];
 	responsiveWidth?: string;
 }
 
 const SelectInput = (props: SelectInputProps & SelectProps) => {
 	const {
-		dataAppId = 'select.input.default',
+		dataTestId = 'select.input.default',
 		options = [],
 		responsiveWidth,
 		label,
@@ -44,13 +44,13 @@ const SelectInput = (props: SelectInputProps & SelectProps) => {
 				size={size}
 				{...rest}
 				responsive={responsiveWidth}
-				{...getElTestAttr(dataAppId)}
+				{...getElTestAttr(dataTestId)}
 			>
 				{options.map((option) => (
 					<MenuItem
 						key={option.label}
 						value={option.value}
-						{...getElTestAttr(`${dataAppId}.item.${option.value}`)}
+						{...getElTestAttr(`${dataTestId}.item.${option.value}`)}
 					>
 						{option.label}
 					</MenuItem>

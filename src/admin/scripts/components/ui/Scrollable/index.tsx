@@ -27,14 +27,14 @@ const WrapperContent = styled.div`
 `;
 
 interface ScrollableProps {
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const Scrollable: React.FC<ScrollableProps> = (props) => {
-	const { children, dataAppId = 'scrollable.default' } = props;
+	const { children, dataTestId = 'scrollable.default' } = props;
 
 	return (
-		<Wrapper {...getElTestAttr(dataAppId)}>
+		<Wrapper {...getElTestAttr(dataTestId)}>
 			<WrapperScrollable>
 				<WrapperContent>{children}</WrapperContent>
 			</WrapperScrollable>

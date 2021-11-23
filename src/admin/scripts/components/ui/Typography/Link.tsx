@@ -11,7 +11,7 @@ interface LinkProps {
 	activeClassName?: string;
 	onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 	exact?: boolean;
-	dataAppId?: string;
+	dataTestId?: string;
 	ariaLabel?: string;
 }
 
@@ -21,7 +21,7 @@ const Link: React.FC<LinkProps> = ({
 	activeClassName = 'is-active',
 	onClick,
 	exact = false,
-	dataAppId = 'typography.link.default',
+	dataTestId = 'typography.link.default',
 	ariaLabel = 'link',
 }) => {
 	return (
@@ -31,7 +31,7 @@ const Link: React.FC<LinkProps> = ({
 			onClick={onClick}
 			exact={exact}
 			aria-label={ariaLabel}
-			{...getElTestAttr(dataAppId)}
+			{...getElTestAttr(dataTestId)}
 		>
 			{children}
 		</StyledLink>

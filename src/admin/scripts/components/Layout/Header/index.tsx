@@ -40,10 +40,10 @@ const StyledTitle = styled(Typography.Paragraph)`
 `;
 
 interface HeaderProps {
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
-const Header = ({ dataAppId = 'header' }: HeaderProps) => {
+const Header = ({ dataTestId = 'header' }: HeaderProps) => {
 	const history = useHistory();
 
 	const titleClickHandler = () => {
@@ -51,7 +51,7 @@ const Header = ({ dataAppId = 'header' }: HeaderProps) => {
 	};
 
 	return (
-		<Wrapper {...getElTestAttr(dataAppId)}>
+		<Wrapper {...getElTestAttr(dataTestId)}>
 			<Block>
 				<SidebarToggle />
 			</Block>
@@ -59,7 +59,7 @@ const Header = ({ dataAppId = 'header' }: HeaderProps) => {
 				<StyledTitle span>
 					<span
 						onClick={titleClickHandler}
-						{...getElTestAttr(`${dataAppId}.trigger.home`)}
+						{...getElTestAttr(`${dataTestId}.trigger.home`)}
 					>
 						{config.project.admin.name}
 					</span>

@@ -56,7 +56,7 @@ export interface ConfirmDialogProps {
 	size?: MuiDialogProps['maxWidth'];
 	scroll?: MuiDialogProps['scroll'];
 	dividers?: boolean;
-	dataAppId?: string;
+	dataTestId?: string;
 	confirmMethod: 'delete' | 'formDirty' | 'logOut';
 	onConfirm: () => void;
 	confirmData?: (number | string)[];
@@ -77,7 +77,7 @@ const ConfirmDialog = ({
 	confirmMethod,
 	onConfirm,
 	confirmData = [],
-	dataAppId = 'dialog.confirm',
+	dataTestId = 'dialog.confirm',
 }: ConfirmDialogProps) => {
 	const { t } = useTranslation(['common', 'messages', 'components']);
 	const [open, setOpen] = useState<boolean>(isOpen);
@@ -100,7 +100,7 @@ const ConfirmDialog = ({
 				aria-labelledby={labeledBy}
 				fullWidth
 			>
-				<div {...getElTestAttr(dataAppId)}>
+				<div {...getElTestAttr(dataTestId)}>
 					<DialogContent dividers={dividers}>
 						<Wrapper>
 							<MediaBlock>
@@ -128,7 +128,7 @@ const ConfirmDialog = ({
 											variant="outlined"
 											color="secondary"
 											onClick={onClose}
-											dataAppId={`${dataAppId}.button.cancel`}
+											dataTestId={`${dataTestId}.button.cancel`}
 											size="large"
 										>
 											{t('button.no')}
@@ -137,7 +137,7 @@ const ConfirmDialog = ({
 											variant="contained"
 											color="primary"
 											onClick={onConfirm}
-											dataAppId={`${dataAppId}.button.confirm`}
+											dataTestId={`${dataTestId}.button.confirm`}
 											size="large"
 										>
 											{t('button.yes')}

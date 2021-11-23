@@ -33,10 +33,10 @@ const StyledItem = styled(ListItemButton)`
 
 interface NavbarProps {
 	app: pageObjectProps['app'];
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
-const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
+const Navbar = ({ dataTestId = 'navbar.primary', app }: NavbarProps) => {
 	const { t } = useTranslation(['common', 'page']);
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -86,7 +86,7 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 					onClick={() => linkTriggerHandler(item.path)}
 					selected={isItemSelected(item.path)}
 					divider
-					{...getElTestAttr(`${dataAppId}.item.${item.name}`)}
+					{...getElTestAttr(`${dataTestId}.item.${item.name}`)}
 					ref={isItemSelected(item.path) ? selectedItem : null}
 				>
 					<ListItemText primary={t(`page:${item.name}.label`)} />
@@ -111,7 +111,7 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 			<>
 				<ListItemButton
 					onClick={callback}
-					{...getElTestAttr(`${dataAppId}.toggle.${app}`)}
+					{...getElTestAttr(`${dataTestId}.toggle.${app}`)}
 				>
 					<ListItemText primary={t(`app.${app}`)} />
 					{state ? <ExpandLess /> : <ExpandMore />}
@@ -133,9 +133,9 @@ const Navbar = ({ dataAppId = 'navbar.primary', app }: NavbarProps) => {
 			<List
 				sx={{ width: '100%' }}
 				component="div"
-				aria-label={dataAppId}
+				aria-label={dataTestId}
 				disablePadding
-				{...getElTestAttr(dataAppId)}
+				{...getElTestAttr(dataTestId)}
 			>
 				{sectionAppActive && renderItems('app')}
 				{sectionCrmActive &&

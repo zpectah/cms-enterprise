@@ -89,7 +89,7 @@ const SettingsForm = ({
 		<>
 			<Form.Layout
 				formName={formOptions.id}
-				dataAppId={formOptions.id}
+				dataTestId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 				footerChildren={renderFooter()}
 			>

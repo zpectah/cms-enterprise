@@ -5,16 +5,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { getElTestAttr } from '../../../utils/tests';
 
 interface SwitchInputProps {
-	dataAppId?: string;
+	dataTestId?: string;
 	label?: string;
 }
 
 const SwitchInput = (props: SwitchInputProps & SwitchProps) => {
-	const { dataAppId = 'switch.input.default', label, ...rest } = props;
+	const { dataTestId = 'switch.input.default', label, ...rest } = props;
 
 	return (
 		<FormControlLabel
-			control={<Switch size="small" {...rest} {...getElTestAttr(dataAppId)} />}
+			control={<Switch size="small" {...rest} {...getElTestAttr(dataTestId)} />}
 			label={label}
 		/>
 	);

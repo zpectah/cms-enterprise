@@ -49,7 +49,7 @@ export interface TableProps {
 	onSelect: (selected: readonly (number | string)[]) => void;
 	onToggle: (id: number) => void;
 	onDelete: (id: number) => void;
-	dataAppId?: string;
+	dataTestId?: string;
 	minWidth?: number;
 }
 
@@ -61,7 +61,7 @@ const Table = ({
 	onSelect,
 	onToggle,
 	onDelete,
-	dataAppId,
+	dataTestId,
 	minWidth = 750,
 }: TableProps) => {
 	const history = useHistory();
@@ -153,7 +153,7 @@ const Table = ({
 					<StyledRowLink
 						h6
 						onClick={() => clickDetailHandler(row.id)}
-						dataAppId={`${dataAppId}.cell.name.link.${row.id}`}
+						dataTestId={`${dataTestId}.cell.name.link.${row.id}`}
 					>
 						{row.name}
 					</StyledRowLink>
@@ -172,7 +172,7 @@ const Table = ({
 					<StyledRowLink
 						h6
 						onClick={() => clickDetailHandler(row.id)}
-						dataAppId={`${dataAppId}.cell.email.link.${row.id}`}
+						dataTestId={`${dataTestId}.cell.email.link.${row.id}`}
 					>
 						(avatar) {row.email}
 					</StyledRowLink>
@@ -212,7 +212,7 @@ const Table = ({
 						size="small"
 						checked={row.active}
 						onClick={() => onRowToggleHandler(row.id)}
-						{...getElTestAttr(`${dataAppId}.cell.active.switch.${row.id}`)}
+						{...getElTestAttr(`${dataTestId}.cell.active.switch.${row.id}`)}
 					/>
 				),
 			});
@@ -237,7 +237,7 @@ const Table = ({
 	useEffect(() => setSelected(selectedRows), [selectedRows]);
 
 	return (
-		<Box sx={{ width: '100%' }} {...getElTestAttr(dataAppId)}>
+		<Box sx={{ width: '100%' }} {...getElTestAttr(dataTestId)}>
 			<TableContainer>
 				<MuiTable
 					sx={{ minWidth: minWidth }}
@@ -279,7 +279,7 @@ const Table = ({
 													'aria-labelledby': labelId,
 												}}
 												{...getElTestAttr(
-													`${dataAppId}.cell.checkbox.${row.id}`,
+													`${dataTestId}.cell.checkbox.${row.id}`,
 												)}
 											/>
 										</TableCell>
@@ -307,7 +307,7 @@ const Table = ({
 													onClick={() => onRowDeleteHandler(row.id)}
 													size="small"
 													{...getElTestAttr(
-														`${dataAppId}.cell.delete.button.${row.id}`,
+														`${dataTestId}.cell.delete.button.${row.id}`,
 													)}
 												>
 													<DeleteOutlineIcon />

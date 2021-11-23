@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AddIcon from '@mui/icons-material/Add';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
@@ -33,7 +32,7 @@ interface DataTableProps {
 	onSelect: (selected: readonly string[]) => void;
 	languageList: string[];
 	languageDefault: string;
-	dataAppId?: string;
+	dataTestId?: string;
 	withoutLanguageToggle?: boolean;
 	onCreateCallback: () => void;
 }
@@ -50,7 +49,7 @@ const DataTable = ({
 	onSelect,
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
-	dataAppId = `dataTable.${model}`,
+	dataTestId = `dataTable.${model}`,
 	withoutLanguageToggle = false,
 	onCreateCallback,
 }: DataTableProps) => {
@@ -128,7 +127,7 @@ const DataTable = ({
 					<>
 						<ButtonCreate
 							onClick={onCreateCallback}
-							dataAppId={`button.create.new.${model}`}
+							dataTestId={`button.create.new.${model}`}
 						>
 							{t(`new.${model}`)}
 						</ButtonCreate>
@@ -152,7 +151,7 @@ const DataTable = ({
 											</InputAdornment>
 										),
 									}}
-									dataAppId={`${dataAppId}.options.search`}
+									dataTestId={`${dataTestId}.options.search`}
 								/>
 							</FormControl>
 							<FormControl size="small">
@@ -164,7 +163,7 @@ const DataTable = ({
 									value={filterType}
 									onChange={(e: any) => setFilterType(e.target.value)}
 									disabled={getTypesFromData(tableData).length == 0}
-									dataAppId={`${dataAppId}.options.filter.type`}
+									dataTestId={`${dataTestId}.options.filter.type`}
 									options={getTypesOptions()}
 								/>
 							</FormControl>
@@ -172,7 +171,7 @@ const DataTable = ({
 								size="small"
 								onClick={resetFilterHandler}
 								disabled={searchInput == '' && filterType == 'all'}
-								dataAppId={`${dataAppId}.options.button.reset`}
+								dataTestId={`${dataTestId}.options.button.reset`}
 							>
 								{t(`button.reset`)}
 							</Button>
@@ -189,7 +188,7 @@ const DataTable = ({
 									size="small"
 									disabled={selectedRows.length == 0}
 									onClick={onSelectedToggleCallback}
-									dataAppId={`${dataAppId}.options.button.toggleSelected`}
+									dataTestId={`${dataTestId}.options.button.toggleSelected`}
 								>
 									{t(`button.toggle`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
 								</Button>
@@ -199,7 +198,7 @@ const DataTable = ({
 									color="error"
 									disabled={selectedRows.length == 0}
 									onClick={onSelectedDeleteCallback}
-									dataAppId={`${dataAppId}.options.button.deleteSelected`}
+									dataTestId={`${dataTestId}.options.button.deleteSelected`}
 								>
 									{t(`button.delete`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
 								</Button>
@@ -228,7 +227,7 @@ const DataTable = ({
 					onSelect={onRowSelectCallback}
 					onToggle={onRowToggleCallback}
 					onDelete={onRowDeleteCallback}
-					dataAppId={dataAppId}
+					dataTestId={dataTestId}
 				/>
 			</Section>
 		</>

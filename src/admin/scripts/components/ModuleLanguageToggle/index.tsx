@@ -47,7 +47,7 @@ const ModuleLanguageToggle = ({
 			size="small"
 			style={style}
 			options={getOptions()}
-			dataAppId={`button.languageToggle`}
+			dataTestId={`button.languageToggle`}
 		/>
 	);
 };

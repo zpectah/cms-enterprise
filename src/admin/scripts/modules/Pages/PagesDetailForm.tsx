@@ -103,7 +103,7 @@ const PagesDetailForm = ({
 					<ButtonCreate
 						variant="outlined"
 						onClick={onCreateCallback}
-						dataAppId={`button.create.new.Pages`}
+						dataTestId={`button.create.new.Pages`}
 					>
 						{t(`new.Pages`)}
 					</ButtonCreate>
@@ -118,7 +118,7 @@ const PagesDetailForm = ({
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}
-				dataAppId={formOptions.id}
+				dataTestId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 				footerChildren={renderFooter()}
 				sidebarChildren={
@@ -137,7 +137,7 @@ const PagesDetailForm = ({
 											checked={value}
 											name={name}
 											id={`${formOptions.id}__active`}
-											dataAppId={`${formOptions.id}.switch.active`}
+											dataTestId={`${formOptions.id}.switch.active`}
 											label={t('form:input.active')}
 										/>
 									</Form.Row>
@@ -167,7 +167,7 @@ const PagesDetailForm = ({
 									id={`${formOptions.id}__name`}
 									label={t('form:input.name')}
 									responsiveWidth={'75%'}
-									dataAppId={`${formOptions.id}.input.name`}
+									dataTestId={`${formOptions.id}.input.name`}
 									required
 								/>
 							</Form.Row>

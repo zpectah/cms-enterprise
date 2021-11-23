@@ -7,7 +7,7 @@ import ToggleButtonGroup, {
 import { getElTestAttr } from '../../../utils/tests';
 
 interface ToggleInputProps {
-	dataAppId?: string;
+	dataTestId?: string;
 	options: {
 		label: string;
 		value: string | number;
@@ -16,16 +16,16 @@ interface ToggleInputProps {
 }
 
 const ToggleInput = (props: ToggleInputProps & ToggleButtonGroupProps) => {
-	const { dataAppId = 'toggle.input.default', options = [], ...rest } = props;
+	const { dataTestId = 'toggle.input.default', options = [], ...rest } = props;
 
 	return (
-		<ToggleButtonGroup {...rest} {...getElTestAttr(dataAppId)}>
+		<ToggleButtonGroup {...rest} {...getElTestAttr(dataTestId)}>
 			{options.map((option) => (
 				<ToggleButton
 					key={option.value}
 					value={option.value}
 					aria-label={option.label}
-					{...getElTestAttr(`${dataAppId}.item.${option.value}`)}
+					{...getElTestAttr(`${dataTestId}.item.${option.value}`)}
 				>
 					{option.children ? option.children : <span>{option.label}</span>}
 				</ToggleButton>

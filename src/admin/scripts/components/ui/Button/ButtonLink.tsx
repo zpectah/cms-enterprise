@@ -7,11 +7,11 @@ import { getElTestAttr } from '../../../utils/tests';
 export interface LinkButtonProps {
 	to?: string;
 	href?: string;
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const ButtonLink = forwardRef((props: LinkButtonProps & ButtonProps, ref) => {
-	const { dataAppId = 'button.link', to, href, ...rest } = props;
+	const { dataTestId = 'button.link', to, href, ...rest } = props;
 
 	const history = useHistory();
 
@@ -28,7 +28,7 @@ const ButtonLink = forwardRef((props: LinkButtonProps & ButtonProps, ref) => {
 	};
 
 	return (
-		<Button onClick={onClickHandler} {...rest} {...getElTestAttr(dataAppId)} />
+		<Button onClick={onClickHandler} {...rest} {...getElTestAttr(dataTestId)} />
 	);
 });
 

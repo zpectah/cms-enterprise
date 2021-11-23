@@ -58,7 +58,7 @@ interface DrawerBaseProps {
 	onClose: () => void;
 	title?: string;
 	size?: 'md' | 'lg' | 'xl';
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const Drawer: React.FC<DrawerBaseProps> = ({
@@ -67,7 +67,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 	onClose,
 	title,
 	size = 'md',
-	dataAppId = 'drawer.default',
+	dataTestId = 'drawer.default',
 }) => {
 	const [open, setOpen] = useState<boolean>(isOpen);
 	const handleClose = () => {
@@ -91,7 +91,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 	return (
 		<>
 			<MuiDrawer anchor={'right'} onClose={handleClose} open={open}>
-				<InnerComponent {...getElTestAttr(dataAppId)}>
+				<InnerComponent {...getElTestAttr(dataTestId)}>
 					<DrawerHeading>
 						<HeadingBlock>
 							<IconButton
@@ -102,7 +102,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 									height: '50px',
 									color: (theme) => theme.palette.grey[500],
 								}}
-								{...getElTestAttr(`${dataAppId}.button.close`)}
+								{...getElTestAttr(`${dataTestId}.button.close`)}
 							>
 								<MediaQuery minWidth={RESPONSIVE_BREAKPOINTS[minWidth[size]]}>
 									{(matches) => (matches ? <ArrowBackIcon /> : <CloseIcon />)}

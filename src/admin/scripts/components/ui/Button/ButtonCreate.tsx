@@ -12,12 +12,12 @@ const StyledButton = styled(Button)`
 `;
 
 export interface ButtonCreateProps {
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const ButtonCreate = forwardRef(
 	(props: ButtonCreateProps & ButtonProps, ref) => {
-		const { dataAppId = 'button.create', ...rest } = props;
+		const { dataTestId = 'button.create', ...rest } = props;
 
 		return (
 			<StyledButton
@@ -25,7 +25,7 @@ const ButtonCreate = forwardRef(
 				variant="contained"
 				startIcon={<AddIcon />}
 				{...rest}
-				{...getElTestAttr(dataAppId)}
+				{...getElTestAttr(dataTestId)}
 			/>
 		);
 	},

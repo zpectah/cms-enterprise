@@ -14,13 +14,13 @@ const StyledInput = styled(Slider)<{ responsive: string }>`
 `;
 
 interface SliderInputProps {
-	dataAppId?: string;
+	dataTestId?: string;
 	responsiveWidth?: string;
 }
 
 const SliderInput = (props: SliderInputProps & SliderProps) => {
 	const {
-		dataAppId = 'slider.input.default',
+		dataTestId = 'slider.input.default',
 		responsiveWidth,
 		...rest
 	} = props;
@@ -29,7 +29,7 @@ const SliderInput = (props: SliderInputProps & SliderProps) => {
 		<StyledInput
 			{...rest}
 			responsive={responsiveWidth}
-			{...getElTestAttr(dataAppId)}
+			{...getElTestAttr(dataTestId)}
 		/>
 	);
 };

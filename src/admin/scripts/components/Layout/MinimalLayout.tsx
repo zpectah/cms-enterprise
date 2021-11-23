@@ -40,7 +40,7 @@ interface MinimalLayoutProps {
 	titlePage?: string;
 	withFooter?: boolean;
 	containerMaxWidth?: ContainerProps['maxWidth'];
-	dataAppId?: string;
+	dataTestId?: string;
 }
 
 const MinimalLayout: React.FC<MinimalLayoutProps> = ({
@@ -50,7 +50,7 @@ const MinimalLayout: React.FC<MinimalLayoutProps> = ({
 	titlePage,
 	withFooter = false,
 	containerMaxWidth = 'md',
-	dataAppId = 'layout.minimal',
+	dataTestId = 'layout.minimal',
 }) => {
 	return (
 		<>
@@ -59,7 +59,10 @@ const MinimalLayout: React.FC<MinimalLayoutProps> = ({
 					{config.project.admin.name} {titleMeta && `| ${titleMeta}`}
 				</title>
 			</Helmet>
-			<Wrapper {...getElTestAttr(dataAppId)} data-layout-page={pageObject.name}>
+			<Wrapper
+				{...getElTestAttr(dataTestId)}
+				data-layout-page={pageObject.name}
+			>
 				<WrapperInner>
 					<Container maxWidth={containerMaxWidth}>
 						<Content>
@@ -73,7 +76,7 @@ const MinimalLayout: React.FC<MinimalLayoutProps> = ({
 					</Container>
 				</WrapperInner>
 				{withFooter && (
-					<Footer align={'center'} dataAppId={`${dataAppId}.footer`} />
+					<Footer align={'center'} dataTestId={`${dataTestId}.footer`} />
 				)}
 			</Wrapper>
 		</>

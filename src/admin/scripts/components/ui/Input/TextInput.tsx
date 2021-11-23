@@ -15,12 +15,12 @@ const StyledInput = styled(TextField)<{ responsive: string }>`
 `;
 
 interface TextInputProps {
-	dataAppId?: string;
+	dataTestId?: string;
 	responsiveWidth?: string;
 }
 
 const TextInput = (props: TextInputProps & TextFieldProps) => {
-	const { dataAppId = 'text.input.default', responsiveWidth, ...rest } = props;
+	const { dataTestId = 'text.input.default', responsiveWidth, ...rest } = props;
 
 	return (
 		<StyledInput
@@ -28,7 +28,7 @@ const TextInput = (props: TextInputProps & TextFieldProps) => {
 			size="small"
 			{...rest}
 			responsive={responsiveWidth}
-			{...getElTestAttr(dataAppId)}
+			{...getElTestAttr(dataTestId)}
 		/>
 	);
 };

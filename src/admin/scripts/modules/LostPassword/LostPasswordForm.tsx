@@ -62,7 +62,7 @@ const LostPasswordForm = ({}: LostPasswordFormProps) => {
 	return (
 		<Form.Base
 			name={formOptions.id}
-			dataAppId={formOptions.id}
+			dataTestId={formOptions.id}
 			onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 		>
 			<Section style={{ width: '300px' }}>
@@ -80,7 +80,7 @@ const LostPasswordForm = ({}: LostPasswordFormProps) => {
 								name={name}
 								id={`${formOptions.id}__email`}
 								label={t('form:input.email')}
-								dataAppId={`${formOptions.id}.input.email`}
+								dataTestId={`${formOptions.id}.input.email`}
 								required
 							/>
 						</Form.Row>
