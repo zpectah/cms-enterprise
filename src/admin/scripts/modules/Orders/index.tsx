@@ -103,7 +103,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 
 				closeDetailHandler();
 				createToasts({
-					title: t('messages:success.itemUpdated'),
+					title: t('messages:success.itemUpdated', { count: 1 }),
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
@@ -226,6 +226,23 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 							languageList={Settings.language_active}
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
+							//
+							customActionTriggers={[
+								{
+									label: 'Demo custom trigger 2',
+									callback: (id) => {
+										console.log('customActionTriggers 2', id);
+									},
+									disabled: false,
+								},
+								{
+									label: 'Demo custom trigger 3',
+									callback: (id) => {
+										console.log('customActionTriggers 3', id);
+									},
+									disabled: true,
+								},
+							]}
 						/>
 					) : (
 						<div>Loading</div>

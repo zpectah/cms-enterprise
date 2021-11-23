@@ -12,7 +12,7 @@ import { getSearchAttrs, getTypesFromData } from '../../utils/table';
 import { ROUTE_SUFFIX } from '../../constants';
 import { routeItemProps } from '../../types/pages';
 import { appModelProps } from '../../types/app';
-import { cellsTypesProps } from '../../types/table';
+import { cellsTypesProps, customActionCellItemProps } from '../../types/table';
 import { oneOfModelItemProps } from '../../types/model';
 import { Section, Button, ButtonCreate, Input } from '../ui';
 import ModuleViewHeading from '../ModuleViewHeading';
@@ -35,6 +35,7 @@ interface DataTableProps {
 	dataTestId?: string;
 	withoutLanguageToggle?: boolean;
 	onCreateCallback: () => void;
+	customActionTriggers?: customActionCellItemProps[];
 }
 
 const DataTable = ({
@@ -52,6 +53,7 @@ const DataTable = ({
 	dataTestId = `dataTable.${model}`,
 	withoutLanguageToggle = false,
 	onCreateCallback,
+	customActionTriggers,
 }: DataTableProps) => {
 	const { t } = useTranslation(['common', 'components', 'types']);
 	const [lang, setLang] = useState(languageDefault);
@@ -231,6 +233,7 @@ const DataTable = ({
 					onToggle={onRowToggleCallback}
 					onDelete={onRowDeleteCallback}
 					dataTestId={dataTestId}
+					customActionTriggers={customActionTriggers}
 				/>
 			</Section>
 		</>

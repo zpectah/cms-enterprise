@@ -29,6 +29,7 @@ import {
 	cellsTypesProps,
 	sortType,
 	tableBodyCellItemProps,
+	customActionCellItemProps,
 } from '../../../types/table';
 import { appModelProps } from '../../../types/app';
 import { oneOfModelItemProps } from '../../../types/model';
@@ -57,18 +58,21 @@ export interface TableProps {
 	onDelete: (id: number) => void;
 	dataTestId?: string;
 	minWidth?: number;
+	customActionTriggers?: customActionCellItemProps[];
 }
 
 interface TableRowActionsButtonsProps {
 	row: any;
-	onDelete: (id: number) => void;
+	onDelete: TableProps['onDelete'];
 	rowIdPrefix: string;
+	customActionTriggers?: customActionCellItemProps[];
 }
 
 const TableRowActionButtons = ({
 	row,
 	onDelete,
 	rowIdPrefix,
+	customActionTriggers = [],
 }: TableRowActionsButtonsProps) => {
 	const { t } = useTranslation(['common']);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -108,6 +112,19 @@ const TableRowActionButtons = ({
 					}}
 				>
 					<MenuItem onClick={deleteClickHandler}>{t('button.delete')}</MenuItem>
+					{customActionTriggers.length > 0 &&
+						customActionTriggers.map((trigger) => (
+							<MenuItem
+								key={trigger.label}
+								onClick={() => {
+									trigger.callback(row.id);
+									menuCloseHandler();
+								}}
+								disabled={trigger.disabled}
+							>
+								{trigger.label}
+							</MenuItem>
+						))}
 				</Menu>
 			</div>
 		</Stack>
@@ -115,6 +132,7 @@ const TableRowActionButtons = ({
 };
 
 const Table = ({
+	model,
 	tableData,
 	tableCells,
 	rowPathPrefix,
@@ -124,6 +142,7 @@ const Table = ({
 	onDelete,
 	dataTestId,
 	minWidth = 750,
+	customActionTriggers,
 }: TableProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components', 'types']);
@@ -141,7 +160,7 @@ const Table = ({
 
 	const sortRequestHandler = (
 		event: React.MouseEvent<unknown>,
-		property: keyof oneOfModelItemProps, // TODO
+		property: keyof oneOfModelItemProps,
 	) => {
 		const isAsc = orderBy === property && order === 'asc';
 
@@ -303,7 +322,7 @@ const Table = ({
 			<TableContainer>
 				<MuiTable
 					sx={{ minWidth: minWidth }}
-					aria-labelledby="tableTitle"
+					aria-labelledby={`dataTable_title_${model}`}
 					size={'medium'}
 				>
 					<TableHeader
@@ -360,6 +379,7 @@ const Table = ({
 												row={row}
 												rowIdPrefix={`${tableRowIdPrefix}_${index}`}
 												onDelete={onRowDeleteHandler}
+												customActionTriggers={customActionTriggers}
 											/>
 										</TableCell>
 									</TableRow>

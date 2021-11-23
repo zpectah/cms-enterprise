@@ -103,7 +103,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 				closeDetailHandler();
 				createToasts({
-					title: t('messages:success.itemUpdated'),
+					title: t('messages:success.itemUpdated', { count: 1 }),
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});

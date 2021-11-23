@@ -29,3 +29,9 @@ export interface tableBodyCellItemProps {
 	element?: 'th' | 'td';
 	width: string;
 }
+
+export interface customActionCellItemProps {
+	label: string;
+	callback: (id: number | string) => void;
+	disabled: boolean;
+}
