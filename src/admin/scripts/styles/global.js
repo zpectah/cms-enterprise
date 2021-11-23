@@ -20,8 +20,4 @@ export const GlobalStyles = createGlobalStyle`
 	
 	/* Fixes and alignment */
 	
-	.MuiFormControlLabel-label{
-	    padding-left: calc(${(props) => props.theme.spacer} / 2);
-	}
-	
 `;

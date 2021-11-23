@@ -132,7 +132,7 @@ const DeliveriesDetailForm = ({
 								rules={{}}
 								render={({ field: { onChange, onBlur, value, ref, name } }) => (
 									<Form.Row errors={[]}>
-										<Input.Switch
+										<Input.SwitchControl
 											onChange={onChange}
 											onBlur={onBlur}
 											checked={value}

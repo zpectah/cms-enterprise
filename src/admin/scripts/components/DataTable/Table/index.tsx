@@ -250,13 +250,13 @@ const Table = ({
 				align: tableCells.type[0],
 				width: tableCells.type[1],
 				children: (
-					<div>
+					<Stack direction="row" spacing={2}>
 						<Chip
 							label={t(`types:${row.type}`)}
 							variant="outlined"
 							size="small"
 						/>
-					</div>
+					</Stack>
 				),
 			});
 
@@ -269,14 +269,12 @@ const Table = ({
 				align: tableCells.active[0],
 				width: tableCells.active[1],
 				children: (
-					<Switch
-						inputProps={{ 'aria-label': 'Item toggle' }}
+					<Input.Switch
+						aria-label="Item toggle"
 						size="small"
 						checked={row.active}
 						onClick={() => onRowToggleHandler(row.id)}
-						{...getElTestAttr(
-							`${tableRowIdPrefix}.cell.active.switch.${row.id}`,
-						)}
+						dataTestId={`${tableRowIdPrefix}.cell.active.switch.${row.id}`}
 					/>
 				),
 			});
@@ -360,7 +358,7 @@ const Table = ({
 										<TableCell align="right" style={{ width: '125px' }}>
 											<TableRowActionButtons
 												row={row}
-												rowIdPrefix={`${tableRowIdPrefix}${index}`}
+												rowIdPrefix={`${tableRowIdPrefix}_${index}`}
 												onDelete={onRowDeleteHandler}
 											/>
 										</TableCell>
