@@ -14,6 +14,7 @@ import {
 	sortType,
 	tableHeaderCellItemProps,
 } from '../../../types/table';
+import { Input } from '../../ui';
 
 interface TableHeaderProps {
 	numSelected: number;
@@ -66,14 +67,15 @@ const TableHeader = ({
 		<TableHead>
 			<TableRow>
 				<TableCell padding="checkbox">
-					<Checkbox
+					<Input.Checkbox
 						color="primary"
 						indeterminate={numSelected > 0 && numSelected < rowCount}
 						checked={rowCount > 0 && numSelected === rowCount}
 						onChange={onSelectAllClick}
 						inputProps={{
-							'aria-label': 'select all desserts',
+							'aria-label': 'select all items',
 						}}
+						dataTestId={`table.header.checkbox.selectAll`}
 					/>
 				</TableCell>
 				{getHeadCells().map((cell) => (

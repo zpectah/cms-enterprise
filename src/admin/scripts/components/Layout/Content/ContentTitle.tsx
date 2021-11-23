@@ -19,6 +19,7 @@ const Wrapper = styled.div<{ textAlign: ContentTitleProps['textAlign'] }>`
 `;
 
 interface ContentTitleProps {
+	id?: string;
 	title?: string;
 	textAlign?: 'inherit' | 'center';
 	listPath?: string;
@@ -28,6 +29,7 @@ interface ContentTitleProps {
 
 const ContentTitle: React.FC<ContentTitleProps> = ({
 	children,
+	id,
 	title,
 	textAlign = 'inherit',
 	listPath,
@@ -65,7 +67,9 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 			{children ? (
 				<>{children}</>
 			) : (
-				<Typography.Title h1>{title}</Typography.Title>
+				<Typography.Title id={id} h1>
+					{title}
+				</Typography.Title>
 			)}
 		</Wrapper>
 	);

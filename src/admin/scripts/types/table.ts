@@ -23,7 +23,7 @@ export interface tableHeaderCellItemProps {
 export interface tableBodyCellItemProps {
 	key: string;
 	align: tableCellAlignType;
-	content: React.ReactElement;
+	children: React.ReactElement;
 	scope?: 'row';
 	padding?: 'checkbox' | 'none' | 'normal';
 	element?: 'th' | 'td';

@@ -21,6 +21,7 @@ const ButtonCreate = forwardRef(
 
 		return (
 			<StyledButton
+				aria-label={`create new item`}
 				color="success"
 				variant="contained"
 				startIcon={<AddIcon />}

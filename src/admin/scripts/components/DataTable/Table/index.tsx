@@ -13,10 +13,14 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import styled from 'styled-components';
 
 import { DATA_TABLE } from '../../../constants';
@@ -26,8 +30,9 @@ import {
 	sortType,
 	tableBodyCellItemProps,
 } from '../../../types/table';
+import { appModelProps } from '../../../types/app';
 import { oneOfModelItemProps } from '../../../types/model';
-import { Typography } from '../../ui';
+import { Typography, Input } from '../../ui';
 import TableHeader from './TableHeader';
 import { getElTestAttr } from '../../../utils/tests';
 
@@ -42,6 +47,7 @@ const StyledRowLink = styled(Typography.Title)`
 `;
 
 export interface TableProps {
+	model: appModelProps;
 	tableData: oneOfModelItemProps[];
 	tableCells: cellsTypesProps;
 	rowPathPrefix: string;
@@ -52,6 +58,61 @@ export interface TableProps {
 	dataTestId?: string;
 	minWidth?: number;
 }
+
+interface TableRowActionsButtonsProps {
+	row: any;
+	onDelete: (id: number) => void;
+	rowIdPrefix: string;
+}
+
+const TableRowActionButtons = ({
+	row,
+	onDelete,
+	rowIdPrefix,
+}: TableRowActionsButtonsProps) => {
+	const { t } = useTranslation(['common']);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const menuOpenHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const menuCloseHandler = () => {
+		setAnchorEl(null);
+	};
+
+	const deleteClickHandler = () => {
+		onDelete(row.id);
+		menuCloseHandler();
+	};
+
+	return (
+		<Stack direction="row" spacing={2} justifyContent="flex-end">
+			<div>
+				<IconButton
+					id={`${rowIdPrefix}_button`}
+					aria-controls={`${rowIdPrefix}_menu`}
+					aria-haspopup="true"
+					aria-expanded={open ? 'true' : undefined}
+					size="small"
+					onClick={menuOpenHandler}
+				>
+					<MoreHorizIcon />
+				</IconButton>
+				<Menu
+					id={`${rowIdPrefix}_menu`}
+					anchorEl={anchorEl}
+					open={open}
+					onClose={menuCloseHandler}
+					MenuListProps={{
+						'aria-labelledby': `${rowIdPrefix}_button`,
+					}}
+				>
+					<MenuItem onClick={deleteClickHandler}>{t('button.delete')}</MenuItem>
+				</Menu>
+			</div>
+		</Stack>
+	);
+};
 
 const Table = ({
 	tableData,
@@ -76,6 +137,7 @@ const Table = ({
 	const tableRowHeight = DATA_TABLE.rowHeightDefault;
 	const emptyRows =
 		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
+	const tableRowIdPrefix = `${dataTestId}.row`;
 
 	const sortRequestHandler = (
 		event: React.MouseEvent<unknown>,
@@ -149,11 +211,11 @@ const Table = ({
 				element: 'th',
 				align: tableCells.name[0],
 				width: tableCells.name[1],
-				content: (
+				children: (
 					<StyledRowLink
 						h6
 						onClick={() => clickDetailHandler(row.id)}
-						dataTestId={`${dataTestId}.cell.name.link.${row.id}`}
+						dataTestId={`${tableRowIdPrefix}.cell.name.link.${row.id}`}
 					>
 						{row.name}
 					</StyledRowLink>
@@ -168,11 +230,11 @@ const Table = ({
 				element: 'th',
 				align: tableCells.email[0],
 				width: tableCells.email[1],
-				content: (
+				children: (
 					<StyledRowLink
 						h6
 						onClick={() => clickDetailHandler(row.id)}
-						dataTestId={`${dataTestId}.cell.email.link.${row.id}`}
+						dataTestId={`${tableRowIdPrefix}.cell.email.link.${row.id}`}
 					>
 						(avatar) {row.email}
 					</StyledRowLink>
@@ -187,7 +249,7 @@ const Table = ({
 				padding: 'none',
 				align: tableCells.type[0],
 				width: tableCells.type[1],
-				content: (
+				children: (
 					<div>
 						<Chip
 							label={t(`types:${row.type}`)}
@@ -206,13 +268,15 @@ const Table = ({
 				padding: 'none',
 				align: tableCells.active[0],
 				width: tableCells.active[1],
-				content: (
+				children: (
 					<Switch
 						inputProps={{ 'aria-label': 'Item toggle' }}
 						size="small"
 						checked={row.active}
 						onClick={() => onRowToggleHandler(row.id)}
-						{...getElTestAttr(`${dataTestId}.cell.active.switch.${row.id}`)}
+						{...getElTestAttr(
+							`${tableRowIdPrefix}.cell.active.switch.${row.id}`,
+						)}
 					/>
 				),
 			});
@@ -271,16 +335,14 @@ const Table = ({
 										selected={isItemSelected}
 									>
 										<TableCell padding="checkbox">
-											<Checkbox
+											<Input.Checkbox
 												color="primary"
 												checked={isItemSelected}
 												onClick={(event) => rowSelectHandler(event, row.id)}
 												inputProps={{
 													'aria-labelledby': labelId,
 												}}
-												{...getElTestAttr(
-													`${dataTestId}.cell.checkbox.${row.id}`,
-												)}
+												dataTestId={`${tableRowIdPrefix}.cell.checkbox.${row.id}`}
 											/>
 										</TableCell>
 										{getBodyCells(row).map((cell) => (
@@ -290,29 +352,17 @@ const Table = ({
 												id={cell.key}
 												scope={cell.scope && cell.scope}
 												padding={cell.padding ? cell.padding : 'normal'}
-												children={cell.content}
+												children={cell.children}
 												align={cell.align}
 												width={cell.width}
 											/>
 										))}
 										<TableCell align="right" style={{ width: '125px' }}>
-											<Stack
-												direction="row"
-												spacing={2}
-												justifyContent="flex-end"
-											>
-												<IconButton
-													aria-label="Delete"
-													color="secondary"
-													onClick={() => onRowDeleteHandler(row.id)}
-													size="small"
-													{...getElTestAttr(
-														`${dataTestId}.cell.delete.button.${row.id}`,
-													)}
-												>
-													<DeleteOutlineIcon />
-												</IconButton>
-											</Stack>
+											<TableRowActionButtons
+												row={row}
+												rowIdPrefix={`${tableRowIdPrefix}${index}`}
+												onDelete={onRowDeleteHandler}
+											/>
 										</TableCell>
 									</TableRow>
 								);

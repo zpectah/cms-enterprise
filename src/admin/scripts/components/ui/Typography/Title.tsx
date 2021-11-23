@@ -52,6 +52,7 @@ interface TitleProps {
 	className?: string;
 	onClick?: (e: any) => void;
 	dataTestId?: string;
+	id?: string;
 }
 
 const Title: React.FC<TitleProps> = ({
@@ -65,11 +66,13 @@ const Title: React.FC<TitleProps> = ({
 	className,
 	onClick,
 	dataTestId = 'typography.title.default',
+	id,
 }) => {
 	const componentProps = {
 		children: children,
 		className: className,
 		onClick: onClick,
+		id: id,
 	};
 
 	const getComponent = () => {

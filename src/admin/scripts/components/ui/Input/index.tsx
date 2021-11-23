@@ -4,6 +4,8 @@ import SwitchInput from './SwitchInput';
 import RadioInput from './RadioInput';
 import ToggleInput from './ToggleInput';
 import SliderInput from './SliderInput';
+import CheckboxInput from './CheckboxInput';
+import CheckboxControlInput from './CheckboxControlInput';
 
 export default {
 	Select: SelectInput,
@@ -12,4 +14,6 @@ export default {
 	Radio: RadioInput,
 	Toggle: ToggleInput,
 	Slider: SliderInput,
+	Checkbox: CheckboxInput,
+	CheckboxControl: CheckboxControlInput,
 };

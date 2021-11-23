@@ -119,6 +119,7 @@ const DataTable = ({
 	return (
 		<>
 			<ContentTitle
+				id={`dataTable_title_${model}`}
 				title={t(`page:${model}.page.title`)}
 				listPath={routeObject.path}
 			/>
@@ -168,6 +169,7 @@ const DataTable = ({
 								/>
 							</FormControl>
 							<Button
+								aria-label={`reset filter`}
 								size="small"
 								onClick={resetFilterHandler}
 								disabled={searchInput == '' && filterType == 'all'}
@@ -184,7 +186,7 @@ const DataTable = ({
 								size="small"
 							>
 								<Button
-									aria-label={`toggle ${selectedRows.length}`}
+									aria-label={`toggle selected`}
 									size="small"
 									disabled={selectedRows.length == 0}
 									onClick={onSelectedToggleCallback}
@@ -193,7 +195,7 @@ const DataTable = ({
 									{t(`button.toggle`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
 								</Button>
 								<Button
-									aria-label={`delete ${selectedRows.length}`}
+									aria-label={`delete selected`}
 									size="small"
 									color="error"
 									disabled={selectedRows.length == 0}
@@ -220,6 +222,7 @@ const DataTable = ({
 			</ModuleViewHeading>
 			<Section>
 				<Table
+					model={model}
 					tableData={getFilteredItems()}
 					tableCells={tableCells}
 					rowPathPrefix={routeObject.path + ROUTE_SUFFIX.detail}
