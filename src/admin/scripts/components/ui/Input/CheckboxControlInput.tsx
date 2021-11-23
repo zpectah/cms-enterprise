@@ -3,27 +3,33 @@ import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
 import FormControlLabel, {
 	FormControlLabelProps,
 } from '@mui/material/FormControlLabel';
+import styled from 'styled-components';
 
 import { getElTestAttr } from '../../../utils/tests';
 
+const StyledLabel = styled(FormControlLabel)``;
+
 interface CheckboxControlInputProps {
 	dataTestId?: string;
-	checkboxProps?: CheckboxProps;
+	label?: string;
+	labelProps?: FormControlLabelProps;
 }
 
 const CheckboxControlInput = (
-	props: CheckboxControlInputProps & FormControlLabelProps,
+	props: CheckboxControlInputProps & CheckboxProps,
 ) => {
 	const {
 		dataTestId = 'checkbox-control.input.default',
-		checkboxProps,
+		label = '',
+		labelProps,
 		...rest
 	} = props;
 
 	return (
-		<FormControlLabel
-			{...rest}
-			control={<Checkbox {...checkboxProps} {...getElTestAttr(dataTestId)} />}
+		<StyledLabel
+			control={<Checkbox {...rest} {...getElTestAttr(dataTestId)} />}
+			label={label}
+			{...labelProps}
 		/>
 	);
 };
