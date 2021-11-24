@@ -1,16 +1,17 @@
+import { PATH } from '../constants.js';
 import Page from './page';
 
 class ExamplePage extends Page {
 	get menuToggle() {
-		return $('[data-app-id="toggle.sidebar"]');
+		return super.getElm('toggle.sidebar');
 	}
 
 	get menuLink() {
-		return $('[data-app-id="navbar.primary.item.Posts"]');
+		return super.getElm('navbar.primary.item.Posts');
 	}
 
 	openAdmin() {
-		return super.openUrl('http://cms2022/admin');
+		return super.openUrl(PATH.admin);
 	}
 }
 
