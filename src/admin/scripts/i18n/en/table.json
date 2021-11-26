@@ -9,6 +9,7 @@
   },
   "options": {
     "searchInTable": "Search in table",
-    "filterByType": "Filter by type"
+    "filterByType": "Filter by type",
+    "selectedItems": "Selected"
   }
 }

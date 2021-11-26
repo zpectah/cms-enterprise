@@ -16,6 +16,8 @@ export const DEFAULT_UNITS = {
 	weight: 'Kg',
 	length: 'mm',
 };
+export const FORM_INPUT_MIN_LENGTH = 3;
+export const FORM_INPUT_MAX_LENGTH = 500;
 export const ELEMENT_DATA_TEST_ATTR = 'data-test-id';
 export const USER_LEVEL = {
 	demo: {

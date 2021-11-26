@@ -10,7 +10,7 @@ import { PaymentsItemProps } from '../../types/model';
 import { usePayments } from '../../hooks/market';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PaymentsDetailForm from './PaymentsDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updatePayments(master).then((response) => {
-				console.log('update response', response);
+			createPayments(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 				});
 			});
 		} else {
-			createPayments(master).then((response) => {
-				console.log('create response', response);
+			updatePayments(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

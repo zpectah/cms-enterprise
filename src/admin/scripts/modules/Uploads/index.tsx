@@ -10,7 +10,7 @@ import { UploadsItemProps } from '../../types/model';
 import { useUploads } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import UploadsDetailForm from './UploadsDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateUploads(master).then((response) => {
-				console.log('update response', response);
+			createUploads(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 				});
 			});
 		} else {
-			createUploads(master).then((response) => {
-				console.log('create response', response);
+			updateUploads(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

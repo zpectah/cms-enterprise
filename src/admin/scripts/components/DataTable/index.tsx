@@ -5,11 +5,13 @@ import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import config from '../../config';
 import { array, file } from '../../../../../utils/utils';
 import { getSearchAttrs, getTypesFromData } from '../../utils/table';
-import { ROUTE_SUFFIX } from '../../constants';
+import { ROUTE_SUFFIX, FORM_INPUT_MIN_LENGTH } from '../../constants';
 import { routeItemProps } from '../../types/pages';
 import { appModelProps } from '../../types/app';
 import { cellsTypesProps, customActionCellItemProps } from '../../types/table';
@@ -19,6 +21,7 @@ import ModuleViewHeading from '../ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../ModuleLanguageToggle';
 import Table from './Table';
+import { getElTestAttr } from '../../utils/tests';
 
 interface DataTableProps {
 	model: appModelProps;
@@ -60,15 +63,34 @@ const DataTable = ({
 	const [selectedRows, setSelectedRows] = useState(selectedItems);
 	const [searchInput, setSearchInput] = useState('');
 	const [filterType, setFilterType] = useState('all');
+	const [selectedAnchEl, setSelectedAnchEl] = useState<null | HTMLElement>(
+		null,
+	);
 
+	const selectedDropdownOpen = Boolean(selectedAnchEl);
+
+	const selectedDropdownOpenHandler = (
+		event: React.MouseEvent<HTMLButtonElement>,
+	) => {
+		setSelectedAnchEl(event.currentTarget);
+	};
+	const selectedDropdownCloseHandler = () => {
+		setSelectedAnchEl(null);
+	};
 	const onRowSelectCallback = (selected) => {
 		onSelect(selected);
 		setSelectedRows(selected);
 	};
 	const onRowToggleCallback = (id: number | string) => onToggle([id]);
 	const onRowDeleteCallback = (id: number | string) => onDelete([id]);
-	const onSelectedToggleCallback = () => onToggle([...selectedRows]);
-	const onSelectedDeleteCallback = () => onDelete([...selectedRows]);
+	const onSelectedToggleCallback = () => {
+		onToggle([...selectedRows]);
+		selectedDropdownCloseHandler();
+	};
+	const onSelectedDeleteCallback = () => {
+		onDelete([...selectedRows]);
+		selectedDropdownCloseHandler();
+	};
 	const resetFilterHandler = () => {
 		setSearchInput('');
 		setFilterType('all');
@@ -92,11 +114,10 @@ const DataTable = ({
 
 		return options;
 	}, [tableData]);
-
 	const getFilteredItems = useCallback(() => {
 		let items = tableData;
 
-		if (searchInput.length > 3)
+		if (searchInput.length > FORM_INPUT_MIN_LENGTH)
 			items = array.search(
 				tableData,
 				getSearchAttrs(tableSearchProps, lang),
@@ -146,7 +167,7 @@ const DataTable = ({
 									style={{ width: '250px' }}
 									placeholder={t('table:options.searchInTable')}
 									value={searchInput}
-									onChange={(e) => setSearchInput(e.target.value)}
+									onChange={(e: any) => setSearchInput(e.target.value)}
 									InputProps={{
 										startAdornment: (
 											<InputAdornment position="start">
@@ -181,32 +202,48 @@ const DataTable = ({
 							</Button>
 						</Stack>
 						<Stack spacing={2} direction="row">
-							<ButtonGroup
-								variant="outlined"
-								color="secondary"
-								aria-label="outlined button group"
-								size="small"
-							>
+							<div>
 								<Button
-									aria-label={`toggle selected`}
-									size="small"
+									id="dataTable_options_selected_trigger"
+									aria-controls="dataTable_options_selected_menu"
+									aria-haspopup="true"
+									aria-expanded={selectedDropdownOpen ? 'true' : undefined}
+									onClick={selectedDropdownOpenHandler}
+									variant="outlined"
+									color="secondary"
 									disabled={selectedRows.length == 0}
-									onClick={onSelectedToggleCallback}
-									dataTestId={`${dataTestId}.options.button.toggleSelected`}
+									dataTestId={`${dataTestId}.options.selected.dropdown.trigger`}
 								>
-									{t(`button.toggle`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
+									{t(`table:options.selectedItems`)}&nbsp;&nbsp;(
+									{selectedRows.length})
 								</Button>
-								<Button
-									aria-label={`delete selected`}
-									size="small"
-									color="error"
-									disabled={selectedRows.length == 0}
-									onClick={onSelectedDeleteCallback}
-									dataTestId={`${dataTestId}.options.button.deleteSelected`}
+								<Menu
+									id="dataTable_options_selected_menu"
+									anchorEl={selectedAnchEl}
+									open={selectedDropdownOpen}
+									onClose={selectedDropdownCloseHandler}
+									MenuListProps={{
+										'aria-labelledby': 'dataTable_options_selected_trigger',
+									}}
 								>
-									{t(`button.delete`)}&nbsp;&nbsp;<b>{selectedRows.length}</b>
-								</Button>
-							</ButtonGroup>
+									<MenuItem
+										onClick={onSelectedToggleCallback}
+										{...getElTestAttr(
+											`${dataTestId}.options.selected.dropdown.toggleSelected`,
+										)}
+									>
+										{t(`button.toggle`)}
+									</MenuItem>
+									<MenuItem
+										onClick={onSelectedDeleteCallback}
+										{...getElTestAttr(
+											`${dataTestId}.options.selected.dropdown.deleteSelected`,
+										)}
+									>
+										{t(`button.delete`)}
+									</MenuItem>
+								</Menu>
+							</div>
 						</Stack>
 					</>
 				}

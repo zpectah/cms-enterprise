@@ -10,7 +10,7 @@ import { MembersItemProps } from '../../types/model';
 import { useMembers } from '../../hooks/crm';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import MembersDetailForm from './MembersDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const MembersModule = ({}: MembersModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateMembers(master).then((response) => {
-				console.log('update response', response);
+			createMembers(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const MembersModule = ({}: MembersModuleProps) => {
 				});
 			});
 		} else {
-			createMembers(master).then((response) => {
-				console.log('create response', response);
+			updateMembers(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

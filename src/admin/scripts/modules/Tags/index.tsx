@@ -10,7 +10,7 @@ import { TagsItemProps } from '../../types/model';
 import { useTags } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import TagsDetailForm from './TagsDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -86,8 +86,8 @@ const TagsModule = ({}: TagsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateTags(master).then((response) => {
-				console.log('update response', response);
+			createTags(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -97,8 +97,8 @@ const TagsModule = ({}: TagsModuleProps) => {
 				});
 			});
 		} else {
-			createTags(master).then((response) => {
-				console.log('create response', response);
+			updateTags(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -227,7 +227,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

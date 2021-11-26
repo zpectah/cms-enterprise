@@ -10,7 +10,7 @@ import { CategoriesItemProps } from '../../types/model';
 import { useCategories } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import CategoriesDetailForm from './CategoriesDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateCategories(master).then((response) => {
-				console.log('update response', response);
+			createCategories(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 				});
 			});
 		} else {
-			createCategories(master).then((response) => {
-				console.log('create response', response);
+			updateCategories(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

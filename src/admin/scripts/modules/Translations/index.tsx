@@ -10,7 +10,7 @@ import { TranslationsItemProps } from '../../types/model';
 import { useTranslations } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import TranslationsDetailForm from './TranslationsDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateTranslations(master).then((response) => {
-				console.log('update response', response);
+			createTranslations(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 				});
 			});
 		} else {
-			createTranslations(master).then((response) => {
-				console.log('create response', response);
+			updateTranslations(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

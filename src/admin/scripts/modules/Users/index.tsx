@@ -10,7 +10,7 @@ import { UsersItemProps } from '../../types/model';
 import { useUsers } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import UsersDetailForm from './UsersDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -93,8 +93,8 @@ const UsersModule = ({}: UsersModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateUsers(master).then((response) => {
-				console.log('update response', response);
+			createUsers(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -104,8 +104,8 @@ const UsersModule = ({}: UsersModuleProps) => {
 				});
 			});
 		} else {
-			createUsers(master).then((response) => {
-				console.log('create response', response);
+			updateUsers(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -235,7 +235,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 							withoutLanguageToggle
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

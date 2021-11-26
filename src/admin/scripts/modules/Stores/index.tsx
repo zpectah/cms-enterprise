@@ -10,7 +10,7 @@ import { StoresItemProps } from '../../types/model';
 import { useStores } from '../../hooks/market';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import StoresDetailForm from './StoresDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -87,8 +87,8 @@ const StoresModule = ({}: StoresModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateStores(master).then((response) => {
-				console.log('update response', response);
+			createStores(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -98,8 +98,8 @@ const StoresModule = ({}: StoresModuleProps) => {
 				});
 			});
 		} else {
-			createStores(master).then((response) => {
-				console.log('create response', response);
+			updateStores(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -228,7 +228,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

@@ -10,7 +10,7 @@ import { DeliveriesItemProps } from '../../types/model';
 import { useDeliveries } from '../../hooks/market';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import DeliveriesDetailForm from './DeliveriesDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateDeliveries(master).then((response) => {
-				console.log('update response', response);
+			createDeliveries(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 				});
 			});
 		} else {
-			createDeliveries(master).then((response) => {
-				console.log('create response', response);
+			updateDeliveries(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

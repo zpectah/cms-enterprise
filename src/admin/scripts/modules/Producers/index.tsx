@@ -10,7 +10,7 @@ import { ProducersItemProps } from '../../types/model';
 import { useProducers } from '../../hooks/market';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import ProducersDetailForm from './ProducersDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateProducers(master).then((response) => {
-				console.log('update response', response);
+			createProducers(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 				});
 			});
 		} else {
-			createProducers(master).then((response) => {
-				console.log('create response', response);
+			updateProducers(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

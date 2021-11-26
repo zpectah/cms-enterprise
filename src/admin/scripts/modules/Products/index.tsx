@@ -10,7 +10,7 @@ import { ProductsItemProps } from '../../types/model';
 import { useProducts } from '../../hooks/market';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import ProductsDetailForm from './ProductsDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateProducts(master).then((response) => {
-				console.log('update response', response);
+			createProducts(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 				});
 			});
 		} else {
-			createProducts(master).then((response) => {
-				console.log('create response', response);
+			updateProducts(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

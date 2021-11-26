@@ -10,7 +10,7 @@ import { PostsItemProps } from '../../types/model';
 import { usePosts } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PostsDetailForm from './PostsDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -87,8 +87,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updatePosts(master).then((response) => {
-				console.log('update response', response);
+			createPosts(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -98,8 +98,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 				});
 			});
 		} else {
-			createPosts(master).then((response) => {
-				console.log('create response', response);
+			updatePosts(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -228,7 +228,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

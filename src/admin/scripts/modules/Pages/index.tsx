@@ -10,7 +10,7 @@ import { PagesItemProps } from '../../types/model';
 import { usePages } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PagesDetailForm from './PagesDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -87,8 +87,8 @@ const PagesModule = ({}: PagesModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updatePages(master).then((response) => {
-				console.log('update response', response);
+			createPages(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -98,8 +98,8 @@ const PagesModule = ({}: PagesModuleProps) => {
 				});
 			});
 		} else {
-			createPages(master).then((response) => {
-				console.log('create response', response);
+			updatePages(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -228,7 +228,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

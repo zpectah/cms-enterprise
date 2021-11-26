@@ -10,7 +10,7 @@ import { MenuItemProps } from '../../types/model';
 import { useMenu } from '../../hooks/app';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import MenuDetailForm from './MenuDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -86,8 +86,8 @@ const MenuModule = ({}: MenuModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateMenu(master).then((response) => {
-				console.log('update response', response);
+			createMenu(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -97,8 +97,8 @@ const MenuModule = ({}: MenuModuleProps) => {
 				});
 			});
 		} else {
-			createMenu(master).then((response) => {
-				console.log('create response', response);
+			updateMenu(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -227,7 +227,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

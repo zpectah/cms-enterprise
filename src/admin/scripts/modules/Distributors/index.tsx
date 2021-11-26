@@ -10,7 +10,7 @@ import { DistributorsItemProps } from '../../types/model';
 import { useDistributors } from '../../hooks/market';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import DistributorsDetailForm from './DistributorsDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -92,8 +92,8 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateDistributors(master).then((response) => {
-				console.log('update response', response);
+			createDistributors(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -103,8 +103,8 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 				});
 			});
 		} else {
-			createDistributors(master).then((response) => {
-				console.log('create response', response);
+			updateDistributors(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -233,7 +233,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}

@@ -10,7 +10,7 @@ import { OrdersItemProps } from '../../types/model';
 import { useOrders } from '../../hooks/market';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
-import { ConfirmDialog } from '../../components/ui';
+import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import OrdersDetailForm from './OrdersDetailForm';
 import { useToasts } from '../../hooks/common';
@@ -87,8 +87,8 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
-			updateOrders(master).then((response) => {
-				console.log('update response', response);
+			createOrders(master).then((response) => {
+				console.log('create response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -98,8 +98,8 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 				});
 			});
 		} else {
-			createOrders(master).then((response) => {
-				console.log('create response', response);
+			updateOrders(master).then((response) => {
+				console.log('update response', response);
 
 				closeDetailHandler();
 				createToasts({
@@ -245,7 +245,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 							]}
 						/>
 					) : (
-						<div>Loading</div>
+						<Preloader.Page />
 					)}
 				</>
 			)}
