@@ -43,6 +43,8 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		updateCategories,
 		toggleCategories,
 		deleteCategories,
+		categories_loading,
+		categories_error,
 	} = useCategories();
 
 	// Module object data & options
@@ -192,7 +194,9 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Categories && params.id) setDetail(params.id);
+	}, [params.id, Categories]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +207,21 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<CategoriesDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Categories ? (
 				<>
-					{Categories ? (
+					{detail && detailData ? (
+						<CategoriesDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +236,10 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

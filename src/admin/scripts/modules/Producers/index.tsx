@@ -43,6 +43,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		updateProducers,
 		toggleProducers,
 		deleteProducers,
+		producers_loading,
+		producers_error,
 	} = useProducers();
 
 	// Module object data & options
@@ -192,7 +194,9 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Producers && params.id) setDetail(params.id);
+	}, [params.id, Producers]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +207,21 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<ProducersDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Producers ? (
 				<>
-					{Producers ? (
+					{detail && detailData ? (
+						<ProducersDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +236,10 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

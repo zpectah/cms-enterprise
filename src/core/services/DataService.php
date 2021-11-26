@@ -2,6 +2,9 @@
 
 namespace service;
 
+use model\Users;
+use mysqli;
+
 class DataService {
 
     /* !!!
@@ -13,11 +16,30 @@ class DataService {
     !!! */
 
     public function get ($model, $data = null) {
+        $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
-            'data' => $data, // TODO: DEMO
-            '__model__' => $model, // TODO: DEMO
+            // 'data' => $data, // TODO: DEMO
+            // '__model__' => $model, // TODO: DEMO
         ];
+
+        // Model
+        $Users = new Users;
+
+
+
+        // Additional
+        $languages = ['en'];
+        $modules = ['crm', 'market'];
+
+
+        switch ($model) {
+
+            case 'Users':
+                $response['data'] = $Users -> get($conn, $data);
+                break;
+
+        }
 
         return $response;
     }
@@ -63,39 +85,6 @@ class DataService {
     }
 
 
-
-
-
-    /********** System **********/
-
-    /********** Settings **********/
-    public function get_settings () {
-        $response = [
-            'status' => 'ok',
-        ];
-
-        return $response;
-    }
-
-    public function update_settings () {
-        $response = [
-            'status' => 'ok',
-        ];
-
-        return $response;
-    }
-
-    /********** Profile **********/
-    public function user_login () {}
-
-    public function user_logout () {}
-
-    public function user_lost_password () {}
-
-    public function user_lost_password_reset () {}
-
-
-
     /********** Categories **********/
 
     /********** Deliveries **********/
@@ -125,5 +114,41 @@ class DataService {
     /********** Uploads **********/
 
     /********** Users **********/
+
+
+
+
+
+
+
+    /********** System **********/
+
+    /********** Settings **********/
+    public function get_settings ($data) {
+        $response = [
+            'status' => 'ok',
+            'data' => $data, // TODO: DEMO
+        ];
+
+        return $response;
+    }
+
+    public function update_settings ($data) {
+        $response = [
+            'status' => 'ok',
+            'data' => $data, // TODO: DEMO
+        ];
+
+        return $response;
+    }
+
+    /********** Profile **********/
+    public function user_login () {}
+
+    public function user_logout () {}
+
+    public function user_lost_password () {}
+
+    public function user_lost_password_reset () {}
 
 }

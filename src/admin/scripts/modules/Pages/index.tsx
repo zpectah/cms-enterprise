@@ -37,8 +37,15 @@ const PagesModule = ({}: PagesModuleProps) => {
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
-	const { Pages, createPages, updatePages, togglePages, deletePages } =
-		usePages();
+	const {
+		Pages,
+		createPages,
+		updatePages,
+		togglePages,
+		deletePages,
+		pages_loading,
+		pages_error,
+	} = usePages();
 
 	// Module object data & options
 	const moduleObject: moduleObjectProps = {
@@ -187,7 +194,9 @@ const PagesModule = ({}: PagesModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Pages && params.id) setDetail(params.id);
+	}, [params.id, Pages]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -198,21 +207,21 @@ const PagesModule = ({}: PagesModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<PagesDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Pages ? (
 				<>
-					{Pages ? (
+					{detail && detailData ? (
+						<PagesDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -227,10 +236,10 @@ const PagesModule = ({}: PagesModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

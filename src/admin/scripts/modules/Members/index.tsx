@@ -43,6 +43,8 @@ const MembersModule = ({}: MembersModuleProps) => {
 		updateMembers,
 		toggleMembers,
 		deleteMembers,
+		members_loading,
+		members_error,
 	} = useMembers();
 
 	// Module object data & options
@@ -192,7 +194,9 @@ const MembersModule = ({}: MembersModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Members && params.id) setDetail(params.id);
+	}, [params.id, Members]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +207,21 @@ const MembersModule = ({}: MembersModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<MembersDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Members ? (
 				<>
-					{Members ? (
+					{detail && detailData ? (
+						<MembersDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +236,10 @@ const MembersModule = ({}: MembersModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

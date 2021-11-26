@@ -45,7 +45,7 @@ export default (
 
 	if (id == 'new') {
 		item = blankDataItem[model];
-	} else {
+	} else if (Array.isArray(items)) {
 		item = items.find((item) => item.id == id);
 	}
 

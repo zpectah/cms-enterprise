@@ -192,7 +192,9 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Distributors && params.id) setDetail(params.id);
+	}, [params.id, Distributors]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +205,21 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<DistributorsDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Distributors ? (
 				<>
-					{Distributors ? (
+					{detail && detailData ? (
+						<DistributorsDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +234,10 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

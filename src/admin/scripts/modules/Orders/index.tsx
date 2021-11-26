@@ -37,8 +37,15 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
-	const { Orders, createOrders, updateOrders, toggleOrders, deleteOrders } =
-		useOrders();
+	const {
+		Orders,
+		createOrders,
+		updateOrders,
+		toggleOrders,
+		deleteOrders,
+		orders_loading,
+		orders_error,
+	} = useOrders();
 
 	// Module object data & options
 	const moduleObject: moduleObjectProps = {
@@ -187,7 +194,9 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Orders && params.id) setDetail(params.id);
+	}, [params.id, Orders]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -198,21 +207,21 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<OrdersDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Orders ? (
 				<>
-					{Orders ? (
+					{detail && detailData ? (
+						<OrdersDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -244,10 +253,10 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 								},
 							]}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

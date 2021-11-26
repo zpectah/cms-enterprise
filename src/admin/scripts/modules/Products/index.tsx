@@ -43,6 +43,8 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 		updateProducts,
 		toggleProducts,
 		deleteProducts,
+		products_loading,
+		products_error,
 	} = useProducts();
 
 	// Module object data & options
@@ -192,7 +194,9 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Products && params.id) setDetail(params.id);
+	}, [params.id, Products]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +207,21 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<ProductsDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Products ? (
 				<>
-					{Products ? (
+					{detail && detailData ? (
+						<ProductsDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +236,10 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

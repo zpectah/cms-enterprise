@@ -43,6 +43,8 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		updateTranslations,
 		toggleTranslations,
 		deleteTranslations,
+		translations_loading,
+		translations_error,
 	} = useTranslations();
 
 	// Module object data & options
@@ -192,7 +194,9 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Translations && params.id) setDetail(params.id);
+	}, [params.id, Translations]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +207,21 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<TranslationsDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Translations ? (
 				<>
-					{Translations ? (
+					{detail && detailData ? (
+						<TranslationsDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +236,10 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

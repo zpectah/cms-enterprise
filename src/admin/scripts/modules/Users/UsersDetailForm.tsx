@@ -51,14 +51,13 @@ const UsersDetailForm = ({
 		route: ROUTES.app.users,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState, watch } = useForm({
+	const { control, handleSubmit, reset, register, formState } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 		},
 	});
 	const { isDirty, isValid } = formState;
-	const passwordMinLength = 5;
 
 	const submitHandler = (data: UsersItemProps, e: any) => onSubmit(data, e);
 	const errorSubmitHandler = (errors: any, e: any) => {
@@ -113,35 +112,6 @@ const UsersDetailForm = ({
 	}, [detailData]);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
-
-	// Passwords match state & messages
-	const watchPasswordMatch = watch(['password', 'password_confirm']);
-	const isPasswordsMatching = useMemo(() => {
-		if (detailData.id == 'new') {
-			const p1 = watchPasswordMatch[0];
-			const p2 = watchPasswordMatch[1];
-
-			if (p1 == p2) {
-				return {
-					match: true,
-					p1: p1,
-					p2: p2,
-				};
-			} else {
-				return {
-					match: false,
-					p1: p1,
-					p2: p2,
-				};
-			}
-		} else {
-			return {
-				match: true,
-				p1: null,
-				p2: null,
-			};
-		}
-	}, [watchPasswordMatch]);
 
 	return (
 		<>
@@ -293,6 +263,7 @@ const UsersDetailForm = ({
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text
+									type="password"
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
@@ -310,44 +281,6 @@ const UsersDetailForm = ({
 							</Form.Row>
 						)}
 					/>
-					{detailData.id == 'new' && (
-						<Controller
-							name="password_confirm"
-							control={control}
-							rules={{ required: detailData.id == 'new' }}
-							render={({ field: { onChange, onBlur, value, ref, name } }) => (
-								<Form.Row
-									errors={
-										!isPasswordsMatching.match &&
-										isPasswordsMatching.p1.length >= passwordMinLength &&
-										isPasswordsMatching.p2.length >= passwordMinLength
-											? ['Password wont match!']
-											: []
-									}
-									success={
-										isPasswordsMatching.match &&
-										isPasswordsMatching.p1.length >= passwordMinLength &&
-										isPasswordsMatching.p2.length >= passwordMinLength
-											? ['Password match']
-											: []
-									}
-									responsiveMessages={'75%'}
-								>
-									<Input.Text
-										onChange={onChange}
-										onBlur={onBlur}
-										value={value}
-										name={name}
-										id={`${formOptions.id}__password_confirm`}
-										label={t('form:input.password_confirm')}
-										responsiveWidth={'75%'}
-										dataTestId={`${formOptions.id}.input.password_confirm`}
-										required={detailData.id == 'new'}
-									/>
-								</Form.Row>
-							)}
-						/>
-					)}
 				</Section>
 				<Section>
 					<Controller

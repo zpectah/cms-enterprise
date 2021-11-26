@@ -45,7 +45,6 @@ export interface UploadsItemProps extends commonItemProps {
 export interface UsersItemProps extends commonItemProps {
 	email: string;
 	password?: string;
-	password_confirm?: string;
 	nick_name: string;
 	first_name?: string;
 	middle_name?: string;

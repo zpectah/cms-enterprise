@@ -43,6 +43,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		updateUploads,
 		toggleUploads,
 		deleteUploads,
+		uploads_loading,
+		uploads_error,
 	} = useUploads();
 
 	// Module object data & options
@@ -192,7 +194,9 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Uploads && params.id) setDetail(params.id);
+	}, [params.id, Uploads]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +207,21 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<UploadsDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Uploads ? (
 				<>
-					{Uploads ? (
+					{detail && detailData ? (
+						<UploadsDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +236,10 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

@@ -40,7 +40,7 @@ export function useMembers() {
 			},
 		],
 		members_loading: !data && !error,
-		posts_error: error,
+		members_error: error,
 		reloadMembers: () => mutate(`/api/get_members`),
 		createMembers: (data: MembersItemProps) =>
 			post('/api/create_members', data),

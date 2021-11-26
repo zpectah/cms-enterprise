@@ -43,6 +43,8 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 		updatePayments,
 		togglePayments,
 		deletePayments,
+		payments_loading,
+		payments_error,
 	} = usePayments();
 
 	// Module object data & options
@@ -192,7 +194,9 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Payments && params.id) setDetail(params.id);
+	}, [params.id, Payments]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -203,21 +207,21 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<PaymentsDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Payments ? (
 				<>
-					{Payments ? (
+					{detail && detailData ? (
+						<PaymentsDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -232,10 +236,10 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

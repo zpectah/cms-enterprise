@@ -37,8 +37,15 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
-	const { Stores, createStores, updateStores, toggleStores, deleteStores } =
-		useStores();
+	const {
+		Stores,
+		createStores,
+		updateStores,
+		toggleStores,
+		deleteStores,
+		stores_loading,
+		stores_error,
+	} = useStores();
 
 	// Module object data & options
 	const moduleObject: moduleObjectProps = {
@@ -187,7 +194,9 @@ const StoresModule = ({}: StoresModuleProps) => {
 		}
 	};
 
-	useEffect(() => setDetail(params.id), [params.id]);
+	useEffect(() => {
+		if (Stores && params.id) setDetail(params.id);
+	}, [params.id, Stores]);
 	useEffect(() => {
 		if (detail) {
 			openDetailHandler(params.id);
@@ -198,21 +207,21 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 	return (
 		<>
-			{detail && detailData ? (
-				<StoresDetailForm
-					detailData={detailData}
-					detailOptions={moduleObject.detail}
-					onSubmit={detailSubmitHandler}
-					onSubmitError={detailSubmitErrorHandler}
-					onCancel={detailCancelHandler}
-					onDelete={(id) => itemDeleteHandler([id])}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
-					onCreateCallback={createNewCallback}
-				/>
-			) : (
+			{Stores ? (
 				<>
-					{Stores ? (
+					{detail && detailData ? (
+						<StoresDetailForm
+							detailData={detailData}
+							detailOptions={moduleObject.detail}
+							onSubmit={detailSubmitHandler}
+							onSubmitError={detailSubmitErrorHandler}
+							onCancel={detailCancelHandler}
+							onDelete={(id) => itemDeleteHandler([id])}
+							languageList={Settings.language_active}
+							languageDefault={Settings.language_default}
+							onCreateCallback={createNewCallback}
+						/>
+					) : (
 						<DataTable
 							model={moduleObject.model}
 							routeObject={moduleObject.route}
@@ -227,10 +236,10 @@ const StoresModule = ({}: StoresModuleProps) => {
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
 						/>
-					) : (
-						<Preloader.Page />
 					)}
 				</>
+			) : (
+				<Preloader.Page />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}
