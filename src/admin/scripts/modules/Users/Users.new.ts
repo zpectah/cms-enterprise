@@ -5,7 +5,6 @@ export default {
 	type: 'default',
 	email: '',
 	password: '',
-	password_confirm: '',
 	nick_name: '',
 	first_name: '',
 	middle_name: '',

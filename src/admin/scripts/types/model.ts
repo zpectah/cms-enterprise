@@ -1,7 +1,8 @@
-export interface commonItemProps {
+interface commonItemProps {
 	id: number | string;
 	type: string;
-	active: boolean;
+	active: boolean; // Overrides default DB type
+	deleted?: boolean; // Overrides default DB type
 }
 
 export interface RequestsItemProps {
@@ -49,9 +50,9 @@ export interface UsersItemProps extends commonItemProps {
 	first_name?: string;
 	middle_name?: string;
 	last_name: string;
-	user_level: number;
 	user_group: string;
 	img_avatar?: string;
+	user_level: number;
 }
 
 export interface MembersItemProps extends commonItemProps {

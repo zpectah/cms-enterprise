@@ -178,7 +178,10 @@ const Table = ({
 		setSelected([]);
 	};
 
-	const rowSelectHandler = (event: React.MouseEvent<unknown>, id: string) => {
+	const rowSelectHandler = (
+		event: React.MouseEvent<unknown>,
+		id: number | string,
+	) => {
 		const selectedIndex = selected.indexOf(id);
 		let newSelected: (number | string)[] = [];
 

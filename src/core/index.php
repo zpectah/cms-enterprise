@@ -18,7 +18,7 @@ require PATH_ROOT . 'config/core.php';
 /*
  * API request handler
  */
-require PATH_ROOT . 'core/Request.php';
+require PATH_ROOT . 'core/ApiRequest.php';
 
 /*
  * Services

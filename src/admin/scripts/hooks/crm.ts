@@ -38,7 +38,7 @@ export function useMembers() {
 				name: 'Post 5 name',
 				active: true,
 			},
-		],
+		] as MembersItemProps[],
 		members_loading: !data && !error,
 		members_error: error,
 		reloadMembers: () => mutate(`/api/get_members`),

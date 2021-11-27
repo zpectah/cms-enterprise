@@ -1,6 +1,6 @@
 <?php
 
-class Request {
+class ApiRequest {
 
     private function isRequestAuthorized () {
         $request_token = $_SERVER['HTTP_X_APP_TOKEN'];
@@ -29,7 +29,7 @@ class Request {
 
         // Parsed url and additional params
         $url_base = $request_url[1];
-        $url_param = $request_url[2];
+        // $url_param = $request_url[2];
 
         // Switching and executing
         if ($url_base) {
