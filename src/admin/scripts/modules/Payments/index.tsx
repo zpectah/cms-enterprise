@@ -242,7 +242,7 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 					)}
 				</>
 			) : (
-				<Preloader.Page />
+				<Preloader.Block />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

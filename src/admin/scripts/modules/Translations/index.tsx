@@ -242,7 +242,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 					)}
 				</>
 			) : (
-				<Preloader.Page />
+				<Preloader.Block />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

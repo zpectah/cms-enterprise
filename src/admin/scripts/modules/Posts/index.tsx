@@ -242,7 +242,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 					)}
 				</>
 			) : (
-				<Preloader.Page />
+				<Preloader.Block />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

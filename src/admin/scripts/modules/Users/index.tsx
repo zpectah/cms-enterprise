@@ -240,7 +240,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 					)}
 				</>
 			) : (
-				<Preloader.Page />
+				<Preloader.Block />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

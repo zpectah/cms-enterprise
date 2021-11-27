@@ -240,7 +240,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 					)}
 				</>
 			) : (
-				<Preloader.Page />
+				<Preloader.Block />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

@@ -242,7 +242,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 					)}
 				</>
 			) : (
-				<Preloader.Page />
+				<Preloader.Block />
 			)}
 			<ConfirmDialog
 				isOpen={confirmDialog}

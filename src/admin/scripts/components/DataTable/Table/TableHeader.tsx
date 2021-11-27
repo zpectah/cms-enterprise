@@ -1,20 +1,27 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
+import { styled } from '@mui/material/styles';
 
 import { DATA_TABLE } from '../../../constants';
+import palette from '../../../styles/palette';
 import {
 	cellsTypesProps,
 	sortType,
 	tableHeaderCellItemProps,
 } from '../../../types/table';
 import { Input } from '../../ui';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+	[`&.${tableCellClasses.head}`]: {
+		backgroundColor: palette._lightDark,
+	},
+}));
 
 interface TableHeaderProps {
 	numSelected: number;
@@ -66,7 +73,7 @@ const TableHeader = ({
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell padding="checkbox">
+				<StyledTableCell padding="checkbox">
 					<Input.Checkbox
 						color="primary"
 						indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -77,9 +84,9 @@ const TableHeader = ({
 						}}
 						dataTestId={`table.header.checkbox.selectAll`}
 					/>
-				</TableCell>
+				</StyledTableCell>
 				{getHeadCells().map((cell) => (
-					<TableCell
+					<StyledTableCell
 						key={cell.id}
 						align={cell.align}
 						padding={'none'}
@@ -98,16 +105,16 @@ const TableHeader = ({
 								</Box>
 							) : null}
 						</TableSortLabel>
-					</TableCell>
+					</StyledTableCell>
 				))}
-				<TableCell
+				<StyledTableCell
 					key="actions"
 					align="right"
 					padding="normal"
 					style={{ width: '125px' }}
 				>
 					<span>{t('table:label.actions')}</span>
-				</TableCell>
+				</StyledTableCell>
 			</TableRow>
 		</TableHead>
 	);

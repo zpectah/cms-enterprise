@@ -163,6 +163,8 @@ const UsersDetailForm = ({
 									</Form.Row>
 								)}
 							/>
+						</Section>
+						<Section>
 							<Controller
 								name="user_level"
 								control={control}
