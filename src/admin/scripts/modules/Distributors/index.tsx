@@ -193,15 +193,15 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Distributors && params.id) setDetail(params.id);
-	}, [params.id, Distributors]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Distributors) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Distributors]);
 
 	return (
 		<>

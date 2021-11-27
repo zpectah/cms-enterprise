@@ -195,15 +195,15 @@ const PagesModule = ({}: PagesModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Pages && params.id) setDetail(params.id);
-	}, [params.id, Pages]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Pages) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Pages]);
 
 	return (
 		<>

@@ -195,15 +195,15 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Payments && params.id) setDetail(params.id);
-	}, [params.id, Payments]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Payments) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Payments]);
 
 	return (
 		<>

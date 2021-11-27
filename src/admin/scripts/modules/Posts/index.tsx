@@ -195,15 +195,15 @@ const PostsModule = ({}: PostsModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Posts && params.id) setDetail(params.id);
-	}, [params.id, Posts]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Posts) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Posts]);
 
 	return (
 		<>

@@ -195,15 +195,15 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Categories && params.id) setDetail(params.id);
-	}, [params.id, Categories]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Categories) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Categories]);
 
 	return (
 		<>

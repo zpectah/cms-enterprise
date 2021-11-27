@@ -195,15 +195,15 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Products && params.id) setDetail(params.id);
-	}, [params.id, Products]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Products) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Products]);
 
 	return (
 		<>

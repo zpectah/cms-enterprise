@@ -195,15 +195,15 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Translations && params.id) setDetail(params.id);
-	}, [params.id, Translations]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Translations) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Translations]);
 
 	return (
 		<>

@@ -195,15 +195,15 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Producers && params.id) setDetail(params.id);
-	}, [params.id, Producers]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Producers) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Producers]);
 
 	return (
 		<>

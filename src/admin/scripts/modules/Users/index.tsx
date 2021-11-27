@@ -201,15 +201,15 @@ const UsersModule = ({}: UsersModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Users && params.id) setDetail(params.id);
-	}, [params.id, Users]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Users) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Users]);
 
 	return (
 		<>

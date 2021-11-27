@@ -195,15 +195,15 @@ const MembersModule = ({}: MembersModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Members && params.id) setDetail(params.id);
-	}, [params.id, Members]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Members) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Members]);
 
 	return (
 		<>

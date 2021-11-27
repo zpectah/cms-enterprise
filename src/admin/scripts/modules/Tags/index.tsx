@@ -195,15 +195,15 @@ const TagsModule = ({}: TagsModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Tags && params.id) setDetail(params.id);
-	}, [params.id, Tags]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Tags) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Tags]);
 
 	return (
 		<>

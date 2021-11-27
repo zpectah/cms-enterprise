@@ -195,15 +195,15 @@ const MenuModule = ({}: MenuModuleProps) => {
 	};
 
 	useEffect(() => {
-		if (Menu && params.id) setDetail(params.id);
-	}, [params.id, Menu]);
-	useEffect(() => {
-		if (detail) {
-			openDetailHandler(params.id);
-		} else {
-			setDetailData(null);
+		if (Menu) {
+			if (params.id) {
+				setDetail(params.id);
+				openDetailHandler(params.id);
+			} else {
+				setDetailData(null);
+			}
 		}
-	}, [detail]);
+	}, [params.id, Menu]);
 
 	return (
 		<>
