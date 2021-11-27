@@ -107,3 +107,12 @@ export type oneOfModelItemProps =
 	| ProducersItemProps
 	| ProductsItemProps
 	| StoresItemProps;
+
+export interface CmsRequestsItemProps {
+	id: number;
+	type: string;
+	context: string;
+	value: string;
+	token: string;
+	status: number;
+}

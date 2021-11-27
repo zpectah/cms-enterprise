@@ -45,6 +45,27 @@ class ApiRequest {
 
 
 
+                /********** CmsRequests **********/
+                case 'get_cms_requests':
+                    $response = $ds -> get('CmsRequests', $request_data);
+                    break;
+
+                case 'create_cms_requests':
+                    $response = $ds -> create('CmsRequests', $request_data);
+                    break;
+
+                case 'update_cms_requests':
+                    $response = $ds -> update('CmsRequests', $request_data);
+                    break;
+
+                case 'toggle_cms_requests':
+                    $response = $ds -> toggle('CmsRequests', $request_data);
+                    break;
+
+                case 'delete_cms_requests':
+                    $response = $ds -> delete('CmsRequests', $request_data);
+                    break;
+
                 /********** Categories **********/
 
                 /********** Deliveries **********/

@@ -31,6 +31,7 @@ require PATH_ROOT . 'core/services/EmailService.php';
 /*
  * Model
  */
+require PATH_ROOT . 'core/model/CmsRequests.php';
 require PATH_ROOT . 'core/model/Categories.php';
 require PATH_ROOT . 'core/model/Deliveries.php';
 require PATH_ROOT . 'core/model/Distributors.php';

@@ -3,6 +3,7 @@ import useSWR, { mutate } from 'swr';
 import config from '../config';
 import { get, post, postRaw } from '../utils/api';
 import {
+	CmsRequestsItemProps,
 	PostsItemProps,
 	CategoriesItemProps,
 	MenuItemProps,
@@ -24,6 +25,25 @@ import {
 } from '../types/model';
 
 const api_path_prefix = config.project.api.base;
+
+export function useCmsRequests() {
+	const { data, error } = useSWR(`${api_path_prefix}/get_cms_requests`, get);
+
+	return {
+		CmsRequests: data?.data as CmsRequestsItemProps[],
+		cmsRequests_loading: !data && !error,
+		cmsRequests_error: error,
+		reloadCmsRequests: () => mutate(`${api_path_prefix}/get_cms_requests`),
+		createCmsRequests: (data: CmsRequestsItemProps) =>
+			post(`${api_path_prefix}/create_cms_requests`, data),
+		updateCmsRequests: (data: CmsRequestsItemProps) =>
+			post(`${api_path_prefix}/update_cms_requests`, data),
+		toggleCmsRequests: (data: (number | string)[]) =>
+			post(`${api_path_prefix}/toggle_cms_requests`, data),
+		deleteCmsRequests: (data: (number | string)[]) =>
+			post(`${api_path_prefix}/delete_cms_requests`, data),
+	};
+}
 
 export function usePosts() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_posts`, get);

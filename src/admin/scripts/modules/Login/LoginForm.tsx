@@ -49,6 +49,16 @@ const LoginForm = ({}: LoginFormProps) => {
 
 		setErrorMessage('Example error message ...');
 		setSuccessMessage('Example success message ...');
+
+		/*
+
+		user_not_found
+		user_password_not_match
+		user_not_active
+		user_is_deleted
+		user_login_success
+
+		*/
 	};
 	const errorSubmitHandler = (errors: any, e: any) =>
 		console.warn(`${formOptions.id}__${errors}`, e);

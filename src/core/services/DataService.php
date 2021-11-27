@@ -2,8 +2,10 @@
 
 namespace service;
 
+use model\CmsRequests;
 use model\Tags;
 use model\Users;
+use module\admin\Profile;
 use mysqli;
 
 class DataService {
@@ -24,6 +26,7 @@ class DataService {
         ];
 
         // Model
+        $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
 
@@ -36,6 +39,10 @@ class DataService {
 
         switch ($model) {
 
+            case 'CmsRequests':
+                $response['data'] = $CmsRequests -> get($conn, $data);
+                break;
+
             case 'Users':
                 $response['data'] = $Users -> get($conn, $data);
                 break;
@@ -45,6 +52,8 @@ class DataService {
                 break;
 
         }
+
+        $conn -> close();
 
         return $response;
     }
@@ -57,6 +66,7 @@ class DataService {
         ];
 
         // Model
+        $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
 
@@ -69,6 +79,10 @@ class DataService {
 
         switch ($model) {
 
+            case 'CmsRequests':
+                $response['data'] = $CmsRequests -> create($conn, $data);
+                break;
+
             case 'Users':
                 $response['data'] = $Users -> create($conn, $data);
                 break;
@@ -78,6 +92,8 @@ class DataService {
                 break;
 
         }
+
+        $conn -> close();
 
         return $response;
     }
@@ -90,6 +106,7 @@ class DataService {
         ];
 
         // Model
+        $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
 
@@ -102,6 +119,10 @@ class DataService {
 
         switch ($model) {
 
+            case 'CmsRequests':
+                $response['data'] = $CmsRequests -> update($conn, $data);
+                break;
+
             case 'Users':
                 $response['data'] = $Users -> update($conn, $data);
                 break;
@@ -111,6 +132,8 @@ class DataService {
                 break;
 
         }
+
+        $conn -> close();
 
         return $response;
     }
@@ -123,11 +146,16 @@ class DataService {
         ];
 
         // Model
+        $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
 
 
         switch ($model) {
+
+            case 'CmsRequests':
+                $response['data'] = $CmsRequests -> toggle($conn, $data);
+                break;
 
             case 'Users':
                 $response['data'] = $Users -> toggle($conn, $data);
@@ -138,6 +166,8 @@ class DataService {
                 break;
 
         }
+
+        $conn -> close();
 
         return $response;
     }
@@ -150,11 +180,16 @@ class DataService {
         ];
 
         // Model
+        $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
 
 
         switch ($model) {
+
+            case 'CmsRequests':
+                $response['data'] = $CmsRequests -> delete($conn, $data);
+                break;
 
             case 'Users':
                 $response['data'] = $Users -> delete($conn, $data);
@@ -165,6 +200,8 @@ class DataService {
                 break;
 
         }
+
+        $conn -> close();
 
         return $response;
     }
@@ -216,6 +253,8 @@ class DataService {
             'data' => $data, // TODO: DEMO
         ];
 
+        $conn -> close();
+
         return $response;
     }
 
@@ -226,16 +265,71 @@ class DataService {
             'data' => $data, // TODO: DEMO
         ];
 
+        $conn -> close();
+
         return $response;
     }
 
     /********** Profile **********/
-    public function user_login () {}
+    public function get_user_profile () {
+        $conn = new mysqli(...CFG_DB_CONN);
 
-    public function user_logout () {}
+        $Profile = new Profile;
+        $response = $Profile -> get_user_profile($conn);
 
-    public function user_lost_password () {}
+        $conn -> close();
 
-    public function user_lost_password_reset () {}
+        return $response;
+    }
+
+    public function user_update_profile ($data) {
+        $conn = new mysqli(...CFG_DB_CONN);
+
+        $Profile = new Profile;
+        $response = $Profile -> user_update_profile($conn, $data);
+
+        $conn -> close();
+
+        return $response;
+    }
+
+    public function user_login ($data) {
+        $conn = new mysqli(...CFG_DB_CONN);
+
+        $Profile = new Profile;
+        $response = $Profile -> user_login($conn, $data);
+
+        $conn -> close();
+
+        return $response;
+    }
+
+    public function user_logout () {
+        $Profile = new Profile;
+
+        return $Profile -> user_logout();
+    }
+
+    public function user_lost_password ($data) {
+        $conn = new mysqli(...CFG_DB_CONN);
+
+        $Profile = new Profile;
+        $response = $Profile -> user_lost_password($conn, $data);
+
+        $conn -> close();
+
+        return $response;
+    }
+
+    public function user_lost_password_reset ($data) {
+        $conn = new mysqli(...CFG_DB_CONN);
+
+        $Profile = new Profile;
+        $response = $Profile -> user_lost_password_reset($conn, $data);
+
+        $conn -> close();
+
+        return $response;
+    }
 
 }

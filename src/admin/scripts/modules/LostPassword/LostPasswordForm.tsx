@@ -48,6 +48,22 @@ const LostPasswordForm = ({}: LostPasswordFormProps) => {
 
 		setErrorMessage('Example error message ...');
 		setSuccessMessage('Example success message ...');
+
+		/*
+
+		user_not_found
+		user_not_active
+		user_is_deleted
+		request_was_send
+
+		user_password_reset_error
+		user_password_reset_success
+		user_password_already_reset
+		request_not_found
+		token_not_found
+
+
+		*/
 	};
 	const errorSubmitHandler = (errors: any, e: any) =>
 		console.warn(`${formOptions.id}__${errors}`, e);

@@ -2,15 +2,15 @@
 
 namespace model;
 
-class Tags {
+class CmsRequests {
 
     public function get ($conn, $data) {
         $response = [];
 
         // prepare
-        $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM tags WHERE deleted = ?');
-        $types = 'i';
-        $args = [ 0 ];
+        $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM cms_requests');
+        $types = '';
+        $args = [];
 
         // execute
         $stmt = $conn -> prepare($query);
@@ -20,13 +20,7 @@ class Tags {
         $stmt -> close();
 
         if ($result -> num_rows > 0) {
-            while($row = $result -> fetch_assoc()) {
-                $row['active'] = $row['active'] == 1;
-
-                unset($row['deleted']);
-
-                $response[] = $row;
-            }
+            while($row = $result -> fetch_assoc()) $response[] = $row;
         }
 
         return $response;
@@ -36,13 +30,14 @@ class Tags {
         $response = [];
 
         // prepare
-        $query = ('INSERT INTO tags (type, name, active, deleted) VALUES (?,?,?,?)');
-        $types = 'ssii';
+        $query = ('INSERT INTO cms_requests (type, context, value, token, status) VALUES (?,?,?,?,?)');
+        $types = 'ssssi';
         $args = [
             $data['type'],
-            $data['name'],
-            $data['active'],
-            0
+            $data['context'],
+            $data['value'],
+            $data['token'],
+            1
         ];
 
         // execute
@@ -63,13 +58,11 @@ class Tags {
         $response = [];
 
         // prepare
-        $query = ('UPDATE tags SET type = ?, name = ?, active = ? WHERE id = ?');
-        $types = 'ssii';
+        $query = ('UPDATE cms_requests SET status = ? WHERE token = ?');
+        $types = 'is';
         $args = [
-            $data['type'],
-            $data['name'],
-            $data['active'],
-            $data['id']
+            $data['status'],
+            $data['token']
         ];
 
         // execute
@@ -90,8 +83,8 @@ class Tags {
         $response = [];
         $utils = new \Utils;
 
-        foreach ($data as $id) {
-            $response[] = $utils -> proceed_update_row('UPDATE tags SET active = IF(active=1, 0, 1) WHERE id = ?', $conn, $id);
+        foreach ($data as $token) {
+            $response[] = $utils -> proceed_update_row('UPDATE cms_requests SET status = IF(status=1, 2, 1) WHERE id = ?', $conn, $token);
         }
 
         return $response; // list of affected ids
@@ -101,8 +94,8 @@ class Tags {
         $response = [];
         $utils = new \Utils;
 
-        foreach ($data as $id) {
-            $response[] = $utils -> proceed_update_row('UPDATE tags SET deleted = 1 WHERE id = ?', $conn, $id);
+        foreach ($data as $token) {
+            $response[] = $utils -> proceed_update_row('UPDATE cms_requests SET status = 3 WHERE token = ?', $conn, $token);
         }
 
         return $response; // list of affected ids

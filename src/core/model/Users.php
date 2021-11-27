@@ -19,15 +19,47 @@ class Users {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // request params
+        $rp_id = $data['id'];
+        $rp_email = $data['email'];
+        $rp_withPassword = $data['withPassword'];
+
         if ($result -> num_rows > 0) {
-            while($row = $result -> fetch_assoc()) {
-                if (!$data['withPassword']) unset($row['password']);
+            // iterate by params
+            if ($rp_id) {
+                while($row = $result -> fetch_assoc()) {
+                    if ($rp_id == $row['id']) {
+                        if (!$rp_withPassword) unset($row['password']);
 
-                $row['active'] = $row['active'] == 1;
+                        $row['active'] = $row['active'] == 1;
 
-                unset($row['deleted']);
+                        unset($row['deleted']);
 
-                $response[] = $row;
+                        $response = $row;
+                    }
+                }
+            } else if ($rp_email) {
+                while($row = $result -> fetch_assoc()) {
+                    if ($rp_email == $row['email']) {
+                        if (!$rp_withPassword) unset($row['password']);
+
+                        $row['active'] = $row['active'] == 1;
+
+                        unset($row['deleted']);
+
+                        $response = $row;
+                    }
+                }
+            } else {
+                while($row = $result -> fetch_assoc()) {
+                    if (!$rp_withPassword) unset($row['password']);
+
+                    $row['active'] = $row['active'] == 1;
+
+                    unset($row['deleted']);
+
+                    $response[] = $row;
+                }
             }
         }
 
