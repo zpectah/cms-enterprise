@@ -59,4 +59,19 @@ class Utils {
         return $ip;
     }
 
+    public function proceed_update_row ($query, $conn, $id) {
+        // prepare
+        $types = 'i';
+        $args = [ $id ];
+
+        // execute
+        $stmt = $conn -> prepare($query);
+        $stmt -> bind_param($types, ...$args);
+        $stmt -> execute();
+        $r = $stmt -> affected_rows;
+        $stmt -> close();
+
+        return $r;
+    }
+
 }

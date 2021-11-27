@@ -1,5 +1,6 @@
 import useSWR, { mutate } from 'swr';
 
+import config from '../config';
 import { get, post, postRaw } from '../utils/api';
 import {
 	PostsItemProps,
@@ -12,6 +13,8 @@ import {
 	UploadsItemProps,
 	UsersItemProps,
 } from '../types/model';
+
+const api_path_prefix = `/${config.project.path.api}`;
 
 export function usePosts() {
 	const { data, error } = useSWR(`/api/get_posts`, get);
@@ -392,16 +395,20 @@ export function useUploads() {
 }
 
 export function useUsers() {
-	const { data, error } = useSWR(`/api/get_users`, get);
+	const { data, error } = useSWR(`${api_path_prefix}get_users`, get);
 
 	return {
 		Users: data?.data as UsersItemProps[],
 		users_loading: !data && !error,
 		users_error: error,
-		reloadUsers: () => mutate(`/api/get_users`),
-		createUsers: (data: UsersItemProps) => post('/api/create_users', data),
-		updateUsers: (data: UsersItemProps) => post('/api/update_users', data),
-		toggleUsers: (data: (number | string)[]) => post('/api/toggle_users', data),
-		deleteUsers: (data: (number | string)[]) => post('/api/delete_users', data),
+		reloadUsers: () => mutate(`${api_path_prefix}get_users`),
+		createUsers: (data: UsersItemProps) =>
+			post(`${api_path_prefix}create_users`, data),
+		updateUsers: (data: UsersItemProps) =>
+			post(`${api_path_prefix}update_users`, data),
+		toggleUsers: (data: (number | string)[]) =>
+			post(`${api_path_prefix}toggle_users`, data),
+		deleteUsers: (data: (number | string)[]) =>
+			post(`${api_path_prefix}delete_users`, data),
 	};
 }

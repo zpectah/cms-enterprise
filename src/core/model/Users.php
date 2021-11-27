@@ -37,25 +37,111 @@ class Users {
     public function create ($conn, $data) {
         $response = [];
 
-        return $response; // last created ID
+        $data['active'] = $data['active'] == true ? 1 : 0;
+
+        // prepare
+        $query = ('INSERT INTO users (email, type, password, nick_name, first_name, middle_name, last_name, user_level, user_group, img_avatar, active, deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'sssssssissii';
+        $args = [
+            $data['email'],
+            $data['type'],
+            password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
+            $data['nick_name'],
+            $data['first_name'],
+            $data['middle_name'],
+            $data['last_name'],
+            $data['user_level'],
+            $data['user_group'],
+            $data['img_avatar'],
+            $data['active'],
+            0
+        ];
+
+        // execute
+        if ($conn -> connect_error) {
+            $response = $conn -> connect_error;
+        } else {
+            $stmt = $conn -> prepare($query);
+            $stmt -> bind_param($types, ...$args);
+            $stmt -> execute();
+            $response['id'] = $stmt -> insert_id;
+            $stmt -> close();
+        }
+
+        return $response;
     }
 
     public function update ($conn, $data) {
         $response = [];
 
-        return $response; // list of affected ids
+        $data['active'] = $data['active'] == true ? 1 : 0;
+
+        // prepare
+        $password = $data['password'];
+        $query = $password ? ('UPDATE users SET email = ?, type = ?, password = ?, nick_name = ?, first_name = ?, middle_name = ?, last_name = ?, user_level = ?, user_group = ?, img_avatar = ?, active = ? WHERE id = ?')
+            : ('UPDATE users SET email = ?, type = ?, nick_name = ?, first_name = ?, middle_name = ?, last_name = ?, user_level = ?, user_group = ?, img_avatar = ?, active = ? WHERE id = ?');
+        $types = $password ? 'sssssssissii' : 'ssssssissii';
+        $args = $password ? [
+            $data['email'],
+            $data['type'],
+            password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
+            $data['nick_name'],
+            $data['first_name'],
+            $data['middle_name'],
+            $data['last_name'],
+            $data['user_level'],
+            $data['user_group'],
+            $data['img_avatar'],
+            $data['active'],
+            $data['id']
+        ] : [
+            $data['email'],
+            $data['type'],
+            $data['nick_name'],
+            $data['first_name'],
+            $data['middle_name'],
+            $data['last_name'],
+            $data['user_level'],
+            $data['user_group'],
+            $data['img_avatar'],
+            $data['active'],
+            $data['id']
+        ];
+
+        // execute
+        if ($conn -> connect_error) {
+            $response = $conn -> connect_error;
+        } else {
+            $stmt = $conn -> prepare($query);
+            $stmt -> bind_param($types, ...$args);
+            $stmt -> execute();
+            $response['rows'] = $stmt -> affected_rows;
+            $stmt -> close();
+        }
+
+        return $response;
     }
 
     public function toggle ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
-        return $response; // list of affected ids
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE users SET active = IF(active=1, 0, 1) WHERE id = ?', $conn, $id);
+        }
+
+        return $response;
     }
 
     public function delete ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
-        return $response; // list of affected ids
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE users SET deleted = 1 WHERE id = ?', $conn, $id);
+        }
+
+        return $response;
     }
 
 }

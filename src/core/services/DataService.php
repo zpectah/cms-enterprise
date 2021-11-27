@@ -15,12 +15,11 @@ class DataService {
     - delete [...] [ affected ids ]
     !!! */
 
-    public function get ($model, $data = null) {
+    public function get ($model, $data) {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
-            // 'data' => $data, // TODO: DEMO
-            // '__model__' => $model, // TODO: DEMO
+            'data' => [], // data -> [items]
         ];
 
         // Model
@@ -45,41 +44,101 @@ class DataService {
     }
 
     public function create ($model, $data) {
+        $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
-            'data' => $data, // TODO: DEMO
-            '__model__' => $model, // TODO: DEMO
+            'data' => [], // data -> id (int)
         ];
+
+        // Model
+        $Users = new Users;
+
+
+
+        // Additional
+        $languages = ['en'];
+        $modules = ['crm', 'market'];
+
+
+        switch ($model) {
+
+            case 'Users':
+                $response['data'] = $Users -> create($conn, $data);
+                break;
+
+        }
 
         return $response;
     }
 
     public function update ($model, $data) {
+        $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
-            'data' => $data, // TODO: DEMO
-            '__model__' => $model, // TODO: DEMO
+            'data' => [], // data -> rows (int)
         ];
+
+        // Model
+        $Users = new Users;
+
+
+
+        // Additional
+        $languages = ['en'];
+        $modules = ['crm', 'market'];
+
+
+        switch ($model) {
+
+            case 'Users':
+                $response['data'] = $Users -> update($conn, $data);
+                break;
+
+        }
 
         return $response;
     }
 
     public function toggle ($model, $data) {
+        $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
-            'data' => $data, // TODO: DEMO
-            '__model__' => $model, // TODO: DEMO
+            'data' => [], // data -> [id]
         ];
+
+        // Model
+        $Users = new Users;
+
+
+        switch ($model) {
+
+            case 'Users':
+                $response['data'] = $Users -> toggle($conn, $data);
+                break;
+
+        }
 
         return $response;
     }
 
     public function delete ($model, $data) {
+        $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
-            'data' => $data, // TODO: DEMO
-            '__model__' => $model, // TODO: DEMO
+            'data' => [], // data -> [id]
         ];
+
+        // Model
+        $Users = new Users;
+
+
+        switch ($model) {
+
+            case 'Users':
+                $response['data'] = $Users -> delete($conn, $data);
+                break;
+
+        }
 
         return $response;
     }
@@ -125,6 +184,7 @@ class DataService {
 
     /********** Settings **********/
     public function get_settings ($data) {
+        $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
             'data' => $data, // TODO: DEMO
@@ -134,6 +194,7 @@ class DataService {
     }
 
     public function update_settings ($data) {
+        $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
             'data' => $data, // TODO: DEMO

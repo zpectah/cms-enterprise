@@ -2,7 +2,6 @@ interface commonItemProps {
 	id: number | string;
 	type: string;
 	active: boolean; // Overrides default DB type
-	deleted?: boolean; // Overrides default DB type
 }
 
 export interface RequestsItemProps {

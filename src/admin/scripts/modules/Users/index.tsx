@@ -43,6 +43,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 		updateUsers,
 		toggleUsers,
 		deleteUsers,
+		reloadUsers,
 		users_loading,
 		users_error,
 	} = useUsers();
@@ -103,6 +104,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 			createUsers(master).then((response) => {
 				console.log('create response', response);
 
+				reloadUsers();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -114,6 +116,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 			updateUsers(master).then((response) => {
 				console.log('update response', response);
 
+				reloadUsers();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -166,6 +169,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 		toggleUsers(master).then((response) => {
 			console.log('toggle response', response);
 
+			reloadUsers();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -185,6 +189,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 			deleteUsers(master).then((response) => {
 				console.log('delete response', response);
 
+				reloadUsers();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

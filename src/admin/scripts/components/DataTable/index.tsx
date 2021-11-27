@@ -115,7 +115,7 @@ const DataTable = ({
 		return options;
 	}, [tableData]);
 	const getFilteredItems = useCallback(() => {
-		let items = tableData;
+		let items = [...tableData];
 
 		if (searchInput.length > FORM_INPUT_MIN_LENGTH)
 			items = array.search(
@@ -135,7 +135,7 @@ const DataTable = ({
 		}
 
 		return items;
-	}, [searchInput, filterType]);
+	}, [tableData, searchInput, filterType]);
 
 	useEffect(() => setSelectedRows(selectedItems), [selectedItems]);
 

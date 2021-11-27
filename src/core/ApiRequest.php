@@ -19,7 +19,8 @@ class ApiRequest {
         $request_is_authorized = self::isRequestAuthorized();
         $request_url_trimmed = ltrim( $_SERVER['REDIRECT_URL'], "/" );
         $request_url = explode( "/", $request_url_trimmed );
-        $request_data = json_decode(file_get_contents('php://input'));
+        $request_data_raw = json_decode(file_get_contents('php://input'));
+        $request_data = json_decode(json_encode($request_data_raw), true);
 
         if (!$request_is_authorized) {
             $response['status'] = 'unauthorized';
