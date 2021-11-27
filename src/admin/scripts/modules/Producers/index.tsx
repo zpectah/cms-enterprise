@@ -7,7 +7,12 @@ import { useDispatch } from 'react-redux';
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
 import { ProducersItemProps } from '../../types/model';
-import { useProducers } from '../../hooks/market';
+import {
+	selectedArrayProps,
+	selectedItemsProps,
+	confirmDialogTypeProps,
+} from '../../types/table';
+import { useProducers } from '../../hooks/model';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
@@ -24,16 +29,12 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	const { t } = useTranslation(['common', 'messages']);
 	const [detail, setDetail] = useState<string | number>(null);
 	const [detailData, setDetailData] = useState<ProducersItemProps>(null);
-	const [selectedItems, setSelectedItems] = useState<
-		readonly (number | string)[]
-	>([]);
+	const [selectedItems, setSelectedItems] = useState<selectedItemsProps>([]);
 	const [confirmDialog, setConfirmDialog] = useState<boolean>(false);
-	const [confirmDialogType, setConfirmDialogType] = useState<
-		'delete' | 'formDirty' | null
-	>(null);
-	const [confirmDialogData, setConfirmDialogData] = useState<
-		(number | string)[]
-	>([]);
+	const [confirmDialogType, setConfirmDialogType] =
+		useState<confirmDialogTypeProps>(null);
+	const [confirmDialogData, setConfirmDialogData] =
+		useState<selectedArrayProps>([]);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -136,8 +137,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	};
 
 	// When item/row opens confirm dialog
-	const itemDeleteHandler = (ids: (number | string)[]) => {
-		const master: (number | string)[] = [...ids];
+	const itemDeleteHandler = (ids: selectedArrayProps) => {
+		const master: selectedArrayProps = [...ids];
 
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
@@ -152,8 +153,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	};
 
 	// When item/row is active/disable toggled
-	const itemToggleHandler = (ids: (number | string)[]) => {
-		const master: (number | string)[] = [...ids];
+	const itemToggleHandler = (ids: selectedArrayProps) => {
+		const master: selectedArrayProps = [...ids];
 
 		console.log('AJAX ... toggle ...', master);
 
@@ -172,7 +173,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
-			const master: (number | string)[] = [...confirmDialogData];
+			const master: selectedArrayProps = [...confirmDialogData];
 
 			console.log('AJAX ... delete ...', master);
 
@@ -194,15 +195,17 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		}
 	};
 
-	useEffect(() => {
-		if (Producers) {
-			if (params.id) {
-				setDetail(params.id);
-				openDetailHandler(params.id);
-			} else {
-				setDetailData(null);
-			}
+	const toggleDetail = useCallback(() => {
+		if (params.id) {
+			setDetail(params.id);
+			openDetailHandler(params.id);
+		} else {
+			setDetailData(null);
 		}
+	}, [params.id]);
+
+	useEffect(() => {
+		if (Producers) toggleDetail();
 	}, [params.id, Producers]);
 
 	return (

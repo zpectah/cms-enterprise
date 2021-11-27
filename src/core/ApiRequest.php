@@ -2,7 +2,7 @@
 
 class ApiRequest {
 
-    private function isRequestAuthorized () {
+    private function is_request_authorized () {
         $request_token = $_SERVER['HTTP_X_APP_TOKEN'];
 
         return $request_token == 'wmcyenyntbmxzanv'; // TODO
@@ -12,11 +12,11 @@ class ApiRequest {
         $ds = new service\DataService;
         $response = [
             'status' => 'error',
-            // 'data' => null,
+            'data' => null,
         ];
 
         // Request
-        $request_is_authorized = self::isRequestAuthorized();
+        $request_is_authorized = self::is_request_authorized();
         $request_url_trimmed = ltrim( $_SERVER['REDIRECT_URL'], "/" );
         $request_url = explode( "/", $request_url_trimmed );
         $request_data_raw = json_decode(file_get_contents('php://input'));
@@ -68,6 +68,25 @@ class ApiRequest {
                 /********** Stores **********/
 
                 /********** Tags **********/
+                case 'get_tags':
+                    $response = $ds -> get('Tags', $request_data);
+                    break;
+
+                case 'create_tags':
+                    $response = $ds -> create('Tags', $request_data);
+                    break;
+
+                case 'update_tags':
+                    $response = $ds -> update('Tags', $request_data);
+                    break;
+
+                case 'toggle_tags':
+                    $response = $ds -> toggle('Tags', $request_data);
+                    break;
+
+                case 'delete_tags':
+                    $response = $ds -> delete('Tags', $request_data);
+                    break;
 
                 /********** Translations **********/
 

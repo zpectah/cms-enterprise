@@ -37,8 +37,6 @@ class Users {
     public function create ($conn, $data) {
         $response = [];
 
-        $data['active'] = $data['active'] == true ? 1 : 0;
-
         // prepare
         $query = ('INSERT INTO users (email, type, password, nick_name, first_name, middle_name, last_name, user_level, user_group, img_avatar, active, deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
         $types = 'sssssssissii';
@@ -73,8 +71,6 @@ class Users {
 
     public function update ($conn, $data) {
         $response = [];
-
-        $data['active'] = $data['active'] == true ? 1 : 0;
 
         // prepare
         $password = $data['password'];

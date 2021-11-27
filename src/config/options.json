@@ -22,7 +22,7 @@
       "type": ["default"]
     },
     "Uploads": {
-      "type": ["image", "audio", "video", "document", "archive"],
+      "type": ["unknown", "image", "audio", "video", "document", "archive"],
       "audio": {
         "extension": ["mp3", "aac"]
       },

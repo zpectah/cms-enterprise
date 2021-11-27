@@ -35,3 +35,7 @@ export interface customActionCellItemProps {
 	callback: (id: number | string) => void;
 	disabled: boolean;
 }
+
+export type selectedArrayProps = (number | string)[];
+export type selectedItemsProps = readonly (number | string)[];
+export type confirmDialogTypeProps = 'delete' | 'formDirty' | null;

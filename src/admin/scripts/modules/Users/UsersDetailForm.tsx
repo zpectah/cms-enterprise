@@ -90,6 +90,7 @@ const UsersDetailForm = ({
 		);
 	};
 
+	// Model options list
 	const getTypeOptions = useCallback(
 		() => getOptionsList(config.options.model.Users.type, t),
 		[detailData],

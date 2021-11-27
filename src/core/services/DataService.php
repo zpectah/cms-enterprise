@@ -2,6 +2,7 @@
 
 namespace service;
 
+use model\Tags;
 use model\Users;
 use mysqli;
 
@@ -24,6 +25,7 @@ class DataService {
 
         // Model
         $Users = new Users;
+        $Tags = new Tags;
 
 
 
@@ -36,6 +38,10 @@ class DataService {
 
             case 'Users':
                 $response['data'] = $Users -> get($conn, $data);
+                break;
+
+            case 'Tags':
+                $response['data'] = $Tags -> get($conn, $data);
                 break;
 
         }
@@ -52,6 +58,7 @@ class DataService {
 
         // Model
         $Users = new Users;
+        $Tags = new Tags;
 
 
 
@@ -64,6 +71,10 @@ class DataService {
 
             case 'Users':
                 $response['data'] = $Users -> create($conn, $data);
+                break;
+
+            case 'Tags':
+                $response['data'] = $Tags -> create($conn, $data);
                 break;
 
         }
@@ -80,6 +91,7 @@ class DataService {
 
         // Model
         $Users = new Users;
+        $Tags = new Tags;
 
 
 
@@ -92,6 +104,10 @@ class DataService {
 
             case 'Users':
                 $response['data'] = $Users -> update($conn, $data);
+                break;
+
+            case 'Tags':
+                $response['data'] = $Tags -> update($conn, $data);
                 break;
 
         }
@@ -108,12 +124,17 @@ class DataService {
 
         // Model
         $Users = new Users;
+        $Tags = new Tags;
 
 
         switch ($model) {
 
             case 'Users':
                 $response['data'] = $Users -> toggle($conn, $data);
+                break;
+
+            case 'Tags':
+                $response['data'] = $Tags -> toggle($conn, $data);
                 break;
 
         }
@@ -130,12 +151,17 @@ class DataService {
 
         // Model
         $Users = new Users;
+        $Tags = new Tags;
 
 
         switch ($model) {
 
             case 'Users':
                 $response['data'] = $Users -> delete($conn, $data);
+                break;
+
+            case 'Tags':
+                $response['data'] = $Tags -> delete($conn, $data);
                 break;
 
         }

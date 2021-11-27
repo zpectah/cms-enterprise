@@ -56,5 +56,8 @@
     "theme": "app_theme",
     "help": "app_help",
     "sidebar": "app_sidebar"
+  },
+  "api": {
+    "base": "/api"
   }
 }

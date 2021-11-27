@@ -7,7 +7,12 @@ import { useDispatch } from 'react-redux';
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
 import { TagsItemProps } from '../../types/model';
-import { useTags } from '../../hooks/app';
+import {
+	selectedArrayProps,
+	selectedItemsProps,
+	confirmDialogTypeProps,
+} from '../../types/table';
+import { useTags } from '../../hooks/model';
 import getDetailData from '../../utils/getDetailData';
 import { useSettings } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
@@ -24,16 +29,12 @@ const TagsModule = ({}: TagsModuleProps) => {
 	const { t } = useTranslation(['common', 'messages']);
 	const [detail, setDetail] = useState<string | number>(null);
 	const [detailData, setDetailData] = useState<TagsItemProps>(null);
-	const [selectedItems, setSelectedItems] = useState<
-		readonly (number | string)[]
-	>([]);
+	const [selectedItems, setSelectedItems] = useState<selectedItemsProps>([]);
 	const [confirmDialog, setConfirmDialog] = useState<boolean>(false);
-	const [confirmDialogType, setConfirmDialogType] = useState<
-		'delete' | 'formDirty' | null
-	>(null);
-	const [confirmDialogData, setConfirmDialogData] = useState<
-		(number | string)[]
-	>([]);
+	const [confirmDialogType, setConfirmDialogType] =
+		useState<confirmDialogTypeProps>(null);
+	const [confirmDialogData, setConfirmDialogData] =
+		useState<selectedArrayProps>([]);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -43,6 +44,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 		updateTags,
 		toggleTags,
 		deleteTags,
+		reloadTags,
 		tags_loading,
 		tags_error,
 	} = useTags();
@@ -91,12 +93,9 @@ const TagsModule = ({}: TagsModuleProps) => {
 	const detailSubmitHandler = (data: TagsItemProps) => {
 		const master: TagsItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
-
 		if (master.id == 'new') {
 			createTags(master).then((response) => {
-				console.log('create response', response);
-
+				reloadTags();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -106,8 +105,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 			});
 		} else {
 			updateTags(master).then((response) => {
-				console.log('update response', response);
-
+				reloadTags();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -136,8 +134,8 @@ const TagsModule = ({}: TagsModuleProps) => {
 	};
 
 	// When item/row opens confirm dialog
-	const itemDeleteHandler = (ids: (number | string)[]) => {
-		const master: (number | string)[] = [...ids];
+	const itemDeleteHandler = (ids: selectedArrayProps) => {
+		const master: selectedArrayProps = [...ids];
 
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
@@ -152,14 +150,11 @@ const TagsModule = ({}: TagsModuleProps) => {
 	};
 
 	// When item/row is active/disable toggled
-	const itemToggleHandler = (ids: (number | string)[]) => {
-		const master: (number | string)[] = [...ids];
-
-		console.log('AJAX ... toggle ...', master);
+	const itemToggleHandler = (ids: selectedArrayProps) => {
+		const master: selectedArrayProps = [...ids];
 
 		toggleTags(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadTags();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -172,13 +167,10 @@ const TagsModule = ({}: TagsModuleProps) => {
 	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
-			const master: (number | string)[] = [...confirmDialogData];
-
-			console.log('AJAX ... delete ...', master);
+			const master: selectedArrayProps = [...confirmDialogData];
 
 			deleteTags(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadTags();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({
@@ -194,15 +186,17 @@ const TagsModule = ({}: TagsModuleProps) => {
 		}
 	};
 
-	useEffect(() => {
-		if (Tags) {
-			if (params.id) {
-				setDetail(params.id);
-				openDetailHandler(params.id);
-			} else {
-				setDetailData(null);
-			}
+	const toggleDetail = useCallback(() => {
+		if (params.id) {
+			setDetail(params.id);
+			openDetailHandler(params.id);
+		} else {
+			setDetailData(null);
 		}
+	}, [params.id]);
+
+	useEffect(() => {
+		if (Tags) toggleDetail();
 	}, [params.id, Tags]);
 
 	return (
