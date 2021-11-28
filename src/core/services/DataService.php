@@ -7,6 +7,7 @@ use model\Tags;
 use model\Translations;
 use model\Users;
 use module\admin\Profile;
+use module\admin\Settings;
 use mysqli;
 
 class DataService {
@@ -272,25 +273,18 @@ class DataService {
     /********** System **********/
 
     /********** Settings **********/
-    public function get_settings ($data) {
+    public function get_cms_settings ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
-        $response = [
-            'status' => 'ok',
-            'data' => $data, // TODO: DEMO
-        ];
-
+        $Settings = new Settings;
+        $response = $Settings -> get_cms_settings($conn, $data);
         $conn -> close();
 
         return $response;
     }
-
-    public function update_settings ($data) {
+    public function update_cms_settings ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
-        $response = [
-            'status' => 'ok',
-            'data' => $data, // TODO: DEMO
-        ];
-
+        $Settings = new Settings;
+        $response = $Settings -> update_cms_settings($conn, $data);
         $conn -> close();
 
         return $response;
@@ -299,71 +293,53 @@ class DataService {
     /********** Profile **********/
     public function get_user_profile () {
         $conn = new mysqli(...CFG_DB_CONN);
-
         $Profile = new Profile;
         $response = $Profile -> get_user_profile($conn);
-
         $conn -> close();
 
         return $response;
     }
-
     public function user_update_profile ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
-
         $Profile = new Profile;
         $response = $Profile -> user_update_profile($conn, $data);
-
         $conn -> close();
 
         return $response;
     }
-
     public function user_login ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
-
         $Profile = new Profile;
         $response = $Profile -> user_login($conn, $data);
-
         $conn -> close();
 
         return $response;
     }
-
     public function user_logout (): array {
         $Profile = new Profile;
 
         return $Profile -> user_logout();
     }
-
     public function user_lost_password ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
-
         $Profile = new Profile;
         $response = $Profile -> user_lost_password($conn, $data);
-
         $conn -> close();
 
         return $response;
     }
-
     public function user_lost_password_reset ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
-
         $Profile = new Profile;
         $response = $Profile -> user_lost_password_reset($conn, $data);
-
         $conn -> close();
 
         return $response;
     }
-
     public function user_create_new_password ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
-
         $Profile = new Profile;
         $response = $Profile -> user_create_new_password($conn, $data);
-
         $conn -> close();
 
         return $response;

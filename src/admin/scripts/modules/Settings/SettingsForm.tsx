@@ -11,10 +11,11 @@ import TabPanel from '@mui/lab/TabPanel';
 import config from '../../config';
 import { ROUTES } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
+import { cmsSettingsObjectProps } from '../../types/cms_settings';
 import { Button, Form, Section } from '../../components/ui';
 
 interface SettingsFormProps {
-	formData: any;
+	formData: cmsSettingsObjectProps;
 	onSubmit: (data: any, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
 	languageList: string[];

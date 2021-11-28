@@ -2,7 +2,7 @@
 
 class ApiRequest {
 
-    private function is_request_authorized () {
+    private function is_request_authorized (): bool {
         $request_token = $_SERVER['HTTP_X_APP_TOKEN'];
 
         return $request_token == 'wmcyenyntbmxzanv'; // TODO
@@ -38,6 +38,13 @@ class ApiRequest {
                 /********** System **********/
 
                 /********** Settings **********/
+                case 'get_cms_settings':
+                    $response = $ds -> get_cms_settings($request_data);
+                    break;
+
+                case 'update_cms_settings':
+                    $response = $ds -> update_cms_settings($request_data);
+                    break;
 
                 /********** Profile **********/
                 case 'get_user_profile':
@@ -180,9 +187,6 @@ class ApiRequest {
 
             }
         }
-
-
-
 
         return $response;
     }

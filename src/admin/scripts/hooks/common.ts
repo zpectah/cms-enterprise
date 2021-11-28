@@ -2,6 +2,7 @@ import useSWR, { mutate } from 'swr';
 
 import config from '../config';
 import { UsersItemProps } from '../types/model';
+import { cmsSettingsObjectProps } from '../types/cms_settings';
 import { addToast } from '../store/actions';
 import { get, post, postRaw } from '../utils/api';
 
@@ -50,18 +51,15 @@ export function useProfile() {
 }
 
 export function useSettings() {
+	const { data, error } = useSWR(`${api_path_prefix}/get_cms_settings`, get);
+
 	return {
-		Settings: {
-			language_default: 'en',
-			language_installed: ['en', 'cs'],
-			language_active: ['en', 'cs'],
-		},
-		settings_loading: false,
-		settings_error: false,
-		reloadSettings: () => {},
-		updateSettings: (data: any) => {
-			console.log(`update `, data);
-		},
+		Settings: data as cmsSettingsObjectProps,
+		settings_loading: !data && !error,
+		settings_error: error,
+		reloadSettings: () => mutate(`${api_path_prefix}/get_cms_settings`),
+		updateSettings: (data: cmsSettingsObjectProps) =>
+			post(`${api_path_prefix}/update_cms_settings`, data),
 	};
 }
 
