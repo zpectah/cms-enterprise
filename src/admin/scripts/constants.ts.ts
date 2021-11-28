@@ -13,6 +13,7 @@ export const APP_MODEL_TYPES = [
 	'Profile',
 	'Login',
 	'LostPassword',
+	'NewPassword',
 	'Requests',
 	// TODO
 	'Members',

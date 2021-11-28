@@ -9,6 +9,7 @@ use service\EmailService;
 
 class Profile {
 
+    // Returns user profile object when logged in, else returns null
     public function get_user_profile ($conn) {
         $response = null;
         $as = new AuthService;
@@ -42,13 +43,15 @@ class Profile {
         return $response;
     }
 
-    public function user_update_profile ($conn, $data) {
+    // Update profile data when user logged in
+    public function user_update_profile ($conn, $data): array {
         $Users = new Users;
 
         return $Users -> update($conn, $data);
     }
 
-    public function user_login ($conn, $data) {
+    // User check and log in
+    public function user_login ($conn, $data): array {
         $response = [
             'message' => 'user_not_found',
             'session' => null,
@@ -80,13 +83,15 @@ class Profile {
         return $response;
     }
 
-    public function user_logout () {
+    // User log out / destroys all sessions
+    public function user_logout (): array {
         $as = new AuthService;
 
         return $as -> close_user_session();
     }
 
-    public function user_lost_password ($conn, $data) {
+    // Create new request item for password reset and send email message
+    public function user_lost_password ($conn, $data): array {
         $response = [
             'message' => 'user_not_found',
             'email' => null,
@@ -129,7 +134,50 @@ class Profile {
         return $response;
     }
 
-    public static function user_lost_password_reset ($conn, $data): array {
+    // User create his own new password, checked by token
+    public function user_create_new_password ($conn, $data): array {
+        $response = [
+            'message' => 'user_password_reset_error',
+            'request' => null,
+            'user' => null,
+        ];
+        $Users = new Users;
+        $CmsRequests = new CmsRequests;
+
+        $rd_password_raw = $data['password'];
+        $rd_token = $data['token'];
+
+        if ($rd_token) {
+            $request_row = $CmsRequests -> get($conn, ['token' => $rd_token]);
+
+            if ($request_row) {
+
+                if ($request_row['status'] == 1) {
+                    $user_row = $Users -> get($conn, ['email' => $request_row['value']]);
+                    $user_row['password'] = $rd_password_raw;
+
+                    $response['user'] = $Users -> update($conn, $user_row);
+                    $response['request'] = $CmsRequests -> update($conn, [
+                        'status' => 2,
+                        'token' => $rd_token
+                    ]);
+
+                    $response['message'] = 'user_password_reset_success';
+                } else {
+                    $response['message'] = 'user_password_already_reset';
+                }
+            } else {
+                $response['message'] = 'request_not_found';
+            }
+        } else {
+            $response['message'] = 'token_not_found';
+        }
+
+        return $response;
+    }
+
+    // User request for reset, generate new password and send email message
+    public function user_lost_password_reset ($conn, $data): array {
         $response = [
             'message' => 'user_password_reset_error',
             'email' => null,
@@ -150,12 +198,10 @@ class Profile {
                     $user_row = $Users -> get($conn, ['email' => $request_row['value']]);
                     if ($user_row) {
                         $tmp_password = $utils -> getToken(4, '');
-                        $tmp_password_ = $tmp_password;
-                        $hash_password = $utils -> passwordHash($tmp_password_);
                         $response['email'] = $es -> sendStyledMessage(
                             $user_row['email'],
                             "New password",
-                            "<div>This is your new password: <b>" . $tmp_password_ . " : " . $hash_password .  "</b><br /> Keep it safe, or change after login</div>",
+                            "<div>This is your new password: <b>" . $tmp_password .  "</b><br /> Keep it safe, or change after login</div>",
                             null,
                             'password_reset'
                         );
@@ -164,7 +210,7 @@ class Profile {
                             'status' => 2,
                             'token' => $request_row['token']
                         ]);
-                        $user_row['password'] = $hash_password;
+                        $user_row['password'] = $tmp_password;
                         $response['user'] = $Users -> update($conn, $user_row);
                         $response['message'] = 'user_password_reset_success';
                     }

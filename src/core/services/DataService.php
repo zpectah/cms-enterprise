@@ -282,7 +282,7 @@ class DataService {
         return $response;
     }
 
-    public function user_update_profile ($data) {
+    public function user_update_profile ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
 
         $Profile = new Profile;
@@ -293,7 +293,7 @@ class DataService {
         return $response;
     }
 
-    public function user_login ($data) {
+    public function user_login ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
 
         $Profile = new Profile;
@@ -304,13 +304,13 @@ class DataService {
         return $response;
     }
 
-    public function user_logout () {
+    public function user_logout (): array {
         $Profile = new Profile;
 
         return $Profile -> user_logout();
     }
 
-    public function user_lost_password ($data) {
+    public function user_lost_password ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
 
         $Profile = new Profile;
@@ -321,11 +321,22 @@ class DataService {
         return $response;
     }
 
-    public function user_lost_password_reset ($data) {
+    public function user_lost_password_reset ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
 
         $Profile = new Profile;
         $response = $Profile -> user_lost_password_reset($conn, $data);
+
+        $conn -> close();
+
+        return $response;
+    }
+
+    public function user_create_new_password ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+
+        $Profile = new Profile;
+        $response = $Profile -> user_create_new_password($conn, $data);
 
         $conn -> close();
 

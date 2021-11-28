@@ -31,14 +31,16 @@ export function useProfile() {
 		profile_error: error,
 		reloadProfile: () => mutate(`${api_path_prefix}/get_user_profile`),
 		updateProfile: (data: UsersItemProps) =>
-			post('/api/update_user_profile', data),
+			post(`${api_path_prefix}/update_user_profile`, data),
 		userLogin: (data: { email: string; password: string }) =>
-			post('/api/user_login', data),
-		userLogout: () => post('/api/user_logout', {}),
+			post(`${api_path_prefix}/user_login`, data),
+		userLogout: () => post(`${api_path_prefix}/user_logout`, {}),
 		userLostPassword: (data: { email: string }) =>
-			post('/api/user_lost_password', data),
+			post(`${api_path_prefix}/user_lost_password`, data),
 		userLostPasswordReset: (data: { token: string }) =>
-			post('/api/user_lost_password_reset', data),
+			post(`${api_path_prefix}/user_lost_password_reset`, data),
+		userCreateNewPassword: (data: { password: string; token: string }) =>
+			post(`${api_path_prefix}/user_create_new_password`, data),
 		userShouldDisplay: (level: number) => {
 			const userLevel = data?.data?.user_level;
 

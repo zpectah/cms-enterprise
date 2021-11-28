@@ -64,6 +64,10 @@ class ApiRequest {
                     $response = $ds -> user_lost_password_reset($request_data);
                     break;
 
+                case 'user_create_new_password':
+                    $response = $ds -> user_create_new_password($request_data);
+                    break;
+
 
 
                 /********** CmsRequests **********/

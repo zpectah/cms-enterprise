@@ -1,47 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 
-import { ROUTES, EMAIL_REGEX } from '../../constants';
-import { formLayoutObjectProps } from '../../types/app';
 import { Form, Button, Section, Input } from '../../components/ui';
+import { formLayoutObjectProps } from '../../types/app';
 
-interface LostPasswordFormProps {
-	onSubmit: (data: { email: string }) => void;
+interface NewPasswordFormProps {
+	token: string;
+	onSubmit: (data: { password: string; token: string }) => void;
 	onSubmitError: (errors: any, e: any) => void;
 	errorMessage?: string;
 	successMessage?: string;
 }
 
-const LostPasswordForm = ({
+const NewPasswordForm = ({
+	token,
 	onSubmit,
 	onSubmitError,
 	errorMessage,
 	successMessage,
-}: LostPasswordFormProps) => {
-	const history = useHistory();
+}: NewPasswordFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 
 	const formOptions: formLayoutObjectProps = {
-		model: 'LostPassword',
-		id: 'LostPasswordForm',
+		model: 'NewPassword',
+		id: 'NewPasswordForm',
 	};
 	const { control, handleSubmit, reset, register, formState, setValue } =
 		useForm({
 			mode: 'all',
 			defaultValues: {
-				email: '',
+				password: '',
+				token: token,
 			},
 		});
 	const { isDirty, isValid } = formState;
 
-	const submitHandler = (data: any, e: any) => onSubmit(data);
+	const submitHandler = (data: { password: string; token: string }, e: any) =>
+		onSubmit(data);
 	const errorSubmitHandler = (errors: any, e: any) => onSubmitError(errors, e);
-
-	const backToLoginHandler = () => history.push(ROUTES.app.login.path);
 
 	return (
 		<Form.Base
@@ -49,22 +48,25 @@ const LostPasswordForm = ({
 			dataTestId={formOptions.id}
 			onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 		>
+			<div>
+				<input type="hidden" {...register('token', { required: true })} />
+			</div>
 			<Section style={{ width: '300px' }}>
 				<Controller
-					name="email"
+					name="password"
 					control={control}
-					rules={{ required: true, pattern: EMAIL_REGEX }}
+					rules={{ required: true, minLength: 5 }}
 					render={({ field: { onChange, onBlur, value, ref, name } }) => (
 						<Form.Row errors={[]}>
 							<Input.Text
-								type="email"
+								type="password"
 								onChange={onChange}
 								onBlur={onBlur}
 								value={value}
 								name={name}
-								id={`${formOptions.id}__email`}
-								label={t('form:input.email')}
-								dataTestId={`${formOptions.id}.input.email`}
+								id={`${formOptions.id}__password`}
+								label={t('form:input.password_new')}
+								dataTestId={`${formOptions.id}.input.password`}
 								required
 							/>
 						</Form.Row>
@@ -83,13 +85,10 @@ const LostPasswordForm = ({
 					<Button type="submit" variant="contained" disabled={!isValid}>
 						{t('button.submit')}
 					</Button>
-					<Button color="secondary" onClick={backToLoginHandler}>
-						{t('label.backToLogin')}
-					</Button>
 				</Stack>
 			</Section>
 		</Form.Base>
 	);
 };
 
-export default LostPasswordForm;
+export default NewPasswordForm;

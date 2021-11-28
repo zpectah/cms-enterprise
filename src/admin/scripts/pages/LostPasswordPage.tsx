@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../constants';
 import { pageObjectProps } from '../types/pages';
 import Layout from '../components/Layout';
-import LostPasswordForm from '../modules/LostPassword/LostPasswordForm';
+import LostPasswordModule from '../modules/LostPassword';
 
 const LostPasswordPage = () => {
 	const { t } = useTranslation(['common', 'page']);
@@ -23,7 +23,7 @@ const LostPasswordPage = () => {
 				pageObject={pageObject}
 				withFooter
 			>
-				<LostPasswordForm />
+				<LostPasswordModule />
 			</Layout.Minimal>
 		</>
 	);

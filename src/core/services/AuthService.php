@@ -16,7 +16,7 @@ class AuthService {
         return $_SESSION[SESSION_USER_TOKEN_PREFIX];
     }
 
-    public function start_user_session ($email) {
+    public function start_user_session ($email): array {
         session_start();
 
         return [
@@ -25,7 +25,7 @@ class AuthService {
         ];
     }
 
-    public function close_user_session () {
+    public function close_user_session (): array {
         session_start();
 
         return [
