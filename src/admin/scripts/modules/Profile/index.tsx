@@ -1,28 +1,53 @@
 import React from 'react';
+import _ from 'lodash';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
-import { useProfile } from '../../hooks/common';
+import { UsersItemProps } from '../../types/model';
+import { useProfile, useToasts } from '../../hooks/common';
+import { Preloader } from '../../components/ui';
+import { TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import ProfileForm from './ProfileForm';
 
 interface ProfileModuleProps {}
 
 const ProfileModule = ({}: ProfileModuleProps) => {
-	const { Profile } = useProfile();
+	const dispatch = useDispatch();
+	const { t } = useTranslation(['common', 'messages']);
+	const { Profile, updateProfile } = useProfile();
+	const { createToasts } = useToasts(dispatch);
 
-	const formSubmitHandler = (data: any, e: any) => {
-		console.log('formSubmitHandler', data);
+	const formSubmitHandler = (data: UsersItemProps, e: any) => {
+		const master: UsersItemProps = _.cloneDeep(data);
+
+		updateProfile(master).then((response) => {
+			createToasts({
+				title: t('messages:success.itemUpdated', { count: 1 }),
+				context: 'success',
+				timeout: TOASTS_TIMEOUT_DEFAULT,
+			});
+		});
 	};
 
-	const formSubmitErrorHandler = (error: any, e: any) => {
-		console.log('formSubmitErrorHandler', error);
-	};
+	// When error returns from submit
+	const formSubmitErrorHandler = (error: string) =>
+		createToasts({
+			title: error,
+			context: 'error',
+			timeout: TOASTS_TIMEOUT_DEFAULT,
+		});
 
 	return (
 		<>
-			<ProfileForm
-				formData={Profile}
-				onSubmit={formSubmitHandler}
-				onSubmitError={formSubmitErrorHandler}
-			/>
+			{Profile ? (
+				<ProfileForm
+					formData={Profile}
+					onSubmit={formSubmitHandler}
+					onSubmitError={formSubmitErrorHandler}
+				/>
+			) : (
+				<Preloader.Block />
+			)}
 		</>
 	);
 };

@@ -229,6 +229,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 							languageList={Settings.language_active}
 							languageDefault={Settings.language_default}
 							onCreateCallback={createNewCallback}
+							withoutLanguageToggle
 						/>
 					)}
 				</>

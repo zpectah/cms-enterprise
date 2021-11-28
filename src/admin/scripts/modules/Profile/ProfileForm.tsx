@@ -1,14 +1,17 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { UsersItemProps } from '../../types/model';
 import { formLayoutObjectProps } from '../../types/app';
-import { Form, Button, Section } from '../../components/ui';
-import { useProfile } from '../../hooks/common';
+import { Form, Button, Section, Input } from '../../components/ui';
+import { EMAIL_REGEX } from '../../constants';
+
+import AvatarPicker from '../../components/AvatarPicker';
 
 interface ProfileFormProps {
 	formData: any;
-	onSubmit: (data: any, e: any) => void;
+	onSubmit: (data: UsersItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
 }
 
@@ -17,8 +20,7 @@ const ProfileForm = ({
 	onSubmit,
 	onSubmitError,
 }: ProfileFormProps) => {
-	const { t } = useTranslation(['common', 'form']);
-	const { Profile } = useProfile();
+	const { t } = useTranslation(['common', 'form', 'messages']);
 
 	const formOptions: formLayoutObjectProps = {
 		model: 'Profile',
@@ -53,8 +55,129 @@ const ProfileForm = ({
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
 				footerChildren={renderFooter()}
 			>
-				<Section> form section </Section>
-				<Section>{JSON.stringify(Profile)}</Section>
+				{/*  ============ Main form body ============ */}
+				<div>
+					<input type="hidden" {...register('id', { required: true })} />
+					<input type="hidden" {...register('type', { required: true })} />
+					<input
+						type="hidden"
+						{...register('user_level', { required: true })}
+					/>
+					<input
+						type="hidden"
+						{...register('user_group', { required: true })}
+					/>
+					<input type="hidden" {...register('email', { required: true })} />
+					<input type="hidden" {...register('active', { required: true })} />
+				</div>
+				<Section>
+					<AvatarPicker />
+				</Section>
+				<Section>
+					<div>{formData.email}</div>
+				</Section>
+				<Section>
+					<Controller
+						name="password"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="password"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value || ''}
+									name={name}
+									id={`${formOptions.id}__password`}
+									label={t('form:input.password_new')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.password`}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section>
+					<Controller
+						name="nick_name"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__nick_name`}
+									label={t('form:input.nick_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.nick_name`}
+									required
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="first_name"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__first_name`}
+									label={t('form:input.first_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.first_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="middle_name"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__middle_name`}
+									label={t('form:input.middle_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.middle_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="last_name"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__last_name`}
+									label={t('form:input.last_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.last_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>
 	);
