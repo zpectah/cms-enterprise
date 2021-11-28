@@ -27,6 +27,8 @@ class DataService {
             'data' => [], // data -> [items]
         ];
 
+        $Settings = new Settings;
+
         // Model
         $CmsRequests = new CmsRequests;
         $Users = new Users;
@@ -36,9 +38,10 @@ class DataService {
 
 
         // Additional
-        $languages = ['en', 'cs'];
-        $modules = ['crm', 'market'];
+        $languages = $Settings -> get_cms_settings_languages($conn);
+        $modules = $Settings -> get_cms_settings_modules($conn);
 
+        $language_active = $languages['language_active'];
 
         switch ($model) {
 
@@ -55,7 +58,7 @@ class DataService {
                 break;
 
             case 'Translations':
-                $response['data'] = $Translations -> get($conn, $data, $languages);
+                $response['data'] = $Translations -> get($conn, $data, $language_active);
                 break;
 
         }
@@ -72,6 +75,8 @@ class DataService {
             'data' => [], // data -> id (int)
         ];
 
+        $Settings = new Settings;
+
         // Model
         $CmsRequests = new CmsRequests;
         $Users = new Users;
@@ -81,9 +86,10 @@ class DataService {
 
 
         // Additional
-        $languages = ['en', 'cs'];
-        $modules = ['crm', 'market'];
+        $languages = $Settings -> get_cms_settings_languages($conn);
+        $modules = $Settings -> get_cms_settings_modules($conn);
 
+        $language_active = $languages['language_active'];
 
         switch ($model) {
 
@@ -100,7 +106,7 @@ class DataService {
                 break;
 
             case 'Translations':
-                $response['data'] = $Translations -> create($conn, $data, $languages);
+                $response['data'] = $Translations -> create($conn, $data, $language_active);
                 break;
 
         }
@@ -117,6 +123,8 @@ class DataService {
             'data' => [], // data -> rows (int)
         ];
 
+        $Settings = new Settings;
+
         // Model
         $CmsRequests = new CmsRequests;
         $Users = new Users;
@@ -126,9 +134,10 @@ class DataService {
 
 
         // Additional
-        $languages = ['en', 'cs'];
-        $modules = ['crm', 'market'];
+        $languages = $Settings -> get_cms_settings_languages($conn);
+        $modules = $Settings -> get_cms_settings_modules($conn);
 
+        $language_active = $languages['language_active'];
 
         switch ($model) {
 
@@ -145,7 +154,7 @@ class DataService {
                 break;
 
             case 'Translations':
-                $response['data'] = $Translations -> update($conn, $data, $languages);
+                $response['data'] = $Translations -> update($conn, $data, $language_active);
                 break;
 
         }
@@ -273,10 +282,10 @@ class DataService {
     /********** System **********/
 
     /********** Settings **********/
-    public function get_cms_settings ($data): array {
+    public function get_cms_settings (): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $Settings = new Settings;
-        $response = $Settings -> get_cms_settings($conn, $data);
+        $response = $Settings -> get_cms_settings($conn);
         $conn -> close();
 
         return $response;

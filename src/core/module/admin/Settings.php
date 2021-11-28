@@ -108,9 +108,9 @@ class Settings {
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                if ($row['name'] == 'language_default') $response['default'] = $row['value'];
-                if ($row['name'] == 'language_installed') $response['installed'] = explode(",", $row['value']);
-                if ($row['name'] == 'language_active') $response['active'] = explode(",", $row['value']);
+                if ($row['name'] == 'language_default') $response['language_default'] = $row['value'];
+                if ($row['name'] == 'language_installed') $response['language_installed'] = explode(",", $row['value']);
+                if ($row['name'] == 'language_active') $response['language_active'] = explode(",", $row['value']);
             }
         }
 
@@ -121,7 +121,7 @@ class Settings {
         $response = [];
 
         // prepare
-        $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM settings_cms WHERE context = ?');
+        $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM cms_settings WHERE context = ?');
         $types = 's';
         $args = [ 'module' ];
 
