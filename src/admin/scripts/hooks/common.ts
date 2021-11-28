@@ -42,11 +42,8 @@ export function useProfile() {
 			post(`${api_path_prefix}/user_lost_password_reset`, data),
 		userCreateNewPassword: (data: { password: string; token: string }) =>
 			post(`${api_path_prefix}/user_create_new_password`, data),
-		userShouldDisplay: (level: number) => {
-			const userLevel = data?.data?.user_level;
-
-			return Number(userLevel) >= Number(level);
-		},
+		userShouldDisplay: (level: number) =>
+			Number(data?.user_level) >= Number(level),
 	};
 }
 

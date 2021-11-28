@@ -14,6 +14,7 @@ import styled from 'styled-components';
 
 import { NAV_ITEMS, ROUTES } from '../../../constants';
 import { navItemProps, pageObjectProps } from '../../../types/pages';
+import { useProfile } from '../../../hooks/common';
 import { sidebarToggle } from '../../../store/actions';
 import { getElTestAttr } from '../../../utils/tests';
 
@@ -41,6 +42,7 @@ const Navbar = ({ dataTestId = 'navbar.primary', app }: NavbarProps) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const location = useLocation();
+	const { userShouldDisplay } = useProfile();
 	const [openSectionCrm, setOpenSectionCrm] = useState<boolean>(app == 'crm');
 	const [openSectionMarket, setOpenSectionMarket] = useState<boolean>(
 		app == 'market',
@@ -79,7 +81,7 @@ const Navbar = ({ dataTestId = 'navbar.primary', app }: NavbarProps) => {
 	};
 
 	const renderItem = (item: navItemProps, key: number) => {
-		if (item.active)
+		if (item.active && userShouldDisplay(item.auth))
 			return (
 				<StyledItem
 					key={key}
