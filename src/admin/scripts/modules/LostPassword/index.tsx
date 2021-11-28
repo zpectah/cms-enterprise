@@ -44,7 +44,6 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 
 				case 'request_was_send':
 					setSuccessMessage(t('form:form.LostPassword.msg.request_was_send'));
-					// setValue('email', '');
 					break;
 			}
 		});
@@ -88,7 +87,7 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 					setSuccessMessage(
 						t('form:form.LostPassword.msg.user_password_reset_success'),
 					);
-					setFormView('lost-password');
+					setFormView('none');
 					history.replace(ROUTES.app.lostPassword.path);
 					break;
 			}
@@ -107,14 +106,6 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 	};
 
 	useEffect(() => formViewHandler(), [params.token]);
-
-	/*
-	- když bude token, přepnout formulář na 'newPassword'
-	- kontrolovat sílu hesla + minimální požadavky na heslo
-	- odeslat email, nové heslo a token
-	- kontrolovat jestli sedí email a token, až potom uložit nové heslo
-	- poslat response, že je heslo změněno
-	*/
 
 	return (
 		<>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 
 import { Form, Button, Section, Input } from '../../components/ui';
 import { formLayoutObjectProps } from '../../types/app';
+import { ROUTES } from '../../constants';
 
 interface NewPasswordFormProps {
 	token: string;
@@ -23,6 +25,7 @@ const NewPasswordForm = ({
 	successMessage,
 }: NewPasswordFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
+	const history = useHistory();
 
 	const formOptions: formLayoutObjectProps = {
 		model: 'NewPassword',
@@ -41,6 +44,8 @@ const NewPasswordForm = ({
 	const submitHandler = (data: { password: string; token: string }, e: any) =>
 		onSubmit(data);
 	const errorSubmitHandler = (errors: any, e: any) => onSubmitError(errors, e);
+
+	const backToLoginHandler = () => history.push(ROUTES.app.login.path);
 
 	return (
 		<Form.Base
@@ -84,6 +89,9 @@ const NewPasswordForm = ({
 				>
 					<Button type="submit" variant="contained" disabled={!isValid}>
 						{t('button.submit')}
+					</Button>
+					<Button color="secondary" onClick={backToLoginHandler}>
+						{t('label.backToLogin')}
 					</Button>
 				</Stack>
 			</Section>

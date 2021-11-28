@@ -18,7 +18,7 @@ class DataService {
     - delete [...] [ affected ids ]
     !!! */
 
-    public function get ($model, $data) {
+    public function get ($model, $data): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
@@ -58,7 +58,7 @@ class DataService {
         return $response;
     }
 
-    public function create ($model, $data) {
+    public function create ($model, $data): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
@@ -98,7 +98,7 @@ class DataService {
         return $response;
     }
 
-    public function update ($model, $data) {
+    public function update ($model, $data): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
@@ -138,7 +138,7 @@ class DataService {
         return $response;
     }
 
-    public function toggle ($model, $data) {
+    public function toggle ($model, $data): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
@@ -172,7 +172,7 @@ class DataService {
         return $response;
     }
 
-    public function delete ($model, $data) {
+    public function delete ($model, $data): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
