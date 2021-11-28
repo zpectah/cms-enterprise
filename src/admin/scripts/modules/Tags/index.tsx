@@ -211,8 +211,8 @@ const TagsModule = ({}: TagsModuleProps) => {
 							onSubmitError={detailSubmitErrorHandler}
 							onCancel={detailCancelHandler}
 							onDelete={(id) => itemDeleteHandler([id])}
-							languageList={Settings.language_active}
-							languageDefault={Settings.language_default}
+							languageList={Settings?.language_active}
+							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 						/>
 					) : (
@@ -226,8 +226,8 @@ const TagsModule = ({}: TagsModuleProps) => {
 							onToggle={itemToggleHandler}
 							onDelete={itemDeleteHandler}
 							onSelect={itemSelectHandler}
-							languageList={Settings.language_active}
-							languageDefault={Settings.language_default}
+							languageList={Settings?.language_active}
+							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							withoutLanguageToggle
 						/>

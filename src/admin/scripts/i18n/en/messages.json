@@ -6,6 +6,10 @@
     "itemDeleted_one": "Item has been deleted",
     "itemDeleted_other": "{{count}} Items has been deleted"
   },
-  "error": {},
+  "error": {
+    "noAccess": "No access!",
+    "unauthorizedAccess": "Unauthorized access",
+    "profileLoadError": "Error while loading profile"
+  },
   "info": {}
 }
