@@ -13,16 +13,20 @@ interface NewPasswordFormProps {
 	token: string;
 	onSubmit: (data: { password: string; token: string }) => void;
 	onSubmitError: (errors: any, e: any) => void;
+	onGenerateTemporary: ({ token: string }) => void;
 	errorMessage?: string;
 	successMessage?: string;
+	formProcessing: boolean;
 }
 
 const NewPasswordForm = ({
 	token,
 	onSubmit,
 	onSubmitError,
+	onGenerateTemporary,
 	errorMessage,
 	successMessage,
+	formProcessing,
 }: NewPasswordFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const history = useHistory();
@@ -92,6 +96,16 @@ const NewPasswordForm = ({
 					</Button>
 					<Button color="secondary" onClick={backToLoginHandler}>
 						{t('label.backToLogin')}
+					</Button>
+				</Stack>
+				<Stack
+					spacing={2}
+					direction="row"
+					justifyContent="center"
+					style={{ paddingTop: '1rem' }}
+				>
+					<Button onClick={() => onGenerateTemporary({ token: token })}>
+						{t('form:form.LostPassword.btn.generateTemporaryPassword')}
 					</Button>
 				</Stack>
 			</Section>

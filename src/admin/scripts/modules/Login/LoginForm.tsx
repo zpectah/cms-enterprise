@@ -69,8 +69,7 @@ const LoginForm = ({}: LoginFormProps) => {
 			}
 		});
 	};
-	const errorSubmitHandler = (errors: any, e: any) =>
-		console.warn(`${formOptions.id}__${errors}`, e);
+	const errorSubmitHandler = (errors: any, e: any) => console.warn(errors, e);
 
 	const lostPasswordHandler = () => history.push(ROUTES.app.lostPassword.path);
 

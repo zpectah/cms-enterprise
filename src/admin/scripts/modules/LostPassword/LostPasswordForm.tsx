@@ -14,6 +14,7 @@ interface LostPasswordFormProps {
 	onSubmitError: (errors: any, e: any) => void;
 	errorMessage?: string;
 	successMessage?: string;
+	formProcessing: boolean;
 }
 
 const LostPasswordForm = ({
@@ -21,6 +22,7 @@ const LostPasswordForm = ({
 	onSubmitError,
 	errorMessage,
 	successMessage,
+	formProcessing,
 }: LostPasswordFormProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'form']);
