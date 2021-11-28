@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import Typography from '../Typography';
 
-const Wrapper = styled.section`
+const Wrapper = styled.section<{ visible: boolean; noSpacing: boolean }>`
 	width: 100%;
 	height: auto;
-	margin-bottom: ${(props) => props.theme.spacer};
-	display: flex;
+	margin-bottom: ${(props) => (props.noSpacing ? '0' : props.theme.spacer)};
+	display: ${(props) => (props.visible ? 'flex' : 'none')};
 	flex-direction: column;
 `;
 const TitleBlock = styled.div`
@@ -23,6 +23,8 @@ interface SectionProps {
 	beforeChildren?: React.ReactElement | React.ReactElement[];
 	afterChildren?: React.ReactElement | React.ReactElement[];
 	style?: {};
+	visible?: boolean;
+	noSpacing?: boolean;
 }
 
 const Section: React.FC<SectionProps> = ({
@@ -31,9 +33,11 @@ const Section: React.FC<SectionProps> = ({
 	beforeChildren,
 	afterChildren,
 	style,
+	visible = true,
+	noSpacing = false,
 }) => {
 	return (
-		<Wrapper style={style}>
+		<Wrapper style={style} visible={visible} noSpacing={noSpacing}>
 			{title && (
 				<TitleBlock>
 					<Typography.Title h2>{title}</Typography.Title>

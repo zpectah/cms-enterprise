@@ -4,6 +4,8 @@ interface commonItemProps {
 	active: boolean; // Overrides default DB type
 }
 
+interface languageFieldProps {}
+
 export interface RequestsItemProps {
 	id: number | string;
 	type: string;
@@ -36,6 +38,7 @@ export interface TagsItemProps extends commonItemProps {
 
 export interface TranslationsItemProps extends commonItemProps {
 	name: string;
+	lang: any; // TODO
 }
 
 export interface UploadsItemProps extends commonItemProps {
@@ -52,6 +55,7 @@ export interface UsersItemProps extends commonItemProps {
 	user_group: string;
 	img_avatar?: string;
 	user_level: number;
+	// description?: string; // TODO
 }
 
 export interface MembersItemProps extends commonItemProps {

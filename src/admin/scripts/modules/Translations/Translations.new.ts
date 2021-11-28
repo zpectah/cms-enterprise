@@ -5,4 +5,5 @@ export default {
 	type: 'default',
 	name: '',
 	active: true,
+	lang: {},
 } as TranslationsItemProps;

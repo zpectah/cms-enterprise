@@ -19,6 +19,7 @@ import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import TranslationsDetailForm from './TranslationsDetailForm';
 import { useToasts } from '../../hooks/common';
+import { getLanguagesFields } from '../../utils/detail';
 
 interface TranslationsModuleProps {}
 
@@ -69,8 +70,14 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
+		const detail = getDetailData(id, 'Translations', Translations);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings.language_active, {
+				value: '',
+			});
+
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Translations', Translations));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);

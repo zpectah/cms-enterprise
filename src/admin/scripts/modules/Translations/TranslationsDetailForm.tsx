@@ -175,7 +175,38 @@ const TranslationsDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.value`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__value`}
+												label={`${t('form:input.value')} (${lng})`}
+												// responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.value`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

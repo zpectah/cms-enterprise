@@ -13,7 +13,8 @@
     "last_name": "Last name",
     "level": "Level",
     "group": "Group",
-    "avatar": "Avatar"
+    "avatar": "Avatar",
+    "value": "Value"
   },
   "form": {
     "Login": {

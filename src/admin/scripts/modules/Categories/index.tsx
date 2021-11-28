@@ -19,6 +19,7 @@ import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import CategoriesDetailForm from './CategoriesDetailForm';
 import { useToasts } from '../../hooks/common';
+import { getLanguagesFields } from '../../utils/detail';
 
 interface CategoriesModuleProps {}
 
@@ -69,6 +70,12 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
+		// const detail = getDetailData(id, 'Translations', Translations);
+		// if (id == 'new')
+		// 	detail['lang'] = getLanguagesFields(Settings.language_active, {
+		// 		value: '',
+		// 	});
+
 		setDetail(id);
 		setDetailData(getDetailData(id, 'Categories', Categories));
 
