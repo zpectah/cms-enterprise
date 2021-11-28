@@ -111,7 +111,7 @@ class Translations {
                     'si',
                     [
                         $data['lang'][$lang]['value'],
-                        $data['id']
+                        $data['lang'][$lang]['id']
                     ]
                 );
             }

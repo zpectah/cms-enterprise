@@ -105,38 +105,7 @@ export function useCategories() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_categories`, get);
 
 	return {
-		Categories: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Category 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Category 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Category 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Category 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Category 5 name`,
-				active: true,
-			},
-		] as CategoriesItemProps[],
+		Categories: data?.data as CategoriesItemProps[],
 		categories_loading: !data && !error,
 		categories_error: error,
 		reloadCategories: () => mutate(`${api_path_prefix}/get_categories`),

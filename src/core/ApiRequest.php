@@ -9,7 +9,7 @@ class ApiRequest {
     }
 
     public function getResponse () {
-        $ds = new service\DataService;
+        $dc = new \controller\DataController;
         $response = [
             'status' => 'error',
             'data' => null,
@@ -39,66 +39,85 @@ class ApiRequest {
 
                 /********** Settings **********/
                 case 'get_cms_settings':
-                    $response = $ds -> get_cms_settings($request_data);
+                    $response = $dc -> get_cms_settings();
                     break;
 
                 case 'update_cms_settings':
-                    $response = $ds -> update_cms_settings($request_data);
+                    $response = $dc -> update_cms_settings($request_data);
                     break;
 
                 /********** Profile **********/
                 case 'get_user_profile':
-                    $response = $ds -> get_user_profile();
+                    $response = $dc -> get_user_profile();
                     break;
 
                 case 'update_user_profile':
-                    $response = $ds -> user_update_profile($request_data);
+                    $response = $dc -> user_update_profile($request_data);
                     break;
 
                 case 'user_login':
-                    $response = $ds -> user_login($request_data);
+                    $response = $dc -> user_login($request_data);
                     break;
 
                 case 'user_logout':
-                    $response = $ds -> user_logout();
+                    $response = $dc -> user_logout();
                     break;
 
                 case 'user_lost_password':
-                    $response = $ds -> user_lost_password($request_data);
+                    $response = $dc -> user_lost_password($request_data);
                     break;
 
                 case 'user_lost_password_reset':
-                    $response = $ds -> user_lost_password_reset($request_data);
+                    $response = $dc -> user_lost_password_reset($request_data);
                     break;
 
                 case 'user_create_new_password':
-                    $response = $ds -> user_create_new_password($request_data);
+                    $response = $dc -> user_create_new_password($request_data);
                     break;
 
 
 
                 /********** CmsRequests **********/
                 case 'get_cms_requests':
-                    $response = $ds -> get('CmsRequests', $request_data);
+                    $response = $dc -> get('CmsRequests', $request_data);
                     break;
 
                 case 'create_cms_requests':
-                    $response = $ds -> create('CmsRequests', $request_data);
+                    $response = $dc -> create('CmsRequests', $request_data);
                     break;
 
                 case 'update_cms_requests':
-                    $response = $ds -> update('CmsRequests', $request_data);
+                    $response = $dc -> update('CmsRequests', $request_data);
                     break;
 
                 case 'toggle_cms_requests':
-                    $response = $ds -> toggle('CmsRequests', $request_data);
+                    $response = $dc -> toggle('CmsRequests', $request_data);
                     break;
 
                 case 'delete_cms_requests':
-                    $response = $ds -> delete('CmsRequests', $request_data);
+                    $response = $dc -> delete('CmsRequests', $request_data);
                     break;
 
                 /********** Categories **********/
+                case 'get_categories':
+                    $response = $dc -> get('Categories', $request_data);
+                    break;
+
+                case 'create_categories':
+                    $response = $dc -> create('Categories', $request_data);
+                    break;
+
+                case 'update_categories':
+                    $response = $dc -> update('Categories', $request_data);
+                    break;
+
+                case 'toggle_categories':
+                    $response = $dc -> toggle('Categories', $request_data);
+                    break;
+
+                case 'delete_categories':
+                    $response = $dc -> delete('Categories', $request_data);
+                    break;
 
                 /********** Deliveries **********/
 
@@ -122,67 +141,67 @@ class ApiRequest {
 
                 /********** Tags **********/
                 case 'get_tags':
-                    $response = $ds -> get('Tags', $request_data);
+                    $response = $dc -> get('Tags', $request_data);
                     break;
 
                 case 'create_tags':
-                    $response = $ds -> create('Tags', $request_data);
+                    $response = $dc -> create('Tags', $request_data);
                     break;
 
                 case 'update_tags':
-                    $response = $ds -> update('Tags', $request_data);
+                    $response = $dc -> update('Tags', $request_data);
                     break;
 
                 case 'toggle_tags':
-                    $response = $ds -> toggle('Tags', $request_data);
+                    $response = $dc -> toggle('Tags', $request_data);
                     break;
 
                 case 'delete_tags':
-                    $response = $ds -> delete('Tags', $request_data);
+                    $response = $dc -> delete('Tags', $request_data);
                     break;
 
                 /********** Translations **********/
                 case 'get_translations':
-                    $response = $ds -> get('Translations', $request_data);
+                    $response = $dc -> get('Translations', $request_data);
                     break;
 
                 case 'create_translations':
-                    $response = $ds -> create('Translations', $request_data);
+                    $response = $dc -> create('Translations', $request_data);
                     break;
 
                 case 'update_translations':
-                    $response = $ds -> update('Translations', $request_data);
+                    $response = $dc -> update('Translations', $request_data);
                     break;
 
                 case 'toggle_translations':
-                    $response = $ds -> toggle('Translations', $request_data);
+                    $response = $dc -> toggle('Translations', $request_data);
                     break;
 
                 case 'delete_translations':
-                    $response = $ds -> delete('Translations', $request_data);
+                    $response = $dc -> delete('Translations', $request_data);
                     break;
 
                 /********** Uploads **********/
 
                 /********** Users **********/
                 case 'get_users':
-                    $response = $ds -> get('Users', $request_data);
+                    $response = $dc -> get('Users', $request_data);
                     break;
 
                 case 'create_users':
-                    $response = $ds -> create('Users', $request_data);
+                    $response = $dc -> create('Users', $request_data);
                     break;
 
                 case 'update_users':
-                    $response = $ds -> update('Users', $request_data);
+                    $response = $dc -> update('Users', $request_data);
                     break;
 
                 case 'toggle_users':
-                    $response = $ds -> toggle('Users', $request_data);
+                    $response = $dc -> toggle('Users', $request_data);
                     break;
 
                 case 'delete_users':
-                    $response = $ds -> delete('Users', $request_data);
+                    $response = $dc -> delete('Users', $request_data);
                     break;
 
             }

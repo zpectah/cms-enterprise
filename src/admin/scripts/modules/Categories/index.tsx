@@ -45,6 +45,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		updateCategories,
 		toggleCategories,
 		deleteCategories,
+		reloadCategories,
 		categories_loading,
 		categories_error,
 	} = useCategories();
@@ -70,11 +71,13 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		// const detail = getDetailData(id, 'Translations', Translations);
-		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings.language_active, {
-		// 		value: '',
-		// 	});
+		const detail = getDetailData(id, 'Categories', Categories);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings?.language_active, {
+				title: '',
+				description: '',
+				content: '',
+			});
 
 		setDetail(id);
 		setDetailData(getDetailData(id, 'Categories', Categories));
@@ -99,12 +102,9 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	const detailSubmitHandler = (data: CategoriesItemProps) => {
 		const master: CategoriesItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
-
 		if (master.id == 'new') {
 			createCategories(master).then((response) => {
-				console.log('create response', response);
-
+				reloadCategories();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -114,8 +114,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			});
 		} else {
 			updateCategories(master).then((response) => {
-				console.log('update response', response);
-
+				reloadCategories();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -163,11 +162,8 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 
-		console.log('AJAX ... toggle ...', master);
-
 		toggleCategories(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadCategories();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -182,11 +178,8 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 
-			console.log('AJAX ... delete ...', master);
-
 			deleteCategories(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadCategories();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

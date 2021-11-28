@@ -1,7 +1,8 @@
 <?php
 
-namespace service;
+namespace controller;
 
+use model\Categories;
 use model\CmsRequests;
 use model\Tags;
 use model\Translations;
@@ -10,15 +11,7 @@ use module\admin\Profile;
 use module\admin\Settings;
 use mysqli;
 
-class DataService {
-
-    /* !!!
-    Response data for:
-    - create {...} [ last id ]
-    - update {...} [ affected ids ]
-    - toggle [...] [ affected ids ]
-    - delete [...] [ affected ids ]
-    !!! */
+class DataController {
 
     public function get ($model, $data): array {
         $conn = new mysqli(...CFG_DB_CONN);
@@ -34,6 +27,7 @@ class DataService {
         $Users = new Users;
         $Tags = new Tags;
         $Translations = new Translations;
+        $Categories = new Categories;
 
 
 
@@ -61,6 +55,10 @@ class DataService {
                 $response['data'] = $Translations -> get($conn, $data, $language_active);
                 break;
 
+            case 'Categories':
+                $response['data'] = $Categories -> get($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -82,6 +80,7 @@ class DataService {
         $Users = new Users;
         $Tags = new Tags;
         $Translations = new Translations;
+        $Categories = new Categories;
 
 
 
@@ -109,6 +108,10 @@ class DataService {
                 $response['data'] = $Translations -> create($conn, $data, $language_active);
                 break;
 
+            case 'Categories':
+                $response['data'] = $Categories -> create($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -130,6 +133,7 @@ class DataService {
         $Users = new Users;
         $Tags = new Tags;
         $Translations = new Translations;
+        $Categories = new Categories;
 
 
 
@@ -157,6 +161,10 @@ class DataService {
                 $response['data'] = $Translations -> update($conn, $data, $language_active);
                 break;
 
+            case 'Categories':
+                $response['data'] = $Categories -> update($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -176,6 +184,7 @@ class DataService {
         $Users = new Users;
         $Tags = new Tags;
         $Translations = new Translations;
+        $Categories = new Categories;
 
 
         switch ($model) {
@@ -194,6 +203,10 @@ class DataService {
 
             case 'Translations':
                 $response['data'] = $Translations -> toggle($conn, $data);
+                break;
+
+            case 'Categories':
+                $response['data'] = $Categories -> toggle($conn, $data);
                 break;
 
         }
@@ -215,6 +228,7 @@ class DataService {
         $Users = new Users;
         $Tags = new Tags;
         $Translations = new Translations;
+        $Categories = new Categories;
 
 
         switch ($model) {
@@ -233,6 +247,10 @@ class DataService {
 
             case 'Translations':
                 $response['data'] = $Translations -> delete($conn, $data);
+                break;
+
+            case 'Categories':
+                $response['data'] = $Categories -> delete($conn, $data);
                 break;
 
         }

@@ -24,9 +24,13 @@ require PATH_ROOT . 'core/ApiRequest.php';
  * Services
  */
 require PATH_ROOT . 'core/services/AuthService.php';
-require PATH_ROOT . 'core/services/DataService.php';
 require PATH_ROOT . 'core/services/LogService.php';
 require PATH_ROOT . 'core/services/EmailService.php';
+
+/*
+ * Controller
+ */
+require PATH_ROOT . 'core/controller/DataController.php';
 
 /*
  * Model

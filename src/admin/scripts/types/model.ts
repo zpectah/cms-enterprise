@@ -4,16 +4,24 @@ interface commonItemProps {
 	active: boolean; // Overrides default DB type
 }
 
-interface languageFieldProps {}
-
 export interface RequestsItemProps {
 	id: number | string;
 	type: string;
 	status: number;
 }
 
+export interface CategoriesItemLangProps {
+	id: number | string;
+	title: string;
+	description?: string;
+	content?: string;
+}
 export interface CategoriesItemProps extends commonItemProps {
 	name: string;
+	parent?: string;
+	img_main?: string;
+	img_thumbnail?: string;
+	lang: any; // TODO
 }
 
 export interface MenuItemProps extends commonItemProps {
@@ -36,6 +44,10 @@ export interface TagsItemProps extends commonItemProps {
 	name: string;
 }
 
+export interface TranslationsItemLangProps {
+	id: number | string;
+	value: string;
+}
 export interface TranslationsItemProps extends commonItemProps {
 	name: string;
 	lang: any; // TODO

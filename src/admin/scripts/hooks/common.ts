@@ -2,7 +2,7 @@ import useSWR, { mutate } from 'swr';
 
 import config from '../config';
 import { UsersItemProps } from '../types/model';
-import { cmsSettingsObjectProps } from '../types/cms_settings';
+import { cmsSettingsObjectProps } from '../types/modules';
 import { addToast } from '../store/actions';
 import { get, post, postRaw } from '../utils/api';
 

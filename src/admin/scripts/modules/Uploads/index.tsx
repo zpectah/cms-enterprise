@@ -72,7 +72,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		// const detail = getDetailData(id, 'Translations', Translations);
 		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings.language_active, {
+		// 	detail['lang'] = getLanguagesFields(Settings?.language_active, {
 		// 		value: '',
 		// 	});
 
