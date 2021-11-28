@@ -45,6 +45,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		updateTranslations,
 		toggleTranslations,
 		deleteTranslations,
+		reloadTranslations,
 		translations_loading,
 		translations_error,
 	} = useTranslations();
@@ -99,12 +100,9 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	const detailSubmitHandler = (data: TranslationsItemProps) => {
 		const master: TranslationsItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
-
 		if (master.id == 'new') {
 			createTranslations(master).then((response) => {
-				console.log('create response', response);
-
+				reloadTranslations();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -114,8 +112,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			});
 		} else {
 			updateTranslations(master).then((response) => {
-				console.log('update response', response);
-
+				reloadTranslations();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -163,11 +160,8 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 
-		console.log('AJAX ... toggle ...', master);
-
 		toggleTranslations(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadTranslations();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -182,11 +176,8 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 
-			console.log('AJAX ... delete ...', master);
-
 			deleteTranslations(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadTranslations();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

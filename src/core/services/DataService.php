@@ -4,6 +4,7 @@ namespace service;
 
 use model\CmsRequests;
 use model\Tags;
+use model\Translations;
 use model\Users;
 use module\admin\Profile;
 use mysqli;
@@ -29,11 +30,12 @@ class DataService {
         $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
+        $Translations = new Translations;
 
 
 
         // Additional
-        $languages = ['en'];
+        $languages = ['en', 'cs'];
         $modules = ['crm', 'market'];
 
 
@@ -49,6 +51,10 @@ class DataService {
 
             case 'Tags':
                 $response['data'] = $Tags -> get($conn, $data);
+                break;
+
+            case 'Translations':
+                $response['data'] = $Translations -> get($conn, $data, $languages);
                 break;
 
         }
@@ -69,11 +75,12 @@ class DataService {
         $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
+        $Translations = new Translations;
 
 
 
         // Additional
-        $languages = ['en'];
+        $languages = ['en', 'cs'];
         $modules = ['crm', 'market'];
 
 
@@ -89,6 +96,10 @@ class DataService {
 
             case 'Tags':
                 $response['data'] = $Tags -> create($conn, $data);
+                break;
+
+            case 'Translations':
+                $response['data'] = $Translations -> create($conn, $data, $languages);
                 break;
 
         }
@@ -109,11 +120,12 @@ class DataService {
         $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
+        $Translations = new Translations;
 
 
 
         // Additional
-        $languages = ['en'];
+        $languages = ['en', 'cs'];
         $modules = ['crm', 'market'];
 
 
@@ -129,6 +141,10 @@ class DataService {
 
             case 'Tags':
                 $response['data'] = $Tags -> update($conn, $data);
+                break;
+
+            case 'Translations':
+                $response['data'] = $Translations -> update($conn, $data, $languages);
                 break;
 
         }
@@ -149,6 +165,7 @@ class DataService {
         $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
+        $Translations = new Translations;
 
 
         switch ($model) {
@@ -163,6 +180,10 @@ class DataService {
 
             case 'Tags':
                 $response['data'] = $Tags -> toggle($conn, $data);
+                break;
+
+            case 'Translations':
+                $response['data'] = $Translations -> toggle($conn, $data);
                 break;
 
         }
@@ -183,6 +204,7 @@ class DataService {
         $CmsRequests = new CmsRequests;
         $Users = new Users;
         $Tags = new Tags;
+        $Translations = new Translations;
 
 
         switch ($model) {
@@ -197,6 +219,10 @@ class DataService {
 
             case 'Tags':
                 $response['data'] = $Tags -> delete($conn, $data);
+                break;
+
+            case 'Translations':
+                $response['data'] = $Translations -> delete($conn, $data);
                 break;
 
         }

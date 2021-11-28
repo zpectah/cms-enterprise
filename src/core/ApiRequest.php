@@ -135,6 +135,25 @@ class ApiRequest {
                     break;
 
                 /********** Translations **********/
+                case 'get_translations':
+                    $response = $ds -> get('Translations', $request_data);
+                    break;
+
+                case 'create_translations':
+                    $response = $ds -> create('Translations', $request_data);
+                    break;
+
+                case 'update_translations':
+                    $response = $ds -> update('Translations', $request_data);
+                    break;
+
+                case 'toggle_translations':
+                    $response = $ds -> toggle('Translations', $request_data);
+                    break;
+
+                case 'delete_translations':
+                    $response = $ds -> delete('Translations', $request_data);
+                    break;
 
                 /********** Uploads **********/
 

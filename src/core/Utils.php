@@ -82,4 +82,43 @@ class Utils {
         return password_verify($password, $passwordHash);
     }
 
+    public function get_language_row ($conn, $id, $query) {
+        $response = null;
+
+        // prepare
+        $types = 'i';
+        $args = [ $id ];
+
+        // execute
+        $stmt = $conn -> prepare($query);
+        $stmt -> bind_param($types, ...$args);
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+        $stmt -> close();
+        if ($result -> num_rows > 0) {
+            while($row = $result -> fetch_assoc()) {
+                $response = $row;
+            }
+        }
+
+        return $response;
+    }
+
+    public function update_language_row ($conn, $lang, $query, $types, $args) {
+        $response = null;
+
+        // execute
+        if ($conn -> connect_error) {
+            $response = $conn -> connect_error;
+        } else {
+            $stmt = $conn -> prepare($query);
+            $stmt -> bind_param($types, ...$args);
+            $stmt -> execute();
+            $response = $lang;
+            $stmt -> close();
+        }
+
+        return $response;
+    }
+
 }

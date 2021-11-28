@@ -17,6 +17,7 @@ import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
+import getOptionsList from '../../utils/getOptionsList';
 
 interface TranslationsDetailFormProps {
 	detailData: TranslationsItemProps;
@@ -90,6 +91,12 @@ const TranslationsDetailForm = ({
 		);
 	};
 
+	// Model options list
+	const getTypeOptions = useCallback(
+		() => getOptionsList(config.options.model.Translations.type, t),
+		[detailData],
+	);
+
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
 	return (
@@ -125,6 +132,28 @@ const TranslationsDetailForm = ({
 				sidebarChildren={
 					<>
 						{/*  ============ Form sidebar ============ */}
+						<Section>
+							<Controller
+								name="type"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Select
+											id={`${formOptions.id}__type.label`}
+											labelId={`${formOptions.id}__type.label`}
+											label={t('form:input.type')}
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											options={getTypeOptions()}
+											dataTestId={`${formOptions.id}.select.type`}
+										/>
+									</Form.Row>
+								)}
+							/>
+						</Section>
 						<Section>
 							<Controller
 								name="active"
