@@ -30,7 +30,6 @@ class ApiRequest {
 
         // Parsed url and additional params
         $url_base = $request_url[1];
-        // $url_param = $request_url[2];
 
         // Switching and executing
         if ($url_base) {
@@ -41,7 +40,29 @@ class ApiRequest {
                 /********** Settings **********/
 
                 /********** Profile **********/
+                case 'get_user_profile':
+                    $response = $ds -> get_user_profile();
+                    break;
 
+                case 'update_user_profile':
+                    $response = $ds -> user_update_profile($request_data);
+                    break;
+
+                case 'user_login':
+                    $response = $ds -> user_login($request_data);
+                    break;
+
+                case 'user_logout':
+                    $response = $ds -> user_logout();
+                    break;
+
+                case 'user_lost_password':
+                    $response = $ds -> user_lost_password($request_data);
+                    break;
+
+                case 'user_lost_password_reset':
+                    $response = $ds -> user_lost_password_reset($request_data);
+                    break;
 
 
 

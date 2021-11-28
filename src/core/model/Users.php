@@ -68,6 +68,7 @@ class Users {
 
     public function create ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
         // prepare
         $query = ('INSERT INTO users (email, type, password, nick_name, first_name, middle_name, last_name, user_level, user_group, img_avatar, active, deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
@@ -75,7 +76,8 @@ class Users {
         $args = [
             $data['email'],
             $data['type'],
-            password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
+            // password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
+            $utils -> passwordHash($data['password']),
             $data['nick_name'],
             $data['first_name'],
             $data['middle_name'],
@@ -103,6 +105,7 @@ class Users {
 
     public function update ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
         // prepare
         $password = $data['password'];
@@ -112,7 +115,8 @@ class Users {
         $args = $password ? [
             $data['email'],
             $data['type'],
-            password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
+            // password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
+            $utils -> passwordHash($data['password']),
             $data['nick_name'],
             $data['first_name'],
             $data['middle_name'],

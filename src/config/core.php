@@ -11,7 +11,7 @@ $utils = new Utils;
 
 const ENV =                                               BUILD['env'];                                                 // Environment
 const TIMESTAMP =                                         BUILD['timestamp'];                                           // Build timestamp
-const PASS_CRYPT =                                        PASSWORD_ARGON2I;
+const PASS_CRYPT =                                        PASSWORD_ARGON2ID;
 const PASS_CRYPT_OPTIONS = [
     'memory_cost' =>                                      2048,
     'time_cost' =>                                        4,

@@ -19,8 +19,25 @@ class CmsRequests {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // params
+        $rp_id = $data['id'];
+        $rp_token = $data['token'];
+
         if ($result -> num_rows > 0) {
-            while($row = $result -> fetch_assoc()) $response[] = $row;
+            // iterate by params
+            if ($rp_id) {
+                while($row = $result -> fetch_assoc()) {
+                    if ($rp_id == $row['id']) $response = $row;
+                }
+            } else if ($rp_token) {
+                while($row = $result -> fetch_assoc()) {
+                    if ($rp_token == $row['token']) $response = $row;
+                }
+            } else {
+                while($row = $result -> fetch_assoc()) {
+                    $response[] = $row;
+                }
+            }
         }
 
         return $response;

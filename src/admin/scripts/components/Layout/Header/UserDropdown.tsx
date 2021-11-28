@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ROUTES } from '../../../constants';
 import { Avatar, ConfirmDialog } from '../../ui';
+import { useProfile } from '../../../hooks/common';
 import { getElTestAttr } from '../../../utils/tests';
 
 interface UserDropdownProps {
@@ -22,6 +23,7 @@ const UserDropdown = ({ dataTestId = 'user.dropdown' }: UserDropdownProps) => {
 	const { t } = useTranslation(['common', 'components']);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [confirmDialog, setConfirmDialog] = useState<boolean>(false);
+	const { Profile, userLogout } = useProfile();
 	const open = Boolean(anchorEl);
 
 	const dropdownOpenHandler = (event: React.MouseEvent<HTMLElement>) =>
@@ -30,7 +32,11 @@ const UserDropdown = ({ dataTestId = 'user.dropdown' }: UserDropdownProps) => {
 	const profileClickHandler = () => history.push(ROUTES.app.profile.path);
 	const helpClickHandler = () => history.push(ROUTES.app.help.path + '/about');
 	const logoutClickHandler = () => setConfirmDialog(true);
-	const logoutConfirmHandler = () => history.push(ROUTES.app.login.path);
+	const logoutConfirmHandler = () => {
+		userLogout().then(() => {
+			history.push(ROUTES.app.login.path);
+		});
+	};
 	const closeConfirmDialog = () => setConfirmDialog(false);
 
 	return (

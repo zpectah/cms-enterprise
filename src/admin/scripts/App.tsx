@@ -146,16 +146,6 @@ const App = () => {
 								auth={ROUTES.crm.crmDashboard.auth}
 								exact
 							/>
-
-							<Route
-								path={[
-									ROUTES.app.lostPassword.path,
-									ROUTES.app.lostPassword.path + ROUTE_PATH_PARAMS.token,
-								]}
-								component={LostPasswordPage}
-								exact
-							/>
-							<Route path={ROUTES.app.login.path} component={LoginPage} />
 							<AuthRoute
 								path={[
 									ROUTES.app.settings.path,
@@ -238,12 +228,6 @@ const App = () => {
 								exact
 							/>
 							<AuthRoute
-								path={ROUTES.app.dashboard.path}
-								component={DashboardPage}
-								auth={ROUTES.app.dashboard.auth}
-								exact
-							/>
-							<AuthRoute
 								path={[
 									ROUTES.app.help.path,
 									ROUTES.app.help.path + ROUTE_PATH_PARAMS.panel,
@@ -252,10 +236,25 @@ const App = () => {
 								auth={ROUTES.app.help.auth}
 								exact
 							/>
+							<Route
+								path={[
+									ROUTES.app.lostPassword.path,
+									ROUTES.app.lostPassword.path + ROUTE_PATH_PARAMS.token,
+								]}
+								component={LostPasswordPage}
+								exact
+							/>
+							<Route path={ROUTES.app.login.path} component={LoginPage} />
 							<AuthRoute
 								path={ROUTES.app.profile.path}
 								component={ProfilePage}
 								auth={ROUTES.app.profile.auth}
+								exact
+							/>
+							<AuthRoute
+								path={ROUTES.app.dashboard.path}
+								component={DashboardPage}
+								auth={ROUTES.app.dashboard.auth}
 								exact
 							/>
 							<Route component={Error404Page} />

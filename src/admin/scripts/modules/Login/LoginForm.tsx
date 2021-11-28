@@ -40,25 +40,34 @@ const LoginForm = ({}: LoginFormProps) => {
 		setErrorMessage(null);
 		setSuccessMessage(null);
 
-		console.log('submitHandler', master);
+		userLogin(master).then((response) => {
+			switch (response?.message) {
+				case 'user_not_found':
+					setErrorMessage(t('form:form.Login.msg.user_not_found'));
+					break;
 
-		userLogin(master); // TODO
+				case 'user_password_not_match':
+					setErrorMessage(t('form:form.Login.msg.user_password_not_match'));
+					break;
 
-		setValue('email', '');
-		setValue('password', '');
+				case 'user_not_active':
+					setErrorMessage(t('form:form.Login.msg.user_not_active'));
+					break;
 
-		setErrorMessage('Example error message ...');
-		setSuccessMessage('Example success message ...');
+				case 'user_is_deleted':
+					setErrorMessage(t('form:form.Login.msg.user_is_deleted'));
+					break;
 
-		/*
-
-		user_not_found
-		user_password_not_match
-		user_not_active
-		user_is_deleted
-		user_login_success
-
-		*/
+				case 'user_login_success':
+					setSuccessMessage(t('form:form.Login.msg.user_login_success'));
+					setValue('email', '');
+					setValue('password', '');
+					setTimeout(() => {
+						history.push(ROUTES.app.dashboard.path);
+					}, 1500);
+					break;
+			}
+		});
 	};
 	const errorSubmitHandler = (errors: any, e: any) =>
 		console.warn(`${formOptions.id}__${errors}`, e);

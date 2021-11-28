@@ -32,6 +32,8 @@ class Profile {
                     unset($row['password']);
                     unset($row['deleted']);
 
+                    $row['active'] = $row['active'] == 1;
+
                     $response = $row;
                 }
             }
@@ -53,6 +55,7 @@ class Profile {
         ];
         $as = new AuthService;
         $Users = new Users;
+        $utils = new \Utils;
 
         // Form data
         $email = $data['email'];
@@ -68,9 +71,9 @@ class Profile {
                 $response['message'] = 'user_not_active';
             } else if ($user['deleted'] == 1) {
                 $response['message'] = 'user_is_deleted';
-            } else if (password_verify($password, $user['password'])) {
-                $response['message'] = 'user_login_success';
+            } else if ($utils -> passwordVerify($password, $user['password'])) {
                 $response['session'] = $as -> start_user_session($email);
+                $response['message'] = 'user_login_success';
             }
         }
 
@@ -126,11 +129,11 @@ class Profile {
         return $response;
     }
 
-    public function user_lost_password_reset ($conn, $data) {
+    public static function user_lost_password_reset ($conn, $data): array {
         $response = [
             'message' => 'user_password_reset_error',
             'email' => null,
-            'row' => null,
+            'request' => null,
             'user' => null,
         ];
         $es = new EmailService;
@@ -143,24 +146,25 @@ class Profile {
 
         if ($token) {
             if ($request_row) {
-                if ($request_row['status'] == 0) {
+                if ($request_row['status'] == 1) {
                     $user_row = $Users -> get($conn, ['email' => $request_row['value']]);
                     if ($user_row) {
-                        $tmp_password = $utils -> getToken(3, '');
-                        $hash_password = password_hash($tmp_password, PASS_CRYPT, PASS_CRYPT_OPTIONS);
-                        $user_row['password'] = $hash_password;
-
+                        $tmp_password = $utils -> getToken(4, '');
+                        $tmp_password_ = $tmp_password;
+                        $hash_password = $utils -> passwordHash($tmp_password_);
                         $response['email'] = $es -> sendStyledMessage(
                             $user_row['email'],
                             "New password",
-                            "<div>This is your new password: <b>" . $tmp_password ."</b> <br /> Keep it safe, or change after login</div>",
+                            "<div>This is your new password: <b>" . $tmp_password_ . " : " . $hash_password .  "</b><br /> Keep it safe, or change after login</div>",
                             null,
                             'password_reset'
                         );
-                        $response['row'] = $CmsRequests -> update($conn, [
-                            'status' => 1,
+
+                        $response['request'] = $CmsRequests -> update($conn, [
+                            'status' => 2,
                             'token' => $request_row['token']
                         ]);
+                        $user_row['password'] = $hash_password;
                         $response['user'] = $Users -> update($conn, $user_row);
                         $response['message'] = 'user_password_reset_success';
                     }

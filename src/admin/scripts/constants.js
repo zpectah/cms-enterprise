@@ -80,7 +80,7 @@ export const DATA_TABLE = {
 export const ROUTE_SUFFIX = {
 	detail: '/id',
 	panel: '',
-	token: '',
+	token: '/token',
 };
 export const ROUTE_PATH_PARAMS = {
 	detail: ROUTE_SUFFIX.detail + '/:id',

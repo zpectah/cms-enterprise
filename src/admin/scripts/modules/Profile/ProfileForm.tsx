@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { formLayoutObjectProps } from '../../types/app';
 import { Form, Button, Section } from '../../components/ui';
+import { useProfile } from '../../hooks/common';
 
 interface ProfileFormProps {
 	formData: any;
@@ -17,6 +18,7 @@ const ProfileForm = ({
 	onSubmitError,
 }: ProfileFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
+	const { Profile } = useProfile();
 
 	const formOptions: formLayoutObjectProps = {
 		model: 'Profile',
@@ -52,6 +54,7 @@ const ProfileForm = ({
 				footerChildren={renderFooter()}
 			>
 				<Section> form section </Section>
+				<Section>{JSON.stringify(Profile)}</Section>
 			</Form.Layout>
 		</>
 	);

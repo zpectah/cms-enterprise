@@ -8,7 +8,7 @@ export const init: any = {
 };
 
 export const get = async (url: string) => {
-	// console.log(url);
+	// console.log('get', url);
 	const response = await fetch(url, {
 		method: 'GET',
 		...init,
@@ -17,17 +17,18 @@ export const get = async (url: string) => {
 };
 
 export const post = async (url: string, data: any) => {
-	// console.log(url, data);
+	// console.log('post', url, data);
 	const response = await fetch(url, {
 		method: 'POST',
 		...init,
 		body: JSON.stringify(data),
 	});
+
 	return response.json();
 };
 
 export const postRaw = async (url: string, data: any) => {
-	// console.log(url, data);
+	// console.log('postRaw', url, data);
 	return await fetch(url, {
 		method: 'POST',
 		...init,
