@@ -8,6 +8,7 @@ export const RESPONSIVE_BREAKPOINTS = {
 	xxl: 1400,
 };
 export const TOASTS_TIMEOUT_DEFAULT = 3500;
+export const TOASTS_TIMEOUT_ERROR = 5000;
 export const UI_VIEW_TOLERANCE = 50;
 export const EMAIL_REGEX =
 	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
@@ -21,7 +22,7 @@ export const FORM_INPUT_MAX_LENGTH = 500;
 export const ELEMENT_DATA_TEST_ATTR = 'data-test-id';
 export const USER_LEVEL = {
 	demo: {
-		id: 0,
+		id: 1,
 		key: 'demo',
 	},
 	redactor: {

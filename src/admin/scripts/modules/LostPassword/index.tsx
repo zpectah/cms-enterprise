@@ -3,11 +3,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import MuiAlert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 import { ROUTES } from '../../constants';
 import { useProfile } from '../../hooks/common';
 import LostPasswordForm from './LostPasswordForm';
 import NewPasswordForm from './NewPasswordForm';
+import { Button } from '../../components/ui';
 
 interface LostPasswordModuleProps {}
 
@@ -117,6 +119,8 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 		if (params.token) setFormView('new-password');
 	};
 
+	const backToLoginHandler = () => history.push(ROUTES.app.login.path);
+
 	useEffect(() => formViewHandler(), [params.token]);
 
 	return (
@@ -151,6 +155,16 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 							{successMessage && (
 								<MuiAlert severity="success">{successMessage}</MuiAlert>
 							)}
+							<Stack
+								spacing={2}
+								direction="row"
+								justifyContent="center"
+								style={{ paddingTop: '1rem' }}
+							>
+								<Button color="secondary" onClick={backToLoginHandler}>
+									{t('label.backToLogin')}
+								</Button>
+							</Stack>
 						</>
 					),
 				}[formView]
