@@ -233,6 +233,10 @@ const UsersDetailForm = ({
 				{/*  ============ Main form body ============ */}
 				<div>
 					<input type="hidden" {...register('id', { required: true })} />
+					<input
+						type="hidden"
+						{...register('description', { required: true })}
+					/>
 				</div>
 				<Section>
 					<Controller

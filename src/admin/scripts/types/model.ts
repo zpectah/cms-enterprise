@@ -67,7 +67,7 @@ export interface UsersItemProps extends commonItemProps {
 	user_group: string;
 	img_avatar?: string;
 	user_level: number;
-	// description?: string; // TODO
+	description?: string;
 }
 
 export interface MembersItemProps extends commonItemProps {

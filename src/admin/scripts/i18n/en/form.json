@@ -14,7 +14,8 @@
     "level": "Level",
     "group": "Group",
     "avatar": "Avatar",
-    "value": "Value"
+    "value": "Value",
+    "description": "Description"
   },
   "form": {
     "Login": {

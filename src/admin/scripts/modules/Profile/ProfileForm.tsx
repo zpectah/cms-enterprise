@@ -176,6 +176,29 @@ const ProfileForm = ({
 						)}
 					/>
 				</Section>
+				<Section>
+					<Controller
+						name="description"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__description`}
+									label={t('form:input.description')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.description`}
+									multiline
+									rows={5}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>
