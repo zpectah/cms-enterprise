@@ -192,14 +192,14 @@ const UsersModule = ({}: UsersModuleProps) => {
 		}
 	};
 
-	const toggleDetail = useCallback(() => {
+	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);
 			openDetailHandler(params.id);
 		} else {
 			setDetailData(null);
 		}
-	}, [params.id]);
+	};
 
 	useEffect(() => {
 		if (Users) toggleDetail();
