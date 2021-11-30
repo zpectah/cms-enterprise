@@ -1,3 +1,5 @@
+import { UsersItemProps } from './model';
+
 export interface cmsSettingsObjectProps {
 	comments_anonymous_active: boolean;
 	comments_global_active: boolean;
@@ -30,3 +32,5 @@ export interface cmsSettingsObjectProps {
 	web_mode_debug: boolean;
 	web_mode_maintenance: boolean;
 }
+
+export type ProfileItemProps = UsersItemProps | 'anonymous';

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ROUTES, TOASTS_TIMEOUT_ERROR } from '../../constants';
 import { useProfile, useToasts } from '../../hooks/common';
+import { ProfileItemProps } from '../../types/modules';
 import { Preloader } from '../ui';
 
 interface AuthRouteProps {
@@ -22,6 +23,8 @@ const AuthRoute = ({ exact, path, component, auth }: AuthRouteProps) => {
 	const [redirect, setRedirect] = useState<string | null>(null);
 	const [userReady, setUserReady] = useState<boolean>(true);
 
+	const user = Profile as ProfileItemProps;
+
 	const authorizeAccess = () => {
 		if (profile_error) {
 			createToasts({
@@ -31,7 +34,7 @@ const AuthRoute = ({ exact, path, component, auth }: AuthRouteProps) => {
 			});
 		}
 
-		if (!Profile && !profile_loading) {
+		if ((!user || user == 'anonymous') && !profile_loading) {
 			setRedirect(ROUTES.app.login.path);
 			createToasts({
 				title: t('messages:error.noAccess'),
@@ -40,7 +43,7 @@ const AuthRoute = ({ exact, path, component, auth }: AuthRouteProps) => {
 			});
 
 			return;
-		} else if (Profile && !profile_loading) {
+		} else if (user && user !== 'anonymous' && !profile_loading) {
 			if (Profile?.user_level < auth) {
 				setRedirect(ROUTES.app.dashboard.path);
 				createToasts({
@@ -54,7 +57,7 @@ const AuthRoute = ({ exact, path, component, auth }: AuthRouteProps) => {
 		setUserReady(true);
 	};
 
-	useEffect(authorizeAccess, [Profile, auth, profile_error]);
+	useEffect(authorizeAccess, [user, auth]);
 
 	if (profile_loading) return <Preloader.Page />;
 

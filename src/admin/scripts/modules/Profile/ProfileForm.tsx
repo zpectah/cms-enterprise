@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { UsersItemProps } from '../../types/model';
 import { formLayoutObjectProps } from '../../types/app';
 import { Form, Button, Section, Input } from '../../components/ui';
-import { EMAIL_REGEX } from '../../constants';
 
 import AvatarPicker from '../../components/AvatarPicker';
 

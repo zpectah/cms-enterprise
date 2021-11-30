@@ -45,8 +45,10 @@ const NewPasswordForm = ({
 		});
 	const { isDirty, isValid } = formState;
 
-	const submitHandler = (data: { password: string; token: string }, e: any) =>
+	const submitHandler = (data: { password: string; token: string }, e: any) => {
+		setValue('password', '');
 		onSubmit(data);
+	};
 	const errorSubmitHandler = (errors: any, e: any) => onSubmitError(errors, e);
 
 	const backToLoginHandler = () => history.push(ROUTES.app.login.path);

@@ -62,9 +62,10 @@ const LoginForm = ({}: LoginFormProps) => {
 					setSuccessMessage(t('form:form.Login.msg.user_login_success'));
 					setValue('email', '');
 					setValue('password', '');
-					setTimeout(() => {
-						history.push(ROUTES.app.dashboard.path);
-					}, 1500);
+					setTimeout(
+						() => (window.location.href = ROUTES.app.dashboard.path),
+						1500,
+					);
 					break;
 			}
 		});

@@ -28,7 +28,7 @@ export function useProfile() {
 
 	return {
 		Profile: data as UsersItemProps,
-		profile_loading: (!data || false) && !error,
+		profile_loading: !data && !error,
 		profile_error: error,
 		reloadProfile: () => mutate(`${api_path_prefix}/get_user_profile`),
 		updateProfile: (data: UsersItemProps) =>

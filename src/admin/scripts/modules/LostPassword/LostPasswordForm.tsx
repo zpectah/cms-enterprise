@@ -40,7 +40,10 @@ const LostPasswordForm = ({
 		});
 	const { isDirty, isValid } = formState;
 
-	const submitHandler = (data: any, e: any) => onSubmit(data);
+	const submitHandler = (data: any, e: any) => {
+		setValue('email', '');
+		onSubmit(data);
+	};
 	const errorSubmitHandler = (errors: any, e: any) => onSubmitError(errors, e);
 
 	const backToLoginHandler = () => history.push(ROUTES.app.login.path);
