@@ -63,3 +63,4 @@ require PATH_ROOT . 'core/module/admin/Dashboard.php';
 require PATH_ROOT . 'core/module/admin/MarketDashboard.php';
 require PATH_ROOT . 'core/module/admin/Profile.php';
 require PATH_ROOT . 'core/module/admin/Settings.php';
+require PATH_ROOT . 'core/module/admin/System.php';

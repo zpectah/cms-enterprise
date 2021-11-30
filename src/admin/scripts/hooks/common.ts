@@ -10,6 +10,8 @@ const api_path_prefix = config.project.api.base;
 
 export function useSystem() {
 	return {
+		createLog: (data: any) => post(`${api_path_prefix}/create_log`, data),
+		getLogList: (data: any) => post(`${api_path_prefix}/get_log_list`, data),
 		installLanguage: (data: any) =>
 			post(`${api_path_prefix}/install_language`, data),
 		installModule: (data: any) =>

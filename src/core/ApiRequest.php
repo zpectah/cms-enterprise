@@ -36,6 +36,13 @@ class ApiRequest {
             switch (strtolower($url_base)) {
 
                 /********** System **********/
+                case 'create_log':
+                    $response = $dc -> create_log($request_data);
+                    break;
+
+                case 'get_log_list':
+                    $response = $dc -> get_log_list();
+                    break;
 
                 /********** Settings **********/
                 case 'get_cms_settings':

@@ -25,7 +25,12 @@ class ErrorBoundary extends React.Component<
 
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 		this.setState({ isError: true, error, errorInfo });
-		LogsService.create(error, errorInfo);
+		console.error(error, errorInfo);
+		LogsService.create({
+			user: 'anonymous',
+			method: '' + error,
+			status: 'error',
+		});
 	}
 
 	render() {

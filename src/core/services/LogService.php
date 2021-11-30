@@ -8,8 +8,8 @@ class LogService {
         return null;
     }
 
-    public function create ($uid, $method, $status) {
-        $log = date("G:i:s e") . ' [#' . $uid . '][' . $_SERVER['REMOTE_ADDR'] . '][' . $method . ':' . $status . '];' . PHP_EOL;
+    public function create ($user, $method, $status) {
+        $log = date("G:i:s e") . ' [' . $user . '][' . $_SERVER['REMOTE_ADDR'] . '][' . $method . ':' . $status . '];' . PHP_EOL;
 
         if (!file_exists(PATH_LOGS)) mkdir(PATH_LOGS, 0777, true);
 

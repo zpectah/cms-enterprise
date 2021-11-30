@@ -9,6 +9,7 @@ use model\Translations;
 use model\Users;
 use module\admin\Profile;
 use module\admin\Settings;
+use module\admin\System;
 use mysqli;
 
 class DataController {
@@ -298,6 +299,16 @@ class DataController {
 
 
     /********** System **********/
+    public function create_log ($data): array {
+        $System = new System;
+
+        return $System -> create_log($data);
+    }
+    public function get_log_list (): array {
+        $System = new System;
+
+        return $System -> get_log_list();
+    }
 
     /********** Settings **********/
     public function get_cms_settings (): array {
