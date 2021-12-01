@@ -15,7 +15,15 @@
     "group": "Group",
     "avatar": "Avatar",
     "value": "Value",
-    "description": "Description"
+    "description": "Description",
+    "title": "Title",
+    "content": "Content",
+    "parent": "Parent",
+    "img_thumbnail": "Thumbnail",
+    "img_main": "Main image"
+  },
+  "label": {
+    "no_parent": "No parent"
   },
   "form": {
     "Login": {

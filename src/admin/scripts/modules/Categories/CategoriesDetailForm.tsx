@@ -16,6 +16,7 @@ import {
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
+import Picker from '../../components/Picker';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 
@@ -204,7 +205,112 @@ const CategoriesDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				<Section>
+					<Controller
+						name="parent"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Categories
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__parent`}
+									label={t('form:input.parent')}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.parent`}
+									ignored={[detailData.id]}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.title`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__title`}
+												label={`${t('form:input.title')} (${lng})`}
+												// responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.title`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.description`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__description`}
+												label={`${t('form:input.description')} (${lng})`}
+												// responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.description`}
+												required
+												multiline
+												rows={5}
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.content`}
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__content`}
+												label={`${t('form:input.content')} (${lng})`}
+												// responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.content`}
+												multiline
+												rows={8}
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
+				</Section>
+				<Section>
+					<Picker.Uploads value={''} onChange={() => {}} />
+					<input type="text" {...register('img_thumbnail', {})} />
+					<Picker.Uploads value={''} onChange={() => {}} />
+					<input type="text" {...register('img_main', {})} />
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

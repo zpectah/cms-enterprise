@@ -19,7 +19,7 @@ const StyledInput = styled(Select)<{ responsive: string }>`
 
 interface SelectInputProps {
 	dataTestId?: string;
-	options: { label: string; value: string | number }[];
+	options: { label: string; value: string | number; disabled?: boolean }[];
 	responsiveWidth?: string;
 }
 
@@ -51,6 +51,7 @@ const SelectInput = (props: SelectInputProps & SelectProps) => {
 						key={option.label}
 						value={option.value}
 						{...getElTestAttr(`${dataTestId}.item.${option.value}`)}
+						disabled={option.disabled}
 					>
 						{option.label}
 					</MenuItem>

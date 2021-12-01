@@ -6,7 +6,7 @@ import { UsersItemProps } from '../../types/model';
 import { formLayoutObjectProps } from '../../types/app';
 import { Form, Button, Section, Input } from '../../components/ui';
 
-import AvatarPicker from '../../components/AvatarPicker';
+import Picker from '../../components/Picker';
 
 interface ProfileFormProps {
 	formData: any;
@@ -70,7 +70,7 @@ const ProfileForm = ({
 					<input type="hidden" {...register('active', { required: true })} />
 				</div>
 				<Section>
-					<AvatarPicker />
+					<Picker.Uploads value={''} onChange={() => {}} avatar />
 				</Section>
 				<Section>
 					<div>{formData.email}</div>

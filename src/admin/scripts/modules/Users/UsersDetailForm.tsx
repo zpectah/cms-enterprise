@@ -17,7 +17,7 @@ import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import getOptionsList from '../../utils/getOptionsList';
-import AvatarPicker from '../../components/AvatarPicker';
+import Picker from '../../components/Picker';
 
 interface UsersDetailFormProps {
 	detailData: UsersItemProps;
@@ -369,7 +369,7 @@ const UsersDetailForm = ({
 					/>
 				</Section>
 				<Section>
-					<AvatarPicker />
+					<Picker.Uploads value={''} onChange={() => {}} avatar />
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
