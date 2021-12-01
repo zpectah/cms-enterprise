@@ -6,12 +6,14 @@ import { getElTestAttr } from '../../../utils/tests';
 const titleBaseStyle = css`
 	margin: 0;
 	padding: 0;
+	font-weight: 700;
 `;
 
 const StyledH1 = styled.h1`
 	${titleBaseStyle}
 
 	font-size: 1.75rem;
+	font-weight: 900;
 `;
 const StyledH2 = styled.h2`
 	${titleBaseStyle}
@@ -39,6 +41,8 @@ const StyledH6 = styled.h6`
 	font-size: 1rem;
 `;
 const StyledSpan = styled.span`
+	${titleBaseStyle}
+
 	font-size: 1rem;
 `;
 

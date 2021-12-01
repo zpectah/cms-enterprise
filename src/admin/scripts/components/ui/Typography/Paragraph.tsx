@@ -1,13 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { getElTestAttr } from '../../../utils/tests';
 
-const StyledP = styled.p``;
-const StyledSpan = styled.span``;
-const StyledLabel = styled.label``;
-const StyledSmall = styled.small``;
-const StyledStrong = styled.strong``;
+const typoBaseStyle = css``;
+const StyledP = styled.p`
+	${typoBaseStyle}
+`;
+const StyledSpan = styled.span`
+	${typoBaseStyle}
+`;
+const StyledLabel = styled.label`
+	${typoBaseStyle}
+`;
+const StyledSmall = styled.small`
+	${typoBaseStyle}
+`;
+const StyledStrong = styled.strong`
+	${typoBaseStyle}
+`;
 
 interface ParagraphProps {
 	p?: true;
