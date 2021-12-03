@@ -4,6 +4,7 @@ namespace controller;
 
 use model\Categories;
 use model\CmsRequests;
+use model\Posts;
 use model\Tags;
 use model\Translations;
 use model\Users;
@@ -29,6 +30,7 @@ class DataController {
         $Tags = new Tags;
         $Translations = new Translations;
         $Categories = new Categories;
+        $Posts = new Posts;
 
 
 
@@ -60,6 +62,10 @@ class DataController {
                 $response['data'] = $Categories -> get($conn, $data, $language_active);
                 break;
 
+            case 'Posts':
+                $response['data'] = $Posts -> get($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -82,6 +88,7 @@ class DataController {
         $Tags = new Tags;
         $Translations = new Translations;
         $Categories = new Categories;
+        $Posts = new Posts;
 
 
 
@@ -113,6 +120,10 @@ class DataController {
                 $response['data'] = $Categories -> create($conn, $data, $language_active);
                 break;
 
+            case 'Posts':
+                $response['data'] = $Posts -> create($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -135,6 +146,7 @@ class DataController {
         $Tags = new Tags;
         $Translations = new Translations;
         $Categories = new Categories;
+        $Posts = new Posts;
 
 
 
@@ -166,6 +178,10 @@ class DataController {
                 $response['data'] = $Categories -> update($conn, $data, $language_active);
                 break;
 
+            case 'Posts':
+                $response['data'] = $Posts -> update($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -186,6 +202,7 @@ class DataController {
         $Tags = new Tags;
         $Translations = new Translations;
         $Categories = new Categories;
+        $Posts = new Posts;
 
 
         switch ($model) {
@@ -210,6 +227,10 @@ class DataController {
                 $response['data'] = $Categories -> toggle($conn, $data);
                 break;
 
+            case 'Posts':
+                $response['data'] = $Posts -> toggle($conn, $data);
+                break;
+
         }
 
         $conn -> close();
@@ -230,6 +251,7 @@ class DataController {
         $Tags = new Tags;
         $Translations = new Translations;
         $Categories = new Categories;
+        $Posts = new Posts;
 
 
         switch ($model) {
@@ -252,6 +274,10 @@ class DataController {
 
             case 'Categories':
                 $response['data'] = $Categories -> delete($conn, $data);
+                break;
+
+            case 'Posts':
+                $response['data'] = $Posts -> delete($conn, $data);
                 break;
 
         }

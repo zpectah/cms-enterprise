@@ -93,6 +93,9 @@ const TagsModule = ({}: TagsModuleProps) => {
 	const detailSubmitHandler = (data: TagsItemProps) => {
 		const master: TagsItemProps = _.cloneDeep(data);
 
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
+
 		if (master.id == 'new') {
 			createTags(master).then((response) => {
 				reloadTags();

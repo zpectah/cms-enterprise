@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useCategories } from '../../hooks/model';
+import { useTags } from '../../hooks/model';
 import PickerBase from './PickerBase';
 
-interface CategoriesPickerProps {
+interface TagsPickerProps {
 	value: any;
 	onChange: () => void;
 	responsiveWidth?: string;
@@ -16,10 +16,10 @@ interface CategoriesPickerProps {
 	multiple?: boolean;
 }
 
-const CategoriesPicker = (props: CategoriesPickerProps) => {
+const TagsPicker = (props: TagsPickerProps) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
 	const { t } = useTranslation(['common', 'form']);
-	const { Categories } = useCategories();
+	const { Tags } = useTags();
 
 	const getOptionsList = () => {
 		let options = [];
@@ -30,7 +30,7 @@ const CategoriesPicker = (props: CategoriesPickerProps) => {
 				disabled: false,
 			});
 
-		Categories?.map((item) => {
+		Tags?.map((item) => {
 			options.push({
 				label: item.name,
 				value: item.id as string,
@@ -44,11 +44,11 @@ const CategoriesPicker = (props: CategoriesPickerProps) => {
 	return (
 		<PickerBase
 			items={getOptionsList()}
-			dataTestId={`CategoriesPicker.${dataTestId}`}
+			dataTestId={`TagsPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
 			{...rest}
 		/>
 	);
 };
 
-export default CategoriesPicker;
+export default TagsPicker;

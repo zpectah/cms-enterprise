@@ -67,7 +67,7 @@ class Categories {
             $stmt -> execute();
             $response['id'] = $stmt -> insert_id;
             foreach ($languages as $lang) {
-                $response['lang'][$lang] = $utils -> update_language_row(
+                $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
                     'INSERT INTO categories__' . $lang . ' (id, title, description, content) VALUES (?,?,?,?)',
@@ -112,7 +112,7 @@ class Categories {
             $stmt -> execute();
             $response['rows'] = $stmt -> affected_rows;
             foreach ($languages as $lang) {
-                $response['lang'][$lang] = $utils -> update_language_row(
+                $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
                     'UPDATE categories__' . $lang . ' SET title = ?, description = ?, content = ? WHERE id = ?',

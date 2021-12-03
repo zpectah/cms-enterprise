@@ -19,5 +19,6 @@
   "admin": "Admin",
   "super_admin": "Super Admin",
   "demo": "Demo",
-  "custom": "Custom"
+  "custom": "Custom",
+  "event": "Event"
 }

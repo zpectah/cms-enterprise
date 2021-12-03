@@ -13,7 +13,7 @@
       "type": ["default"]
     },
     "Posts": {
-      "type": ["article", "blog", "media", "reference", "testimonial"]
+      "type": ["article", "blog", "media", "event", "reference", "testimonial"]
     },
     "Tags": {
       "type": ["default"]

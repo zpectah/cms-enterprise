@@ -80,7 +80,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			});
 
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Categories', Categories));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -101,6 +101,9 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: CategoriesItemProps) => {
 		const master: CategoriesItemProps = _.cloneDeep(data);
+
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
 
 		if (master.id == 'new') {
 			createCategories(master).then((response) => {

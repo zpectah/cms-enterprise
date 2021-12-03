@@ -139,6 +139,25 @@ class ApiRequest {
                 /********** Payments **********/
 
                 /********** Posts **********/
+                case 'get_posts':
+                    $response = $dc -> get('Posts', $request_data);
+                    break;
+
+                case 'create_posts':
+                    $response = $dc -> create('Posts', $request_data);
+                    break;
+
+                case 'update_posts':
+                    $response = $dc -> update('Posts', $request_data);
+                    break;
+
+                case 'toggle_posts':
+                    $response = $dc -> toggle('Posts', $request_data);
+                    break;
+
+                case 'delete_posts':
+                    $response = $dc -> delete('Posts', $request_data);
+                    break;
 
                 /********** Producers **********/
 

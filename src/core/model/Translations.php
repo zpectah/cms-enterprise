@@ -64,7 +64,7 @@ class Translations {
             $stmt -> execute();
             $response['id'] = $stmt -> insert_id;
             foreach ($languages as $lang) {
-                $response['lang'][$lang] = $utils -> update_language_row(
+                $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
                     'INSERT INTO translations__' . $lang . ' (id, value) VALUES (?,?)',
@@ -104,7 +104,7 @@ class Translations {
             $stmt -> execute();
             $response['rows'] = $stmt -> affected_rows;
             foreach ($languages as $lang) {
-                $response['lang'][$lang] = $utils -> update_language_row(
+                $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
                     'UPDATE translations__' . $lang . ' SET value = ? WHERE id = ?',

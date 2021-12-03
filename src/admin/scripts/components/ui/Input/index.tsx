@@ -7,6 +7,8 @@ import ToggleInput from './ToggleInput';
 import SliderInput from './SliderInput';
 import CheckboxInput from './CheckboxInput';
 import CheckboxControlInput from './CheckboxControlInput';
+import RatingInput from './RatingInput';
+import DateTimeInput from './DateTimeInput';
 
 export default {
 	Select: SelectInput,
@@ -18,4 +20,6 @@ export default {
 	Slider: SliderInput,
 	Checkbox: CheckboxInput,
 	CheckboxControl: CheckboxControlInput,
+	Rating: RatingInput,
+	DateTime: DateTimeInput,
 };

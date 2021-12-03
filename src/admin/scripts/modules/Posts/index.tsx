@@ -1,10 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import _ from 'lodash';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
+import {
+	ROUTES,
+	ROUTE_SUFFIX,
+	TOASTS_TIMEOUT_DEFAULT,
+	USER_LEVEL,
+} from '../../constants';
 import { moduleObjectProps } from '../../types/app';
 import { PostsItemProps } from '../../types/model';
 import {
@@ -14,7 +20,7 @@ import {
 } from '../../types/table';
 import { usePosts } from '../../hooks/model';
 import getDetailData from '../../utils/getDetailData';
-import { useSettings } from '../../hooks/common';
+import { useSettings, useProfile } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import PostsDetailForm from './PostsDetailForm';
@@ -39,12 +45,14 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
+	const { Profile } = useProfile();
 	const {
 		Posts,
 		createPosts,
 		updatePosts,
 		togglePosts,
 		deletePosts,
+		reloadPosts,
 		posts_loading,
 		posts_error,
 	} = usePosts();
@@ -60,7 +68,12 @@ const PostsModule = ({}: PostsModuleProps) => {
 				type: ['left', '150px'],
 				active: ['right', '125px'],
 			},
-			tableSearchProps: ['name'],
+			tableSearchProps: [
+				'name',
+				'lang.[lang].title',
+				'lang.[lang].description',
+				'lang.[lang].content',
+			],
 		},
 	};
 
@@ -70,14 +83,16 @@ const PostsModule = ({}: PostsModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		// const detail = getDetailData(id, 'Translations', Translations);
-		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings?.language_active, {
-		// 		value: '',
-		// 	});
+		const detail = getDetailData(id, 'Posts', Posts);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings?.language_active, {
+				title: '',
+				description: '',
+				content: '',
+			});
 
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Posts', Posts));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -99,12 +114,17 @@ const PostsModule = ({}: PostsModuleProps) => {
 	const detailSubmitHandler = (data: PostsItemProps) => {
 		const master: PostsItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
+		master.published = moment(master.published).format();
+		master.event_start = moment(master.event_start).format();
+		master.event_end = moment(master.event_end).format();
+
+		if (master.id == 'new') master.author = Number(Profile.id);
 
 		if (master.id == 'new') {
 			createPosts(master).then((response) => {
-				console.log('create response', response);
-
+				reloadPosts();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -114,8 +134,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 			});
 		} else {
 			updatePosts(master).then((response) => {
-				console.log('update response', response);
-
+				reloadPosts();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -163,11 +182,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 
-		console.log('AJAX ... toggle ...', master);
-
 		togglePosts(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadPosts();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -182,11 +198,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 
-			console.log('AJAX ... delete ...', master);
-
 			deletePosts(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadPosts();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({
@@ -200,6 +213,16 @@ const PostsModule = ({}: PostsModuleProps) => {
 			closeConfirmHandler();
 			history.push(moduleObject.route.path);
 		}
+	};
+
+	const shouldApproveHandler = () => {
+		if (
+			Settings.content_redactor_approval &&
+			Profile.user_level <= USER_LEVEL.redactor.id
+		)
+			return true;
+
+		return false;
 	};
 
 	const toggleDetail = () => {
@@ -230,6 +253,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							shouldApprove={shouldApproveHandler()}
 						/>
 					) : (
 						<DataTable

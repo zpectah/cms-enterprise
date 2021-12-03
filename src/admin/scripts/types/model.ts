@@ -36,8 +36,32 @@ export interface PagesItemProps extends commonItemProps {
 	name: string;
 }
 
+export interface PostsItemLangProps {
+	id: number | string;
+	title: string;
+	description?: string;
+	content?: string;
+}
 export interface PostsItemProps extends commonItemProps {
 	name: string;
+	categories?: string[];
+	tags?: string[];
+	event_start?: string;
+	event_end?: string;
+	event_location?: string;
+	event_address?: string;
+	event_country?: string;
+	event_city?: string;
+	event_zip?: string;
+	media?: string;
+	attachments?: string;
+	img_main?: string;
+	img_thumbnail?: string;
+	published: any; // TODO: date
+	author: number;
+	approved: boolean;
+	rating: number;
+	lang: any; // TODO
 }
 
 export interface TagsItemProps extends commonItemProps {

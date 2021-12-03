@@ -61,7 +61,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 				type: ['left', '150px'],
 				active: ['right', '125px'],
 			},
-			tableSearchProps: ['name'],
+			tableSearchProps: ['name', 'lang.[lang].value'],
 		},
 	};
 
@@ -99,6 +99,9 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: TranslationsItemProps) => {
 		const master: TranslationsItemProps = _.cloneDeep(data);
+
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
 
 		if (master.id == 'new') {
 			createTranslations(master).then((response) => {

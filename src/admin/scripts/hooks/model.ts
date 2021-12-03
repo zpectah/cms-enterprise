@@ -49,44 +49,7 @@ export function usePosts() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_posts`, get);
 
 	return {
-		Posts: [
-			{
-				id: 1,
-				type: `article`,
-				name: `Post 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `blog`,
-				name: `Post 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `article`,
-				name: `Post 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `reference`,
-				name: `Post 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `testimonial`,
-				name: `Post 5 name`,
-				active: true,
-			},
-			{
-				id: 6,
-				type: `article`,
-				name: `Post 6 name`,
-				active: true,
-			},
-		] as PostsItemProps[],
+		Posts: data?.data as PostsItemProps[],
 		posts_loading: !data && !error,
 		posts_error: error,
 		reloadPosts: () => mutate(`${api_path_prefix}/get_posts`),

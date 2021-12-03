@@ -20,10 +20,27 @@
     "content": "Content",
     "parent": "Parent",
     "img_thumbnail": "Thumbnail",
-    "img_main": "Main image"
+    "img_main": "Main image",
+    "categories": "Categories",
+    "tags": "Tags",
+    "options": "Options",
+    "media": "Media",
+    "attachments": "Attachments",
+    "published": "Published",
+    "rating": "Rating",
+    "approved": "Approved",
+    "event_start": "Event starts",
+    "event_end": "Event ends",
+    "event_location": "Location",
+    "event_address": "Address",
+    "event_country": "Country",
+    "event_city": "City",
+    "event_zip": "ZIP"
   },
   "label": {
-    "no_parent": "No parent"
+    "no_parent": "No parent",
+    "no_selected": "No selected",
+    "no_category": "No category"
   },
   "form": {
     "Login": {

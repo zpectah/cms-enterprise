@@ -135,7 +135,7 @@ const DataTable = ({
 		}
 
 		return items;
-	}, [tableData, searchInput, filterType]);
+	}, [tableData, searchInput, filterType, lang]);
 
 	useEffect(() => setSelectedRows(selectedItems), [selectedItems]);
 
