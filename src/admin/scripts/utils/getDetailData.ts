@@ -2,6 +2,7 @@ import { appModelProps } from '../types/app';
 import { oneOfModelItemProps } from '../types/model';
 import CategoriesNew from '../modules/Categories/Categories.new';
 import MenuNew from '../modules/Menu/Menu.new';
+import MenuItemsNew from '../modules/Menu/MenuItems.new';
 import PostsNew from '../modules/Posts/Posts.new';
 import PagesNew from '../modules/Pages/Pages.new';
 import TagsNew from '../modules/Tags/Tags.new';
@@ -20,6 +21,7 @@ import StoresNew from '../modules/Stores/Stores.new';
 export const blankDataItem = {
 	Categories: CategoriesNew,
 	Menu: MenuNew,
+	MenuItems: MenuItemsNew,
 	Posts: PostsNew,
 	Pages: PagesNew,
 	Tags: TagsNew,

@@ -12,7 +12,8 @@
     "reset": "Reset",
     "toggle": "Toggle",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "edit": "Edit"
   },
   "new": {
     "Categories": "New category",

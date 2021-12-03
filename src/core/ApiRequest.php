@@ -132,6 +132,47 @@ class ApiRequest {
 
                 /********** Members **********/
 
+                /********** Menu & MenuItems **********/
+                case 'get_menu':
+                    $response = $dc -> get('Menu', $request_data);
+                    break;
+
+                case 'create_menu':
+                    $response = $dc -> create('Menu', $request_data);
+                    break;
+
+                case 'update_menu':
+                    $response = $dc -> update('Menu', $request_data);
+                    break;
+
+                case 'toggle_menu':
+                    $response = $dc -> toggle('Menu', $request_data);
+                    break;
+
+                case 'delete_menu':
+                    $response = $dc -> delete('Menu', $request_data);
+                    break;
+
+                case 'get_menu_items':
+                    $response = $dc -> get('MenuItems', $request_data);
+                    break;
+
+                case 'create_menu_items':
+                    $response = $dc -> create('MenuItems', $request_data);
+                    break;
+
+                case 'update_menu_items':
+                    $response = $dc -> update('MenuItems', $request_data);
+                    break;
+
+                case 'toggle_menu_items':
+                    $response = $dc -> toggle('MenuItems', $request_data);
+                    break;
+
+                case 'delete_menu_items':
+                    $response = $dc -> delete('MenuItems', $request_data);
+                    break;
+
                 /********** Orders **********/
 
                 /********** Pages **********/

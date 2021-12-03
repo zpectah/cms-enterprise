@@ -28,8 +28,18 @@ export interface MenuItemProps extends commonItemProps {
 	name: string;
 }
 
+export interface MenuItemItemLangProps {
+	id: number | string;
+	label: string;
+}
 export interface MenuItemItemProps extends commonItemProps {
 	name: string;
+	page?: string;
+	path_url?: string;
+	menu: number;
+	parent?: string;
+	item_order: number;
+	lang: any; // TODO
 }
 
 export interface PagesItemLangProps {

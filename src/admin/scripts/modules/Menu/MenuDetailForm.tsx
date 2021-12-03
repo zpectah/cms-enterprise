@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import Alert from '@mui/material/Alert';
 
 import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
@@ -18,6 +19,7 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
+import MenuItemsManager from './MenuItemsManager';
 
 interface MenuDetailFormProps {
 	detailData: MenuItemProps;
@@ -42,7 +44,7 @@ const MenuDetailForm = ({
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
 }: MenuDetailFormProps) => {
-	const { t } = useTranslation(['common', 'form']);
+	const { t } = useTranslation(['common', 'form', 'messages']);
 	const [lang, setLang] = useState(languageDefault);
 
 	const formOptions: formLayoutObjectProps = {
@@ -178,7 +180,17 @@ const MenuDetailForm = ({
 				}
 				secondaryChildren={
 					<>
-						<div>Menu items manager ...</div>
+						{detailData.id !== 'new' ? (
+							<MenuItemsManager
+								menuId={detailData.id}
+								languageList={languageList}
+								languageDefault={languageDefault}
+							/>
+						) : (
+							<Alert severity="info">
+								{t('messages.info.menuMustBeCreated')}
+							</Alert>
+						)}
 					</>
 				}
 			>
@@ -208,7 +220,6 @@ const MenuDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

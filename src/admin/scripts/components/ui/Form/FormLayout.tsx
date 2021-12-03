@@ -35,7 +35,7 @@ const SidebarBlock = styled.div`
 	}
 `;
 const SecondaryBlock = styled.footer`
-	padding-top: ${(props) => props.theme.spacer};
+	padding-top: calc(${(props) => props.theme.spacer} * 2);
 `;
 const FooterBlock = styled.footer`
 	padding-top: ${(props) => props.theme.spacer};
@@ -70,20 +70,26 @@ const FormLayout: React.FC<FormLayoutProps> = ({
 	};
 
 	return (
-		<Wrapper name={formName} onSubmit={onSubmit} {...getElTestAttr(dataTestId)}>
-			<ColumnBlock>
-				<MainBlock withSidebar={sidebarChildren}>{children}</MainBlock>
-				{sidebarChildren && <SidebarBlock>{sidebarChildren}</SidebarBlock>}
-			</ColumnBlock>
+		<>
+			<Wrapper
+				name={formName}
+				onSubmit={onSubmit}
+				{...getElTestAttr(dataTestId)}
+			>
+				<ColumnBlock>
+					<MainBlock withSidebar={sidebarChildren}>{children}</MainBlock>
+					{sidebarChildren && <SidebarBlock>{sidebarChildren}</SidebarBlock>}
+				</ColumnBlock>
+				{footerChildren && (
+					<FooterBlock>
+						<Stack {...stackProps}>{footerChildren}</Stack>
+					</FooterBlock>
+				)}
+			</Wrapper>
 			{secondaryChildren && (
 				<SecondaryBlock>{secondaryChildren}</SecondaryBlock>
 			)}
-			{footerChildren && (
-				<FooterBlock>
-					<Stack {...stackProps}>{footerChildren}</Stack>
-				</FooterBlock>
-			)}
-		</Wrapper>
+		</>
 	);
 };
 export default FormLayout;

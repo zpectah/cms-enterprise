@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { default as MuiDrawer } from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 
@@ -52,6 +52,11 @@ const DrawerContentInner = styled.div`
 		${(props) => props.theme.spacer};
 `;
 const DrawerTitle = styled.div``;
+const DrawerTitleChildren = styled.div`
+	margin-left: auto;
+	display: flex;
+	justify-self: flex-end;
+`;
 
 interface DrawerBaseProps {
 	isOpen: boolean;
@@ -59,6 +64,7 @@ interface DrawerBaseProps {
 	title?: string;
 	size?: 'md' | 'lg' | 'xl';
 	dataTestId?: string;
+	headingChildren?: React.ReactElement<any, any>;
 }
 
 const Drawer: React.FC<DrawerBaseProps> = ({
@@ -68,6 +74,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 	title,
 	size = 'md',
 	dataTestId = 'drawer.default',
+	headingChildren,
 }) => {
 	const [open, setOpen] = useState<boolean>(isOpen);
 	const handleClose = () => {
@@ -105,12 +112,17 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 								{...getElTestAttr(`${dataTestId}.button.close`)}
 							>
 								<MediaQuery minWidth={RESPONSIVE_BREAKPOINTS[minWidth[size]]}>
-									{(matches) => (matches ? <ArrowBackIcon /> : <CloseIcon />)}
+									{(matches) =>
+										matches ? <ArrowForwardIosIcon /> : <CloseIcon />
+									}
 								</MediaQuery>
 							</IconButton>
 							<DrawerTitle>
 								<Typography.Title h3>{title}</Typography.Title>
 							</DrawerTitle>
+							{headingChildren && (
+								<DrawerTitleChildren>{headingChildren}</DrawerTitleChildren>
+							)}
 						</HeadingBlock>
 					</DrawerHeading>
 					<DrawerContent>

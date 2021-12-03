@@ -11,5 +11,7 @@
     "unauthorizedAccess": "Unauthorized access",
     "profileLoadError": "Error while loading profile"
   },
-  "info": {}
+  "info": {
+    "menuMustBeCreated": "The menu must be created before you can create items in it"
+  }
 }

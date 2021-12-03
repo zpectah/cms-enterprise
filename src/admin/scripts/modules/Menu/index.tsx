@@ -45,6 +45,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 		updateMenu,
 		toggleMenu,
 		deleteMenu,
+		reloadMenu,
 		menu_loading,
 		menu_error,
 	} = useMenu();
@@ -70,12 +71,6 @@ const MenuModule = ({}: MenuModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		// const detail = getDetailData(id, 'Translations', Translations);
-		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings?.language_active, {
-		// 		value: '',
-		// 	});
-
 		setDetail(id);
 		setDetailData(getDetailData(id, 'Menu', Menu));
 
@@ -99,12 +94,12 @@ const MenuModule = ({}: MenuModuleProps) => {
 	const detailSubmitHandler = (data: MenuItemProps) => {
 		const master: MenuItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
 
 		if (master.id == 'new') {
 			createMenu(master).then((response) => {
-				console.log('create response', response);
-
+				reloadMenu();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -114,8 +109,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 			});
 		} else {
 			updateMenu(master).then((response) => {
-				console.log('update response', response);
-
+				reloadMenu();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -163,11 +157,8 @@ const MenuModule = ({}: MenuModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 
-		console.log('AJAX ... toggle ...', master);
-
 		toggleMenu(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadMenu();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -182,11 +173,8 @@ const MenuModule = ({}: MenuModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 
-			console.log('AJAX ... delete ...', master);
-
 			deleteMenu(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadMenu();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

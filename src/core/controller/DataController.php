@@ -4,6 +4,8 @@ namespace controller;
 
 use model\Categories;
 use model\CmsRequests;
+use model\Menu;
+use model\MenuItems;
 use model\Pages;
 use model\Posts;
 use model\Tags;
@@ -33,6 +35,8 @@ class DataController {
         $Categories = new Categories;
         $Posts = new Posts;
         $Pages = new Pages;
+        $Menu = new Menu;
+        $MenuItems = new MenuItems;
 
 
 
@@ -72,6 +76,14 @@ class DataController {
                 $response['data'] = $Pages -> get($conn, $data, $language_active);
                 break;
 
+            case 'Menu':
+                $response['data'] = $Menu -> get($conn, $data);
+                break;
+
+            case 'MenuItems':
+                $response['data'] = $MenuItems -> get($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -96,6 +108,8 @@ class DataController {
         $Categories = new Categories;
         $Posts = new Posts;
         $Pages = new Pages;
+        $Menu = new Menu;
+        $MenuItems = new MenuItems;
 
 
 
@@ -135,6 +149,14 @@ class DataController {
                 $response['data'] = $Pages -> create($conn, $data, $language_active);
                 break;
 
+            case 'Menu':
+                $response['data'] = $Menu -> create($conn, $data);
+                break;
+
+            case 'MenuItems':
+                $response['data'] = $MenuItems -> create($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -159,6 +181,8 @@ class DataController {
         $Categories = new Categories;
         $Posts = new Posts;
         $Pages = new Pages;
+        $Menu = new Menu;
+        $MenuItems = new MenuItems;
 
 
 
@@ -198,6 +222,14 @@ class DataController {
                 $response['data'] = $Pages -> update($conn, $data, $language_active);
                 break;
 
+            case 'Menu':
+                $response['data'] = $Menu -> update($conn, $data);
+                break;
+
+            case 'MenuItems':
+                $response['data'] = $MenuItems -> update($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -220,6 +252,8 @@ class DataController {
         $Categories = new Categories;
         $Posts = new Posts;
         $Pages = new Pages;
+        $Menu = new Menu;
+        $MenuItems = new MenuItems;
 
 
         switch ($model) {
@@ -252,6 +286,14 @@ class DataController {
                 $response['data'] = $Pages -> toggle($conn, $data);
                 break;
 
+            case 'Menu':
+                $response['data'] = $Menu -> toggle($conn, $data);
+                break;
+
+            case 'MenuItems':
+                $response['data'] = $MenuItems -> toggle($conn, $data);
+                break;
+
         }
 
         $conn -> close();
@@ -274,6 +316,8 @@ class DataController {
         $Categories = new Categories;
         $Posts = new Posts;
         $Pages = new Pages;
+        $Menu = new Menu;
+        $MenuItems = new MenuItems;
 
 
         switch ($model) {
@@ -304,6 +348,14 @@ class DataController {
 
             case 'Pages':
                 $response['data'] = $Pages -> delete($conn, $data);
+                break;
+
+            case 'Menu':
+                $response['data'] = $Menu -> delete($conn, $data);
+                break;
+
+            case 'MenuItems':
+                $response['data'] = $MenuItems -> delete($conn, $data);
                 break;
 
         }

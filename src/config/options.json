@@ -7,7 +7,7 @@
       "type": ["primary", "secondary", "custom"]
     },
     "MenuItems": {
-      "type": ["default"]
+      "type": ["page", "external"]
     },
     "Pages": {
       "type": ["default", "system", "category", "tag"]

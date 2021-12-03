@@ -87,26 +87,7 @@ export function useMenu() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_menu`, get);
 
 	return {
-		Menu: [
-			{
-				id: 1,
-				type: `primary`,
-				name: `Menu 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `secondary`,
-				name: `Menu 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `custom`,
-				name: `Menu 3 name`,
-				active: true,
-			},
-		] as MenuItemProps[],
+		Menu: data?.data as MenuItemProps[],
 		menu_loading: !data && !error,
 		menu_error: error,
 		reloadMenu: () => mutate(`/api/get_menu`),
@@ -118,52 +99,21 @@ export function useMenu() {
 }
 
 export function useMenuItems() {
-	const { data, error } = useSWR(`${api_path_prefix}/get_menuItems`, get);
+	const { data, error } = useSWR(`${api_path_prefix}/get_menu_items`, get);
 
 	return {
-		MenuItems: [
-			{
-				id: 1,
-				type: `default`,
-				name: `MenuItem 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `MenuItem 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `MenuItem 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `MenuItem 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `MenuItem 5 name`,
-				active: true,
-			},
-		] as MenuItemItemProps[],
+		MenuItems: data?.data as MenuItemItemProps[],
 		menuItems_loading: !data && !error,
 		menuItems_error: error,
-		reloadMenuItems: () => mutate(`${api_path_prefix}/get_menuItems`),
+		reloadMenuItems: () => mutate(`${api_path_prefix}/get_menu_items`),
 		createMenuItems: (data: MenuItemItemProps) =>
-			post(`${api_path_prefix}/create_menuItems`, data),
+			post(`${api_path_prefix}/create_menu_items`, data),
 		updateMenuItems: (data: MenuItemItemProps) =>
-			post(`${api_path_prefix}/update_menuItems`, data),
+			post(`${api_path_prefix}/update_menu_items`, data),
 		toggleMenuItems: (data: (number | string)[]) =>
-			post(`${api_path_prefix}/toggle_menuItems`, data),
+			post(`${api_path_prefix}/toggle_menu_items`, data),
 		deleteMenuItems: (data: (number | string)[]) =>
-			post(`${api_path_prefix}/delete_menuItems`, data),
+			post(`${api_path_prefix}/delete_menu_items`, data),
 	};
 }
 
