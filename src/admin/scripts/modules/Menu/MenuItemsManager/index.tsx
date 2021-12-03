@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import Stack from '@mui/material/Stack';
 
 import config from '../../../config';
 import { TOASTS_TIMEOUT_DEFAULT } from '../../../constants';
@@ -215,10 +216,12 @@ const MenuItemsManager = ({
 				) : (
 					<Preloader.Block />
 				)}
+			</div>
+			<Stack spacing={2} direction="row" justifyContent="flex-end">
 				<ButtonCreate onClick={() => openDetailHandler('new')}>
 					{t('new.MenuItems')}
 				</ButtonCreate>
-			</div>
+			</Stack>
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

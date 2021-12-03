@@ -43,6 +43,7 @@ const FooterBlock = styled.footer`
 
 interface FormLayoutProps {
 	secondaryChildren?: React.ReactElement | React.ReactElement[];
+	outerChildren?: React.ReactElement | React.ReactElement[];
 	sidebarChildren?: React.ReactElement | React.ReactElement[];
 	footerChildren?: React.ReactElement | React.ReactElement[];
 	footerStackProps?: StackProps;
@@ -54,6 +55,7 @@ interface FormLayoutProps {
 const FormLayout: React.FC<FormLayoutProps> = ({
 	children,
 	secondaryChildren,
+	outerChildren,
 	sidebarChildren,
 	footerChildren,
 	footerStackProps,
@@ -80,15 +82,16 @@ const FormLayout: React.FC<FormLayoutProps> = ({
 					<MainBlock withSidebar={sidebarChildren}>{children}</MainBlock>
 					{sidebarChildren && <SidebarBlock>{sidebarChildren}</SidebarBlock>}
 				</ColumnBlock>
+				{secondaryChildren && (
+					<SecondaryBlock>{secondaryChildren}</SecondaryBlock>
+				)}
 				{footerChildren && (
 					<FooterBlock>
 						<Stack {...stackProps}>{footerChildren}</Stack>
 					</FooterBlock>
 				)}
 			</Wrapper>
-			{secondaryChildren && (
-				<SecondaryBlock>{secondaryChildren}</SecondaryBlock>
-			)}
+			{outerChildren && <SecondaryBlock>{outerChildren}</SecondaryBlock>}
 		</>
 	);
 };

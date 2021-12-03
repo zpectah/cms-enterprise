@@ -37,7 +37,8 @@
   },
   "label": {
     "lostPassword": "Lost password",
-    "backToLogin": "Back to login page"
+    "backToLogin": "Back to login page",
+    "noItemsFound": "No items found"
   },
   "common": {
     "allRightsReserved": "All rights reserved"

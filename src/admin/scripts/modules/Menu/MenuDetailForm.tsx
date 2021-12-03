@@ -178,20 +178,18 @@ const MenuDetailForm = ({
 						{/*  ============ \\ Form sidebar ============ */}
 					</>
 				}
-				secondaryChildren={
-					<>
-						{detailData.id !== 'new' ? (
-							<MenuItemsManager
-								menuId={detailData.id}
-								languageList={languageList}
-								languageDefault={languageDefault}
-							/>
-						) : (
-							<Alert severity="info">
-								{t('messages.info.menuMustBeCreated')}
-							</Alert>
-						)}
-					</>
+				outerChildren={
+					detailData.id !== 'new' ? (
+						<MenuItemsManager
+							menuId={detailData.id}
+							languageList={languageList}
+							languageDefault={languageDefault}
+						/>
+					) : (
+						<Alert severity="info">
+							{t('messages.info.menuMustBeCreated')}
+						</Alert>
+					)
 				}
 			>
 				{/*  ============ Main form body ============ */}

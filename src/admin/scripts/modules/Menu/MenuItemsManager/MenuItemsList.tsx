@@ -9,6 +9,7 @@ import { Button, Typography } from '../../../components/ui';
 const Wrapper = styled.div`
 	padding-top: ${(props) => props.theme.spacer};
 `;
+const CardOuter = styled.div``;
 const StyledLabel = styled(Typography.Title)<{ disabled: boolean }>`
 	padding-left: calc(${(props) => props.theme.spacer} / 2);
 	padding-right: calc(${(props) => props.theme.spacer} / 2);
@@ -20,6 +21,7 @@ const StyledCardInnerBlock = styled.div`
 `;
 const StyledCardInnerActionBlock = styled(StyledCardInnerBlock)`
 	opacity: 0;
+	transitions: opacity 0.25s ease-in-out 0s;
 `;
 const StyledCardInner = styled.div`
 	width: 100%;
@@ -53,7 +55,6 @@ const MenuItemsList = ({
 	onDelete,
 }: MenuItemsListProps) => {
 	const { t } = useTranslation(['common']);
-	const [listItems, setListItems] = useState([]);
 
 	const getItemsList = (items: MenuItemItemProps[]) => {
 		let a = [];
@@ -79,9 +80,12 @@ const MenuItemsList = ({
 		return a;
 	};
 
-	const renderItem = (item: MenuItemItemProps, sub: MenuItemItemProps[]) => {
+	const renderItem = (
+		item: MenuItemItemProps,
+		children: MenuItemItemProps[],
+	) => {
 		return (
-			<div key={item.id}>
+			<CardOuter key={item.id}>
 				<Card>
 					<StyledCardInner>
 						<StyledCardInnerBlock>
@@ -106,8 +110,8 @@ const MenuItemsList = ({
 						</StyledCardInnerActionBlock>
 					</StyledCardInner>
 				</Card>
-				{sub && <ItemChildrenWrapper>{sub}</ItemChildrenWrapper>}
-			</div>
+				{children && <ItemChildrenWrapper>{children}</ItemChildrenWrapper>}
+			</CardOuter>
 		);
 	};
 
@@ -130,7 +134,15 @@ const MenuItemsList = ({
 		);
 	};
 
-	return <Wrapper>{renderList(getItemsList(items))}</Wrapper>;
+	return (
+		<Wrapper>
+			{items.length > 0 ? (
+				renderList(getItemsList(items))
+			) : (
+				<>{t('label.noItemsFound')}</>
+			)}
+		</Wrapper>
+	);
 };
 
 export default MenuItemsList;
