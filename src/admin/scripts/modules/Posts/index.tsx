@@ -12,7 +12,7 @@ import {
 	USER_LEVEL,
 } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { PostsItemProps } from '../../types/model';
+import { PostsItemProps, PostsItemLangProps } from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -89,7 +89,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 				title: '',
 				description: '',
 				content: '',
-			});
+			} as PostsItemLangProps);
 
 		setDetail(id);
 		setDetailData(detail);

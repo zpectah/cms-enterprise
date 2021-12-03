@@ -6,7 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { TranslationsItemProps } from '../../types/model';
+import {
+	TranslationsItemProps,
+	TranslationsItemLangProps,
+} from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -75,7 +78,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		if (id == 'new')
 			detail['lang'] = getLanguagesFields(Settings?.language_active, {
 				value: '',
-			});
+			} as TranslationsItemLangProps);
 
 		setDetail(id);
 		setDetailData(detail);

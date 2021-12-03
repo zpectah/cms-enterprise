@@ -6,7 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { CategoriesItemProps } from '../../types/model';
+import {
+	CategoriesItemProps,
+	CategoriesItemLangProps,
+} from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -77,7 +80,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 				title: '',
 				description: '',
 				content: '',
-			});
+			} as CategoriesItemLangProps);
 
 		setDetail(id);
 		setDetailData(detail);
