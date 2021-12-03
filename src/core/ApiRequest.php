@@ -268,6 +268,25 @@ class ApiRequest {
                     break;
 
                 /********** Uploads **********/
+                case 'get_uploads':
+                    $response = $dc -> get('Uploads', $request_data);
+                    break;
+
+                case 'create_uploads':
+                    $response = $dc -> create('Uploads', $request_data);
+                    break;
+
+                case 'update_uploads':
+                    $response = $dc -> update('Uploads', $request_data);
+                    break;
+
+                case 'toggle_uploads':
+                    $response = $dc -> toggle('Uploads', $request_data);
+                    break;
+
+                case 'delete_uploads':
+                    $response = $dc -> delete('Uploads', $request_data);
+                    break;
 
                 /********** Users **********/
                 case 'get_users':

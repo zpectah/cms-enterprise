@@ -96,8 +96,20 @@ export interface TranslationsItemProps extends commonItemProps {
 	lang: any; // TODO
 }
 
+export interface UploadsItemLangProps {
+	id: number | string;
+	label: string;
+	description?: string;
+}
 export interface UploadsItemProps extends commonItemProps {
 	name: string;
+	extension: string;
+	file_name: string;
+	file_mime: string;
+	file_size: string;
+	categories?: string[];
+	tags?: string[];
+	lang: any; // TODO
 }
 
 export interface UsersItemProps extends commonItemProps {

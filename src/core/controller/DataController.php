@@ -10,6 +10,7 @@ use model\Pages;
 use model\Posts;
 use model\Tags;
 use model\Translations;
+use model\Uploads;
 use model\Users;
 use module\admin\Profile;
 use module\admin\Settings;
@@ -37,6 +38,7 @@ class DataController {
         $Pages = new Pages;
         $Menu = new Menu;
         $MenuItems = new MenuItems;
+        $Uploads = new Uploads;
 
 
 
@@ -84,6 +86,10 @@ class DataController {
                 $response['data'] = $MenuItems -> get($conn, $data, $language_active);
                 break;
 
+            case 'Uploads':
+                $response['data'] = $Uploads -> get($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -110,6 +116,7 @@ class DataController {
         $Pages = new Pages;
         $Menu = new Menu;
         $MenuItems = new MenuItems;
+        $Uploads = new Uploads;
 
 
 
@@ -157,6 +164,10 @@ class DataController {
                 $response['data'] = $MenuItems -> create($conn, $data, $language_active);
                 break;
 
+            case 'Uploads':
+                $response['data'] = $Uploads -> create($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -183,6 +194,7 @@ class DataController {
         $Pages = new Pages;
         $Menu = new Menu;
         $MenuItems = new MenuItems;
+        $Uploads = new Uploads;
 
 
 
@@ -230,6 +242,10 @@ class DataController {
                 $response['data'] = $MenuItems -> update($conn, $data, $language_active);
                 break;
 
+            case 'Uploads':
+                $response['data'] = $Uploads -> update($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -254,6 +270,7 @@ class DataController {
         $Pages = new Pages;
         $Menu = new Menu;
         $MenuItems = new MenuItems;
+        $Uploads = new Uploads;
 
 
         switch ($model) {
@@ -294,6 +311,10 @@ class DataController {
                 $response['data'] = $MenuItems -> toggle($conn, $data);
                 break;
 
+            case 'Uploads':
+                $response['data'] = $Uploads -> toggle($conn, $data);
+                break;
+
         }
 
         $conn -> close();
@@ -318,6 +339,7 @@ class DataController {
         $Pages = new Pages;
         $Menu = new Menu;
         $MenuItems = new MenuItems;
+        $Uploads = new Uploads;
 
 
         switch ($model) {
@@ -358,48 +380,16 @@ class DataController {
                 $response['data'] = $MenuItems -> delete($conn, $data);
                 break;
 
+            case 'Uploads':
+                $response['data'] = $Uploads -> delete($conn, $data);
+                break;
+
         }
 
         $conn -> close();
 
         return $response;
     }
-
-
-    /********** Categories **********/
-
-    /********** Deliveries **********/
-
-    /********** Distributors **********/
-
-    /********** Members **********/
-
-    /********** Orders **********/
-
-    /********** Pages **********/
-
-    /********** Payments **********/
-
-    /********** Posts **********/
-
-    /********** Producers **********/
-
-    /********** Products **********/
-
-    /********** Stores **********/
-
-    /********** Tags **********/
-
-    /********** Translations **********/
-
-    /********** Uploads **********/
-
-    /********** Users **********/
-
-
-
-
-
 
 
     /********** System **********/

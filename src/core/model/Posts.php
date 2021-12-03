@@ -76,9 +76,7 @@ class Posts {
         $args = [
             $data['name'],
             $data['type'],
-            // $data['categories'],
             $data['categories'] ? implode(",", $data['categories']) : '',
-            // $data['tags'],
             $data['tags'] ? implode(",", $data['tags']) : '',
             $data['event_start'],
             $data['event_end'],
@@ -137,9 +135,7 @@ class Posts {
         $args = [
             $data['name'],
             $data['type'],
-            // $data['categories'],
             $data['categories'] ? implode(",", $data['categories']) : '',
-            // $data['tags'],
             $data['tags'] ? implode(",", $data['tags']) : '',
             $data['event_start'],
             $data['event_end'],

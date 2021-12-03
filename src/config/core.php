@@ -33,6 +33,7 @@ const SESSION_USER_TOKEN_PREFIX =                         'cms_enterprise_token'
 define( "PATH_UPLOADS",                                   PATH_ROOT . $JSON_PROJECT['path']['uploads'] );
 define( "PATH_LOGS",                                      PATH_ROOT . $JSON_PROJECT['path']['logs'] );
 define( "PATH_ASSETS",                                    PATH_ROOT . $JSON_PROJECT['path']['assets'] );
+define( "UPLOADS_IMAGE_FORMATS",                          $JSON_OPTIONS['model']['uploads']['image']['format'] );
 const URL_USER_LOST_PASSWORD_TOKEN =                      CFG_ENV['root'] . 'admin/lost-password/token/';
 define("ADMIN_VIEW", [
     'meta' => [

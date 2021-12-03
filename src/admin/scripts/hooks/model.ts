@@ -178,38 +178,7 @@ export function useUploads() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_uploads`, get);
 
 	return {
-		Uploads: [
-			{
-				id: 1,
-				type: `image`,
-				name: `Upload 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `audio`,
-				name: `Upload 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `image`,
-				name: `Upload 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `document`,
-				name: `Upload 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `image`,
-				name: `Upload 5 name`,
-				active: true,
-			},
-		] as UploadsItemProps[],
+		Uploads: data?.data as UploadsItemProps[],
 		uploads_loading: !data && !error,
 		uploads_error: error,
 		reloadUploads: () => mutate(`${api_path_prefix}/get_uploads`),
