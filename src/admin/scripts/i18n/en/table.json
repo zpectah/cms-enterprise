@@ -11,5 +11,10 @@
     "searchInTable": "Search in table",
     "filterByType": "Filter by type",
     "selectedItems": "Selected"
+  },
+  "message": {
+    "itemsLoading": "Items loading",
+    "itemsNotFound": "No items found",
+    "noItemsCreated": "No items created or loaded yet"
   }
 }

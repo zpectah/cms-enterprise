@@ -176,6 +176,10 @@ const DataTable = ({
 										),
 									}}
 									dataTestId={`${dataTestId}.options.search`}
+									disabled={
+										tableData.length == 0 &&
+										!(searchInput.length >= FORM_INPUT_MIN_LENGTH)
+									}
 								/>
 							</FormControl>
 							<FormControl size="small">
@@ -271,6 +275,7 @@ const DataTable = ({
 					onDelete={onRowDeleteCallback}
 					dataTestId={dataTestId}
 					customActionTriggers={customActionTriggers}
+					searchLength={searchInput.length}
 				/>
 			</Section>
 		</>

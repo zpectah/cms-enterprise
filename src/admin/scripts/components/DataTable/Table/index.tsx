@@ -23,7 +23,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import styled from 'styled-components';
 
-import { DATA_TABLE } from '../../../constants';
+import { DATA_TABLE, FORM_INPUT_MIN_LENGTH } from '../../../constants';
 import { getComparator, stableSort } from '../../../utils/table';
 import {
 	cellsTypesProps,
@@ -59,6 +59,7 @@ export interface TableProps {
 	dataTestId?: string;
 	minWidth?: number;
 	customActionTriggers?: customActionCellItemProps[];
+	searchLength?: number;
 }
 
 interface TableRowActionsButtonsProps {
@@ -143,6 +144,7 @@ const Table = ({
 	dataTestId,
 	minWidth = 750,
 	customActionTriggers,
+	searchLength = 0,
 }: TableProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components', 'types']);
@@ -310,6 +312,8 @@ const Table = ({
 		const cells = [] as string[];
 
 		if (tableCells.name) cells.push('name');
+		if (tableCells.email) cells.push('email');
+		if (tableCells.type) cells.push('type');
 		if (tableCells.active) cells.push('active');
 		// TODO: new cells
 
@@ -395,6 +399,19 @@ const Table = ({
 								}}
 							>
 								<TableCell colSpan={getCellsInRow().length + 2} />
+							</TableRow>
+						)}
+						{tableData.length == 0 && (
+							<TableRow
+								style={{
+									height: tableRowHeight * emptyRows,
+								}}
+							>
+								<TableCell colSpan={getCellsInRow().length + 2}>
+									{searchLength > FORM_INPUT_MIN_LENGTH
+										? t('table:message.itemsNotFound')
+										: t('table:message.noItemsCreated')}
+								</TableCell>
 							</TableRow>
 						)}
 					</TableBody>
