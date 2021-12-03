@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { PagesItemProps } from '../../types/model';
+import { PagesItemProps, PagesItemLangProps } from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -45,6 +45,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 		updatePages,
 		togglePages,
 		deletePages,
+		reloadPages,
 		pages_loading,
 		pages_error,
 	} = usePages();
@@ -70,14 +71,16 @@ const PagesModule = ({}: PagesModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		// const detail = getDetailData(id, 'Translations', Translations);
-		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings?.language_active, {
-		// 		value: '',
-		// 	});
+		const detail = getDetailData(id, 'Pages', Pages);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings?.language_active, {
+				title: '',
+				description: '',
+				content: '',
+			} as PagesItemLangProps);
 
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Pages', Pages));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -99,12 +102,14 @@ const PagesModule = ({}: PagesModuleProps) => {
 	const detailSubmitHandler = (data: PagesItemProps) => {
 		const master: PagesItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
+		if (!(master.type == 'category' || master.type == 'tag'))
+			master.type_id = '';
 
 		if (master.id == 'new') {
 			createPages(master).then((response) => {
-				console.log('create response', response);
-
+				reloadPages();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -114,8 +119,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 			});
 		} else {
 			updatePages(master).then((response) => {
-				console.log('update response', response);
-
+				reloadPages();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -163,11 +167,8 @@ const PagesModule = ({}: PagesModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 
-		console.log('AJAX ... toggle ...', master);
-
 		togglePages(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadPages();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -182,11 +183,8 @@ const PagesModule = ({}: PagesModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 
-			console.log('AJAX ... delete ...', master);
-
 			deletePages(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadPages();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

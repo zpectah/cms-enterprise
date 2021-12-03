@@ -135,6 +135,25 @@ class ApiRequest {
                 /********** Orders **********/
 
                 /********** Pages **********/
+                case 'get_pages':
+                    $response = $dc -> get('Pages', $request_data);
+                    break;
+
+                case 'create_pages':
+                    $response = $dc -> create('Pages', $request_data);
+                    break;
+
+                case 'update_pages':
+                    $response = $dc -> update('Pages', $request_data);
+                    break;
+
+                case 'toggle_pages':
+                    $response = $dc -> toggle('Pages', $request_data);
+                    break;
+
+                case 'delete_pages':
+                    $response = $dc -> delete('Pages', $request_data);
+                    break;
 
                 /********** Payments **********/
 

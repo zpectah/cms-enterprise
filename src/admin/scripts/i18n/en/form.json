@@ -35,7 +35,8 @@
     "event_address": "Address",
     "event_country": "Country",
     "event_city": "City",
-    "event_zip": "ZIP"
+    "event_zip": "ZIP",
+    "robots": "Robots"
   },
   "label": {
     "no_parent": "No parent",

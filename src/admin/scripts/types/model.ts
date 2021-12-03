@@ -32,8 +32,17 @@ export interface MenuItemItemProps extends commonItemProps {
 	name: string;
 }
 
+export interface PagesItemLangProps {
+	id: number | string;
+	title: string;
+	description?: string;
+	content: string;
+}
 export interface PagesItemProps extends commonItemProps {
 	name: string;
+	type_id?: string;
+	meta_robots: string;
+	lang: any; // TODO
 }
 
 export interface PostsItemLangProps {

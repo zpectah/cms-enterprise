@@ -21,6 +21,7 @@ interface SelectInputProps {
 	dataTestId?: string;
 	options: { label: string; value: string | number; disabled?: boolean }[];
 	responsiveWidth?: string;
+	required?: boolean;
 }
 
 const SelectInput = (props: SelectInputProps & SelectProps) => {
@@ -31,17 +32,23 @@ const SelectInput = (props: SelectInputProps & SelectProps) => {
 		label,
 		labelId,
 		size = 'small',
+		required = false,
 		...rest
 	} = props;
 
 	return (
 		<FormControl fullWidth size={size}>
-			{label && <InputLabel id={labelId}>{label}</InputLabel>}
+			{label && (
+				<InputLabel id={labelId} required={required}>
+					{label}
+				</InputLabel>
+			)}
 			<StyledInput
 				labelId={labelId}
 				label={label}
 				variant="outlined"
 				size={size}
+				required={required}
 				{...rest}
 				responsive={responsiveWidth}
 				{...getElTestAttr(dataTestId)}

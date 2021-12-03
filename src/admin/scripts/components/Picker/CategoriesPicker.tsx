@@ -14,6 +14,7 @@ interface CategoriesPickerProps {
 	label?: string;
 	ignored?: any[];
 	multiple?: boolean;
+	required?: boolean;
 }
 
 const CategoriesPicker = (props: CategoriesPickerProps) => {

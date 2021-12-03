@@ -171,38 +171,7 @@ export function usePages() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_pages`, get);
 
 	return {
-		Pages: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Page 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Page 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Page 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Page 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Page 5 name`,
-				active: true,
-			},
-		] as PagesItemProps[],
+		Pages: data?.data as PagesItemProps[],
 		pages_loading: !data && !error,
 		pages_error: error,
 		reloadPages: () => mutate(`${api_path_prefix}/get_pages`),

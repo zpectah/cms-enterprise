@@ -20,5 +20,15 @@
   "super_admin": "Super Admin",
   "demo": "Demo",
   "custom": "Custom",
-  "event": "Event"
+  "event": "Event",
+  "system": "System",
+  "category": "Category",
+  "tag": "Tag",
+  "none": "None",
+  "noindex": "No index",
+  "nofollow": "No follow",
+  "index": "Index",
+  "follow": "Follow",
+  "nosnippet": "No snippet",
+  "noarchive": "No archive"
 }

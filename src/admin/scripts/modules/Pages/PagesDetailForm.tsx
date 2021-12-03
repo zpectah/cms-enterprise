@@ -18,6 +18,7 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
+import Picker from '../../components/Picker';
 
 interface PagesDetailFormProps {
 	detailData: PagesItemProps;
@@ -51,7 +52,7 @@ const PagesDetailForm = ({
 		route: ROUTES.app.pages,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const { control, handleSubmit, reset, register, formState, watch } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
@@ -95,6 +96,12 @@ const PagesDetailForm = ({
 		() => getOptionsList(config.options.model.Pages.type, t),
 		[detailData],
 	);
+	const getIndexOptions = useCallback(
+		() => getOptionsList(config.options.common.meta_robots, t),
+		[detailData],
+	);
+
+	const watchType = watch('type');
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -155,6 +162,28 @@ const PagesDetailForm = ({
 						</Section>
 						<Section>
 							<Controller
+								name="meta_robots"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Select
+											id={`${formOptions.id}__type.meta_robots`}
+											labelId={`${formOptions.id}__type.meta_robots`}
+											label={t('form:input.robots')}
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											options={getIndexOptions()}
+											dataTestId={`${formOptions.id}.select.meta_robots`}
+										/>
+									</Form.Row>
+								)}
+							/>
+						</Section>
+						<Section>
+							<Controller
 								name="active"
 								control={control}
 								rules={{}}
@@ -203,7 +232,133 @@ const PagesDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				{watchType == 'category' || watchType == 'tag' ? (
+					<>
+						<Section>
+							<Controller
+								name={`type_id`}
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										{
+											{
+												category: (
+													<Picker.Categories
+														onChange={onChange}
+														value={value}
+														name={name}
+														id={`${formOptions.id}__type_id`}
+														label={`${t('form:input.categories')}`}
+														responsiveWidth={'50%'}
+														dataTestId={`${formOptions.id}.input.type_id`}
+														required
+													/>
+												),
+												tag: (
+													<Picker.Tags
+														onChange={onChange}
+														value={value}
+														name={name}
+														id={`${formOptions.id}__type_id`}
+														label={`${t('form:input.tags')}`}
+														responsiveWidth={'50%'}
+														dataTestId={`${formOptions.id}.input.type_id`}
+														required
+													/>
+												),
+											}[watchType]
+										}
+									</Form.Row>
+								)}
+							/>
+						</Section>
+					</>
+				) : (
+					<>
+						<input type="hidden" {...register('type_id', {})} />
+					</>
+				)}
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.title`}
+									control={control}
+									rules={{ required: true }}
+									defaultValue={detailData.lang[lng].title}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__title`}
+												label={`${t('form:input.title')} (${lng})`}
+												// responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.title`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.description`}
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__description`}
+												label={`${t('form:input.description')} (${lng})`}
+												// responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.description`}
+												multiline
+												rows={3}
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.content`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__content`}
+												label={`${t('form:input.content')} (${lng})`}
+												// responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.content`}
+												multiline
+												rows={10}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

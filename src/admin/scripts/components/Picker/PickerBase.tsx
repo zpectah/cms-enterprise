@@ -12,6 +12,7 @@ export interface PickerBaseProps {
 	name?: string;
 	id?: string;
 	label?: string;
+	required?: boolean;
 }
 
 const PickerBase = ({
@@ -24,6 +25,7 @@ const PickerBase = ({
 	name,
 	id,
 	label,
+	required,
 }: PickerBaseProps) => {
 	return (
 		<>
@@ -38,6 +40,7 @@ const PickerBase = ({
 					name={name}
 					id={id}
 					label={label}
+					required={required}
 				/>
 			) : (
 				<Preloader.Block />

@@ -14,6 +14,7 @@ interface TagsPickerProps {
 	label?: string;
 	ignored?: any[];
 	multiple?: boolean;
+	required?: boolean;
 }
 
 const TagsPicker = (props: TagsPickerProps) => {

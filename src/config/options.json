@@ -10,7 +10,7 @@
       "type": ["default"]
     },
     "Pages": {
-      "type": ["default"]
+      "type": ["default", "system", "category", "tag"]
     },
     "Posts": {
       "type": ["article", "blog", "media", "event", "reference", "testimonial"]
@@ -103,5 +103,17 @@
     }
   },
   "module": {},
-  "component": {}
+  "component": {},
+  "common": {
+    "meta_robots": [
+      "all",
+      "none",
+      "noindex",
+      "nofollow",
+      "index",
+      "follow",
+      "nosnippet",
+      "noarchive"
+    ]
+  }
 }
