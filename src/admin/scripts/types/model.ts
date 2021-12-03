@@ -103,6 +103,7 @@ export interface UploadsItemLangProps {
 }
 export interface UploadsItemProps extends commonItemProps {
 	name: string;
+	fileBase64?: any; // TODO
 	extension: string;
 	file_name: string;
 	file_mime: string;

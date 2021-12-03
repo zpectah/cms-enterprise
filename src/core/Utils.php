@@ -1,5 +1,7 @@
 <?php
 
+use Gumlet\ImageResize;
+
 class Utils {
 
     public function createFolder ($directory, $permissions = 0777): void {
@@ -116,6 +118,67 @@ class Utils {
             $stmt -> execute();
             $response = $lang;
             $stmt -> close();
+        }
+
+        return $response;
+    }
+
+    public function put_file($fileName, $fileData, $filePath) {
+        $file = $filePath . $fileName;
+
+        if (!file_exists($filePath)) mkdir($filePath, 0777, true);
+
+        return file_put_contents($file, $fileData);
+    }
+
+    public function put_custom_image($width, $height, $key, $imageData, $pathPrefix, $fileName, $quality, $crop = false) {
+        $image = ImageResize::createFromString($imageData);
+
+        if ($crop) {
+            $image -> crop($width, $height, true, ImageResize::CROPCENTER);
+        } else {
+            $image -> resizeToBestFit($width, $height);
+        }
+
+        $image -> quality_jpg = $quality;
+        $file_path = $pathPrefix . $key . '/';
+        $response[$key] = self::put_file($fileName, $image, $file_path);
+
+        return $response;
+    }
+
+    public function upload_file($file_object, $name, $ext, $type) {
+        $response = null;
+
+        $file_path = null;
+        $file_parts = explode(";base64,", $file_object);
+        $file_base64 = base64_decode($file_parts[1]);
+
+        if ($type !== 'undefined') $file_path = PATH_UPLOADS . $type . '/';
+
+        if ($file_path) {
+
+            $response['original'] = self::put_file($name . '.' . $ext, $file_base64, $file_path);
+
+            if ($type == 'image') {
+
+                foreach (UPLOADS_IMAGE_FORMATS as $v) {
+                    $response[$v['key']] = self::put_custom_image(
+                        $v['width'],
+                        $v['height'],
+                        $v['key'],
+                        $file_base64,
+                        $file_path,
+                        $name . '.' . $ext,
+                        $v['quality'],
+                        $v['crop']
+                    );
+                }
+
+                // TODO: cropped by options
+
+            }
+
         }
 
         return $response;
