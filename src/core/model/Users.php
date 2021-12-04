@@ -110,7 +110,7 @@ class Users {
 
         // prepare
         $password = $data['password'];
-        $query = $password ? ('UPDATE users SET email = ?, type = ?, password = ?, nick_name = ?, first_name = ?, middle_name = ?, last_name = ?, user_level = ?, user_group = ?, img_avatar = ?, active = ? WHERE id = ?')
+        $query = $password ? ('UPDATE users SET email = ?, type = ?, password = ?, nick_name = ?, first_name = ?, middle_name = ?, last_name = ?, user_level = ?, user_group = ?, img_avatar = ?, description = ?, active = ? WHERE id = ?')
             : ('UPDATE users SET email = ?, type = ?, nick_name = ?, first_name = ?, middle_name = ?, last_name = ?, user_level = ?, user_group = ?, img_avatar = ?, description = ?, active = ? WHERE id = ?');
         $types = $password ? 'sssssssisssii' : 'ssssssisssii';
         $args = $password ? [

@@ -8,7 +8,7 @@ export default class Page {
 	}
 
 	wait(timeout) {
-		return browser.pause(timeout);
+		browser.pause(timeout);
 	}
 
 	getElm(selector, prefix = '', suffix = '') {

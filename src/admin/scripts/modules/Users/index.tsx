@@ -99,6 +99,8 @@ const UsersModule = ({}: UsersModuleProps) => {
 	const detailSubmitHandler = (data: UsersItemProps) => {
 		const master: UsersItemProps = _.cloneDeep(data);
 
+		console.log(master);
+
 		if (master.id == 'new') {
 			createUsers(master).then((response) => {
 				reloadUsers();

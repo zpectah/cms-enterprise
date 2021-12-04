@@ -93,10 +93,19 @@ const NewPasswordForm = ({
 					justifyContent="center"
 					style={{ paddingTop: '1rem' }}
 				>
-					<Button type="submit" variant="contained" disabled={!isValid}>
+					<Button
+						type="submit"
+						variant="contained"
+						disabled={!isValid}
+						dataTestId={`${formOptions.id}.button.submit`}
+					>
 						{t('button.submit')}
 					</Button>
-					<Button color="secondary" onClick={backToLoginHandler}>
+					<Button
+						color="secondary"
+						onClick={backToLoginHandler}
+						dataTestId={`${formOptions.id}.button.backToLogin`}
+					>
 						{t('label.backToLogin')}
 					</Button>
 				</Stack>
@@ -106,7 +115,10 @@ const NewPasswordForm = ({
 					justifyContent="center"
 					style={{ paddingTop: '1rem' }}
 				>
-					<Button onClick={() => onGenerateTemporary({ token: token })}>
+					<Button
+						onClick={() => onGenerateTemporary({ token: token })}
+						dataTestId={`${formOptions.id}.button.generateTemporaryPassword`}
+					>
 						{t('form:form.LostPassword.btn.generateTemporaryPassword')}
 					</Button>
 				</Stack>

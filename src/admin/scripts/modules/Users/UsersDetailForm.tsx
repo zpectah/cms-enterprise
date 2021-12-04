@@ -75,15 +75,30 @@ const UsersDetailForm = ({
 	const renderFooter = () => {
 		return (
 			<>
-				<Button type="submit" variant="contained" disabled={!isValid}>
+				<Button
+					type="submit"
+					variant="contained"
+					disabled={!isValid}
+					dataTestId={`${formOptions.id}.button.submit`}
+				>
 					{detailData.id == 'new' ? t('button.create') : t('button.update')}
 				</Button>
 				{detailData.id !== 'new' && (
-					<Button variant="outlined" color="error" onClick={deleteHandler}>
+					<Button
+						variant="outlined"
+						color="error"
+						onClick={deleteHandler}
+						dataTestId={`${formOptions.id}.button.delete`}
+					>
 						{t('button.delete')}
 					</Button>
 				)}
-				<Button variant="outlined" color="secondary" onClick={cancelHandler}>
+				<Button
+					variant="outlined"
+					color="secondary"
+					onClick={cancelHandler}
+					dataTestId={`${formOptions.id}.button.return`}
+				>
 					{t('button.return')}
 				</Button>
 			</>
@@ -233,10 +248,7 @@ const UsersDetailForm = ({
 				{/*  ============ Main form body ============ */}
 				<div>
 					<input type="hidden" {...register('id', { required: true })} />
-					<input
-						type="hidden"
-						{...register('description', { required: true })}
-					/>
+					<input type="hidden" {...register('description', {})} />
 				</div>
 				<Section>
 					<Controller

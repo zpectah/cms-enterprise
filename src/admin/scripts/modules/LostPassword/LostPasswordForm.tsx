@@ -85,10 +85,19 @@ const LostPasswordForm = ({
 					justifyContent="center"
 					style={{ paddingTop: '1rem' }}
 				>
-					<Button type="submit" variant="contained" disabled={!isValid}>
+					<Button
+						type="submit"
+						variant="contained"
+						disabled={!isValid}
+						dataTestId={`${formOptions.id}.button.submit`}
+					>
 						{t('button.submit')}
 					</Button>
-					<Button color="secondary" onClick={backToLoginHandler}>
+					<Button
+						color="secondary"
+						onClick={backToLoginHandler}
+						dataTestId={`${formOptions.id}.button.backToLogin`}
+					>
 						{t('label.backToLogin')}
 					</Button>
 				</Stack>

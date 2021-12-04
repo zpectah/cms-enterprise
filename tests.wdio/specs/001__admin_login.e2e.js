@@ -7,11 +7,8 @@ describe('Admin: Login and logout', () => {
 
 	it('Open login and fill form & submit', async () => {
 		await AdminLoginSteps.go_to_login();
-		await browser.pause(1000);
 		await AdminLoginSteps.fill_form();
-		await browser.pause(1000);
 		await AdminLoginSteps.submit_form();
-		await browser.pause(5000);
 		await expect(AdminLoginPage.menu_link).toBeExisting();
 	});
 });

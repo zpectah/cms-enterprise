@@ -16,15 +16,15 @@ export default class AdminLogin_StepsClass {
 	fill_form() {
 		this.Page.wait(500);
 		this.AdminLoginClass.form_input_email.waitForEnabled();
-		this.AdminLoginClass.form_input_email.setValue('sychrat@gmail.com');
+		this.AdminLoginClass.form_input_email.setValue('john.doe@yahoooo.com');
 		this.Page.wait(500);
 		this.AdminLoginClass.form_input_password.waitForEnabled();
-		this.AdminLoginClass.form_input_password.setValue('bomboklad');
+		this.AdminLoginClass.form_input_password.setValue('password123');
 	}
 
 	submit_form() {
 		this.AdminLoginClass.form_submit_button.waitForEnabled();
 		this.AdminLoginClass.form_submit_button.click();
-		this.Page.wait(2500);
+		this.Page.wait(5000);
 	}
 }

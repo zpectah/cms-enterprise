@@ -13,7 +13,6 @@
         "start": "gulp start --silent",
         "test:jest": "jest --silent",
         "wdio:all": "wdio run tests.wdio/config/wdio.conf.js",
-        "wdio:example": "wdio run tests.wdio/config/wdio.conf.js --conf tests.wdio/config/example.conf.js",
         "wdio:001__admin_login": "wdio run tests.wdio/config/wdio.conf.js --spec tests.wdio/specs/001__admin_login.e2e.js"
     },
     "dependencies": {
