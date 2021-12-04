@@ -1,7 +1,11 @@
 import { PATH } from '../constants.js';
 import Page from './page';
 
-class ExamplePage extends Page {
+export default class ExamplePageClass extends Page {
+	constructor(selectedBrowser) {
+		super(selectedBrowser);
+	}
+
 	get menuToggle() {
 		return super.getElm('toggle.sidebar');
 	}
@@ -11,8 +15,6 @@ class ExamplePage extends Page {
 	}
 
 	openAdmin() {
-		return super.openUrl(PATH.admin);
+		return super.openUrl(PATH.admin.root);
 	}
 }
-
-export default new ExamplePage();

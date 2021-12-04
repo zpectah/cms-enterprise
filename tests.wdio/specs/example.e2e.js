@@ -1,24 +1,35 @@
-import ExamplePage from '../pages/example.page';
+import ExamplePageClass from '../pages/example.page';
+import { ExampleStepsClass } from '../steps/example.steps';
 
 describe('Example test', () => {
+	let exampleSteps;
+
+	before('', () => {
+		exampleSteps = new ExampleStepsClass();
+	});
+
 	it('Open admin page, open menu and click', async () => {
-		await ExamplePage.openAdmin();
+		exampleSteps.go_to_login();
+		/*
+		await ExamplePageClass.openAdmin();
 
 		// wait ...
 		browser.pause(2500);
 
-		await ExamplePage.menuToggle.waitForClickable();
-		await ExamplePage.menuToggle.click();
+		await ExamplePageClass.menuToggle.waitForClickable();
+		await ExamplePageClass.menuToggle.click();
 
 		// wait ...
 		browser.pause(2500);
 
-		await ExamplePage.menuLink.waitForClickable();
-		await ExamplePage.menuLink.click();
+		await ExamplePageClass.menuLink.waitForClickable();
+		await ExamplePageClass.menuLink.click();
 
 		// wait ...
 		browser.pause(2500);
 
-		await expect(ExamplePage.menuLink).toBeExisting();
+		*/
+
+		await expect(ExamplePageClass.menuLink).toBeExisting();
 	});
 });

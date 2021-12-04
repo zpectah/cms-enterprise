@@ -131,10 +131,19 @@ const LoginForm = ({}: LoginFormProps) => {
 					justifyContent="center"
 					style={{ paddingTop: '1rem' }}
 				>
-					<Button type="submit" variant="contained" disabled={!isValid}>
+					<Button
+						type="submit"
+						variant="contained"
+						disabled={!isValid}
+						dataTestId={`${formOptions.id}.button.submit`}
+					>
 						{t('button.submit')}
 					</Button>
-					<Button color="secondary" onClick={lostPasswordHandler}>
+					<Button
+						color="secondary"
+						onClick={lostPasswordHandler}
+						dataTestId={`${formOptions.id}.button.lostPassword`}
+					>
 						{t('label.lostPassword')}
 					</Button>
 				</Stack>
