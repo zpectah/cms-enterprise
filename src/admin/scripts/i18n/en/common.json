@@ -13,7 +13,8 @@
     "toggle": "Toggle",
     "yes": "Yes",
     "no": "No",
-    "edit": "Edit"
+    "edit": "Edit",
+    "clear": "Clear"
   },
   "new": {
     "Categories": "New category",

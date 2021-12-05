@@ -10,7 +10,7 @@ import { Button, Form, Input, Section } from '../ui';
 import ImageCropper from './ImageCropper';
 import { formLayoutObjectProps } from '../../types/app';
 import { getLanguagesFields } from '../../utils/detail';
-import { CategoriesItemLangProps } from '../../types/model';
+import config from '../../config';
 
 const HiddenDropWrapper = styled.label`
 	width: 100%;
@@ -39,7 +39,6 @@ interface UploaderProps {
 interface UploadItemFormProps {
 	file: any;
 	index: number;
-	// onValueChange: (name: string, value: any, index: number) => void;
 	onModelChange: (
 		model: any,
 		index: number,
@@ -59,34 +58,37 @@ const UploadItemForm = ({
 }: UploadItemFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 
-	// const model = _.cloneDeep(file);
-	const model = { ...file };
-	model['name'] = file.file_name.split('.').slice(0, -1).join('.');
-	model['lang'] = getLanguagesFields(languageList, {
-		label: '',
-		description: '',
-	} as any);
+	const getUpdatedModel = () => {
+		const model = { ...file };
+		model['name'] = file.file_name.split('.').slice(0, -1).join('.');
+		model['lang'] = getLanguagesFields(languageList, {
+			label: '',
+		} as any);
+
+		return model;
+	};
 
 	const formOptions: formLayoutObjectProps = {
 		model: 'Uploads',
 		id: `UploadsItemDetailForm_${index}`,
 	};
-	const { control, handleSubmit, reset, register, formState, watch } = useForm({
+	const { control, formState, watch } = useForm({
 		mode: 'all',
 		defaultValues: {
-			...model,
+			...getUpdatedModel(),
 		},
 	});
 	const { isDirty, isValid } = formState;
 	const watchAllFields = watch();
 
-	useEffect(() => {
-		console.log('watchAllFields', watchAllFields);
-		onModelChange(watchAllFields, index, isDirty, isValid);
-	}, [watchAllFields]);
+	useEffect(
+		() => onModelChange(watchAllFields, index, isDirty, isValid),
+		[watchAllFields],
+	);
 
 	return (
 		<Form.Base name={formOptions.id} dataTestId={formOptions.id}>
+			{/*  ============ Main form body ============ */}
 			<Section noSpacing>
 				<Controller
 					name="name"
@@ -101,9 +103,27 @@ const UploadItemForm = ({
 								name={name}
 								id={`${formOptions.id}__name`}
 								label={t('form:input.name')}
-								responsiveWidth={'75%'}
+								// responsiveWidth={'75%'}
 								dataTestId={`${formOptions.id}.input.name`}
 								required
+							/>
+						</Form.Row>
+					)}
+				/>
+				<Controller
+					name="active"
+					control={control}
+					rules={{}}
+					render={({ field: { onChange, onBlur, value, ref, name } }) => (
+						<Form.Row errors={[]}>
+							<Input.SwitchControl
+								onChange={onChange}
+								onBlur={onBlur}
+								checked={value}
+								name={name}
+								id={`${formOptions.id}__active`}
+								dataTestId={`${formOptions.id}.switch.active`}
+								label={t('form:input.active')}
 							/>
 						</Form.Row>
 					)}
@@ -133,33 +153,12 @@ const UploadItemForm = ({
 									</Form.Row>
 								)}
 							/>
-							<Controller
-								name={`lang.${lng}.description`}
-								control={control}
-								rules={{}}
-								render={({ field: { onChange, onBlur, value, ref, name } }) => (
-									<Form.Row errors={[]}>
-										<Input.Text
-											onChange={onChange}
-											onBlur={onBlur}
-											value={value}
-											name={name}
-											id={`${formOptions.id}__${lng}__description`}
-											label={`${t('form:input.description')} (${lng})`}
-											// responsiveWidth={'75%'}
-											dataTestId={`${formOptions.id}.input.${lng}.description`}
-											required
-											multiline
-											rows={4}
-										/>
-									</Form.Row>
-								)}
-							/>
 						</Section>
 					);
 				})}
 				{/*  ============ \\ Language part section ============ */}
 			</Section>
+			{/*  ============ \\ Main form body ============ */}
 		</Form.Base>
 	);
 };
@@ -170,8 +169,8 @@ const Uploader = ({
 	accept,
 	aspect,
 	withForm,
-	language = 'en', // TODO
-	languageList = ['en'],
+	language = config.tmp.languageDefault,
+	languageList = config.tmp.languageList,
 }: UploaderProps) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
@@ -192,7 +191,7 @@ const Uploader = ({
 				files = [...e.target?.files];
 
 			if (files) {
-				tmp = files.map((file) => setBlobSource(file));
+				tmp = files.map((file) => getBlobSource(file));
 
 				setRawFileList(tmp);
 			}
@@ -209,7 +208,7 @@ const Uploader = ({
 			setDragOver(false);
 
 			if (files) {
-				tmp = files.map((file) => setBlobSource(file));
+				tmp = files.map((file) => getBlobSource(file));
 
 				setRawFileList(tmp);
 			}
@@ -238,35 +237,36 @@ const Uploader = ({
 		},
 	};
 
-	const setBlobSource = async (file) => {
-		const blob = await fileUtils.toBase64(file);
+	const getFileObject = (blob, file) => {
 		const ext = file.name.split('.').pop().toLowerCase();
 		const type = getFileType(ext);
 
-		let tmp_file;
-
-		const getFileObject = () => {
-			return {
-				blob: blob,
-				file_name: file.name,
-				file_extension: ext,
-				file_mime: file.type,
-				file_size: file.size,
-				file_type: type,
-				//
-				name: '',
-				lang: {},
-			};
+		return {
+			blob: blob,
+			file_name: file.name,
+			file_extension: ext,
+			file_mime: file.type,
+			file_size: file.size,
+			file_type: type,
+			//
+			name: '',
+			active: true,
+			lang: {},
 		};
+	};
+
+	const getBlobSource = async (file) => {
+		const blob = await fileUtils.toBase64(file);
+		let tmp_file;
 
 		if (accept) {
 			if (file.type.includes(accept.replace('*', ''))) {
-				tmp_file = getFileObject();
+				tmp_file = getFileObject(blob, file);
 			} else {
 				console.warn(t('message:error.fileNotAccepted'));
 			}
 		} else {
-			tmp_file = getFileObject();
+			tmp_file = getFileObject(blob, file);
 		}
 
 		return tmp_file;
@@ -281,7 +281,7 @@ const Uploader = ({
 
 	const cropChangeHandler = (blob: any, index: number) => {
 		let tmp = [...fileList];
-		tmp[index].blob = blob;
+		// tmp[index].blob = blob;
 		onChange(tmp);
 	};
 	const formChangeHandler = (
@@ -297,16 +297,6 @@ const Uploader = ({
 		onChange(fileList);
 	};
 
-	const renderForm = (file: any, index: number) => (
-		<UploadItemForm
-			file={file}
-			index={index}
-			onModelChange={formChangeHandler}
-			language={language}
-			languageList={languageList}
-		/>
-	);
-
 	const onInit = () => {
 		window.addEventListener('mouseup', dragEvents.onDragLeave);
 		window.addEventListener('dragover', dragEvents.onDragOver);
@@ -320,12 +310,6 @@ const Uploader = ({
 		window.removeEventListener('drop', dragEvents.onDrop);
 	};
 
-	useEffect(() => {
-		onInit();
-
-		return () => onDestroy();
-	}, []);
-
 	const handleSources = () => {
 		Promise.all(rawFileList).then((result) => {
 			setFileList(result);
@@ -333,7 +317,23 @@ const Uploader = ({
 		});
 	};
 
+	useEffect(() => {
+		onInit();
+
+		return () => onDestroy();
+	}, []);
+
 	useEffect(handleSources, [rawFileList]);
+
+	const renderForm = (file: any, index: number) => (
+		<UploadItemForm
+			file={file}
+			index={index}
+			onModelChange={formChangeHandler}
+			language={language}
+			languageList={languageList}
+		/>
+	);
 
 	return (
 		<>
@@ -342,7 +342,7 @@ const Uploader = ({
 					onDragLeave={dragEvents.onDragLeave}
 					htmlFor="FileUploaderInput"
 				>
-					...drop here...
+					...drop files here...
 				</HiddenDropWrapper>
 			)}
 			<div>
@@ -372,7 +372,7 @@ const Uploader = ({
 					)}
 				</div>
 				<div>
-					<Button onClick={resetHandler}>Reset</Button>
+					<Button onClick={resetHandler}>{t('button.clear')}</Button>
 				</div>
 			</div>
 		</>

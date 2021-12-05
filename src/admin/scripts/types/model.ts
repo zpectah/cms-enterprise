@@ -108,8 +108,6 @@ export interface UploadsItemProps extends commonItemProps {
 	file_name: string;
 	file_mime: string;
 	file_size: string;
-	categories?: string[];
-	tags?: string[];
 	lang: any; // TODO
 }
 

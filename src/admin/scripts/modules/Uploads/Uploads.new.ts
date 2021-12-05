@@ -9,7 +9,5 @@ export default {
 	file_name: '',
 	file_mime: '',
 	file_size: '',
-	categories: [],
-	tags: [],
 	active: true,
 } as UploadsItemProps;

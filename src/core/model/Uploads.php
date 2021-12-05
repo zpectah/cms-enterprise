@@ -30,8 +30,6 @@ class Uploads {
                     );
                 }
 
-                $row['tags'] = explode(",", $row['tags']);
-                $row['categories'] = explode(",", $row['categories']);
                 $row['active'] = $row['active'] == 1;
 
                 unset($row['deleted']);
@@ -48,19 +46,15 @@ class Uploads {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO uploads (name, type, file_extension, file_name, file_mime, file_size, categories, tags, active, deleted) VALUES (?,?,?,?,?,?,?,?,?,?)');
-        $types = 'ssssssssii';
+        $query = ('INSERT INTO uploads (name, type, file_extension, file_name, file_mime, file_size, active, deleted) VALUES (?,?,?,?,?,?,?,?)');
+        $types = 'ssssssii';
         $args = [
             $data['name'],
             $data['type'],
-
             $data['file_extension'],
             $data['file_name'],
             $data['file_mime'],
             $data['file_size'],
-            $data['categories'] ? implode(",", $data['categories']) : '',
-            $data['tags'] ? implode(",", $data['tags']) : '',
-
             $data['active'],
             0
         ];
@@ -82,12 +76,11 @@ class Uploads {
                     $response['lang'][] = $utils -> update_language_row(
                         $conn,
                         $lang,
-                        'INSERT INTO uploads__' . $lang . ' (id, label, description) VALUES (?,?,?)',
+                        'INSERT INTO uploads__' . $lang . ' (id, label) VALUES (?,?)',
                         'is',
                         [
                             $response['id'],
-                            $data['lang'][$lang]['label'],
-                            $data['lang'][$lang]['description']
+                            $data['lang'][$lang]['label']
                         ]
                     );
                 }
@@ -105,11 +98,9 @@ class Uploads {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE uploads SET categories = ?, tags = ?, active = ? WHERE id = ?');
-        $types = 'ssii';
+        $query = ('UPDATE uploads SET active = ? WHERE id = ?');
+        $types = 'ii';
         $args = [
-            $data['categories'] ? implode(",", $data['categories']) : '',
-            $data['tags'] ? implode(",", $data['tags']) : '',
             $data['active'],
             $data['id']
         ];
@@ -126,11 +117,10 @@ class Uploads {
                 $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
-                    'UPDATE uploads__' . $lang . ' SET label = ?, description = ? WHERE id = ?',
+                    'UPDATE uploads__' . $lang . ' SET label = ?, WHERE id = ?',
                     'si',
                     [
                         $data['lang'][$lang]['label'],
-                        $data['lang'][$lang]['description'],
                         $data['lang'][$lang]['id']
                     ]
                 );

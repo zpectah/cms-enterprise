@@ -91,17 +91,7 @@ const UploadsDetailNewForm = ({
 				listPath={ROUTES.app.uploads.path}
 				clickCallback={cancelHandler}
 			/>
-			<ModuleViewHeading
-				tertiaryChildren={
-					<ButtonCreate
-						variant="outlined"
-						onClick={onCreateCallback}
-						dataTestId={`button.create.new.Uploads`}
-					>
-						{t(`new.Uploads`)}
-					</ButtonCreate>
-				}
-			>
+			<ModuleViewHeading>
 				<ModuleLanguageToggle
 					language={lang}
 					languageList={languageList}
