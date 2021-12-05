@@ -7,6 +7,7 @@ import config from '../../config';
 import { IMAGE_CROP_OPTIONS } from '../../constants';
 import { getCroppedImg } from '../../utils/image';
 import media from '../../styles/responsive';
+import { Input } from '../ui';
 
 const Wrapper = styled.div``;
 const CropperSource = styled.div`
@@ -35,7 +36,7 @@ interface ImageCropperProps {
 	aspect?: number;
 }
 
-const ImageCropper = ({ onChange, src, aspect = 1 / 1 }: ImageCropperProps) => {
+const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 	const [crop, setCrop] = useState<{
 		x: number;
 		y: number;
@@ -45,7 +46,7 @@ const ImageCropper = ({ onChange, src, aspect = 1 / 1 }: ImageCropperProps) => {
 	const [croppedImage, setCroppedImage] = useState(null);
 	const [area, setArea] = useState({ width: 0, height: 0 });
 	const [tmpSrc, setTmpSrc] = useState(null);
-	const [tmpAspect, setTmpAspect] = useState(4 / 3);
+	const [tmpAspect, setTmpAspect] = useState(aspect);
 	const [process, setProcess] = useState(false);
 	const [mediaDimensions, setMediaDimensions] = useState({ w: 0, h: 0 });
 
@@ -95,15 +96,9 @@ const ImageCropper = ({ onChange, src, aspect = 1 / 1 }: ImageCropperProps) => {
 
 	const zoomHandleChange = (event: any, newValue: number) => setZoom(newValue);
 
-	/*
-	const angleHandleChange = (event: any, newValue: number) => {
-		setZoom(newValue);
-	};
-	*/
+	// const angleHandleChange = (event: any, newValue: number) => setRotation(newValue);
 
 	useEffect(() => setTmpSrc(src), [src]);
-
-	// useEffect(() => onChange(croppedImage), [croppedImage]);
 
 	return (
 		<Wrapper>
@@ -121,11 +116,61 @@ const ImageCropper = ({ onChange, src, aspect = 1 / 1 }: ImageCropperProps) => {
 					onMediaLoaded={onImageLoad}
 				/>
 			</CropperSource>
+			<CropperOptions>
+				...CropperOptions...
+				<small>
+					{area.width} x {area.height}
+				</small>
+				<div>
+					<Input.Slider
+						getAriaValueText={valuetext}
+						aria-labelledby="zoom-slider"
+						valueLabelDisplay="auto"
+						marks
+						min={1}
+						max={3}
+						step={0.1}
+						value={zoom}
+						onChange={zoomHandleChange}
+						style={{ width: '50%' }}
+					/>
+				</div>
+				{/*
+				<div>
+					<Input.Slider
+						getAriaValueText={valuetext}
+						aria-labelledby="discrete-slider"
+						valueLabelDisplay="auto"
+						marks
+						min={0}
+						max={360}
+						step={1}
+						value={rotation}
+						onChange={angleHandleChange}
+						style={{ width: '50%' }}
+					/>
+				</div>
+				*/}
+				<div>
+					<Input.Select
+						// id={`${formOptions.id}__type.label`}
+						// labelId={`${formOptions.id}__type.label`}
+						// label={t('form:input.type')}
+						onChange={(e: any) => {
+							setTmpAspect(e.target.value);
+						}}
+						// onBlur={onBlur}
+						value={tmpAspect}
+						// name={name}
+						options={getRatioOptions()}
+						// dataTestId={`${formOptions.id}.select.type`}
+					/>
+				</div>
+			</CropperOptions>
 			<CropperOutput>
 				...ImageCropper...output...
 				{croppedImage && <img src={croppedImage} alt={'cropped image'} />}
 			</CropperOutput>
-			<CropperOptions>...CropperOptions...</CropperOptions>
 		</Wrapper>
 	);
 };
