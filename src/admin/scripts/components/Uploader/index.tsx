@@ -1,13 +1,18 @@
 import React, { MouseEventHandler, useEffect, useState, useRef } from 'react';
+import _ from 'lodash';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { file as fileUtils } from '../../../../../utils/utils';
 import { getFileType } from '../../utils/getFileType';
-import { Button } from '../ui';
+import { Button, Form, Input, Section } from '../ui';
 import ImageCropper from './ImageCropper';
+import { formLayoutObjectProps } from '../../types/app';
+import { getLanguagesFields } from '../../utils/detail';
+import { CategoriesItemLangProps } from '../../types/model';
 
-const HiddenDropWrapper = styled.div`
+const HiddenDropWrapper = styled.label`
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -22,62 +27,192 @@ const HiddenDropWrapper = styled.div`
 `;
 
 interface UploaderProps {
-	onChange: (blob: any, file: any, type: string) => void;
+	onChange: (sources: any[]) => void;
 	onReset?: () => void;
 	accept?: string;
 	aspect?: number;
-	multiple?: boolean;
+	withForm?: boolean;
+	language?: string;
+	languageList?: string[];
 }
+
+interface UploadItemFormProps {
+	file: any;
+	index: number;
+	// onValueChange: (name: string, value: any, index: number) => void;
+	onModelChange: (
+		model: any,
+		index: number,
+		dirty: boolean,
+		valid: boolean,
+	) => void;
+	language: string;
+	languageList: string[];
+}
+
+const UploadItemForm = ({
+	file,
+	index,
+	onModelChange,
+	language,
+	languageList,
+}: UploadItemFormProps) => {
+	const { t } = useTranslation(['common', 'form']);
+
+	// const model = _.cloneDeep(file);
+	const model = { ...file };
+	model['name'] = file.file_name.split('.').slice(0, -1).join('.');
+	model['lang'] = getLanguagesFields(languageList, {
+		label: '',
+		description: '',
+	} as any);
+
+	const formOptions: formLayoutObjectProps = {
+		model: 'Uploads',
+		id: `UploadsItemDetailForm_${index}`,
+	};
+	const { control, handleSubmit, reset, register, formState, watch } = useForm({
+		mode: 'all',
+		defaultValues: {
+			...model,
+		},
+	});
+	const { isDirty, isValid } = formState;
+	const watchAllFields = watch();
+
+	useEffect(() => {
+		console.log('watchAllFields', watchAllFields);
+		onModelChange(watchAllFields, index, isDirty, isValid);
+	}, [watchAllFields]);
+
+	return (
+		<Form.Base name={formOptions.id} dataTestId={formOptions.id}>
+			<Section noSpacing>
+				<Controller
+					name="name"
+					control={control}
+					rules={{ required: true }}
+					render={({ field: { onChange, onBlur, value, ref, name } }) => (
+						<Form.Row errors={[]}>
+							<Input.Text
+								onChange={onChange}
+								onBlur={onBlur}
+								value={value}
+								name={name}
+								id={`${formOptions.id}__name`}
+								label={t('form:input.name')}
+								responsiveWidth={'75%'}
+								dataTestId={`${formOptions.id}.input.name`}
+								required
+							/>
+						</Form.Row>
+					)}
+				/>
+			</Section>
+			<Section noSpacing>
+				{/*  ============ Language part section ============ */}
+				{languageList.map((lng) => {
+					return (
+						<Section key={lng} visible={language == lng}>
+							<Controller
+								name={`lang.${lng}.label`}
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Text
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											id={`${formOptions.id}__${lng}__label`}
+											label={`${t('form:input.label')} (${lng})`}
+											// responsiveWidth={'75%'}
+											dataTestId={`${formOptions.id}.input.${lng}.label`}
+										/>
+									</Form.Row>
+								)}
+							/>
+							<Controller
+								name={`lang.${lng}.description`}
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Text
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											id={`${formOptions.id}__${lng}__description`}
+											label={`${t('form:input.description')} (${lng})`}
+											// responsiveWidth={'75%'}
+											dataTestId={`${formOptions.id}.input.${lng}.description`}
+											required
+											multiline
+											rows={4}
+										/>
+									</Form.Row>
+								)}
+							/>
+						</Section>
+					);
+				})}
+				{/*  ============ \\ Language part section ============ */}
+			</Section>
+		</Form.Base>
+	);
+};
 
 const Uploader = ({
 	onChange,
 	onReset,
 	accept,
 	aspect,
-	multiple,
+	withForm,
+	language = 'en', // TODO
+	languageList = ['en'],
 }: UploaderProps) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
-	const [file, setFile] = useState(null);
-	const [src, setSrc] = useState(null);
-	const [fileType, setFileType] = useState('unknown');
+
+	const [rawFileList, setRawFileList] = useState([]);
+	const [fileList, setFileList] = useState([]);
 
 	const inputFileRef = useRef(null);
 	const inputFileProps = {
 		type: 'file',
 		name: 'FileUploaderInput',
+		id: 'FileUploaderInput',
 		accept: accept,
 		ref: inputFileRef,
+		multiple: true,
 		onChange: (e: any) => {
-			let file = e.target?.files[0];
+			let tmp,
+				files = [...e.target?.files];
 
-			setFile(null);
-			setFileType('unknown');
-			setSrc(null);
+			if (files) {
+				tmp = files.map((file) => setBlobSource(file));
 
-			if (file) return setBlobSource(file);
+				setRawFileList(tmp);
+			}
 		},
 	};
-
 	const dragEvents = {
 		onDrop: (e: any) => {
 			e.stopPropagation();
 			e.preventDefault();
 
-			let file;
-
-			if (e.dataTransfer.items) {
-				file = e.dataTransfer.items[0].getAsFile();
-			} else {
-				file = e.dataTransfer.files[0];
-			}
+			let tmp,
+				files = [...e.dataTransfer.files];
 
 			setDragOver(false);
-			setFile(null);
-			setFileType('unknown');
-			setSrc(null);
 
-			if (file) return setBlobSource(file);
+			if (files) {
+				tmp = files.map((file) => setBlobSource(file));
+
+				setRawFileList(tmp);
+			}
 		},
 		onDragOver: (e: any) => {
 			e.stopPropagation();
@@ -107,53 +242,70 @@ const Uploader = ({
 		const blob = await fileUtils.toBase64(file);
 		const ext = file.name.split('.').pop().toLowerCase();
 		const type = getFileType(ext);
-		setFileType(type);
+
+		let tmp_file;
+
+		const getFileObject = () => {
+			return {
+				blob: blob,
+				file_name: file.name,
+				file_extension: ext,
+				file_mime: file.type,
+				file_size: file.size,
+				file_type: type,
+				//
+				name: '',
+				lang: {},
+			};
+		};
 
 		if (accept) {
 			if (file.type.includes(accept.replace('*', ''))) {
-				setFile({
-					blob: blob,
-					name: file.name,
-					extension: ext,
-					mime: file.type,
-					size: file.size,
-					type: type,
-				});
-				if (type == 'image') {
-					setSrc(blob);
-				}
+				tmp_file = getFileObject();
 			} else {
 				console.warn(t('message:error.fileNotAccepted'));
 			}
 		} else {
-			setFile({
-				blob: blob,
-				name: file.name,
-				extension: ext,
-				mime: file.type,
-				size: file.size,
-				type: type,
-			});
-			if (type == 'image') {
-				setSrc(blob);
-			}
+			tmp_file = getFileObject();
 		}
 
-		onChange(blob, file, type);
+		return tmp_file;
 	};
 	const resetHandler = () => {
-		setFile(null);
-		setFileType('unknown');
-		setSrc(null);
+		setRawFileList([]);
+		setFileList([]);
+
 		if (inputFileRef.current) inputFileRef.current.value = '';
 		if (onReset) onReset();
 	};
-	const cropChangeHandler = (blob) => {
-		const ext = file.name.split('.').pop().toLowerCase();
-		const type = getFileType(ext);
 
-		onChange(blob, file, type);
+	const cropChangeHandler = (blob: any, index: number) => {
+		let tmp = [...fileList];
+		tmp[index].blob = blob;
+		onChange(tmp);
 	};
+	const formChangeHandler = (
+		model: any,
+		index: number,
+		dirty: boolean,
+		valid: boolean,
+	) => {
+		let tmp = [...fileList];
+		tmp[index] = {
+			...model,
+		};
+		onChange(fileList);
+	};
+
+	const renderForm = (file: any, index: number) => (
+		<UploadItemForm
+			file={file}
+			index={index}
+			onModelChange={formChangeHandler}
+			language={language}
+			languageList={languageList}
+		/>
+	);
 
 	const onInit = () => {
 		window.addEventListener('mouseup', dragEvents.onDragLeave);
@@ -174,30 +326,48 @@ const Uploader = ({
 		return () => onDestroy();
 	}, []);
 
+	const handleSources = () => {
+		Promise.all(rawFileList).then((result) => {
+			setFileList(result);
+			onChange(result);
+		});
+	};
+
+	useEffect(handleSources, [rawFileList]);
+
 	return (
 		<>
 			{dragOver && (
-				<HiddenDropWrapper onDragLeave={dragEvents.onDragLeave}>
+				<HiddenDropWrapper
+					onDragLeave={dragEvents.onDragLeave}
+					htmlFor="FileUploaderInput"
+				>
 					...drop here...
 				</HiddenDropWrapper>
 			)}
 			<div>
 				<div>
-					{file ? (
+					{fileList.length == 0 ? (
 						<div>
-							{fileType == 'image' ? (
-								<ImageCropper
-									src={src}
-									onChange={cropChangeHandler}
-									aspect={aspect}
-								/>
-							) : (
-								<div>other file thumb</div>
-							)}
+							<input {...inputFileProps} />
 						</div>
 					) : (
 						<div>
-							<input {...inputFileProps} />
+							{fileList.map((file, index) => (
+								<div key={file.file_name}>
+									<span>{file.file_type}</span>
+									{file.file_type == 'image' ? (
+										<ImageCropper
+											src={file.blob}
+											onChange={(blob) => cropChangeHandler(blob, index)}
+											aspect={aspect}
+										/>
+									) : (
+										<div>other file thumb without crop options</div>
+									)}
+									{withForm && renderForm(file, index)}
+								</div>
+							))}
 						</div>
 					)}
 				</div>

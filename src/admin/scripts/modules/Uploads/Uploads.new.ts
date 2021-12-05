@@ -5,7 +5,7 @@ export default {
 	type: 'unknown',
 	name: '',
 	fileBase64: null,
-	extension: '',
+	file_extension: '',
 	file_name: '',
 	file_mime: '',
 	file_size: '',

@@ -206,17 +206,7 @@ const UploadsDetailForm = ({
 				}
 				secondaryChildren={
 					<>
-						<Controller
-							name="fileBase64"
-							control={control}
-							rules={{}}
-							render={({ field: { onChange, onBlur, value, ref, name } }) => (
-								<Uploader
-									onChange={uploaderChangeHandler}
-									onReset={uploaderResetHandler}
-								/>
-							)}
-						/>
+						<div>Upload thumbnail or icon</div>
 					</>
 				}
 			>

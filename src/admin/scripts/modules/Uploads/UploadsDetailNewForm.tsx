@@ -31,97 +31,6 @@ interface UploadsDetailNewFormProps {
 	onCreateCallback: () => void;
 }
 
-interface SingleFileFormProps {
-	index: number;
-	detailData: UploadsItemProps;
-	detailOptions: {};
-	languageList: string[];
-	languageDefault: string;
-}
-
-const SingleFileForm = ({
-	index,
-	detailData,
-	detailOptions,
-	languageList,
-	languageDefault,
-}: SingleFileFormProps) => {
-	const { t } = useTranslation(['common', 'form']);
-	const [lang, setLang] = useState(languageDefault);
-
-	const formOptions: formLayoutObjectProps = {
-		model: 'Uploads',
-		id: `UploadsDetailForm${index}`,
-		...detailOptions,
-	};
-	const { control, handleSubmit, reset, register, formState, setValue } =
-		useForm({
-			mode: 'all',
-			defaultValues: {
-				...detailData,
-			},
-		});
-	const { isDirty, isValid } = formState;
-
-	return (
-		<Form.Base name={formOptions.id} dataTestId={formOptions.id}>
-			<ModuleLanguageToggle
-				language={lang}
-				languageList={languageList}
-				onChange={(lng) => setLang(lng)}
-				style={{ marginRight: '.75rem' }}
-			/>
-			{/*  ============ Main form body ============ */}
-			<div>
-				<input type="hidden" {...register('id', { required: true })} />
-			</div>
-			<Section>
-				<Controller
-					name="name"
-					control={control}
-					rules={{ required: true }}
-					render={({ field: { onChange, onBlur, value, ref, name } }) => (
-						<Form.Row errors={[]}>
-							<Input.Text
-								onChange={onChange}
-								onBlur={onBlur}
-								value={value}
-								name={name}
-								id={`${formOptions.id}__name`}
-								label={t('form:input.name')}
-								responsiveWidth={'75%'}
-								dataTestId={`${formOptions.id}.input.name`}
-								required
-							/>
-						</Form.Row>
-					)}
-				/>
-			</Section>
-			<Section>
-				<Controller
-					name="active"
-					control={control}
-					rules={{}}
-					render={({ field: { onChange, onBlur, value, ref, name } }) => (
-						<Form.Row errors={[]}>
-							<Input.SwitchControl
-								onChange={onChange}
-								onBlur={onBlur}
-								checked={value}
-								name={name}
-								id={`${formOptions.id}__active`}
-								dataTestId={`${formOptions.id}.switch.active`}
-								label={t('form:input.active')}
-							/>
-						</Form.Row>
-					)}
-				/>
-			</Section>
-			{/*  ============ \\ Main form body ============ */}
-		</Form.Base>
-	);
-};
-
 const UploadsDetailNewForm = ({
 	detailData,
 	onSubmit,
@@ -162,14 +71,9 @@ const UploadsDetailNewForm = ({
 	};
 	*/
 
-	const uploaderChangeHandler = (sources: any[]) => {
-		//
-		console.log('sources', sources);
-
-		setSources(sources);
-	};
+	const uploaderChangeHandler = (sources: any[]) => setSources(sources);
 	const uploaderResetHandler = () => {
-		//
+		setSources([]);
 	};
 
 	// Model options list
@@ -205,42 +109,14 @@ const UploadsDetailNewForm = ({
 					style={{ marginRight: '.75rem' }}
 				/>
 			</ModuleViewHeading>
-
-			{/*
-
-			*/}
-
-			<div>
-				{sources.map((src) => (
-					<div>source ... {JSON.stringify(src)}</div>
-				))}
-			</div>
-
+			<div>sources length: {sources.length}</div>
 			<Uploader
 				onChange={uploaderChangeHandler}
 				onReset={uploaderResetHandler}
-				multiple
+				language={lang}
+				languageList={languageList}
+				withForm
 			/>
-			{/*
-			<Section>
-				<Button
-					// type="submit"
-					variant="contained"
-					// disabled={!isValid}
-					dataTestId={`Uploader.button.submit`}
-				>
-					{t('button.create')}
-				</Button>
-				<Button
-					variant="outlined"
-					color="secondary"
-					onClick={cancelHandler}
-					dataTestId={`Uploader.button.return`}
-				>
-					{t('button.return')}
-				</Button>
-			</Section>
-			*/}
 		</>
 	);
 };
