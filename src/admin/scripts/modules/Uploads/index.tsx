@@ -45,6 +45,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		updateUploads,
 		toggleUploads,
 		deleteUploads,
+		reloadUploads,
 		uploads_loading,
 		uploads_error,
 	} = useUploads();
@@ -100,12 +101,10 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const detailSubmitHandler = (data: UploadsItemProps) => {
 		const master: UploadsItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
-
 		if (master.id == 'new') {
 			createUploads(master).then((response) => {
-				console.log('create response', response);
-
+				// console.log('create response', response);
+				reloadUploads();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -115,8 +114,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 			});
 		} else {
 			updateUploads(master).then((response) => {
-				console.log('update response', response);
-
+				// console.log('create response', response);
+				reloadUploads();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -164,11 +163,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 
-		console.log('AJAX ... toggle ...', master);
-
 		toggleUploads(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadUploads();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -183,11 +179,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 
-			console.log('AJAX ... delete ...', master);
-
 			deleteUploads(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadUploads();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

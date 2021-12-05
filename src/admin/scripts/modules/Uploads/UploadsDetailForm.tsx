@@ -18,6 +18,7 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
+import Uploader from '../../components/Uploader';
 
 interface UploadsDetailFormProps {
 	detailData: UploadsItemProps;
@@ -51,12 +52,13 @@ const UploadsDetailForm = ({
 		route: ROUTES.app.uploads,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
-		mode: 'all',
-		defaultValues: {
-			...detailData,
-		},
-	});
+	const { control, handleSubmit, reset, register, formState, setValue } =
+		useForm({
+			mode: 'all',
+			defaultValues: {
+				...detailData,
+			},
+		});
 	const { isDirty, isValid } = formState;
 
 	const submitHandler = (data: UploadsItemProps, e: any) => onSubmit(data, e);
@@ -103,6 +105,17 @@ const UploadsDetailForm = ({
 				</Button>
 			</>
 		);
+	};
+
+	const uploaderChangeHandler = (blob: any, file: any, type: string) => {
+		setValue('fileBase64', blob);
+		setValue('name', file.name.split('.').slice(0, -1).join('.'));
+		setValue('type', type);
+	};
+	const uploaderResetHandler = () => {
+		setValue('fileBase64', '');
+		setValue('name', '');
+		setValue('type', 'unknown');
 	};
 
 	// Model options list
@@ -193,7 +206,17 @@ const UploadsDetailForm = ({
 				}
 				secondaryChildren={
 					<>
-						<div>Uploader manager ...</div>
+						<Controller
+							name="fileBase64"
+							control={control}
+							rules={{}}
+							render={({ field: { onChange, onBlur, value, ref, name } }) => (
+								<Uploader
+									onChange={uploaderChangeHandler}
+									onReset={uploaderResetHandler}
+								/>
+							)}
+						/>
 					</>
 				}
 			>
@@ -223,7 +246,6 @@ const UploadsDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>
