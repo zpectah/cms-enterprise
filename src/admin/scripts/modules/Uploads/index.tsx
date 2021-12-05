@@ -18,6 +18,7 @@ import { useSettings } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import UploadsDetailForm from './UploadsDetailForm';
+import UploadsDetailNewForm from './UploadsDetailNewForm';
 import { useToasts } from '../../hooks/common';
 import { getLanguagesFields } from '../../utils/detail';
 
@@ -214,17 +215,32 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 			{Uploads ? (
 				<>
 					{detail && detailData ? (
-						<UploadsDetailForm
-							detailData={detailData}
-							detailOptions={moduleObject.detail}
-							onSubmit={detailSubmitHandler}
-							onSubmitError={detailSubmitErrorHandler}
-							onCancel={detailCancelHandler}
-							onDelete={(id) => itemDeleteHandler([id])}
-							languageList={Settings?.language_active}
-							languageDefault={Settings?.language_default}
-							onCreateCallback={createNewCallback}
-						/>
+						<>
+							{detail == 'new' ? (
+								<UploadsDetailNewForm
+									detailData={detailData}
+									detailOptions={moduleObject.detail}
+									onSubmit={detailSubmitHandler}
+									onSubmitError={detailSubmitErrorHandler}
+									onCancel={detailCancelHandler}
+									languageList={Settings?.language_active}
+									languageDefault={Settings?.language_default}
+									onCreateCallback={createNewCallback}
+								/>
+							) : (
+								<UploadsDetailForm
+									detailData={detailData}
+									detailOptions={moduleObject.detail}
+									onSubmit={detailSubmitHandler}
+									onSubmitError={detailSubmitErrorHandler}
+									onCancel={detailCancelHandler}
+									onDelete={(id) => itemDeleteHandler([id])}
+									languageList={Settings?.language_active}
+									languageDefault={Settings?.language_default}
+									onCreateCallback={createNewCallback}
+								/>
+							)}
+						</>
 					) : (
 						<DataTable
 							model={moduleObject.model}

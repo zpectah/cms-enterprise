@@ -26,9 +26,16 @@ interface UploaderProps {
 	onReset?: () => void;
 	accept?: string;
 	aspect?: number;
+	multiple?: boolean;
 }
 
-const Uploader = ({ onChange, onReset, accept, aspect }: UploaderProps) => {
+const Uploader = ({
+	onChange,
+	onReset,
+	accept,
+	aspect,
+	multiple,
+}: UploaderProps) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
 	const [file, setFile] = useState(null);
