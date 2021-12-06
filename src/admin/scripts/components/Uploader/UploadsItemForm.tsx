@@ -65,15 +65,6 @@ const UploadsItemForm = ({
 		>
 			{/*  ============ Main form body ============ */}
 			<Section>
-				<Button
-					variant="outlined"
-					color="error"
-					onClick={() => onRemove(index)}
-				>
-					{t('button.removeFromQueue')}
-				</Button>
-			</Section>
-			<Section>
 				<Controller
 					name="active"
 					control={control}
@@ -107,6 +98,7 @@ const UploadsItemForm = ({
 								name={name}
 								id={`${formOptions.id}__name`}
 								label={t('form:input.name')}
+								responsiveWidth={'50%'}
 								dataTestId={`${formOptions.id}.input.name`}
 								required
 							/>

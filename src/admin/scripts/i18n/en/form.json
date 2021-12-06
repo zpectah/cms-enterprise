@@ -74,6 +74,7 @@
       "label": {
         "files_in_queue": "Files in queue",
         "drop_files_here": "Drop files here",
+        "select_file_to_upload": "Select or drop your file to upload",
         "select_files_to_upload": "Select or drop your files to upload",
         "file_name": "File name",
         "file_mime": "Mime type",

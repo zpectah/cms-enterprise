@@ -52,6 +52,8 @@ const UploaderInputLabel = styled.label`
 	position: relative;
 
 	& input {
+		width: 1px;
+		height: 1px;
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -92,6 +94,8 @@ interface UploaderProps {
 	language?: string;
 	languageList?: string[];
 	widthHeading?: boolean;
+	multiple?: boolean;
+	avatarOnly?: boolean;
 }
 
 const Uploader: React.FC<UploaderProps> = ({
@@ -105,6 +109,8 @@ const Uploader: React.FC<UploaderProps> = ({
 	language = config.tmp.languageDefault,
 	languageList = config.tmp.languageList,
 	widthHeading = true,
+	multiple = true,
+	avatarOnly,
 }) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
@@ -120,7 +126,7 @@ const Uploader: React.FC<UploaderProps> = ({
 		id: 'FileUploaderInput',
 		accept: accept,
 		ref: inputFileRef,
-		multiple: true,
+		multiple: multiple,
 		onChange: (e: any) => {
 			let tmp,
 				files = [...e.target?.files];
@@ -139,7 +145,15 @@ const Uploader: React.FC<UploaderProps> = ({
 			setDragOver(false);
 			if (files) {
 				tmp = files.map((file) => getBlobSource(file));
-				setRawFileList(tmp);
+				if (!multiple) {
+					let n_tmp = [tmp[0]];
+					setRawFileList(n_tmp);
+					if (files.length > 1) {
+						console.warn('Only one file is allowed to drop');
+					}
+				} else {
+					setRawFileList(tmp);
+				}
 			}
 		},
 		onDragOver: (e: any) => {
@@ -212,8 +226,16 @@ const Uploader: React.FC<UploaderProps> = ({
 
 	const cropChangeHandler = (blob: any, index: number) => {
 		let tmp = [...fileList];
-		tmp[index].fileBase64_cropped = blob;
-		onChange(tmp, formsValid);
+		if (avatarOnly) {
+			// Resize image only for avatar picker
+			fileUtils.resizeBase64Image(blob, 150, 150).then((result) => {
+				tmp[index].fileBase64_cropped = result;
+				onChange(tmp, formsValid);
+			});
+		} else {
+			tmp[index].fileBase64_cropped = blob;
+			onChange(tmp, formsValid);
+		}
 	};
 	const formChangeHandler = (
 		model: any,
@@ -322,15 +344,24 @@ const Uploader: React.FC<UploaderProps> = ({
 				{fileList.length == 0 ? (
 					<>
 						{children ? (
-							<>children</>
+							<>
+								<UploaderInputLabel htmlFor={inputFileProps.name}>
+									{children}
+									<input {...inputFileProps} />
+								</UploaderInputLabel>
+							</>
 						) : (
 							<UploaderInputWrapper>
 								<UploaderInputInner>
 									<UploaderInputLabel htmlFor={inputFileProps.name}>
 										<UploaderInputLabelText>
-											{t(
-												'form:form.UploadsDetail.label.select_files_to_upload',
-											)}
+											{multiple
+												? t(
+														'form:form.UploadsDetail.label.select_files_to_upload',
+												  )
+												: t(
+														'form:form.UploadsDetail.label.select_file_to_upload',
+												  )}
 										</UploaderInputLabelText>
 										<input {...inputFileProps} />
 									</UploaderInputLabel>
@@ -348,6 +379,9 @@ const Uploader: React.FC<UploaderProps> = ({
 										cropChangeHandler(fileBase64, index)
 									}
 									aspect={aspect}
+									avatarOnly={avatarOnly}
+									onConfirm={() => {}}
+									onCancel={() => removeFromQueue(index)}
 								/>
 							) : (
 								<OtherFormatsBlock>

@@ -207,13 +207,41 @@ export const file = {
 	},
 	formatBytes: function (bytes, decimals = 2) {
 		if (bytes === 0) return '0 B';
-
 		const k = 1024;
 		const dm = decimals < 0 ? 0 : decimals;
 		const sizes = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
 		const i = Math.floor(Math.log(bytes) / Math.log(k));
 
 		return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+	},
+	resizeBase64Image: function (base64Str, maxWidth = 250, maxHeight = 250) {
+		return new Promise((resolve) => {
+			let img = new Image();
+			img.src = base64Str;
+			img.onload = () => {
+				let canvas = document.createElement('canvas');
+				const MAX_WIDTH = maxWidth;
+				const MAX_HEIGHT = maxHeight;
+				let width = img.width;
+				let height = img.height;
+
+				if (width > height) {
+					if (width > MAX_WIDTH) {
+						height *= MAX_WIDTH / width;
+						width = MAX_WIDTH;
+					}
+				} else {
+					if (height > MAX_HEIGHT) {
+						width *= MAX_HEIGHT / height;
+						height = MAX_HEIGHT;
+					}
+				}
+				canvas.width = width;
+				canvas.height = height;
+				let ctx = canvas.getContext('2d');
+				ctx.drawImage(img, 0, 0, width, height);
+				resolve(canvas.toDataURL());
+			};
+		});
 	},
 };

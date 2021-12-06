@@ -18,7 +18,8 @@
     "clearAll": "Clear all",
     "removeFromQueue": "Remove from queue",
     "clearQueue": "Clear queue",
-    "submitQueue": "Submit queue"
+    "submitQueue": "Submit queue",
+    "close": "Close"
   },
   "new": {
     "Categories": "New category",

@@ -249,6 +249,7 @@ const UsersDetailForm = ({
 				<div>
 					<input type="hidden" {...register('id', { required: true })} />
 					<input type="hidden" {...register('description', {})} />
+					<input type="hidden" {...register('img_avatar', {})} />
 				</div>
 				<Section>
 					<Controller
@@ -380,9 +381,23 @@ const UsersDetailForm = ({
 						)}
 					/>
 				</Section>
+				{/*
 				<Section>
-					<Picker.Uploads value={''} onChange={() => {}} avatar />
+					<Controller
+						name="img_avatar"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Avatar
+									value={value}
+									onChange={(blob) => onChange(blob)}
+								/>
+							</Form.Row>
+						)}
+					/>
 				</Section>
+				*/}
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

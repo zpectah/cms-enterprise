@@ -3,6 +3,7 @@ import CategoriesPicker from './CategoriesPicker';
 import TagsPicker from './TagsPicker';
 import PagesPicker from './PagesPicker';
 import MenuItemsPicker from './MenuItemsPicker';
+import AvatarPicker from './AvatarPicker';
 
 export default {
 	Uploads: UploadsPicker,
@@ -10,4 +11,5 @@ export default {
 	Tags: TagsPicker,
 	Pages: PagesPicker,
 	MenuItems: MenuItemsPicker,
+	Avatar: AvatarPicker,
 };

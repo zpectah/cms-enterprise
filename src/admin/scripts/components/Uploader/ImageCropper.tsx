@@ -7,7 +7,7 @@ import config from '../../config';
 import { IMAGE_CROP_OPTIONS } from '../../constants';
 import { getCroppedImg } from '../../utils/image';
 import media from '../../styles/responsive';
-import { Input, Preloader } from '../ui';
+import { Button, Input, Preloader } from '../ui';
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -65,25 +65,38 @@ const CropperOptions = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	background-color: rgba(225, 225, 225, 0.75);
 `;
 const CropperOptionsBlock = styled.div`
 	padding: calc(${(props) => props.theme.spacer} / 2)
 		${(props) => props.theme.spacer};
 	display: flex;
-	flex: auto;
+	/* flex: auto; */
 	align-items: center;
 	justify-content: center;
+`;
+const CropperOptionsAltBlock = styled(CropperOptionsBlock)`
+	flex: auto;
 `;
 
 interface ImageCropperProps {
 	onChange: (fileBase64: Blob) => void;
 	src: Blob;
 	aspect?: number;
+	avatarOnly?: boolean;
+	onConfirm?: () => void;
+	onCancel?: () => void;
 }
 
-const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
+const ImageCropper = ({
+	onChange,
+	src,
+	aspect = 1 / 1,
+	avatarOnly,
+	onConfirm,
+	onCancel,
+}: ImageCropperProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [crop, setCrop] = useState<{
 		x: number;
@@ -109,7 +122,6 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 			setProcess(false);
 		});
 	}, []);
-
 	const onImageLoad = useCallback((mediaSize) => {
 		setMediaDimensions({
 			w: mediaSize.width,
@@ -121,17 +133,23 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 			setTmpAspect(mediaSize.width / mediaSize.height);
 		}
 	}, []);
-
 	const getRatioOptions = () => {
 		let original = mediaDimensions.w / mediaDimensions.h;
-		let options = [...IMAGE_CROP_OPTIONS];
-		if (original)
+		let options = avatarOnly
+			? [IMAGE_CROP_OPTIONS[0]]
+			: [...IMAGE_CROP_OPTIONS];
+		if (original && !avatarOnly)
 			options.push({
 				label: 'Original',
 				value: original,
 			});
 
 		return options;
+	};
+	const zoomSliderAddProps = {
+		min: 1,
+		max: 4,
+		step: 0.25,
 	};
 
 	function valuetext(value: number) {
@@ -159,25 +177,28 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 			</CropperSource>
 			<CropperOptions>
 				<CropperOptionsBlock>
+					<Button onClick={onCancel}>
+						{avatarOnly ? t('button.close') : t('button.removeFromQueue')}
+					</Button>
+				</CropperOptionsBlock>
+				<CropperOptionsBlock>
 					<small>
 						{area.width} x {area.height}
 					</small>
 				</CropperOptionsBlock>
-				<CropperOptionsBlock>
+				<CropperOptionsAltBlock>
 					<Input.Slider
 						id={`ImageCropper_options_zoom`}
 						getAriaValueText={valuetext}
 						aria-labelledby="ImageCropper_options_zoom_slider"
 						valueLabelDisplay="auto"
 						marks
-						min={1}
-						max={3}
-						step={0.1}
+						{...zoomSliderAddProps}
 						value={zoom}
 						onChange={zoomHandleChange}
 						dataTestId={`ImageCropper.options.zoom`}
 					/>
-				</CropperOptionsBlock>
+				</CropperOptionsAltBlock>
 				<CropperOptionsBlock>
 					<Input.Select
 						id={`ImageCropper_options_aspect`}

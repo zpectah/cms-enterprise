@@ -5,14 +5,9 @@ import { Button, Dialog, Typography } from '../ui';
 interface UploadsPickerProps {
 	value: any;
 	onChange: () => void;
-	avatar?: boolean;
 }
 
-const UploadsPicker = ({
-	value,
-	onChange,
-	avatar = false,
-}: UploadsPickerProps) => {
+const UploadsPicker = ({ value, onChange }: UploadsPickerProps) => {
 	const [dialogOpen, setDialogOpen] = useState(false);
 
 	return (

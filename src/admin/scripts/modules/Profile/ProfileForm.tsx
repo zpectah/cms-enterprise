@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -20,6 +20,7 @@ const ProfileForm = ({
 	onSubmitError,
 }: ProfileFormProps) => {
 	const { t } = useTranslation(['common', 'form', 'messages']);
+	const [tmpAvatar, setTmpAvatar] = useState<any>(null);
 
 	const formOptions: formLayoutObjectProps = {
 		model: 'Profile',
@@ -70,7 +71,22 @@ const ProfileForm = ({
 					<input type="hidden" {...register('active', { required: true })} />
 				</div>
 				<Section>
-					<Picker.Uploads value={''} onChange={() => {}} avatar />
+					<Controller
+						name="img_avatar"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Avatar
+									value={value}
+									onChange={(blob) => {
+										setTmpAvatar(blob);
+										onChange(blob);
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
 				</Section>
 				<Section>
 					<div>{formData.email}</div>
@@ -190,7 +206,7 @@ const ProfileForm = ({
 									name={name}
 									id={`${formOptions.id}__description`}
 									label={t('form:input.description')}
-									responsiveWidth={'75%'}
+									// responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.description`}
 									multiline
 									rows={5}
