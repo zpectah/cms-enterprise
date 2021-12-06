@@ -60,7 +60,7 @@ class Uploads {
         ];
 
         // upload result
-        $uploadedFile = $utils -> upload_file($data['fileBase64'], $data['name'], $data['extension'], $data['type']);
+        $uploadedFile = $utils -> upload_file($data['fileBase64'], $data['fileBase64_cropped'], $data['name'], $data['file_extension'], $data['type']);
 
         // execute
         if ($uploadedFile) {
@@ -117,11 +117,11 @@ class Uploads {
                 $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
-                    'UPDATE uploads__' . $lang . ' SET label = ?, WHERE id = ?',
+                    'UPDATE uploads__' . $lang . ' SET label = ? WHERE id = ?',
                     'si',
                     [
                         $data['lang'][$lang]['label'],
-                        $data['lang'][$lang]['id']
+                        $data['id']
                     ]
                 );
             }

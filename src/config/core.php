@@ -33,7 +33,7 @@ const SESSION_USER_TOKEN_PREFIX =                         'cms_enterprise_token'
 define( "PATH_UPLOADS",                                   PATH_ROOT . $JSON_PROJECT['path']['uploads'] );
 define( "PATH_LOGS",                                      PATH_ROOT . $JSON_PROJECT['path']['logs'] );
 define( "PATH_ASSETS",                                    PATH_ROOT . $JSON_PROJECT['path']['assets'] );
-define( "UPLOADS_IMAGE_FORMATS",                          $JSON_OPTIONS['model']['uploads']['image']['format'] );
+define( "UPLOADS_IMAGE_FORMATS",                          $JSON_OPTIONS['model']['Uploads']['image']['format'] );
 const URL_USER_LOST_PASSWORD_TOKEN =                      CFG_ENV['root'] . 'admin/lost-password/token/';
 define("ADMIN_VIEW", [
     'meta' => [
@@ -48,6 +48,7 @@ define("ADMIN_VIEW", [
         'url' =>                                          CFG_ENV['root'] . $JSON_PROJECT['path']['admin'],
     ],
     'scripts' =>                                          CFG_ENV['admin']['scripts'],
+    'hash' =>                                             $utils -> getRandomString(16, 'lower'),
 ]);
 define("WEB_VIEW", [
     'meta' => [
@@ -63,4 +64,5 @@ define("WEB_VIEW", [
     ],
     'styles' =>                                           CFG_ENV['web']['styles'],
     'scripts' =>                                          CFG_ENV['web']['scripts'],
+    'hash' =>                                             $utils -> getRandomString(16, 'lower'),
 ]);

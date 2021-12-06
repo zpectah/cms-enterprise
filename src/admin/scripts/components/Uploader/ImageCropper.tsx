@@ -7,42 +7,91 @@ import config from '../../config';
 import { IMAGE_CROP_OPTIONS } from '../../constants';
 import { getCroppedImg } from '../../utils/image';
 import media from '../../styles/responsive';
-import { Input } from '../ui';
+import { Input, Preloader } from '../ui';
 
-const Wrapper = styled.div``;
-const CropperSource = styled.div`
+const Wrapper = styled.div`
 	width: 100%;
-	min-height: 250px;
-	padding: 1rem;
+	height: 750px;
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	position: relative;
+`;
+const CropperSource = styled.div`
+	width: 100%;
+	height: 100%;
+	padding: calc(${(props) => props.theme.spacer} * 1.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	left: 0;
 	background-color: rgba(25, 25, 25, 0.9);
 
 	${media.min.md} {
-		width: 50%;
-		min-height: 50vh;
 	}
 `;
-const CropperOutput = styled.div``;
-const CropperOptions = styled.div``;
+const CropperOutput = styled.div`
+	width: 35vw;
+	height: 35vw;
+	padding: ${(props) => props.theme.spacer};
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(25, 25, 25, 0.5);
+
+	& img {
+		max-width: 100%;
+		height: auto;
+		max-height: 100%;
+		display: block;
+	}
+
+	${media.min.md} {
+		width: 15vw;
+		height: 15vw;
+	}
+`;
+const CropperOptions = styled.div`
+	width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	background-color: rgba(225, 225, 225, 0.75);
+`;
+const CropperOptionsBlock = styled.div`
+	padding: calc(${(props) => props.theme.spacer} / 2)
+		${(props) => props.theme.spacer};
+	display: flex;
+	flex: auto;
+	align-items: center;
+	justify-content: center;
+`;
 
 interface ImageCropperProps {
 	onChange: (
-		blob: any, // TODO
+		fileBase64: any, // TODO
 	) => void;
 	src: any; // TODO
 	aspect?: number;
 }
 
 const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
+	const { t } = useTranslation(['common', 'form']);
 	const [crop, setCrop] = useState<{
 		x: number;
 		y: number;
 	}>({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState<number>(1);
-	const [rotation, setRotation] = useState(0);
 	const [croppedImage, setCroppedImage] = useState(null);
 	const [area, setArea] = useState({ width: 0, height: 0 });
 	const [tmpSrc, setTmpSrc] = useState(null);
@@ -50,19 +99,22 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 	const [process, setProcess] = useState(false);
 	const [mediaDimensions, setMediaDimensions] = useState({ w: 0, h: 0 });
 
-	const onCropFinish = useCallback((croppedArea, croppedAreaPixels) => {
-		setProcess(true);
-		setArea({
-			width: croppedAreaPixels.width,
-			height: croppedAreaPixels.height,
-		});
+	const onCropFinish = useCallback(
+		(croppedArea, croppedAreaPixels) => {
+			setProcess(true);
+			setArea({
+				width: croppedAreaPixels.width,
+				height: croppedAreaPixels.height,
+			});
 
-		return getCroppedImg(src, croppedAreaPixels, rotation).then((response) => {
-			setCroppedImage(response);
-			onChange(response);
-			setProcess(false);
-		});
-	}, []);
+			return getCroppedImg(src, croppedAreaPixels, 0).then((response) => {
+				setCroppedImage(response);
+				onChange(response);
+				setProcess(false);
+			});
+		},
+		[src],
+	);
 
 	const onImageLoad = useCallback((mediaSize) => {
 		setMediaDimensions({
@@ -96,8 +148,6 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 
 	const zoomHandleChange = (event: any, newValue: number) => setZoom(newValue);
 
-	// const angleHandleChange = (event: any, newValue: number) => setRotation(newValue);
-
 	useEffect(() => setTmpSrc(src), [src]);
 
 	return (
@@ -107,7 +157,6 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 					image={tmpSrc}
 					crop={crop}
 					zoom={zoom}
-					rotation={rotation}
 					aspect={tmpAspect}
 					onCropChange={setCrop}
 					onCropComplete={onCropFinish}
@@ -117,14 +166,16 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 				/>
 			</CropperSource>
 			<CropperOptions>
-				...CropperOptions...
-				<small>
-					{area.width} x {area.height}
-				</small>
-				<div>
+				<CropperOptionsBlock>
+					<small>
+						{area.width} x {area.height}
+					</small>
+				</CropperOptionsBlock>
+				<CropperOptionsBlock>
 					<Input.Slider
+						id={`ImageCropper_options_zoom`}
 						getAriaValueText={valuetext}
-						aria-labelledby="zoom-slider"
+						aria-labelledby="ImageCropper_options_zoom_slider"
 						valueLabelDisplay="auto"
 						marks
 						min={1}
@@ -132,43 +183,24 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 						step={0.1}
 						value={zoom}
 						onChange={zoomHandleChange}
-						style={{ width: '50%' }}
+						dataTestId={`ImageCropper.options.zoom`}
 					/>
-				</div>
-				{/*
-				<div>
-					<Input.Slider
-						getAriaValueText={valuetext}
-						aria-labelledby="discrete-slider"
-						valueLabelDisplay="auto"
-						marks
-						min={0}
-						max={360}
-						step={1}
-						value={rotation}
-						onChange={angleHandleChange}
-						style={{ width: '50%' }}
-					/>
-				</div>
-				*/}
-				<div>
+				</CropperOptionsBlock>
+				<CropperOptionsBlock>
 					<Input.Select
-						// id={`${formOptions.id}__type.label`}
-						// labelId={`${formOptions.id}__type.label`}
-						// label={t('form:input.type')}
+						id={`ImageCropper_options_aspect`}
+						labelId={`ImageCropper_options_aspect`}
 						onChange={(e: any) => {
 							setTmpAspect(e.target.value);
 						}}
-						// onBlur={onBlur}
 						value={tmpAspect}
-						// name={name}
 						options={getRatioOptions()}
-						// dataTestId={`${formOptions.id}.select.type`}
+						dataTestId={`ImageCropper.options.aspect`}
 					/>
-				</div>
+				</CropperOptionsBlock>
 			</CropperOptions>
 			<CropperOutput>
-				...ImageCropper...output...
+				{process && <Preloader.Block />}
 				{croppedImage && <img src={croppedImage} alt={'cropped image'} />}
 			</CropperOutput>
 		</Wrapper>

@@ -1,16 +1,23 @@
-import React, { MouseEventHandler, useEffect, useState, useRef } from 'react';
+import React, {
+	MouseEventHandler,
+	useEffect,
+	useState,
+	useRef,
+	useCallback,
+} from 'react';
 import _ from 'lodash';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import config from '../../config';
 import { file as fileUtils } from '../../../../../utils/utils';
+import { UploadsItemProps, UploadsItemLangProps } from '../../types/model';
 import { getFileType } from '../../utils/getFileType';
 import { Button, Form, Input, Section } from '../ui';
 import ImageCropper from './ImageCropper';
-import { formLayoutObjectProps } from '../../types/app';
+import UploadsItemForm from './UploadsItemForm';
 import { getLanguagesFields } from '../../utils/detail';
-import config from '../../config';
 
 const HiddenDropWrapper = styled.label`
 	width: 100%;
@@ -25,145 +32,39 @@ const HiddenDropWrapper = styled.label`
 	background-color: rgba(25, 25, 25, 0.5);
 	color: rgb(250, 250, 250);
 `;
+const UploaderInput = styled.div``;
+const UploaderHeading = styled.div`
+	width: 100%;
+	margin-bottom: ${(props) => props.theme.spacer};
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+`;
+const UploadItemsWrapper = styled.div``;
+const UploadItemFormWrapper = styled.div`
+	margin-top: ${(props) => props.theme.spacer};
+`;
+const OtherFormatsBlock = styled.div`
+	padding: ${(props) => props.theme.spacer};
+	display: flex;
+	align: center;
+	justify-content: center;
+`;
 
 interface UploaderProps {
-	onChange: (sources: any[]) => void;
+	onChange: (sources: any[], valid: boolean) => void;
 	onReset?: () => void;
 	accept?: string;
 	aspect?: number;
 	withForm?: boolean;
 	language?: string;
 	languageList?: string[];
+	widthHeading?: boolean;
 }
 
-interface UploadItemFormProps {
-	file: any;
-	index: number;
-	onModelChange: (
-		model: any,
-		index: number,
-		dirty: boolean,
-		valid: boolean,
-	) => void;
-	language: string;
-	languageList: string[];
-}
-
-const UploadItemForm = ({
-	file,
-	index,
-	onModelChange,
-	language,
-	languageList,
-}: UploadItemFormProps) => {
-	const { t } = useTranslation(['common', 'form']);
-
-	const getUpdatedModel = () => {
-		const model = { ...file };
-		model['name'] = file.file_name.split('.').slice(0, -1).join('.');
-		model['lang'] = getLanguagesFields(languageList, {
-			label: '',
-		} as any);
-
-		return model;
-	};
-
-	const formOptions: formLayoutObjectProps = {
-		model: 'Uploads',
-		id: `UploadsItemDetailForm_${index}`,
-	};
-	const { control, formState, watch } = useForm({
-		mode: 'all',
-		defaultValues: {
-			...getUpdatedModel(),
-		},
-	});
-	const { isDirty, isValid } = formState;
-	const watchAllFields = watch();
-
-	useEffect(
-		() => onModelChange(watchAllFields, index, isDirty, isValid),
-		[watchAllFields],
-	);
-
-	return (
-		<Form.Base name={formOptions.id} dataTestId={formOptions.id}>
-			{/*  ============ Main form body ============ */}
-			<Section noSpacing>
-				<Controller
-					name="name"
-					control={control}
-					rules={{ required: true }}
-					render={({ field: { onChange, onBlur, value, ref, name } }) => (
-						<Form.Row errors={[]}>
-							<Input.Text
-								onChange={onChange}
-								onBlur={onBlur}
-								value={value}
-								name={name}
-								id={`${formOptions.id}__name`}
-								label={t('form:input.name')}
-								// responsiveWidth={'75%'}
-								dataTestId={`${formOptions.id}.input.name`}
-								required
-							/>
-						</Form.Row>
-					)}
-				/>
-				<Controller
-					name="active"
-					control={control}
-					rules={{}}
-					render={({ field: { onChange, onBlur, value, ref, name } }) => (
-						<Form.Row errors={[]}>
-							<Input.SwitchControl
-								onChange={onChange}
-								onBlur={onBlur}
-								checked={value}
-								name={name}
-								id={`${formOptions.id}__active`}
-								dataTestId={`${formOptions.id}.switch.active`}
-								label={t('form:input.active')}
-							/>
-						</Form.Row>
-					)}
-				/>
-			</Section>
-			<Section noSpacing>
-				{/*  ============ Language part section ============ */}
-				{languageList.map((lng) => {
-					return (
-						<Section key={lng} visible={language == lng}>
-							<Controller
-								name={`lang.${lng}.label`}
-								control={control}
-								rules={{}}
-								render={({ field: { onChange, onBlur, value, ref, name } }) => (
-									<Form.Row errors={[]}>
-										<Input.Text
-											onChange={onChange}
-											onBlur={onBlur}
-											value={value}
-											name={name}
-											id={`${formOptions.id}__${lng}__label`}
-											label={`${t('form:input.label')} (${lng})`}
-											// responsiveWidth={'75%'}
-											dataTestId={`${formOptions.id}.input.${lng}.label`}
-										/>
-									</Form.Row>
-								)}
-							/>
-						</Section>
-					);
-				})}
-				{/*  ============ \\ Language part section ============ */}
-			</Section>
-			{/*  ============ \\ Main form body ============ */}
-		</Form.Base>
-	);
-};
-
-const Uploader = ({
+const Uploader: React.FC<UploaderProps> = ({
+	children,
 	onChange,
 	onReset,
 	accept,
@@ -171,12 +72,14 @@ const Uploader = ({
 	withForm,
 	language = config.tmp.languageDefault,
 	languageList = config.tmp.languageList,
-}: UploaderProps) => {
+	widthHeading = true,
+}) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
 
 	const [rawFileList, setRawFileList] = useState([]);
 	const [fileList, setFileList] = useState([]);
+	const [formsValid, setFormsValid] = useState<boolean>(false);
 
 	const inputFileRef = useRef(null);
 	const inputFileProps = {
@@ -241,18 +144,26 @@ const Uploader = ({
 		const ext = file.name.split('.').pop().toLowerCase();
 		const type = getFileType(ext);
 
-		return {
-			blob: blob,
+		const model = {
+			fileBase64: blob,
+			fileBase64_cropped: null,
 			file_name: file.name,
 			file_extension: ext,
 			file_mime: file.type,
 			file_size: file.size,
-			file_type: type,
-			//
-			name: '',
-			active: true,
-			lang: {},
-		};
+			type: type,
+		} as UploadsItemProps;
+
+		if (withForm) {
+			model['id'] = 'new';
+			model['name'] = file.name.split('.').slice(0, -1).join('.');
+			model['active'] = true;
+			model['lang'] = getLanguagesFields(languageList, {
+				label: '',
+			} as UploadsItemLangProps);
+		}
+
+		return model;
 	};
 
 	const getBlobSource = async (file) => {
@@ -281,8 +192,10 @@ const Uploader = ({
 
 	const cropChangeHandler = (blob: any, index: number) => {
 		let tmp = [...fileList];
-		// tmp[index].blob = blob;
-		onChange(tmp);
+
+		tmp[index].fileBase64_cropped = blob;
+
+		onChange(tmp, formsValid);
 	};
 	const formChangeHandler = (
 		model: any,
@@ -294,7 +207,10 @@ const Uploader = ({
 		tmp[index] = {
 			...model,
 		};
-		onChange(fileList);
+
+		setFormsValid(valid);
+
+		onChange(tmp, valid);
 	};
 
 	const onInit = () => {
@@ -313,9 +229,31 @@ const Uploader = ({
 	const handleSources = () => {
 		Promise.all(rawFileList).then((result) => {
 			setFileList(result);
-			onChange(result);
+			onChange(result, formsValid);
 		});
 	};
+
+	const removeFromQueue = (index: number) => {
+		let tmp = [...fileList];
+
+		tmp.splice(index, 1);
+
+		setFileList(tmp);
+		onChange(tmp, formsValid);
+	};
+
+	const renderForm = (file: any, index: number) => (
+		<UploadItemFormWrapper>
+			<UploadsItemForm
+				file={file}
+				index={index}
+				onModelChange={formChangeHandler}
+				language={language}
+				languageList={languageList}
+				onRemove={removeFromQueue}
+			/>
+		</UploadItemFormWrapper>
+	);
 
 	useEffect(() => {
 		onInit();
@@ -324,16 +262,6 @@ const Uploader = ({
 	}, []);
 
 	useEffect(handleSources, [rawFileList]);
-
-	const renderForm = (file: any, index: number) => (
-		<UploadItemForm
-			file={file}
-			index={index}
-			onModelChange={formChangeHandler}
-			language={language}
-			languageList={languageList}
-		/>
-	);
 
 	return (
 		<>
@@ -345,36 +273,52 @@ const Uploader = ({
 					...drop files here...
 				</HiddenDropWrapper>
 			)}
-			<div>
-				<div>
-					{fileList.length == 0 ? (
-						<div>
-							<input {...inputFileProps} />
+			{widthHeading && (
+				<UploaderHeading>
+					<div>Files in queue: {fileList.length}</div>
+					<div>
+						<Button
+							variant="outlined"
+							color="error"
+							onClick={resetHandler}
+							disabled={fileList.length == 0}
+						>
+							{t('button.clearAll')}
+						</Button>
+					</div>
+				</UploaderHeading>
+			)}
+			<UploadItemsWrapper>
+				{fileList.length == 0 ? (
+					<UploaderInput>
+						{children ? children : <input {...inputFileProps} />}
+					</UploaderInput>
+				) : (
+					fileList.map((file, index) => (
+						<div key={file.file_name} style={{ marginBottom: '1rem' }}>
+							{file.type == 'image' ? (
+								<ImageCropper
+									src={file.fileBase64}
+									onChange={(fileBase64) =>
+										cropChangeHandler(fileBase64, index)
+									}
+									aspect={aspect}
+								/>
+							) : (
+								<OtherFormatsBlock>
+									<br />
+									other file thumb without crop options ... {file.type}
+									<br />
+									<Button onClick={() => removeFromQueue(index)}>
+										{t('button.removeFromQueue')}
+									</Button>
+								</OtherFormatsBlock>
+							)}
+							{withForm && renderForm(file, index)}
 						</div>
-					) : (
-						<div>
-							{fileList.map((file, index) => (
-								<div key={file.file_name}>
-									<span>{file.file_type}</span>
-									{file.file_type == 'image' ? (
-										<ImageCropper
-											src={file.blob}
-											onChange={(blob) => cropChangeHandler(blob, index)}
-											aspect={aspect}
-										/>
-									) : (
-										<div>other file thumb without crop options</div>
-									)}
-									{withForm && renderForm(file, index)}
-								</div>
-							))}
-						</div>
-					)}
-				</div>
-				<div>
-					<Button onClick={resetHandler}>{t('button.clear')}</Button>
-				</div>
-			</div>
+					))
+				)}
+			</UploadItemsWrapper>
 		</>
 	);
 };

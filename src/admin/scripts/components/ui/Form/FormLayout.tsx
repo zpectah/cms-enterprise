@@ -48,6 +48,8 @@ interface FormLayoutProps {
 	footerChildren?: React.ReactElement | React.ReactElement[];
 	footerStackProps?: StackProps;
 	onSubmit?: () => void;
+	onChange?: () => void;
+	onBlur?: () => void;
 	dataTestId?: string;
 	formName?: string;
 }
@@ -60,6 +62,8 @@ const FormLayout: React.FC<FormLayoutProps> = ({
 	footerChildren,
 	footerStackProps,
 	onSubmit,
+	onChange,
+	onBlur,
 	dataTestId = 'form.detail.layout',
 	formName = 'FormDetailLayout',
 }) => {
@@ -76,6 +80,8 @@ const FormLayout: React.FC<FormLayoutProps> = ({
 			<Wrapper
 				name={formName}
 				onSubmit={onSubmit}
+				onChange={onChange}
+				onBlur={onBlur}
 				{...getElTestAttr(dataTestId)}
 			>
 				<ColumnBlock>

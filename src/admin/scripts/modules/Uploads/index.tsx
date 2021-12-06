@@ -106,7 +106,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 			createUploads(master).then((response) => {
 				// console.log('create response', response);
 				reloadUploads();
-				closeDetailHandler();
+				// closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
 					context: 'success',

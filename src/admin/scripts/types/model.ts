@@ -11,7 +11,7 @@ export interface RequestsItemProps {
 }
 
 export interface CategoriesItemLangProps {
-	id: number | string;
+	id?: number | string;
 	title: string;
 	description?: string;
 	content?: string;
@@ -29,7 +29,7 @@ export interface MenuItemProps extends commonItemProps {
 }
 
 export interface MenuItemItemLangProps {
-	id: number | string;
+	id?: number | string;
 	label: string;
 }
 export interface MenuItemItemProps extends commonItemProps {
@@ -43,7 +43,7 @@ export interface MenuItemItemProps extends commonItemProps {
 }
 
 export interface PagesItemLangProps {
-	id: number | string;
+	id?: number | string;
 	title: string;
 	description?: string;
 	content: string;
@@ -56,7 +56,7 @@ export interface PagesItemProps extends commonItemProps {
 }
 
 export interface PostsItemLangProps {
-	id: number | string;
+	id?: number | string;
 	title: string;
 	description?: string;
 	content?: string;
@@ -88,7 +88,7 @@ export interface TagsItemProps extends commonItemProps {
 }
 
 export interface TranslationsItemLangProps {
-	id: number | string;
+	id?: number | string;
 	value: string;
 }
 export interface TranslationsItemProps extends commonItemProps {
@@ -97,17 +97,17 @@ export interface TranslationsItemProps extends commonItemProps {
 }
 
 export interface UploadsItemLangProps {
-	id: number | string;
+	id?: number | string;
 	label: string;
-	description?: string;
 }
 export interface UploadsItemProps extends commonItemProps {
 	name: string;
-	fileBase64?: any; // TODO
+	fileBase64?: Blob; // TODO
+	fileBase64_cropped?: Blob; // TODO
 	file_extension: string;
 	file_name: string;
 	file_mime: string;
-	file_size: string;
+	file_size: number | string;
 	lang: any; // TODO
 }
 

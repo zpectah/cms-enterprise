@@ -151,9 +151,9 @@ const TaskDef = {
 		process.env.NODE_ENV = env;
 		return del.sync(
 			[
-				path + '**/*',
-				`!` + path + CONF.FOLDER.LOGS + `**/*`,
-				`!` + path + CONF.FOLDER.UPLOADS + `**/*`,
+				`${path}**/*`,
+				`!${path}${CONF.FOLDER.LOGS}**`,
+				`!${path}${CONF.FOLDER.UPLOADS}**`,
 			],
 			cb(printMessage(env, 'Clean', true)),
 		);

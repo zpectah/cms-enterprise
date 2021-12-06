@@ -113,7 +113,7 @@ const UploadsDetailForm = ({
 		setValue('type', type);
 	};
 	const uploaderResetHandler = () => {
-		setValue('fileBase64', '');
+		setValue('fileBase64', null);
 		setValue('name', '');
 		setValue('type', 'unknown');
 	};
@@ -161,28 +161,6 @@ const UploadsDetailForm = ({
 						{/*  ============ Form sidebar ============ */}
 						<Section>
 							<Controller
-								name="type"
-								control={control}
-								rules={{ required: true }}
-								render={({ field: { onChange, onBlur, value, ref, name } }) => (
-									<Form.Row errors={[]}>
-										<Input.Select
-											id={`${formOptions.id}__type.label`}
-											labelId={`${formOptions.id}__type.label`}
-											label={t('form:input.type')}
-											onChange={onChange}
-											onBlur={onBlur}
-											value={value}
-											name={name}
-											options={getTypeOptions()}
-											dataTestId={`${formOptions.id}.select.type`}
-										/>
-									</Form.Row>
-								)}
-							/>
-						</Section>
-						<Section>
-							<Controller
 								name="active"
 								control={control}
 								rules={{}}
@@ -213,6 +191,7 @@ const UploadsDetailForm = ({
 				{/*  ============ Main form body ============ */}
 				<div>
 					<input type="hidden" {...register('id', { required: true })} />
+					<input type="hidden" {...register('type', { required: true })} />
 				</div>
 				<Section>
 					<Controller
@@ -235,6 +214,36 @@ const UploadsDetailForm = ({
 							</Form.Row>
 						)}
 					/>
+				</Section>
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.label`}
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__label`}
+												label={`${lng.toUpperCase()}: ${t('form:input.label')}`}
+												dataTestId={`${formOptions.id}.input.${lng}.label`}
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>

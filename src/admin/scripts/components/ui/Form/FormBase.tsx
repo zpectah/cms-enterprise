@@ -6,6 +6,8 @@ interface FormBaseProps {
 	name?: string;
 	dataTestId?: string;
 	onSubmit?: () => void;
+	onChange?: () => void;
+	onBlur?: () => void;
 }
 
 const FormBase: React.FC<FormBaseProps> = (props) => {

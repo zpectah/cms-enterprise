@@ -44,6 +44,7 @@ const UploadsDetailNewForm = ({
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
 	const [sources, setSources] = useState([]);
+	const [uploadsValid, setUploadsValid] = useState(false);
 
 	const submitHandler = (data: UploadsItemProps, e: any) => onSubmit(data, e);
 	const errorSubmitHandler = (errors: any, e: any) => {
@@ -71,8 +72,26 @@ const UploadsDetailNewForm = ({
 	};
 	*/
 
-	const uploaderChangeHandler = (sources: any[]) => setSources(sources);
+	const submitQueue = () => {
+		let length = sources.length;
+		sources.map((source, index) => {
+			onSubmit(source, null);
+
+			if (index == length - 1) {
+				setSources([]);
+				cancelHandler();
+			}
+		});
+	};
+
+	const uploaderChangeHandler = (sources: any[], valid: boolean) => {
+		console.log('sources in detail form ...', sources);
+
+		setUploadsValid(valid);
+		setSources(sources);
+	};
 	const uploaderResetHandler = () => {
+		setUploadsValid(false);
 		setSources([]);
 	};
 
@@ -99,7 +118,6 @@ const UploadsDetailNewForm = ({
 					style={{ marginRight: '.75rem' }}
 				/>
 			</ModuleViewHeading>
-			<div>sources length: {sources.length}</div>
 			<Uploader
 				onChange={uploaderChangeHandler}
 				onReset={uploaderResetHandler}
@@ -107,6 +125,10 @@ const UploadsDetailNewForm = ({
 				languageList={languageList}
 				withForm
 			/>
+			<div>
+				... form actions asi tady ...valid?: {uploadsValid ? 'false' : 'true'}
+				<Button onClick={submitQueue}>Submit queue</Button>
+			</div>
 		</>
 	);
 };

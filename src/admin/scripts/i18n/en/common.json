@@ -14,7 +14,9 @@
     "yes": "Yes",
     "no": "No",
     "edit": "Edit",
-    "clear": "Clear"
+    "clear": "Clear",
+    "clearAll": "Clear all",
+    "removeFromQueue": "Remove from queue"
   },
   "new": {
     "Categories": "New category",

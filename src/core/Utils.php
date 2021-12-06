@@ -147,21 +147,28 @@ class Utils {
         return $response;
     }
 
-    public function upload_file($file_object, $name, $ext, $type) {
+    public function upload_file($file_object, $cropped_file_object, $name, $ext, $type) {
         $response = null;
 
         $file_path = null;
         $file_parts = explode(";base64,", $file_object);
         $file_base64 = base64_decode($file_parts[1]);
 
-        if ($type !== 'undefined') $file_path = PATH_UPLOADS . $type . '/';
+        if ($type !== 'unknown') $file_path = PATH_UPLOADS . $type . '/';
 
         if ($file_path) {
 
+            // Save original file
             $response['original'] = self::put_file($name . '.' . $ext, $file_base64, $file_path);
 
             if ($type == 'image') {
 
+                // Save cropped image
+                $file_cropped_parts = explode(";base64,", $cropped_file_object);
+                $file_cropped_base64 = base64_decode($file_cropped_parts[1]);
+                $response['cropped'] = self::put_file($name . '.' . $ext, $file_cropped_base64, $file_path . 'cropped/');
+
+                // Save by defined sizes and options
                 foreach (UPLOADS_IMAGE_FORMATS as $v) {
                     $response[$v['key']] = self::put_custom_image(
                         $v['width'],
@@ -174,8 +181,6 @@ class Utils {
                         $v['crop']
                     );
                 }
-
-                // TODO: cropped by options
 
             }
 
