@@ -36,14 +36,17 @@ import { oneOfModelItemProps } from '../../../types/model';
 import { Typography, Input } from '../../ui';
 import TableHeader from './TableHeader';
 import { getElTestAttr } from '../../../utils/tests';
+import config from '../../../config';
 
 const StyledRowLink = styled(Typography.Title)`
 	display: inline-flex;
 	cursor: pointer;
 	border-bottom: 1px solid transparent;
+	align-items: center;
+	justify-content: flex-start;
 
 	&:hover {
-		border-bottom-color: ${(props) => props.theme.ui.borderBase};
+		color: ${(props) => props.theme.palette.primary};
 	}
 `;
 
@@ -265,6 +268,38 @@ const Table = ({
 				),
 			});
 
+		if (tableCells.file_name)
+			cells.push({
+				key: 'file_name',
+				padding: 'none',
+				scope: 'row',
+				element: 'th',
+				align: tableCells.file_name[0],
+				width: tableCells.file_name[1],
+				children: (
+					<>
+						<StyledRowLink
+							h6
+							onClick={() => clickDetailHandler(row.id)}
+							dataTestId={`${tableRowIdPrefix}.cell.file_name.link.${row.id}`}
+						>
+							{row.type == 'image' && (
+								<img
+									src={`/${config.project.path.uploads}image/thumbnail/${row.file_name}`}
+									alt={row.name}
+									style={{
+										maxWidth: '36px',
+										height: 'auto',
+										marginRight: '1rem',
+									}}
+								/>
+							)}
+							{row.file_name}
+						</StyledRowLink>
+					</>
+				),
+			});
+
 		// --
 
 		if (tableCells.type)
@@ -303,7 +338,9 @@ const Table = ({
 				),
 			});
 
+		// ****
 		// TODO: new cells
+		// ***
 
 		return cells;
 	};
@@ -313,9 +350,13 @@ const Table = ({
 
 		if (tableCells.name) cells.push('name');
 		if (tableCells.email) cells.push('email');
+		if (tableCells.file_name) cells.push('file_name');
 		if (tableCells.type) cells.push('type');
 		if (tableCells.active) cells.push('active');
+
+		// ****
 		// TODO: new cells
+		// ***
 
 		return cells;
 	}, [tableCells]);
@@ -379,6 +420,7 @@ const Table = ({
 												children={cell.children}
 												align={cell.align}
 												width={cell.width}
+												style={{ verticalAlign: 'middle' }}
 											/>
 										))}
 										<TableCell align="right" style={{ width: '125px' }}>

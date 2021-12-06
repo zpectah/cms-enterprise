@@ -1,7 +1,11 @@
 import palette from '../palette';
 
 export default {
-	palette: palette,
+	palette: {
+		...palette,
+		//
+		primary: palette.indigo,
+	},
 	fontSizeBase: '14px',
 	spacer: '1.5rem',
 	transition: {
@@ -39,7 +43,7 @@ export default {
 	},
 	drawer: {
 		header: {
-			height: '60px',
+			height: '62px',
 		},
 	},
 	toasts: {

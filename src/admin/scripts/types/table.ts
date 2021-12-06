@@ -9,8 +9,13 @@ export type cellTypeItemProps = [tableCellAlignType, string];
 export interface cellsTypesProps {
 	name?: cellTypeItemProps;
 	email?: cellTypeItemProps;
+	file_name?: cellTypeItemProps;
 	active?: cellTypeItemProps;
 	type?: cellTypeItemProps;
+
+	// ****
+	// TODO: new cells
+	// ***
 }
 
 export interface tableHeaderCellItemProps {

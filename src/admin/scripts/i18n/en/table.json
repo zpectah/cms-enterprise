@@ -5,7 +5,8 @@
     "email": "E-mail",
     "type": "Type",
     "active": "Active",
-    "actions": "Actions"
+    "actions": "Actions",
+    "file_name": "File name"
   },
   "options": {
     "searchInTable": "Search in table",

@@ -34,6 +34,7 @@ const DrawerSizeXl = styled(DrawerElement)`
 const DrawerHeading = styled.div`
 	width: 100%;
 	height: ${(props) => props.theme.drawer.header.height};
+	display: flex;
 `;
 const HeadingBlock = styled.div`
 	width: 100%;

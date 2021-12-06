@@ -24,15 +24,17 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 
-const UploadSourceWrapper = styled.div`
+const UploadSourceWrapper = styled.div<{ isImage: boolean }>`
 	width: 100%;
-	height: 250px;
+	height: ${(props) => (props.isImage ? '500px' : '100px')};
 	padding: ${(props) => props.theme.spacer};
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(25, 25, 25, 0.5);
+	color: ${(props) => props.theme.palette.light};
+	background-color: ${(props) => props.theme.palette.black};
 	border-radius: 0.5rem;
+	font-size: 1.1rem;
 
 	& img {
 		max-width: 100%;
@@ -48,6 +50,7 @@ const InfoTable = styled.dl`
 
 	& dt {
 		width: 50%;
+		font-weight: 500;
 	}
 	& dd {
 		width: 50%;
@@ -247,7 +250,7 @@ const UploadsDetailForm = ({
 					{/*  ============ \\ Language part section ============ */}
 				</Section>
 				<Section>
-					<UploadSourceWrapper>
+					<UploadSourceWrapper isImage={detailData.type == 'image'}>
 						{detailData.type == 'image' ? (
 							<img
 								src={`/${config.project.path.uploads}image/${detailData.file_name}`}

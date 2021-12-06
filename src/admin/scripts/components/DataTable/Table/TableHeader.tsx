@@ -46,12 +46,20 @@ const TableHeader = ({
 	tableCells,
 }: TableHeaderProps) => {
 	const { t } = useTranslation(['common', 'components', 'table']);
-
 	const getHeadCells = () => {
-		// !!! Keep same order as getBodyCells(row) in Table/index.ts !!!
-		const cellTypes: string[] = ['name', 'email', 'type', 'active']; // TODO: new cells
-		const cells = [] as tableHeaderCellItemProps[];
+		const cellTypes: string[] = [
+			// !!! Keep same order as getBodyCells(row) in Table/index.ts !!!
+			'name',
+			'email',
+			'file_name',
+			'type',
+			'active',
 
+			// ****
+			// TODO: new cells
+			// ***
+		];
+		const cells = [] as tableHeaderCellItemProps[];
 		cellTypes.map((type) => {
 			if (tableCells[type])
 				cells.push({
@@ -64,7 +72,6 @@ const TableHeader = ({
 
 		return cells;
 	};
-
 	const createSortHandler =
 		(property: keyof any) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);

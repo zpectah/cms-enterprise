@@ -37,7 +37,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
-
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const {
@@ -58,7 +58,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		detail: {},
 		table: {
 			tableCells: {
-				name: ['left', 'auto'],
+				file_name: ['left', 'auto'],
 				type: ['left', '150px'],
 				active: ['right', '125px'],
 			},
@@ -98,15 +98,16 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: UploadsItemProps) => {
 		const master: UploadsItemProps = _.cloneDeep(data);
+		setProcessing(true);
 		if (master.id == 'new') {
 			createUploads(master).then((response) => {
 				reloadUploads();
-				// closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateUploads(master).then((response) => {
@@ -117,6 +118,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -156,6 +158,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
+		setProcessing(true);
 		toggleUploads(master).then((response) => {
 			reloadUploads();
 			setSelectedItems([]);
@@ -164,6 +167,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -171,6 +175,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
+			setProcessing(true);
 			deleteUploads(master).then((response) => {
 				reloadUploads();
 				setSelectedItems([]);
@@ -180,6 +185,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -252,6 +258,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

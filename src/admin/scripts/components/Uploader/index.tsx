@@ -48,6 +48,21 @@ const UploaderInputInner = styled.div`
 	align-items: center;
 	justify-content: center;
 `;
+const UploaderInputLabel = styled.label`
+	position: relative;
+
+	& input {
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		z-index: -1;
+	}
+`;
+const UploaderInputLabelText = styled.span`
+	padding: ${(props) => props.theme.spacer};
+	cursor: pointer;
+`;
 const UploaderHeading = styled.div`
 	width: 100%;
 	margin-bottom: ${(props) => props.theme.spacer};
@@ -267,7 +282,7 @@ const Uploader: React.FC<UploaderProps> = ({
 			{dragOver && (
 				<HiddenDropWrapper
 					onDragLeave={dragEvents.onDragLeave}
-					htmlFor="FileUploaderInput"
+					htmlFor={inputFileProps.name}
 				>
 					<Stack spacing={2} direction="column" alignItems="center">
 						<div>
@@ -311,7 +326,14 @@ const Uploader: React.FC<UploaderProps> = ({
 						) : (
 							<UploaderInputWrapper>
 								<UploaderInputInner>
-									<input {...inputFileProps} />
+									<UploaderInputLabel htmlFor={inputFileProps.name}>
+										<UploaderInputLabelText>
+											{t(
+												'form:form.UploadsDetail.label.select_files_to_upload',
+											)}
+										</UploaderInputLabelText>
+										<input {...inputFileProps} />
+									</UploaderInputLabel>
 								</UploaderInputInner>
 							</UploaderInputWrapper>
 						)}

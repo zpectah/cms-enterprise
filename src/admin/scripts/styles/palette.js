@@ -20,6 +20,7 @@ export default {
 	blueGrey: 'rgb(69,90,100)',
 	white: 'rgb(253,253,253)',
 	black: 'rgb(2,2,2)',
+	//
 	light: 'rgb(250,250,250)',
 	dark: 'rgb(25,25,25)',
 	lightDark: 'rgb(230,230,230)',
