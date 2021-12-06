@@ -8,6 +8,8 @@ import React, {
 import _ from 'lodash';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import Stack from '@mui/material/Stack';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styled from 'styled-components';
 
 import config from '../../config';
@@ -29,10 +31,23 @@ const HiddenDropWrapper = styled.label`
 	top: 0;
 	left: 0;
 	z-index: 1250;
-	background-color: rgba(25, 25, 25, 0.5);
+	background-color: rgba(25, 25, 25, 0.75);
 	color: rgb(250, 250, 250);
 `;
-const UploaderInput = styled.div``;
+const UploaderInputWrapper = styled.div`
+	width: 100%;
+	height: 100px;
+	display: block;
+	border: 5px dashed rgba(25, 25, 25, 0.5);
+	border-radius: 0.5rem;
+`;
+const UploaderInputInner = styled.div`
+	width: 100%;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
 const UploaderHeading = styled.div`
 	width: 100%;
 	margin-bottom: ${(props) => props.theme.spacer};
@@ -55,6 +70,7 @@ const OtherFormatsBlock = styled.div`
 interface UploaderProps {
 	onChange: (sources: any[], valid: boolean) => void;
 	onReset?: () => void;
+	onSubmit?: () => void;
 	accept?: string;
 	aspect?: number;
 	withForm?: boolean;
@@ -67,6 +83,7 @@ const Uploader: React.FC<UploaderProps> = ({
 	children,
 	onChange,
 	onReset,
+	onSubmit,
 	accept,
 	aspect,
 	withForm,
@@ -270,29 +287,53 @@ const Uploader: React.FC<UploaderProps> = ({
 					onDragLeave={dragEvents.onDragLeave}
 					htmlFor="FileUploaderInput"
 				>
-					...drop files here...
+					<Stack spacing={2} direction="column" alignItems="center">
+						<div>
+							<CloudUploadIcon fontSize="large" />
+						</div>
+						{t('form:form.UploadsDetail.label.drop_files_here')}
+					</Stack>
 				</HiddenDropWrapper>
 			)}
 			{widthHeading && (
 				<UploaderHeading>
-					<div>Files in queue: {fileList.length}</div>
-					<div>
+					<Stack direction="row" alignItems="center">
+						{t('form:form.UploadsDetail.label.files_in_queue')}:{' '}
+						<b>{fileList.length}</b>
+					</Stack>
+					<Stack spacing={2} direction="row">
+						<Button
+							variant="contained"
+							color="success"
+							onClick={onSubmit}
+							disabled={fileList.length == 0}
+						>
+							{t('button.submitQueue')}
+						</Button>
 						<Button
 							variant="outlined"
 							color="error"
 							onClick={resetHandler}
 							disabled={fileList.length == 0}
 						>
-							{t('button.clearAll')}
+							{t('button.clearQueue')}
 						</Button>
-					</div>
+					</Stack>
 				</UploaderHeading>
 			)}
 			<UploadItemsWrapper>
 				{fileList.length == 0 ? (
-					<UploaderInput>
-						{children ? children : <input {...inputFileProps} />}
-					</UploaderInput>
+					<>
+						{children ? (
+							<>children</>
+						) : (
+							<UploaderInputWrapper>
+								<UploaderInputInner>
+									<input {...inputFileProps} />
+								</UploaderInputInner>
+							</UploaderInputWrapper>
+						)}
+					</>
 				) : (
 					fileList.map((file, index) => (
 						<div key={file.file_name} style={{ marginBottom: '1rem' }}>

@@ -1,8 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import DescriptionIcon from '@mui/icons-material/Description';
+import FilePresentIcon from '@mui/icons-material/FilePresent';
+import MovieIcon from '@mui/icons-material/Movie';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import styled from 'styled-components';
 
 import config from '../../config';
+import { file as fileUtils } from '../../../../../utils/utils';
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { UploadsItemProps } from '../../types/model';
@@ -18,7 +24,37 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
-import Uploader from '../../components/Uploader';
+
+const UploadSourceWrapper = styled.div`
+	width: 100%;
+	height: 250px;
+	padding: ${(props) => props.theme.spacer};
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(25, 25, 25, 0.5);
+	border-radius: 0.5rem;
+
+	& img {
+		max-width: 100%;
+		height: auto;
+		max-height: 100%;
+		display: block;
+	}
+`;
+
+const InfoTable = styled.dl`
+	width: 100%;
+	display: flex;
+
+	& dt {
+		width: 50%;
+	}
+	& dd {
+		width: 50%;
+		margin-left: 0;
+	}
+`;
 
 interface UploadsDetailFormProps {
 	detailData: UploadsItemProps;
@@ -85,16 +121,14 @@ const UploadsDetailForm = ({
 				>
 					{detailData.id == 'new' ? t('button.create') : t('button.update')}
 				</Button>
-				{detailData.id !== 'new' && (
-					<Button
-						variant="outlined"
-						color="error"
-						onClick={deleteHandler}
-						dataTestId={`${formOptions.id}.button.delete`}
-					>
-						{t('button.delete')}
-					</Button>
-				)}
+				<Button
+					variant="outlined"
+					color="error"
+					onClick={deleteHandler}
+					dataTestId={`${formOptions.id}.button.delete`}
+				>
+					{t('button.delete')}
+				</Button>
 				<Button
 					variant="outlined"
 					color="secondary"
@@ -179,42 +213,30 @@ const UploadsDetailForm = ({
 								)}
 							/>
 						</Section>
+						<Section>
+							<InfoTable>
+								<dt>{t('form:form.UploadsDetail.label.file_name')}</dt>
+								<dd>{detailData.file_name}</dd>
+							</InfoTable>
+							<InfoTable>
+								<dt>{t('form:form.UploadsDetail.label.file_mime')}</dt>
+								<dd>{detailData.file_mime}</dd>
+							</InfoTable>
+							<InfoTable>
+								<dt>{t('form:form.UploadsDetail.label.file_size')}</dt>
+								<dd>{fileUtils.formatBytes(detailData.file_size)}</dd>
+							</InfoTable>
+						</Section>
 						{/*  ============ \\ Form sidebar ============ */}
-					</>
-				}
-				secondaryChildren={
-					<>
-						<div>Upload thumbnail or icon</div>
 					</>
 				}
 			>
 				{/*  ============ Main form body ============ */}
 				<div>
 					<input type="hidden" {...register('id', { required: true })} />
+					<input type="hidden" {...register('name', { required: true })} />
 					<input type="hidden" {...register('type', { required: true })} />
 				</div>
-				<Section>
-					<Controller
-						name="name"
-						control={control}
-						rules={{ required: true }}
-						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
-								<Input.Text
-									onChange={onChange}
-									onBlur={onBlur}
-									value={value}
-									name={name}
-									id={`${formOptions.id}__name`}
-									label={t('form:input.name')}
-									responsiveWidth={'75%'}
-									dataTestId={`${formOptions.id}.input.name`}
-									required
-								/>
-							</Form.Row>
-						)}
-					/>
-				</Section>
 				<Section noSpacing>
 					{/*  ============ Language part section ============ */}
 					{languageList.map((lng) => {
@@ -244,6 +266,30 @@ const UploadsDetailForm = ({
 						);
 					})}
 					{/*  ============ \\ Language part section ============ */}
+				</Section>
+				<Section>
+					<UploadSourceWrapper>
+						{detailData.type == 'image' ? (
+							<img
+								src={`/${config.project.path.uploads}image/${detailData.file_name}`}
+								alt={detailData.name}
+							/>
+						) : (
+							<>
+								{
+									{
+										document: <DescriptionIcon fontSize="large" />,
+										archive: <FilePresentIcon fontSize="large" />,
+										audio: <MusicNoteIcon fontSize="large" />,
+										video: <MovieIcon fontSize="large" />,
+									}[detailData.type]
+								}
+								<small style={{ marginLeft: '.5rem' }}>
+									{detailData.file_name}
+								</small>
+							</>
+						)}
+					</UploadSourceWrapper>
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>

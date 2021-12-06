@@ -164,9 +164,11 @@ class Utils {
             if ($type == 'image') {
 
                 // Save cropped image
-                $file_cropped_parts = explode(";base64,", $cropped_file_object);
-                $file_cropped_base64 = base64_decode($file_cropped_parts[1]);
-                $response['cropped'] = self::put_file($name . '.' . $ext, $file_cropped_base64, $file_path . 'cropped/');
+                if ($cropped_file_object) {
+                    $file_cropped_parts = explode(";base64,", $cropped_file_object);
+                    $file_cropped_base64 = base64_decode($file_cropped_parts[1]);
+                    $response['cropped'] = self::put_file($name . '.' . $ext, $file_cropped_base64, $file_path . 'cropped/');
+                }
 
                 // Save by defined sizes and options
                 foreach (UPLOADS_IMAGE_FORMATS as $v) {

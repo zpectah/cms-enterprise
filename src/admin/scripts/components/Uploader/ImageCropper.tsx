@@ -99,22 +99,19 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 	const [process, setProcess] = useState(false);
 	const [mediaDimensions, setMediaDimensions] = useState({ w: 0, h: 0 });
 
-	const onCropFinish = useCallback(
-		(croppedArea, croppedAreaPixels) => {
-			setProcess(true);
-			setArea({
-				width: croppedAreaPixels.width,
-				height: croppedAreaPixels.height,
-			});
+	const onCropFinish = useCallback((croppedArea, croppedAreaPixels) => {
+		setProcess(true);
+		setArea({
+			width: croppedAreaPixels.width,
+			height: croppedAreaPixels.height,
+		});
 
-			return getCroppedImg(src, croppedAreaPixels, 0).then((response) => {
-				setCroppedImage(response);
-				onChange(response);
-				setProcess(false);
-			});
-		},
-		[src],
-	);
+		return getCroppedImg(src, croppedAreaPixels, 0).then((response) => {
+			setCroppedImage(response);
+			onChange(response);
+			setProcess(false);
+		});
+	}, []);
 
 	const onImageLoad = useCallback((mediaSize) => {
 		setMediaDimensions({

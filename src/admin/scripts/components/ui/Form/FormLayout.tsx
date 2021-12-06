@@ -19,7 +19,7 @@ const ColumnBlock = styled.div`
 const MainBlock = styled.div<{ withSidebar: boolean }>`
 	flex: 100%;
 
-	${media.min.md} {
+	${media.min.lg} {
 		padding-right: ${(props) =>
 			props.withSidebar ? props.theme.spacer : '0px'};
 		flex: ${(props) => (props.withSidebar ? '75%' : '100%')};
@@ -27,10 +27,16 @@ const MainBlock = styled.div<{ withSidebar: boolean }>`
 `;
 const SidebarBlock = styled.div`
 	flex: 100%;
+	margin-top: calc(${(props) => props.theme.spacer} / 2);
+	padding-top: ${(props) => props.theme.spacer};
+	border-top: 1px solid ${(props) => props.theme.ui.borderSecondary};
 
-	${media.min.md} {
+	${media.min.lg} {
+		margin-top: 0;
+		padding-top: 0;
 		padding-left: ${(props) => props.theme.spacer};
 		flex: 25%;
+		border-top: 0;
 		border-left: 1px solid ${(props) => props.theme.ui.borderSecondary};
 	}
 `;

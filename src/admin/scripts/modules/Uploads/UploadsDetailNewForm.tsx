@@ -110,7 +110,18 @@ const UploadsDetailNewForm = ({
 				listPath={ROUTES.app.uploads.path}
 				clickCallback={cancelHandler}
 			/>
-			<ModuleViewHeading>
+			<ModuleViewHeading
+				tertiaryChildren={
+					<ButtonCreate
+						variant="outlined"
+						onClick={onCreateCallback}
+						dataTestId={`button.create.new.Uploads`}
+						disabled
+					>
+						{t(`new.Uploads`)}
+					</ButtonCreate>
+				}
+			>
 				<ModuleLanguageToggle
 					language={lang}
 					languageList={languageList}
@@ -121,14 +132,11 @@ const UploadsDetailNewForm = ({
 			<Uploader
 				onChange={uploaderChangeHandler}
 				onReset={uploaderResetHandler}
+				onSubmit={submitQueue}
 				language={lang}
 				languageList={languageList}
 				withForm
 			/>
-			<div>
-				... form actions asi tady ...valid?: {uploadsValid ? 'false' : 'true'}
-				<Button onClick={submitQueue}>Submit queue</Button>
-			</div>
 		</>
 	);
 };

@@ -45,6 +45,8 @@ class Uploads {
         $response = [];
         $utils = new \Utils;
 
+        $new_file_name = $data['name'] . '.' . $data['file_extension'];
+
         // prepare
         $query = ('INSERT INTO uploads (name, type, file_extension, file_name, file_mime, file_size, active, deleted) VALUES (?,?,?,?,?,?,?,?)');
         $types = 'ssssssii';
@@ -52,7 +54,7 @@ class Uploads {
             $data['name'],
             $data['type'],
             $data['file_extension'],
-            $data['file_name'],
+            $new_file_name,
             $data['file_mime'],
             $data['file_size'],
             $data['active'],

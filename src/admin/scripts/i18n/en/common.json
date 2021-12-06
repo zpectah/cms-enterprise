@@ -16,7 +16,9 @@
     "edit": "Edit",
     "clear": "Clear",
     "clearAll": "Clear all",
-    "removeFromQueue": "Remove from queue"
+    "removeFromQueue": "Remove from queue",
+    "clearQueue": "Clear queue",
+    "submitQueue": "Submit queue"
   },
   "new": {
     "Categories": "New category",
