@@ -109,10 +109,8 @@ const Uploader: React.FC<UploaderProps> = ({
 		onChange: (e: any) => {
 			let tmp,
 				files = [...e.target?.files];
-
 			if (files) {
 				tmp = files.map((file) => getBlobSource(file));
-
 				setRawFileList(tmp);
 			}
 		},
@@ -121,15 +119,11 @@ const Uploader: React.FC<UploaderProps> = ({
 		onDrop: (e: any) => {
 			e.stopPropagation();
 			e.preventDefault();
-
 			let tmp,
 				files = [...e.dataTransfer.files];
-
 			setDragOver(false);
-
 			if (files) {
 				tmp = files.map((file) => getBlobSource(file));
-
 				setRawFileList(tmp);
 			}
 		},
@@ -142,7 +136,6 @@ const Uploader: React.FC<UploaderProps> = ({
 		onDragEnter: (e: any) => {
 			e.stopPropagation();
 			e.preventDefault();
-
 			setDragOver(true);
 
 			return false;
@@ -150,7 +143,6 @@ const Uploader: React.FC<UploaderProps> = ({
 		onDragLeave: (e: any) => {
 			e.stopPropagation();
 			e.preventDefault();
-
 			setDragOver(false);
 
 			return false;
@@ -160,7 +152,6 @@ const Uploader: React.FC<UploaderProps> = ({
 	const getFileObject = (blob, file) => {
 		const ext = file.name.split('.').pop().toLowerCase();
 		const type = getFileType(ext);
-
 		const model = {
 			fileBase64: blob,
 			fileBase64_cropped: null,
@@ -170,7 +161,6 @@ const Uploader: React.FC<UploaderProps> = ({
 			file_size: file.size,
 			type: type,
 		} as UploadsItemProps;
-
 		if (withForm) {
 			model['id'] = 'new';
 			model['name'] = file.name.split('.').slice(0, -1).join('.');
@@ -186,7 +176,6 @@ const Uploader: React.FC<UploaderProps> = ({
 	const getBlobSource = async (file) => {
 		const blob = await fileUtils.toBase64(file);
 		let tmp_file;
-
 		if (accept) {
 			if (file.type.includes(accept.replace('*', ''))) {
 				tmp_file = getFileObject(blob, file);
@@ -202,16 +191,13 @@ const Uploader: React.FC<UploaderProps> = ({
 	const resetHandler = () => {
 		setRawFileList([]);
 		setFileList([]);
-
 		if (inputFileRef.current) inputFileRef.current.value = '';
 		if (onReset) onReset();
 	};
 
 	const cropChangeHandler = (blob: any, index: number) => {
 		let tmp = [...fileList];
-
 		tmp[index].fileBase64_cropped = blob;
-
 		onChange(tmp, formsValid);
 	};
 	const formChangeHandler = (
@@ -224,9 +210,7 @@ const Uploader: React.FC<UploaderProps> = ({
 		tmp[index] = {
 			...model,
 		};
-
 		setFormsValid(valid);
-
 		onChange(tmp, valid);
 	};
 
@@ -252,9 +236,7 @@ const Uploader: React.FC<UploaderProps> = ({
 
 	const removeFromQueue = (index: number) => {
 		let tmp = [...fileList];
-
 		tmp.splice(index, 1);
-
 		setFileList(tmp);
 		onChange(tmp, formsValid);
 	};

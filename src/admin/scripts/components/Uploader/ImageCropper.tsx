@@ -78,10 +78,8 @@ const CropperOptionsBlock = styled.div`
 `;
 
 interface ImageCropperProps {
-	onChange: (
-		fileBase64: any, // TODO
-	) => void;
-	src: any; // TODO
+	onChange: (fileBase64: Blob) => void;
+	src: Blob;
 	aspect?: number;
 }
 
@@ -98,7 +96,6 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 	const [tmpAspect, setTmpAspect] = useState(aspect);
 	const [process, setProcess] = useState(false);
 	const [mediaDimensions, setMediaDimensions] = useState({ w: 0, h: 0 });
-
 	const onCropFinish = useCallback((croppedArea, croppedAreaPixels) => {
 		setProcess(true);
 		setArea({
@@ -106,7 +103,7 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 			height: croppedAreaPixels.height,
 		});
 
-		return getCroppedImg(src, croppedAreaPixels, 0).then((response) => {
+		return getCroppedImg(src, croppedAreaPixels, 0).then((response: any) => {
 			setCroppedImage(response);
 			onChange(response);
 			setProcess(false);
@@ -127,9 +124,7 @@ const ImageCropper = ({ onChange, src, aspect = 4 / 3 }: ImageCropperProps) => {
 
 	const getRatioOptions = () => {
 		let original = mediaDimensions.w / mediaDimensions.h;
-
 		let options = [...IMAGE_CROP_OPTIONS];
-
 		if (original)
 			options.push({
 				label: 'Original',

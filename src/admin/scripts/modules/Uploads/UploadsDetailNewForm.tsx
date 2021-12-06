@@ -16,9 +16,8 @@ import {
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
-import { getElTestAttr } from '../../utils/tests';
-import getOptionsList from '../../utils/getOptionsList';
 import Uploader from '../../components/Uploader';
+import { getElTestAttr } from '../../utils/tests';
 
 interface UploadsDetailNewFormProps {
 	detailData: UploadsItemProps;
@@ -45,48 +44,24 @@ const UploadsDetailNewForm = ({
 	const [lang, setLang] = useState(languageDefault);
 	const [sources, setSources] = useState([]);
 	const [uploadsValid, setUploadsValid] = useState(false);
-
-	const submitHandler = (data: UploadsItemProps, e: any) => onSubmit(data, e);
-	const errorSubmitHandler = (errors: any, e: any) => {
-		if (onSubmitError) onSubmitError(errors, e);
-	};
 	const cancelHandler = () => onCancel(false);
-
 	const renderTitle = () => {
 		let title = t('new.Uploads');
 		if (detailData.id !== 'new') title = detailData.name;
 
 		return title;
 	};
-
-	/*
-	const uploaderChangeHandler = (blob: any, file: any, type: string) => {
-		setValue('fileBase64', blob);
-		setValue('name', file.name.split('.').slice(0, -1).join('.'));
-		setValue('type', type);
-	};
-	const uploaderResetHandler = () => {
-		setValue('fileBase64', '');
-		setValue('name', '');
-		setValue('type', 'unknown');
-	};
-	*/
-
 	const submitQueue = () => {
 		let length = sources.length;
 		sources.map((source, index) => {
 			onSubmit(source, null);
-
 			if (index == length - 1) {
 				setSources([]);
 				cancelHandler();
 			}
 		});
 	};
-
 	const uploaderChangeHandler = (sources: any[], valid: boolean) => {
-		console.log('sources in detail form ...', sources);
-
 		setUploadsValid(valid);
 		setSources(sources);
 	};
@@ -94,14 +69,6 @@ const UploadsDetailNewForm = ({
 		setUploadsValid(false);
 		setSources([]);
 	};
-
-	// Model options list
-	const getTypeOptions = useCallback(
-		() => getOptionsList(config.options.model.Uploads.type, t),
-		[detailData],
-	);
-
-	// useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
 	return (
 		<>

@@ -78,10 +78,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 				label: '',
 				description: '',
 			} as UploadsItemLangProps);
-
 		setDetail(id);
 		setDetailData(detail);
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
@@ -90,7 +88,6 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
 
@@ -101,10 +98,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: UploadsItemProps) => {
 		const master: UploadsItemProps = _.cloneDeep(data);
-
 		if (master.id == 'new') {
 			createUploads(master).then((response) => {
-				// console.log('create response', response);
 				reloadUploads();
 				// closeDetailHandler();
 				createToasts({
@@ -115,7 +110,6 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 			});
 		} else {
 			updateUploads(master).then((response) => {
-				// console.log('create response', response);
 				reloadUploads();
 				closeDetailHandler();
 				createToasts({
@@ -147,7 +141,6 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
@@ -163,7 +156,6 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		toggleUploads(master).then((response) => {
 			reloadUploads();
 			setSelectedItems([]);
@@ -179,7 +171,6 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
 			deleteUploads(master).then((response) => {
 				reloadUploads();
 				setSelectedItems([]);

@@ -23,7 +23,6 @@ import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
-import getOptionsList from '../../utils/getOptionsList';
 
 const UploadSourceWrapper = styled.div`
 	width: 100%;
@@ -81,7 +80,6 @@ const UploadsDetailForm = ({
 }: UploadsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
-
 	const formOptions: formLayoutObjectProps = {
 		model: 'Uploads',
 		id: 'UploadsDetailForm',
@@ -96,14 +94,12 @@ const UploadsDetailForm = ({
 			},
 		});
 	const { isDirty, isValid } = formState;
-
 	const submitHandler = (data: UploadsItemProps, e: any) => onSubmit(data, e);
 	const errorSubmitHandler = (errors: any, e: any) => {
 		if (onSubmitError) onSubmitError(errors, e);
 	};
 	const deleteHandler = () => onDelete(detailData.id);
 	const cancelHandler = () => onCancel(isDirty);
-
 	const renderTitle = () => {
 		let title = t('new.Uploads');
 		if (detailData.id !== 'new') title = detailData.name;
@@ -140,23 +136,6 @@ const UploadsDetailForm = ({
 			</>
 		);
 	};
-
-	const uploaderChangeHandler = (blob: any, file: any, type: string) => {
-		setValue('fileBase64', blob);
-		setValue('name', file.name.split('.').slice(0, -1).join('.'));
-		setValue('type', type);
-	};
-	const uploaderResetHandler = () => {
-		setValue('fileBase64', null);
-		setValue('name', '');
-		setValue('type', 'unknown');
-	};
-
-	// Model options list
-	const getTypeOptions = useCallback(
-		() => getOptionsList(config.options.model.Uploads.type, t),
-		[detailData],
-	);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
