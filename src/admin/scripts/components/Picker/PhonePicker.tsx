@@ -52,6 +52,10 @@ const PhonePicker = ({ value, onChange, multiple }: PhonePickerProps) => {
 		setSelectedItems(tmp_list);
 	};
 
+	const should_show_input =
+		(multiple && selectedItems.length >= 0) ||
+		(!multiple && selectedItems.length == 0);
+
 	useEffect(() => {
 		if (multiple) {
 			onChange(selectedItems);
@@ -62,40 +66,43 @@ const PhonePicker = ({ value, onChange, multiple }: PhonePickerProps) => {
 
 	return (
 		<>
-			<Stack spacing={1} direction="row">
-				<Controller
-					name="phone"
-					control={control}
-					rules={{ required: true }}
-					render={({ field: { onChange, onBlur, value, ref, name } }) => (
-						<Input.Text
-							type="tel"
-							id={`PhonePicker__type.label`}
-							onChange={onChange}
-							onBlur={onBlur}
-							value={value}
-							name={name}
-							label={'New phone'}
-							dataTestId={`PhonePicker.input.Phone_new`}
-							required
-						/>
-					)}
-				/>
-				<IconButton
-					color="success"
-					aria-label="add phone"
-					component="span"
-					onClick={handleSubmit(submitHandler)}
-					disabled={!isValid}
-				>
-					<AddCircleIcon />
-				</IconButton>
-			</Stack>
+			{should_show_input && (
+				<Stack spacing={1} direction="row">
+					<Controller
+						name="phone"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Input.Text
+								type="tel"
+								id={`PhonePicker__type.label`}
+								onChange={onChange}
+								onBlur={onBlur}
+								value={value}
+								name={name}
+								label={'New phone'}
+								dataTestId={`PhonePicker.input.Phone_new`}
+								required
+							/>
+						)}
+					/>
+					<IconButton
+						color="success"
+						aria-label="add phone"
+						component="span"
+						onClick={handleSubmit(submitHandler)}
+						disabled={!isValid}
+					>
+						<AddCircleIcon />
+					</IconButton>
+				</Stack>
+			)}
 			{selectedItems.length > 0 && (
-				<div style={{ marginTop: '.5rem' }}>
+				<div style={{ marginTop: should_show_input ? '.5rem' : '0' }}>
 					<Stack spacing={1} direction="row">
 						{selectedItems.map((item, index) => (
 							<Chip
+								color="secondary"
 								label={item}
 								onDelete={() => removeHandler(item)}
 								key={item}

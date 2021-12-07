@@ -9,7 +9,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 import config from '../../config';
-import { ROUTES } from '../../constants';
+import { ROUTES, EMAIL_REGEX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { cmsSettingsObjectProps } from '../../types/modules';
 import { Button, Form, Input, Section } from '../../components/ui';
@@ -620,8 +620,58 @@ const SettingsForm = ({
 								/>
 							</Section>
 							<Section title={t('form:form.Settings.section.title.forms')}>
-								<div>form email sender (picker:one)</div>
-								<div>form email recipients (picker)</div>
+								<Controller
+									name="form_email_sender"
+									control={control}
+									rules={{ required: true, pattern: EMAIL_REGEX }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											label={t('form:form.Settings.input.form_email_sender')}
+											id={`${formOptions.id}__form_email_sender`}
+											errors={[]}
+										>
+											<Input.Text
+												type="email"
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__form_email_sender`}
+												// label={t('form:input.project_name')}
+												placeholder={t(
+													'form:form.Settings.input.form_email_sender',
+												)}
+												responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.form_email_sender`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name="form_email_recipients"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											label={t(
+												'form:form.Settings.input.form_email_recipients',
+											)}
+											id={`${formOptions.id}__form_email_recipients`}
+											errors={[]}
+										>
+											<Picker.Email
+												value={value}
+												onChange={onChange}
+												multiple
+											/>
+										</Form.Row>
+									)}
+								/>
 							</Section>
 							<Section title={t('form:form.Settings.section.title.content')}>
 								<Controller

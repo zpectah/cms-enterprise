@@ -53,6 +53,10 @@ const EmailPicker = ({ value, onChange, multiple }: EmailPickerProps) => {
 		setSelectedItems(tmp_list);
 	};
 
+	const should_show_input =
+		(multiple && selectedItems.length >= 0) ||
+		(!multiple && selectedItems.length == 0);
+
 	useEffect(() => {
 		if (multiple) {
 			onChange(selectedItems);
@@ -63,40 +67,43 @@ const EmailPicker = ({ value, onChange, multiple }: EmailPickerProps) => {
 
 	return (
 		<>
-			<Stack spacing={1} direction="row">
-				<Controller
-					name="email"
-					control={control}
-					rules={{ required: true, pattern: EMAIL_REGEX }}
-					render={({ field: { onChange, onBlur, value, ref, name } }) => (
-						<Input.Text
-							type="email"
-							id={`EmailPicker__type.label`}
-							onChange={onChange}
-							onBlur={onBlur}
-							value={value}
-							name={name}
-							label={'New e-mail'}
-							dataTestId={`EmailPicker.input.email_new`}
-							required
-						/>
-					)}
-				/>
-				<IconButton
-					color="success"
-					aria-label="add e-mail"
-					component="span"
-					onClick={handleSubmit(submitHandler)}
-					disabled={!isValid}
-				>
-					<AddCircleIcon />
-				</IconButton>
-			</Stack>
+			{should_show_input && (
+				<Stack spacing={1} direction="row">
+					<Controller
+						name="email"
+						control={control}
+						rules={{ required: true, pattern: EMAIL_REGEX }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Input.Text
+								type="email"
+								id={`EmailPicker__type.label`}
+								onChange={onChange}
+								onBlur={onBlur}
+								value={value}
+								name={name}
+								label={'New e-mail'}
+								dataTestId={`EmailPicker.input.email_new`}
+								required
+							/>
+						)}
+					/>
+					<IconButton
+						color="success"
+						aria-label="add e-mail"
+						component="span"
+						onClick={handleSubmit(submitHandler)}
+						disabled={!isValid}
+					>
+						<AddCircleIcon />
+					</IconButton>
+				</Stack>
+			)}
 			{selectedItems.length > 0 && (
-				<div style={{ marginTop: '.5rem' }}>
+				<div style={{ marginTop: should_show_input ? '.5rem' : '0' }}>
 					<Stack spacing={1} direction="row">
 						{selectedItems.map((item, index) => (
 							<Chip
+								color="secondary"
 								label={item}
 								onDelete={() => removeHandler(item)}
 								key={item}
