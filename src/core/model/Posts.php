@@ -30,8 +30,10 @@ class Posts {
                     );
                 }
 
-                $row['tags'] = explode(",", $row['tags']);
-                $row['categories'] = explode(",", $row['categories']);
+                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']);
+                $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']);
+                $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']);
+                $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']);
                 $row['approved'] = $row['approved'] == 1;
                 $row['active'] = $row['active'] == 1;
 
@@ -85,8 +87,8 @@ class Posts {
             $data['event_country'],
             $data['event_city'],
             $data['event_zip'],
-            $data['media'],
-            $data['attachments'],
+            $data['media'] ? implode(",", $data['media']) : '',
+            $data['attachments'] ? implode(",", $data['attachments']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
             $data['published'],
@@ -144,8 +146,8 @@ class Posts {
             $data['event_country'],
             $data['event_city'],
             $data['event_zip'],
-            $data['media'],
-            $data['attachments'],
+            $data['media'] ? implode(",", $data['media']) : '',
+            $data['attachments'] ? implode(",", $data['attachments']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
             $data['published'],

@@ -47,6 +47,12 @@
     "no_selected": "No selected",
     "no_category": "No category"
   },
+  "section": {
+    "title": {
+      "eventOptions": "Event options",
+      "mediaAndAttachments": "Media and attachments"
+    }
+  },
   "form": {
     "Login": {
       "msg": {

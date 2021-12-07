@@ -19,6 +19,7 @@ export interface CategoriesItemLangProps {
 export interface CategoriesItemProps extends commonItemProps {
 	name: string;
 	parent?: string;
+	media?: (number | string)[];
 	img_main?: string;
 	img_thumbnail?: string;
 	lang: any; // TODO
@@ -72,8 +73,8 @@ export interface PostsItemProps extends commonItemProps {
 	event_country?: string;
 	event_city?: string;
 	event_zip?: string;
-	media?: string;
-	attachments?: string;
+	media?: (number | string)[];
+	attachments?: (number | string)[];
 	img_main?: string;
 	img_thumbnail?: string;
 	published: any; // TODO: date

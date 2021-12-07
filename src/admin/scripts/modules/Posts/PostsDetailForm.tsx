@@ -384,8 +384,34 @@ const PostsDetailForm = ({
 						)}
 					/>
 				</Section>
+				<Section>
+					<Controller
+						name={`published`}
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.DateTime
+									onChange={onChange}
+									value={value}
+									label={`${t('form:input.published')}`}
+									renderInput={(props) => (
+										<Input.Text
+											name={name}
+											id={`${formOptions.id}__published`}
+											responsiveWidth={'50%'}
+											dataTestId={`${formOptions.id}.input.published`}
+											required
+											{...props}
+										/>
+									)}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{watchType == 'event' ? (
-					<Section>
+					<Section title={t('form:section.title.eventOptions')}>
 						<Controller
 							name={`event_start`}
 							control={control}
@@ -544,40 +570,73 @@ const PostsDetailForm = ({
 						<input type="hidden" {...register('event_zip', {})} />
 					</>
 				)}
-				{watchType == 'media' ? (
-					<>...media...</>
-				) : (
-					<input type="hidden" {...register('media', {})} />
-				)}
-				<Section>
-					<Picker.Uploads value={''} onChange={() => {}} />
-					<input type="text" {...register('attachments', {})} />
-					<Picker.Uploads value={''} onChange={() => {}} />
-					<input type="text" {...register('img_thumbnail', {})} />
-					<Picker.Uploads value={''} onChange={() => {}} />
-					<input type="text" {...register('img_main', {})} />
-				</Section>
-				<Section>
+				<Section title={t('form:section.title.mediaAndAttachments')}>
 					<Controller
-						name={`published`}
+						name="media"
 						control={control}
-						rules={{ required: true }}
+						rules={{ required: watchType == 'media' }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
-								<Input.DateTime
-									onChange={onChange}
+								<Picker.Uploads
 									value={value}
-									label={`${t('form:input.published')}`}
-									renderInput={(props) => (
-										<Input.Text
-											name={name}
-											id={`${formOptions.id}__published`}
-											responsiveWidth={'50%'}
-											dataTestId={`${formOptions.id}.input.published`}
-											required
-											{...props}
-										/>
-									)}
+									onChange={onChange}
+									multiple
+									onlyImages
+									required={watchType == 'media'}
+									dataTestId={`${formOptions.id}.input.media`}
+									label={t('form:input.media')}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="attachments"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									multiple
+									dataTestId={`${formOptions.id}.input.attachments`}
+									label={t('form:input.attachments')}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="img_main"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									required={watchType == 'media'}
+									dataTestId={`${formOptions.id}.input.img_main`}
+									label={t('form:input.img_main')}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="img_thumbnail"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									required={watchType == 'media'}
+									dataTestId={`${formOptions.id}.input.img_thumbnail`}
+									label={t('form:input.img_thumbnail')}
 								/>
 							</Form.Row>
 						)}

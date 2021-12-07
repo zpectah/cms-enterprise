@@ -1,10 +1,10 @@
 {
   "model": {
     "Categories": {
-      "type": ["default"]
+      "type": ["default", "gallery"]
     },
     "Menu": {
-      "type": ["primary", "secondary", "custom"]
+      "type": ["primary", "secondary", "tertiary", "custom"]
     },
     "MenuItems": {
       "type": ["page", "external"]

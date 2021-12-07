@@ -52,7 +52,7 @@ const CategoriesDetailForm = ({
 		route: ROUTES.app.categories,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const { control, handleSubmit, reset, register, formState, watch } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
@@ -112,6 +112,8 @@ const CategoriesDetailForm = ({
 		() => getOptionsList(config.options.model.Categories.type, t),
 		[detailData],
 	);
+
+	const watchType = watch('type');
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -271,7 +273,7 @@ const CategoriesDetailForm = ({
 								<Controller
 									name={`lang.${lng}.description`}
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -285,7 +287,6 @@ const CategoriesDetailForm = ({
 												label={`${t('form:input.description')} (${lng})`}
 												// responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.${lng}.description`}
-												required
 												multiline
 												rows={5}
 											/>
@@ -320,11 +321,63 @@ const CategoriesDetailForm = ({
 					})}
 					{/*  ============ \\ Language part section ============ */}
 				</Section>
-				<Section>
-					<Picker.Uploads value={''} onChange={() => {}} />
-					<input type="text" {...register('img_thumbnail', {})} />
-					<Picker.Uploads value={''} onChange={() => {}} />
-					<input type="text" {...register('img_main', {})} />
+				<Section title={t('form:section.title.mediaAndAttachments')}>
+					{watchType == 'gallery' ? (
+						<Controller
+							name="media"
+							control={control}
+							rules={{ required: true }}
+							render={({ field: { onChange, onBlur, value, ref, name } }) => (
+								<Form.Row errors={[]}>
+									<Picker.Uploads
+										value={value}
+										onChange={onChange}
+										multiple
+										onlyImages
+										required
+										dataTestId={`${formOptions.id}.input.media`}
+										label={t('form:input.media')}
+									/>
+								</Form.Row>
+							)}
+						/>
+					) : (
+						<input type="hidden" {...register('media', {})} />
+					)}
+					<Controller
+						name="img_main"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									dataTestId={`${formOptions.id}.input.img_main`}
+									label={t('form:input.img_main')}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="img_thumbnail"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									dataTestId={`${formOptions.id}.input.img_thumbnail`}
+									label={t('form:input.img_thumbnail')}
+								/>
+							</Form.Row>
+						)}
+					/>
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>

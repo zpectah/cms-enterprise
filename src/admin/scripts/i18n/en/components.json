@@ -13,5 +13,8 @@
       "formDirty": "You have unsaved changes, are you sure you want continue?",
       "logOut": "Do you want to log out?"
     }
+  },
+  "UploadsPicker": {
+    "title": "Pick uploads"
   }
 }

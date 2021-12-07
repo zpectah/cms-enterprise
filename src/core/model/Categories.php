@@ -30,6 +30,7 @@ class Categories {
                     );
                 }
 
+                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']);
                 $row['active'] = $row['active'] == 1;
 
                 unset($row['deleted']);
@@ -46,12 +47,13 @@ class Categories {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO categories (name, type, parent, img_main, img_thumbnail, active, deleted) VALUES (?,?,?,?,?,?,?)');
-        $types = 'sssssii';
+        $query = ('INSERT INTO categories (name, type, parent, media, img_main, img_thumbnail, active, deleted) VALUES (?,?,?,?,?,?,?,?)');
+        $types = 'ssssssii';
         $args = [
             $data['name'],
             $data['type'],
             $data['parent'],
+            $data['media'] ? implode(",", $data['media']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
             $data['active'],
@@ -91,12 +93,13 @@ class Categories {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE categories SET name = ?, type = ?, parent = ?, img_main = ?, img_thumbnail = ?, active = ? WHERE id = ?');
-        $types = 'sssssii';
+        $query = ('UPDATE categories SET name = ?, type = ?, parent = ?, media = ?, img_main = ?, img_thumbnail = ?, active = ? WHERE id = ?');
+        $types = 'ssssssii';
         $args = [
             $data['name'],
             $data['type'],
             $data['parent'],
+            $data['media'] ? implode(",", $data['media']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
             $data['active'],
