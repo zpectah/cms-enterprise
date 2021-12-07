@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -84,7 +84,7 @@ const UploadsPicker = ({
 }: UploadsPickerProps) => {
 	const { t } = useTranslation(['common', 'form', 'components']);
 	const [dialogOpen, setDialogOpen] = useState(false);
-	const [selectedItems, setSelectedItems] = useState([]);
+	const [selectedItems, setSelectedItems] = useState(getInitialValue(value));
 	const [selectedObjects, setSelectedObjects] = useState([]);
 
 	const { Uploads } = useUploads();
@@ -141,8 +141,6 @@ const UploadsPicker = ({
 	useEffect(() => {
 		if (Uploads) updateSelectedObjects();
 	}, [Uploads, selectedItems]);
-
-	useEffect(() => setSelectedItems(getInitialValue(value)), [value]);
 
 	return (
 		<div {...getElTestAttr(dataTestId)}>

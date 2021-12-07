@@ -585,6 +585,7 @@ const PostsDetailForm = ({
 									required={watchType == 'media'}
 									dataTestId={`${formOptions.id}.input.media`}
 									label={t('form:input.media')}
+									key={`${formOptions.id}_0_${String(value)}`} // Important to force reload when model changes
 								/>
 							</Form.Row>
 						)}
@@ -601,6 +602,7 @@ const PostsDetailForm = ({
 									multiple
 									dataTestId={`${formOptions.id}.input.attachments`}
 									label={t('form:input.attachments')}
+									key={`${formOptions.id}_1_${String(value)}`} // Important to force reload when model changes
 								/>
 							</Form.Row>
 						)}
@@ -619,6 +621,7 @@ const PostsDetailForm = ({
 									required={watchType == 'media'}
 									dataTestId={`${formOptions.id}.input.img_main`}
 									label={t('form:input.img_main')}
+									key={`${formOptions.id}_2_${String(value)}`} // Important to force reload when model changes
 								/>
 							</Form.Row>
 						)}
@@ -637,6 +640,7 @@ const PostsDetailForm = ({
 									required={watchType == 'media'}
 									dataTestId={`${formOptions.id}.input.img_thumbnail`}
 									label={t('form:input.img_thumbnail')}
+									key={`${formOptions.id}_3_${String(value)}`} // Important to force reload when model changes
 								/>
 							</Form.Row>
 						)}
