@@ -21,20 +21,18 @@ const HelpModule = ({}: HelpModuleProps) => {
 	const { t } = useTranslation(['common']);
 	const [panel, setPanel] = React.useState('about');
 
-	const panels = {
-		about: {
-			key: 'about',
-			label: 'About',
-		},
-		content: {
-			key: 'content',
-			label: 'Content',
-		},
-		modules: {
-			key: 'modules',
-			label: 'Modules',
-		},
+	const panels_list = ['about', 'content', 'modules'];
+	const getPanels = () => {
+		const tmp = {};
+		panels_list.map((panel) => {
+			tmp[panel] = {
+				key: panel,
+				label: t(`panel.${panel}`),
+			};
+		});
+		return tmp as any;
 	};
+	const panels = getPanels();
 
 	const panelChangeHandler = (event: React.SyntheticEvent, panel: string) => {
 		setPanel(panel);
@@ -55,26 +53,31 @@ const HelpModule = ({}: HelpModuleProps) => {
 								onChange={panelChangeHandler}
 								aria-label={`Help tabs-list`}
 							>
-								{/*  ============ Main form items ============ */}
-								<Tab label={panels.about.label} value={panels.about.key} />
-								<Tab label={panels.content.label} value={panels.content.key} />
-								<Tab label={panels.modules.label} value={panels.modules.key} />
-								{/*  ============ \\ Main form items ============ */}
+								{panels_list.map((panel) => (
+									<Tab
+										label={panels[panel].label}
+										value={panels[panel].key}
+										key={panel}
+									/>
+								))}
 							</TabList>
 						</Box>
 						{/*  ============ Main form panels ============ */}
+						{/*  ===== about ============== */}
 						<TabPanel
 							value={panels.about.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>Item about</Section>
 						</TabPanel>
+						{/*  ===== content ============== */}
 						<TabPanel
 							value={panels.content.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>Item content</Section>
 						</TabPanel>
+						{/*  ===== modules ============== */}
 						<TabPanel
 							value={panels.modules.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}

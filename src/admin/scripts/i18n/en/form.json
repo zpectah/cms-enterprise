@@ -86,6 +86,51 @@
         "file_mime": "Mime type",
         "file_size": "File size"
       }
+    },
+    "Settings": {
+      "input": {
+        "project_name": "Project name",
+        "form_email_sender": "Form e-mail sender",
+        "form_email_recipients": "Form e-mail recipients",
+        "web_meta_title": "Web title",
+        "web_meta_description": "Web description",
+        "web_meta_robots": "Web meta robots",
+        "web_meta_keywords": "Web keywords",
+        "web_mode_maintenance": "Mode maintenance",
+        "web_mode_debug": "Mode debug",
+        "company_name": "Company name",
+        "company_description": "Company description",
+        "company_id": "Company ID",
+        "company_address": "Address",
+        "company_city": "City",
+        "company_country": "Country",
+        "company_zip": "ZIP",
+        "company_location": "Location",
+        "company_email": "Company e-mail",
+        "company_phone": "Company phone",
+        "company_bank": "Company bank info",
+        "content_redactor_approval": "Content redactor approval",
+        "comments_global_active": "Comments global active",
+        "comments_anonymous_active": "Comments anonymous active",
+        "language_installed": "Language installed",
+        "language_active": "Language active",
+        "language_default": "Language default",
+        "module_crm_installed": "Crm installed",
+        "module_crm_active": "Crm active",
+        "module_market_installed": "Market installed",
+        "module_market_active": "Market active",
+        "members_login_active": "Members login active",
+        "members_lostPassword_active": "Members lost password active",
+        "members_profile_active": "Members profile page active"
+      },
+      "section": {
+        "title": {
+          "company": "Company",
+          "forms": "Forms",
+          "modes": "Modes",
+          "content": "Content"
+        }
+      }
     }
   }
 }
