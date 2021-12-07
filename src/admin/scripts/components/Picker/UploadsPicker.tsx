@@ -14,6 +14,7 @@ import { array } from '../../../../../utils/utils';
 import { useUploads } from '../../hooks/model';
 import { Button, Dialog, Typography } from '../ui';
 import { getElTestAttr } from '../../utils/tests';
+import getPickerInitialValue from '../../utils/getPickerInitialValue';
 
 const SelectedListWrapper = styled.div`
 	width: 100%;
@@ -61,17 +62,6 @@ interface UploadsPickerProps {
 	label?: string;
 }
 
-const getInitialValue = (value: UploadsPickerProps['value']) => {
-	if (value == '') return [];
-	if (typeof value == 'string') {
-		return [value];
-	} else if (typeof value == 'object') {
-		return [...value];
-	} else {
-		return [];
-	}
-};
-
 const UploadsPicker = ({
 	value,
 	onChange,
@@ -84,7 +74,9 @@ const UploadsPicker = ({
 }: UploadsPickerProps) => {
 	const { t } = useTranslation(['common', 'form', 'components']);
 	const [dialogOpen, setDialogOpen] = useState(false);
-	const [selectedItems, setSelectedItems] = useState(getInitialValue(value));
+	const [selectedItems, setSelectedItems] = useState(
+		getPickerInitialValue(value),
+	);
 	const [selectedObjects, setSelectedObjects] = useState([]);
 
 	const { Uploads } = useUploads();

@@ -14,6 +14,7 @@ import { formLayoutObjectProps } from '../../types/app';
 import { cmsSettingsObjectProps } from '../../types/modules';
 import { Button, Form, Input, Section } from '../../components/ui';
 import getOptionsList from '../../utils/getOptionsList';
+import Picker from '../../components/Picker';
 
 interface SettingsFormProps {
 	formData: cmsSettingsObjectProps;
@@ -374,9 +375,73 @@ const SettingsForm = ({
 										</Form.Row>
 									)}
 								/>
-								<div>company email (picker)</div>
-								<div>company phone (picker)</div>
-								<div>company bank (json data)</div>
+								<Controller
+									name="company_email"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											label={t('form:form.Settings.input.company_email')}
+											id={`${formOptions.id}__company_email`}
+											errors={[]}
+										>
+											<Picker.Email
+												value={value}
+												onChange={onChange}
+												multiple
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name="company_phone"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											label={t('form:form.Settings.input.company_phone')}
+											id={`${formOptions.id}__company_phone`}
+											errors={[]}
+										>
+											<Picker.Phone
+												value={value}
+												onChange={onChange}
+												multiple
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name="company_bank"
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											label={t('form:form.Settings.input.company_bank')}
+											id={`${formOptions.id}__company_bank`}
+											errors={[]}
+										>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__company_bank`}
+												placeholder={t('form:form.Settings.input.company_bank')}
+												dataTestId={`${formOptions.id}.input.company_bank`}
+												required
+												multiline
+												rows={3}
+											/>
+										</Form.Row>
+									)}
+								/>
 							</Section>
 						</TabPanel>
 						{/*  ===== web ============== */}

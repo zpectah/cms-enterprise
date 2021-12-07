@@ -23,8 +23,10 @@ const LabelColumn = styled.div`
 	${media.min.md} {
 		width: 300px;
 		padding-bottom: 0;
+		padding-top: 0.5rem;
 		padding-right: ${(props) => props.theme.spacer};
 		justify-content: flex-end;
+		align-items: flex-start;
 	}
 `;
 const InputColumn = styled.div<{ withLabel: boolean }>`
