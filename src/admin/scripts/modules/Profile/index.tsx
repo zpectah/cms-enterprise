@@ -21,11 +21,19 @@ const ProfileModule = ({}: ProfileModuleProps) => {
 		const master: UsersItemProps = _.cloneDeep(data);
 
 		updateProfile(master).then((response) => {
-			createToasts({
-				title: t('messages:success.itemUpdated', { count: 1 }),
-				context: 'success',
-				timeout: TOASTS_TIMEOUT_DEFAULT,
-			});
+			if (response.rows == 1) {
+				createToasts({
+					title: t('messages:success.profileUpdated'),
+					context: 'success',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+			} else if (response.rows == -1) {
+				createToasts({
+					title: t('messages:error.profileUpdateError'),
+					context: 'error',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				});
+			}
 		});
 	};
 

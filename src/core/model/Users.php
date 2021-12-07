@@ -116,7 +116,6 @@ class Users {
         $args = $password ? [
             $data['email'],
             $data['type'],
-            // password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
             $utils -> passwordHash($data['password']),
             $data['nick_name'],
             $data['first_name'],

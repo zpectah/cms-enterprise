@@ -18,7 +18,7 @@ export const array = {
 		if (Array.isArray(array)) {
 			if (array.indexOf(item) === -1) array.push();
 		} else {
-			console.warn(messages.notValidArray);
+			console.warn('notValidArray');
 		}
 
 		return array;
@@ -27,7 +27,7 @@ export const array = {
 		if (Array.isArray(array)) {
 			if (index > -1) array.splice(index, 1);
 		} else {
-			console.warn(messages.notValidArray);
+			console.warn('notValidArray');
 		}
 
 		return array;

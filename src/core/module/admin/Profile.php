@@ -43,7 +43,7 @@ class Profile {
         return $response;
     }
 
-    // Update profile data when user logged in
+    // Update profile data when user is logged in
     public function user_update_profile ($conn, $data): array {
         $Users = new Users;
 
