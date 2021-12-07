@@ -83,7 +83,6 @@ const EmailPicker = ({ value, onChange, multiple }: EmailPickerProps) => {
 								name={name}
 								label={'New e-mail'}
 								dataTestId={`EmailPicker.input.email_new`}
-								required
 							/>
 						)}
 					/>

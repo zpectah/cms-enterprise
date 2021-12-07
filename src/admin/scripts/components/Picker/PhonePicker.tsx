@@ -82,7 +82,6 @@ const PhonePicker = ({ value, onChange, multiple }: PhonePickerProps) => {
 								name={name}
 								label={'New phone'}
 								dataTestId={`PhonePicker.input.Phone_new`}
-								required
 							/>
 						)}
 					/>
