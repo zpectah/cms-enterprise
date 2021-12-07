@@ -84,7 +84,7 @@ const UploadsPicker = ({
 }: UploadsPickerProps) => {
 	const { t } = useTranslation(['common', 'form', 'components']);
 	const [dialogOpen, setDialogOpen] = useState(false);
-	const [selectedItems, setSelectedItems] = useState(getInitialValue(value));
+	const [selectedItems, setSelectedItems] = useState([]);
 	const [selectedObjects, setSelectedObjects] = useState([]);
 
 	const { Uploads } = useUploads();
@@ -141,6 +141,8 @@ const UploadsPicker = ({
 	useEffect(() => {
 		if (Uploads) updateSelectedObjects();
 	}, [Uploads, selectedItems]);
+
+	useEffect(() => setSelectedItems(getInitialValue(value)), [value]);
 
 	return (
 		<div {...getElTestAttr(dataTestId)}>
