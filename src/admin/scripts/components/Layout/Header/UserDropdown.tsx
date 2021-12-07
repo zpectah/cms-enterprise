@@ -8,11 +8,21 @@ import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import { ROUTES } from '../../../constants';
 import { Avatar, ConfirmDialog } from '../../ui';
 import { useProfile } from '../../../hooks/common';
+import media from '../../../styles/responsive';
 import { getElTestAttr } from '../../../utils/tests';
+
+const UserEmailText = styled.small`
+	display: none;
+
+	${media.min.md} {
+		display: inline-block;
+	}
+`;
 
 interface UserDropdownProps {
 	dataTestId?: string;
@@ -41,15 +51,18 @@ const UserDropdown = ({ dataTestId = 'user.dropdown' }: UserDropdownProps) => {
 
 	return (
 		<>
-			<Avatar
-				nickName={'zpecter'}
-				firstName={'Tomáš'}
-				lastName={'Sychra'}
-				// image={''}
-				onClick={dropdownOpenHandler}
-				dataTestId={`${dataTestId}.avatar`}
-				size={'28px'}
-			/>
+			<div>
+				<UserEmailText>{Profile.email}</UserEmailText>
+				<Avatar
+					nickName={Profile.nick_name}
+					firstName={Profile.first_name}
+					lastName={Profile.last_name}
+					image={Profile.img_avatar}
+					onClick={dropdownOpenHandler}
+					dataTestId={`${dataTestId}.avatar`}
+					size={'28px'}
+				/>
+			</div>
 			<Menu
 				anchorEl={anchorEl}
 				open={open}
