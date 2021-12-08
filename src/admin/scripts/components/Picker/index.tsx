@@ -6,6 +6,7 @@ import MenuItemsPicker from './MenuItemsPicker';
 import AvatarPicker from './AvatarPicker';
 import EmailPicker from './EmailPicker';
 import PhonePicker from './PhonePicker';
+import StringPicker from './StringPicker';
 
 export default {
 	Uploads: UploadsPicker,
@@ -16,4 +17,5 @@ export default {
 	Avatar: AvatarPicker,
 	Email: EmailPicker,
 	Phone: PhonePicker,
+	String: StringPicker,
 };
