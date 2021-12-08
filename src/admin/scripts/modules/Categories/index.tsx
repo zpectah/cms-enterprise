@@ -39,6 +39,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -103,10 +104,9 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: CategoriesItemProps) => {
 		const master: CategoriesItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		// reformat data before save
 		master.name = master.name.split(' ').join('-');
-
 		if (master.id == 'new') {
 			createCategories(master).then((response) => {
 				reloadCategories();
@@ -116,6 +116,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateCategories(master).then((response) => {
@@ -126,6 +127,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -166,7 +168,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		toggleCategories(master).then((response) => {
 			reloadCategories();
 			setSelectedItems([]);
@@ -175,6 +177,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -182,7 +185,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(false);
 			deleteCategories(master).then((response) => {
 				reloadCategories();
 				setSelectedItems([]);
@@ -192,6 +195,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -250,6 +254,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

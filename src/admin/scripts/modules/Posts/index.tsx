@@ -42,6 +42,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -113,15 +114,13 @@ const PostsModule = ({}: PostsModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: PostsItemProps) => {
 		const master: PostsItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		// reformat data before save
 		master.name = master.name.split(' ').join('-');
 		master.published = moment(master.published).format();
 		master.event_start = moment(master.event_start).format();
 		master.event_end = moment(master.event_end).format();
-
 		if (master.id == 'new') master.author = Number(Profile.id);
-
 		if (master.id == 'new') {
 			createPosts(master).then((response) => {
 				reloadPosts();
@@ -131,6 +130,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updatePosts(master).then((response) => {
@@ -141,6 +141,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -181,7 +182,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		togglePosts(master).then((response) => {
 			reloadPosts();
 			setSelectedItems([]);
@@ -190,6 +191,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -197,7 +199,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			deletePosts(master).then((response) => {
 				reloadPosts();
 				setSelectedItems([]);
@@ -207,6 +209,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -276,6 +279,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

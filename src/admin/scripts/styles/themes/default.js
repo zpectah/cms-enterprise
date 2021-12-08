@@ -62,4 +62,17 @@ export default {
 			bg: palette.red,
 		},
 	},
+	preloader: {
+		bar: {
+			height: '3px',
+			color: palette.indigo,
+			animation: {
+				color_a: palette.indigo,
+				color_b: 'rgba(48,63,159,.5)',
+			},
+			zIndex: 1750,
+		},
+		block: {},
+		page: {},
+	},
 };

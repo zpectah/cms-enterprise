@@ -35,6 +35,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -98,9 +99,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: UsersItemProps) => {
 		const master: UsersItemProps = _.cloneDeep(data);
-
-		console.log(master);
-
+		setProcessing(true);
 		if (master.id == 'new') {
 			createUsers(master).then((response) => {
 				reloadUsers();
@@ -110,6 +109,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateUsers(master).then((response) => {
@@ -120,6 +120,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -160,7 +161,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		toggleUsers(master).then((response) => {
 			reloadUsers();
 			setSelectedItems([]);
@@ -169,6 +170,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -176,7 +178,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			deleteUsers(master).then((response) => {
 				reloadUsers();
 				setSelectedItems([]);
@@ -186,6 +188,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -245,6 +248,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

@@ -35,6 +35,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -89,7 +90,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: DistributorsItemProps) => {
 		const master: DistributorsItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
@@ -102,6 +103,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateDistributors(master).then((response) => {
@@ -113,6 +115,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -153,7 +156,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		console.log('AJAX ... toggle ...', master);
 
 		toggleDistributors(master).then((response) => {
@@ -165,6 +168,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -172,7 +176,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			console.log('AJAX ... delete ...', master);
 
 			deleteDistributors(master).then((response) => {
@@ -185,6 +189,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -243,6 +248,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

@@ -35,6 +35,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -92,10 +93,9 @@ const TagsModule = ({}: TagsModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: TagsItemProps) => {
 		const master: TagsItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		// reformat data before save
 		master.name = master.name.split(' ').join('-');
-
 		if (master.id == 'new') {
 			createTags(master).then((response) => {
 				reloadTags();
@@ -105,6 +105,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateTags(master).then((response) => {
@@ -115,6 +116,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -155,7 +157,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		toggleTags(master).then((response) => {
 			reloadTags();
 			setSelectedItems([]);
@@ -164,6 +166,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -171,7 +174,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			deleteTags(master).then((response) => {
 				reloadTags();
 				setSelectedItems([]);
@@ -181,6 +184,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -240,6 +244,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

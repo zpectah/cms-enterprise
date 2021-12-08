@@ -36,6 +36,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -101,12 +102,11 @@ const PagesModule = ({}: PagesModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: PagesItemProps) => {
 		const master: PagesItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		// reformat data before save
 		master.name = master.name.split(' ').join('-');
 		if (!(master.type == 'category' || master.type == 'tag'))
 			master.type_id = '';
-
 		if (master.id == 'new') {
 			createPages(master).then((response) => {
 				reloadPages();
@@ -116,6 +116,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updatePages(master).then((response) => {
@@ -126,6 +127,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -166,7 +168,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		togglePages(master).then((response) => {
 			reloadPages();
 			setSelectedItems([]);
@@ -175,6 +177,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -182,7 +185,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			deletePages(master).then((response) => {
 				reloadPages();
 				setSelectedItems([]);
@@ -192,6 +195,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -250,6 +254,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

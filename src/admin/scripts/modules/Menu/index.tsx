@@ -36,6 +36,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -99,10 +100,9 @@ const MenuModule = ({}: MenuModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: MenuItemProps) => {
 		const master: MenuItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		// reformat data before save
 		master.name = master.name.split(' ').join('-');
-
 		if (master.id == 'new') {
 			createMenu(master).then((response) => {
 				reloadMenu();
@@ -112,6 +112,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateMenu(master).then((response) => {
@@ -122,6 +123,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -162,7 +164,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		toggleMenu(master).then((response) => {
 			reloadMenu();
 			setSelectedItems([]);
@@ -171,6 +173,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -178,7 +181,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			deleteMenu(master).then((response) => {
 				reloadMenu();
 				setSelectedItems([]);
@@ -188,6 +191,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -246,6 +250,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

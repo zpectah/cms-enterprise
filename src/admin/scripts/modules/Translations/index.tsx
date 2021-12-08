@@ -39,6 +39,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -102,10 +103,9 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: TranslationsItemProps) => {
 		const master: TranslationsItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		// reformat data before save
 		master.name = master.name.split(' ').join('-');
-
 		if (master.id == 'new') {
 			createTranslations(master).then((response) => {
 				reloadTranslations();
@@ -115,6 +115,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateTranslations(master).then((response) => {
@@ -125,6 +126,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -165,7 +167,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		toggleTranslations(master).then((response) => {
 			reloadTranslations();
 			setSelectedItems([]);
@@ -174,6 +176,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -181,7 +184,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			deleteTranslations(master).then((response) => {
 				reloadTranslations();
 				setSelectedItems([]);
@@ -191,6 +194,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -249,6 +253,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

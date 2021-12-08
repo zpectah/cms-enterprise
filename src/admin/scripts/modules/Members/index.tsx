@@ -35,6 +35,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -92,7 +93,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: MembersItemProps) => {
 		const master: MembersItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		if (master.id == 'new') {
 			createMembers(master).then((response) => {
 				reloadMembers();
@@ -102,6 +103,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateMembers(master).then((response) => {
@@ -112,6 +114,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -152,7 +155,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		toggleMembers(master).then((response) => {
 			reloadMembers();
 			setSelectedItems([]);
@@ -161,6 +164,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -168,7 +172,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			deleteMembers(master).then((response) => {
 				reloadMembers();
 				setSelectedItems([]);
@@ -178,6 +182,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -237,6 +242,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

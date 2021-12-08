@@ -36,6 +36,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState<boolean>(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
@@ -98,7 +99,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: StoresItemProps) => {
 		const master: StoresItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		console.log('AJAX ... create/save ...', master);
 
 		if (master.id == 'new') {
@@ -111,6 +112,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateStores(master).then((response) => {
@@ -122,6 +124,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -162,7 +165,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		console.log('AJAX ... toggle ...', master);
 
 		toggleStores(master).then((response) => {
@@ -174,6 +177,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -181,7 +185,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
-
+			setProcessing(true);
 			console.log('AJAX ... delete ...', master);
 
 			deleteStores(master).then((response) => {
@@ -194,6 +198,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 				if (master.length == 1) history.push(moduleObject.route.path);
 			});
 		} else if (confirmDialogType == 'formDirty') {
@@ -252,6 +257,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={isProcessing} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}
