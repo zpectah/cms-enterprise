@@ -165,7 +165,42 @@ class ApiRequest {
 
                 /********** Distributors **********/
 
-                /********** Members **********/
+                /********** Members (*) **********/
+                case 'get_members':
+                    $response = $dc -> get('Members', $request_data, $params);
+                    break;
+
+                case 'create_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
 
                 /********** Menu & MenuItems (*) **********/
                 case 'get_menu':

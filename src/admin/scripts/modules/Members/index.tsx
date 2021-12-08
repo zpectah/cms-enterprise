@@ -205,6 +205,8 @@ const MembersModule = ({}: MembersModuleProps) => {
 	};
 
 	useEffect(() => {
+		console.log('Members', Members);
+
 		if (Members) toggleDetail();
 	}, [params.id, Members]);
 

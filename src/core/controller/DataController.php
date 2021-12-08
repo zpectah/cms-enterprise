@@ -4,10 +4,19 @@ namespace controller;
 
 use model\Categories;
 use model\CmsRequests;
+use model\Deliveries;
+use model\Distributors;
+use model\Members;
 use model\Menu;
 use model\MenuItems;
+use model\Orders;
 use model\Pages;
+use model\Payments;
 use model\Posts;
+use model\Producers;
+use model\Products;
+use model\ProductsOptions;
+use model\Stores;
 use model\Tags;
 use model\Translations;
 use model\Uploads;
@@ -39,7 +48,15 @@ class DataController {
         $Menu = new Menu;
         $MenuItems = new MenuItems;
         $Uploads = new Uploads;
-
+        $Members = new Members;
+        $Deliveries = new Deliveries;
+        $Distributors = new Distributors;
+        $Orders = new Orders;
+        $Payments = new Payments;
+        $Producers = new Producers;
+        $Products = new Products;
+        $ProductsOptions = new ProductsOptions;
+        $Stores = new Stores;
 
 
         // Additional
@@ -90,6 +107,42 @@ class DataController {
                 $response['data'] = $Uploads -> get($conn, $data, $params, $language_active);
                 break;
 
+            case 'Members':
+                $response['data'] = $Members -> get($conn, $data, $params);
+                break;
+
+            case 'Deliveries':
+                $response['data'] = $Deliveries -> get($conn, $data, $params, $language_active);
+                break;
+
+            case 'Distributors':
+                $response['data'] = $Distributors -> get($conn, $data, $params);
+                break;
+
+            case 'Orders':
+                $response['data'] = $Orders -> get($conn, $data, $params);
+                break;
+
+            case 'Payments':
+                $response['data'] = $Payments -> get($conn, $data, $params, $language_active);
+                break;
+
+            case 'Producers':
+                $response['data'] = $Producers -> get($conn, $data, $params);
+                break;
+
+            case 'Products':
+                $response['data'] = $Products -> get($conn, $data, $params, $language_active);
+                break;
+
+            case 'ProductsOptions':
+                $response['data'] = $ProductsOptions -> get($conn, $data, $params, $language_active);
+                break;
+
+            case 'Stores':
+                $response['data'] = $Stores -> get($conn, $data, $params, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -117,7 +170,15 @@ class DataController {
         $Menu = new Menu;
         $MenuItems = new MenuItems;
         $Uploads = new Uploads;
-
+        $Members = new Members;
+        $Deliveries = new Deliveries;
+        $Distributors = new Distributors;
+        $Orders = new Orders;
+        $Payments = new Payments;
+        $Producers = new Producers;
+        $Products = new Products;
+        $ProductsOptions = new ProductsOptions;
+        $Stores = new Stores;
 
 
         // Additional
@@ -168,6 +229,42 @@ class DataController {
                 $response['data'] = $Uploads -> create($conn, $data, $language_active);
                 break;
 
+            case 'Members':
+                $response['data'] = $Members -> create($conn, $data);
+                break;
+
+            case 'Deliveries':
+                $response['data'] = $Deliveries -> create($conn, $data, $language_active);
+                break;
+
+            case 'Distributors':
+                $response['data'] = $Distributors -> create($conn, $data);
+                break;
+
+            case 'Orders':
+                $response['data'] = $Orders -> create($conn, $data);
+                break;
+
+            case 'Payments':
+                $response['data'] = $Payments -> create($conn, $data, $language_active);
+                break;
+
+            case 'Producers':
+                $response['data'] = $Producers -> create($conn, $data);
+                break;
+
+            case 'Products':
+                $response['data'] = $Products -> create($conn, $data, $language_active);
+                break;
+
+            case 'ProductsOptions':
+                $response['data'] = $ProductsOptions -> create($conn, $data, $language_active);
+                break;
+
+            case 'Stores':
+                $response['data'] = $Stores -> create($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -195,7 +292,15 @@ class DataController {
         $Menu = new Menu;
         $MenuItems = new MenuItems;
         $Uploads = new Uploads;
-
+        $Members = new Members;
+        $Deliveries = new Deliveries;
+        $Distributors = new Distributors;
+        $Orders = new Orders;
+        $Payments = new Payments;
+        $Producers = new Producers;
+        $Products = new Products;
+        $ProductsOptions = new ProductsOptions;
+        $Stores = new Stores;
 
 
         // Additional
@@ -246,6 +351,42 @@ class DataController {
                 $response['data'] = $Uploads -> update($conn, $data, $language_active);
                 break;
 
+            case 'Members':
+                $response['data'] = $Members -> update($conn, $data);
+                break;
+
+            case 'Deliveries':
+                $response['data'] = $Deliveries -> update($conn, $data, $language_active);
+                break;
+
+            case 'Distributors':
+                $response['data'] = $Distributors -> update($conn, $data);
+                break;
+
+            case 'Orders':
+                $response['data'] = $Orders -> update($conn, $data);
+                break;
+
+            case 'Payments':
+                $response['data'] = $Payments -> update($conn, $data, $language_active);
+                break;
+
+            case 'Producers':
+                $response['data'] = $Producers -> update($conn, $data);
+                break;
+
+            case 'Products':
+                $response['data'] = $Products -> update($conn, $data, $language_active);
+                break;
+
+            case 'ProductsOptions':
+                $response['data'] = $ProductsOptions -> update($conn, $data, $language_active);
+                break;
+
+            case 'Stores':
+                $response['data'] = $Stores -> update($conn, $data, $language_active);
+                break;
+
         }
 
         $conn -> close();
@@ -271,6 +412,15 @@ class DataController {
         $Menu = new Menu;
         $MenuItems = new MenuItems;
         $Uploads = new Uploads;
+        $Members = new Members;
+        $Deliveries = new Deliveries;
+        $Distributors = new Distributors;
+        $Orders = new Orders;
+        $Payments = new Payments;
+        $Producers = new Producers;
+        $Products = new Products;
+        $ProductsOptions = new ProductsOptions;
+        $Stores = new Stores;
 
 
         switch ($model) {
@@ -315,6 +465,42 @@ class DataController {
                 $response['data'] = $Uploads -> toggle($conn, $data);
                 break;
 
+            case 'Members':
+                $response['data'] = $Members -> toggle($conn, $data);
+                break;
+
+            case 'Deliveries':
+                $response['data'] = $Deliveries -> toggle($conn, $data);
+                break;
+
+            case 'Distributors':
+                $response['data'] = $Distributors -> toggle($conn, $data);
+                break;
+
+            case 'Orders':
+                $response['data'] = $Orders -> toggle($conn, $data);
+                break;
+
+            case 'Payments':
+                $response['data'] = $Payments -> toggle($conn, $data);
+                break;
+
+            case 'Producers':
+                $response['data'] = $Producers -> toggle($conn, $data);
+                break;
+
+            case 'Products':
+                $response['data'] = $Products -> toggle($conn, $data);
+                break;
+
+            case 'ProductsOptions':
+                $response['data'] = $ProductsOptions -> toggle($conn, $data);
+                break;
+
+            case 'Stores':
+                $response['data'] = $Stores -> toggle($conn, $data);
+                break;
+
         }
 
         $conn -> close();
@@ -340,6 +526,15 @@ class DataController {
         $Menu = new Menu;
         $MenuItems = new MenuItems;
         $Uploads = new Uploads;
+        $Members = new Members;
+        $Deliveries = new Deliveries;
+        $Distributors = new Distributors;
+        $Orders = new Orders;
+        $Payments = new Payments;
+        $Producers = new Producers;
+        $Products = new Products;
+        $ProductsOptions = new ProductsOptions;
+        $Stores = new Stores;
 
 
         switch ($model) {
@@ -384,6 +579,42 @@ class DataController {
                 $response['data'] = $Uploads -> delete($conn, $data);
                 break;
 
+            case 'Members':
+                $response['data'] = $Members -> delete($conn, $data);
+                break;
+
+            case 'Deliveries':
+                $response['data'] = $Deliveries -> delete($conn, $data);
+                break;
+
+            case 'Distributors':
+                $response['data'] = $Distributors -> delete($conn, $data);
+                break;
+
+            case 'Orders':
+                $response['data'] = $Orders -> delete($conn, $data);
+                break;
+
+            case 'Payments':
+                $response['data'] = $Payments -> delete($conn, $data);
+                break;
+
+            case 'Producers':
+                $response['data'] = $Producers -> delete($conn, $data);
+                break;
+
+            case 'Products':
+                $response['data'] = $Products -> delete($conn, $data);
+                break;
+
+            case 'ProductsOptions':
+                $response['data'] = $ProductsOptions -> delete($conn, $data);
+                break;
+
+            case 'Stores':
+                $response['data'] = $Stores -> delete($conn, $data);
+                break;
+
         }
 
         $conn -> close();
@@ -393,7 +624,7 @@ class DataController {
 
 
     /********** System **********/
-    public function create_log ($data): array {
+    public function create_log ($data) {
         $System = new System;
 
         return $System -> create_log($data);

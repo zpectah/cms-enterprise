@@ -216,38 +216,7 @@ export function useMembers() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_members`, get);
 
 	return {
-		Members: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Member 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Post 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Post 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Post 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Post 5 name`,
-				active: true,
-			},
-		] as MembersItemProps[],
+		Members: data?.data as MembersItemProps[],
 		members_loading: !data && !error,
 		members_error: error,
 		reloadMembers: () => mutate(`${api_path_prefix}/get_members`),

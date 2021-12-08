@@ -130,7 +130,18 @@ export interface UsersItemProps extends commonItemProps {
 }
 
 export interface MembersItemProps extends commonItemProps {
-	name: string;
+	email: string;
+	password?: string;
+	nick_name: string;
+	first_name?: string;
+	middle_name?: string;
+	last_name: string;
+	country?: string;
+	city?: string;
+	address?: string;
+	zip?: string;
+	phone?: (number | string)[];
+	email_alt?: (number | string)[];
 }
 
 export interface DeliveriesItemProps extends commonItemProps {

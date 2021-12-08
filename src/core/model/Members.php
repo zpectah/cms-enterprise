@@ -4,7 +4,7 @@ namespace model;
 
 class Members {
 
-    public function get ($conn, $data) {
+    public function get ($conn, $data, $params) {
         $response = [];
 
         return $response;

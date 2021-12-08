@@ -68,7 +68,7 @@ const MembersDetailForm = ({
 
 	const renderTitle = () => {
 		let title = t('new.Members');
-		if (detailData.id !== 'new') title = detailData.name;
+		if (detailData.id !== 'new') title = detailData.email;
 
 		return title;
 	};
@@ -198,20 +198,21 @@ const MembersDetailForm = ({
 				</div>
 				<Section>
 					<Controller
-						name="name"
+						name="email"
 						control={control}
 						rules={{ required: true }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text
+									type="email"
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
-									id={`${formOptions.id}__name`}
-									label={t('form:input.name')}
+									id={`${formOptions.id}__email`}
+									label={t('form:input.email')}
 									responsiveWidth={'75%'}
-									dataTestId={`${formOptions.id}.input.name`}
+									dataTestId={`${formOptions.id}.input.email`}
 									required
 								/>
 							</Form.Row>

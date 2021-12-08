@@ -4,19 +4,19 @@ namespace model;
 
 class Stores {
 
-    public function get ($conn, $data) {
+    public function get ($conn, $data, $params, $languages) {
         $response = [];
 
         return $response;
     }
 
-    public function create ($conn, $data) {
+    public function create ($conn, $data, $languages) {
         $response = [];
 
         return $response; // last created ID
     }
 
-    public function update ($conn, $data) {
+    public function update ($conn, $data, $languages) {
         $response = [];
 
         return $response; // list of affected ids
