@@ -11,14 +11,14 @@
       "description": "Content Managing System",
       "robots": "noindex,nofollow",
       "author": "Tomas Sychra | zpecter.com",
-      "lang": "en",
+      "lang": "cs",
       "keywords": "zpecter,cms,crm,market,eshop",
       "charset": "utf-8",
       "viewport": "width=device-width, initial-scale=1"
     },
     "language": {
-      "default": "en",
-      "list": ["en", "cs"]
+      "default": "cs",
+      "list": ["cs", "en"]
     }
   },
   "web": {

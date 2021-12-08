@@ -5,24 +5,24 @@
     },
     "page": {
       "title": "Error 404 page",
-      "description": "The page was not found, you either entered the wrong url, or the page was deleted",
-      "button": "Return to dashboard"
+      "description": "Stránka nebyla nalezena. Pravděpodobně byla stránka smazána, nebo jste zadali špatný adresu",
+      "button": "Vrátit se"
     }
   },
   "Login": {
     "meta": {
-      "title": "Login"
+      "title": "Přihlášení"
     },
     "page": {
-      "title": "Login to system"
+      "title": "Přihlášení do systému"
     }
   },
   "LostPassword": {
     "meta": {
-      "title": "Lost Password"
+      "title": "Ztracené heslo"
     },
     "page": {
-      "title": "Recover lost password"
+      "title": "Obnova ztraceného hesla"
     }
   },
   "Dashboard": {
@@ -30,106 +30,106 @@
       "title": "Dashboard"
     },
     "page": {
-      "title": "Welcome"
+      "title": "Vítejte"
     },
     "label": "Dashboard"
   },
   "Settings": {
     "meta": {
-      "title": "Settings"
+      "title": "Nastavení"
     },
     "page": {
-      "title": "Settings"
+      "title": "Nastavení systému"
     },
-    "label": "Settings"
+    "label": "Nastavení"
   },
   "Profile": {
     "meta": {
-      "title": "Profile"
+      "title": "Profil"
     },
     "page": {
-      "title": "My profile"
+      "title": "Profil uživatele"
     },
-    "label": "Profile"
+    "label": "Profil"
   },
   "Help": {
     "meta": {
-      "title": "Help"
+      "title": "Nápověda"
     },
     "page": {
-      "title": "Help"
+      "title": "Nápověda"
     },
-    "label": "Help"
+    "label": "Nápověda"
   },
   "Posts": {
     "meta": {
-      "title": "Posts"
+      "title": "Posty"
     },
     "page": {
-      "title": "Posts"
+      "title": "Výpis postů"
     },
-    "label": "Posts"
+    "label": "Posty"
   },
   "Users": {
     "meta": {
-      "title": "Users"
+      "title": "Uživatelé"
     },
     "page": {
-      "title": "Users"
+      "title": "Výpis uživatelů"
     },
-    "label": "Users"
+    "label": "Uživatelé"
   },
   "Tags": {
     "meta": {
-      "title": "Tags"
+      "title": "Tagy"
     },
     "page": {
-      "title": "Tags"
+      "title": "Výpis tagů"
     },
-    "label": "Tags"
+    "label": "Tagy"
   },
   "Translations": {
     "meta": {
-      "title": "Translations"
+      "title": "Překlady"
     },
     "page": {
-      "title": "Translations"
+      "title": "Výpis překladů"
     },
-    "label": "Translations"
+    "label": "Překlady"
   },
   "Categories": {
     "meta": {
-      "title": "Categories"
+      "title": "Kategorie"
     },
     "page": {
-      "title": "Categories"
+      "title": "Výpis kategorií"
     },
-    "label": "Categories"
+    "label": "Kategorie"
   },
   "Pages": {
     "meta": {
-      "title": "Pages"
+      "title": "Stránky"
     },
     "page": {
-      "title": "Pages"
+      "title": "Výpis stránek"
     },
-    "label": "Pages"
+    "label": "Stránky"
   },
   "Uploads": {
     "meta": {
-      "title": "Uploads"
+      "title": "Soubory"
     },
     "page": {
-      "title": "Uploads"
+      "title": "Výpis souborů"
     },
-    "label": "Uploads"
+    "label": "Soubory"
   },
   "Menu": {
     "meta": {
       "title": "Menu"
     },
     "page": {
-      "title": "Menu"
+      "title": "Výpis menu"
     },
     "label": "Menu"
   },
@@ -148,7 +148,7 @@
       "title": "Members"
     },
     "page": {
-      "title": "Members"
+      "title": "Výpis members"
     },
     "label": "Members"
   },
@@ -164,66 +164,66 @@
   },
   "Deliveries": {
     "meta": {
-      "title": "Deliveries"
+      "title": "Doprava"
     },
     "page": {
-      "title": "Deliveries"
+      "title": "Výpis doprav"
     },
-    "label": "Deliveries"
+    "label": "Doprava"
   },
   "Distributors": {
     "meta": {
-      "title": "Distributors"
+      "title": "Dodavatelé"
     },
     "page": {
-      "title": "Distributors"
+      "title": "Výpis dodavatelů"
     },
-    "label": "Distributors"
+    "label": "Dodavatelé"
   },
   "Orders": {
     "meta": {
-      "title": "Orders"
+      "title": "Objednávky"
     },
     "page": {
-      "title": "Orders"
+      "title": "Výpis objednávek"
     },
-    "label": "Orders"
+    "label": "Objednávky"
   },
   "Payments": {
     "meta": {
-      "title": "Payments"
+      "title": "Platby"
     },
     "page": {
-      "title": "Payments"
+      "title": "Výpis plateb"
     },
-    "label": "Payments"
+    "label": "Platby"
   },
   "Producers": {
     "meta": {
-      "title": "Producers"
+      "title": "Výrobci"
     },
     "page": {
-      "title": "Producers"
+      "title": "Výpis výrobců"
     },
-    "label": "Producers"
+    "label": "Výrobci"
   },
   "Products": {
     "meta": {
-      "title": "Products"
+      "title": "Produkty"
     },
     "page": {
-      "title": "Products"
+      "title": "Výpis produktů"
     },
-    "label": "Products"
+    "label": "Produkty"
   },
   "Stores": {
     "meta": {
-      "title": "Stores"
+      "title": "Obchody"
     },
     "page": {
-      "title": "Stores"
+      "title": "Výpis obchodů"
     },
-    "label": "Stores"
+    "label": "Obchody"
   }
 
 }

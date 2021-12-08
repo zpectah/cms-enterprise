@@ -1,0 +1,20 @@
+{
+  "Header": {
+    "UserDropdown": {
+      "profile": "Profil",
+      "help": "Nápověda",
+      "logOut": "Odhlásit"
+    }
+  },
+  "DialogConfirm": {
+    "title": {
+      "delete_one": "Jste si jisti, že chcete smazat tuto položku?",
+      "delete_other": "Jste si jisti, že chcete smazat těchto {{count}} položek?",
+      "formDirty": "Máte neuložené změny, opravdu chcete pokračovat?",
+      "logOut": "Opravdu se chcete odhlásit?"
+    }
+  },
+  "UploadsPicker": {
+    "title": "vyberte soubory"
+  }
+}

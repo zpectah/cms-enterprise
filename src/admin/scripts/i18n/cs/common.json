@@ -1,0 +1,66 @@
+{
+  "button": {
+    "ok": "Ok",
+    "submit": "Odeslat",
+    "save": "Uložit",
+    "update": "Aktualizovat",
+    "cancel": "Zrušit",
+    "delete": "Smazat",
+    "create": "Vytvořit",
+    "return": "Zpět",
+    "confirm": "Potvrdit",
+    "reset": "Zrušit",
+    "toggle": "Přepnout",
+    "yes": "Ano",
+    "no": "Ne",
+    "edit": "Upravit",
+    "clear": "Odstranit",
+    "clearAll": "Odstranit vše",
+    "removeFromQueue": "Odstranit z fronty",
+    "clearQueue": "Smazat frontu",
+    "submitQueue": "Nahrát frontu",
+    "close": "Zavřít",
+    "open": "Otevřít"
+  },
+  "new": {
+    "Categories": "Nová kategorie",
+    "Menu": "Nové menu",
+    "MenuItems": "Nová menu položka",
+    "Pages": "Nová stránka",
+    "Posts": "Nový post",
+    "Tags": "Nový tag",
+    "Translations": "Nový překlad",
+    "Uploads": "Nový soubor",
+    "Users": "Nový úživatel",
+    "Members": "Nový member",
+    "Deliveries": "Nová doprava",
+    "Distributors": "Nový dodavatel",
+    "Payments": "Nová platba",
+    "Producers": "Nový výrobce",
+    "Products": "Nový produkt",
+    "ProductsOptions": "Nová nabídka produktu",
+    "Stores": "Nový obchod",
+    "Orders": "Nová objednávka"
+  },
+  "label": {
+    "lostPassword": "Ztracené heslo",
+    "backToLogin": "Návrat na přihlašovací stránku",
+    "noItemsFound": "Nebyly nalezeny žádné položky"
+  },
+  "common": {
+    "allRightsReserved": "Všechna práva vyhrazena"
+  },
+  "app": {
+    "app": "App",
+    "crm": "Crm",
+    "market": "Market"
+  },
+  "panel": {
+    "global": "Globalní",
+    "content": "Obsah",
+    "modules": "Moduly",
+    "about": "O systému",
+    "language": "Jazyky",
+    "web": "Web"
+  }
+}

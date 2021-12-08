@@ -497,7 +497,7 @@ const PostsDetailForm = ({
 										value={value}
 										name={name}
 										id={`${formOptions.id}__event_location`}
-										label={t('form:input.event_location')}
+										label={t('form:input.location')}
 										responsiveWidth={'75%'}
 										dataTestId={`${formOptions.id}.input.event_location`}
 										required
@@ -517,7 +517,7 @@ const PostsDetailForm = ({
 										value={value}
 										name={name}
 										id={`${formOptions.id}__event_address`}
-										label={t('form:input.event_address')}
+										label={t('form:input.address')}
 										responsiveWidth={'75%'}
 										dataTestId={`${formOptions.id}.input.event_address`}
 										required
@@ -537,7 +537,7 @@ const PostsDetailForm = ({
 										value={value}
 										name={name}
 										id={`${formOptions.id}__event_country`}
-										label={t('form:input.event_country')}
+										label={t('form:input.country')}
 										responsiveWidth={'75%'}
 										dataTestId={`${formOptions.id}.input.event_country`}
 										required
@@ -557,7 +557,7 @@ const PostsDetailForm = ({
 										value={value}
 										name={name}
 										id={`${formOptions.id}__event_city`}
-										label={t('form:input.event_city')}
+										label={t('form:input.city')}
 										responsiveWidth={'75%'}
 										dataTestId={`${formOptions.id}.input.event_city`}
 										required
@@ -577,7 +577,7 @@ const PostsDetailForm = ({
 										value={value}
 										name={name}
 										id={`${formOptions.id}__event_zip`}
-										label={t('form:input.event_zip')}
+										label={t('form:input.zip')}
 										responsiveWidth={'75%'}
 										dataTestId={`${formOptions.id}.input.event_zip`}
 										required

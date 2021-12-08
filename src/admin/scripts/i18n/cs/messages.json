@@ -1,0 +1,20 @@
+{
+  "success": {
+    "itemCreated": "Položka byla vytvořena",
+    "itemUpdated_one": "Položka byla aktualizována",
+    "itemUpdated_other": "{{count}} Položek bylo aktualizováno",
+    "itemDeleted_one": "Položka byla smazána",
+    "itemDeleted_other": "{{count}} Položek bylo smazáno",
+    "newSettingsUpdated": "Nové nastavení bylo uloženo",
+    "profileUpdated": "Profil byl aktualizován"
+  },
+  "error": {
+    "noAccess": "Bez přístupu! / No access!",
+    "unauthorizedAccess": "Neautorizovaný přístup",
+    "profileLoadError": "Došlo k chybě při načítání profilu",
+    "profileUpdateError": "Došlo k chybě při ukládání profilu, zkuste prosím znovu"
+  },
+  "info": {
+    "menuMustBeCreated": "Pro vytváření položek musí být menu nejdříve uloženo"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "input": {
+    "name": "Název",
+    "type": "Typ",
+    "active": "Položka je aktivní",
+    "email": "E-mail",
+    "password": "Heslo",
+    "password_confirm": "Heslo znovu",
+    "password_new": "Nové heslo",
+    "nick_name": "Přezdívka",
+    "first_name": "Jméno",
+    "middle_name": "Prostřední jméno",
+    "last_name": "Příjmení",
+    "level": "Úroveň",
+    "group": "Skupina",
+    "avatar": "Avatar",
+    "value": "Hodnota",
+    "description": "Popisek",
+    "title": "Titulek",
+    "content": "Obsah",
+    "parent": "Rodič",
+    "img_thumbnail": "Náhledový obrázek",
+    "img_main": "Hlavní obrázek",
+    "categories": "Kategorie",
+    "tags": "Tagy",
+    "options": "Nabídka",
+    "media": "Media",
+    "attachments": "Přílohy",
+    "published": "Publikováno",
+    "rating": "Hodnocení",
+    "approved": "Schváleno",
+    "event_start": "Událost začíná",
+    "event_end": "Událost končí",
+    "robots": "Roboti",
+    "page": "Stránka",
+    "path_url": "Cesta url",
+    "order": "Pořadí",
+    "label": "Štítek",
+    "new_link": "Nový odkaz",
+    "country": "Země",
+    "city": "Město",
+    "address": "Addresa",
+    "zip": "PSČ",
+    "phone": "Telefon",
+    "location": "Místo"
+  },
+  "label": {
+    "no_parent": "Bez rodiče",
+    "no_selected": "Nevybráno",
+    "no_category": "Bez kategorie"
+  },
+  "section": {
+    "title": {
+      "eventOptions": "Nabídka události",
+      "mediaAndAttachments": "Media a přílohy",
+      "linksAndSources": "Odkazy a zdroje"
+    }
+  },
+  "form": {
+    "Login": {
+      "msg": {
+        "user_not_found": "Uživatel nebyl nalezen, zkuste jiný účet",
+        "user_password_not_match": "Uživatel nalezen, ale heslo se neshoduje",
+        "user_not_active": "Uživatel není aktivní",
+        "user_is_deleted": "Uživatel je smazaný",
+        "user_login_success": "Byly jste úspěšně přihlášeni, nyní budete přesměrování na úvodní stránku"
+      }
+    },
+    "LostPassword": {
+      "msg": {
+        "request_was_send": "Požadavek na změnu hesla vám byl odeslán na uvedený e-mail, zkontrolujte schránku a potvrďte odkazem",
+        "user_password_reset_error": "Nastala chyba při resetu hesla, zkuste prosím znovu",
+        "user_password_already_reset": "Požadavek na změnu hesla vám byl již odeslán, zkontrolujte si svou schránku",
+        "request_not_found": "Požadavek nebyl nalezen",
+        "token_not_found": "Token nebyl nalezen",
+        "user_password_reset_success": "Vaše heslo bylo úspěšně vytvořeno a odesláno do vaší schránky"
+      },
+      "btn": {
+        "generateTemporaryPassword": "Odeslat e-mailem"
+      }
+    },
+    "UploadsDetail": {
+      "label": {
+        "files_in_queue": "Soborů ve frontě",
+        "drop_files_here": "Přetáhněte soubory sem",
+        "select_file_to_upload": "Přetáhněte nebo vyberte soubor k nahrání",
+        "select_files_to_upload": "Přetáhněte nebo vyberte soubory k nahrání",
+        "file_name": "Název souboru",
+        "file_mime": "Mime typ",
+        "file_size": "Velikost"
+      }
+    },
+    "Settings": {
+      "input": {
+        "project_name": "Název projektu",
+        "form_email_sender": "Odesílatel e-mailů",
+        "form_email_recipients": "Příjemci e-mailů",
+        "web_meta_title": "Titulek webu",
+        "web_meta_description": "Popisek webu",
+        "web_meta_robots": "Web meta roboti",
+        "web_meta_keywords": "Klíčová slova webu",
+        "web_mode_maintenance": "V módu údržby",
+        "web_mode_debug": "V debug módu",
+        "company_name": "Název společnosti",
+        "company_description": "Popis společnosti",
+        "company_id": "ID společnosti",
+        "company_address": "Addresa společnosti",
+        "company_city": "Město",
+        "company_country": "Země",
+        "company_zip": "PSČ",
+        "company_location": "Místo společnosti",
+        "company_email": "E-mail společnosti",
+        "company_phone": "Telefon společnosti",
+        "company_bank": "Banka společnosti",
+        "content_redactor_approval": "Schvalování postů redaktorům",
+        "comments_global_active": "Komentáře povoleny",
+        "comments_anonymous_active": "Komentáře povoleny i pro anonymy",
+        "language_installed": "Nainstalované jazyky",
+        "language_active": "Aktivní jazyky",
+        "language_default": "Výchozí jazyk",
+        "module_crm_installed": "Crm instalováno",
+        "module_crm_active": "Crm aktivní",
+        "module_market_installed": "Market instalován",
+        "module_market_active": "Market aktivní",
+        "members_login_active": "Přihlašování memberů",
+        "members_lostPassword_active": "Možnost memberů obnovit heslo",
+        "members_profile_active": "AKtivní profil membera"
+      },
+      "section": {
+        "title": {
+          "company": "Společnost",
+          "forms": "Formuláře",
+          "modes": "Módy",
+          "content": "Obsah"
+        }
+      }
+    }
+  }
+}

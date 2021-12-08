@@ -540,7 +540,7 @@ const SettingsForm = ({
 								<Controller
 									name="web_meta_keywords"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -549,19 +549,10 @@ const SettingsForm = ({
 											id={`${formOptions.id}__web_meta_keywords`}
 											errors={[]}
 										>
-											<Input.Text
-												onChange={onChange}
-												onBlur={onBlur}
+											<Picker.String
 												value={value}
-												name={name}
-												id={`${formOptions.id}__web_meta_keywords`}
-												// label={t('form:input.project_name')}
-												placeholder={t(
-													'form:form.Settings.input.web_meta_keywords',
-												)}
-												responsiveWidth={'75%'}
-												dataTestId={`${formOptions.id}.input.web_meta_keywords`}
-												required
+												onChange={onChange}
+												multiple
 											/>
 										</Form.Row>
 									)}

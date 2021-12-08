@@ -1,31 +1,32 @@
-import en_common from './en/common.json';
-import en_page from './en/page.json';
-import en_form from './en/form.json';
-import en_messages from './en/messages.json';
-import en_components from './en/components.json';
-import en_types from './en/types.json';
-import en_calendar from './en/calendar.json';
-import en_table from './en/table.json';
+import cs_common from './cs/common.json';
+import cs_page from './cs/page.json';
+import cs_form from './cs/form.json';
+import cs_messages from './cs/messages.json';
+import cs_components from './cs/components.json';
+import cs_types from './cs/types.json';
+import cs_calendar from './cs/calendar.json';
+import cs_table from './cs/table.json';
 
 export default {
-	en: {
-		common: en_common,
-		page: en_page,
-		form: en_form,
-		messages: en_messages,
-		components: en_components,
-		types: en_types,
-		calendar: en_calendar,
-		table: en_table,
-	},
 	cs: {
-		common: en_common,
-		page: en_page,
-		form: en_form,
-		messages: en_messages,
-		components: en_components,
-		types: en_types,
-		calendar: en_calendar,
-		table: en_table,
+		common: cs_common,
+		page: cs_page,
+		form: cs_form,
+		messages: cs_messages,
+		components: cs_components,
+		types: cs_types,
+		calendar: cs_calendar,
+		table: cs_table,
+	},
+	// TODO
+	en: {
+		common: cs_common,
+		page: cs_page,
+		form: cs_form,
+		messages: cs_messages,
+		components: cs_components,
+		types: cs_types,
+		calendar: cs_calendar,
+		table: cs_table,
 	},
 };

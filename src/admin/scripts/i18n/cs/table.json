@@ -1,0 +1,21 @@
+{
+  "label": {
+    "id": "ID",
+    "name": "Název",
+    "email": "E-mail",
+    "type": "Typ",
+    "active": "Aktivní",
+    "actions": "Akce",
+    "file_name": "Název souboru"
+  },
+  "options": {
+    "searchInTable": "Hledat v tabulce",
+    "filterByType": "Filtrovat podle typu",
+    "selectedItems": "Vybraných položek"
+  },
+  "message": {
+    "itemsLoading": "Načítání položek",
+    "itemsNotFound": "Nebyly nalezeny žádné položky",
+    "noItemsCreated": "Položky nebyly načteny nebo vytvořeny"
+  }
+}
