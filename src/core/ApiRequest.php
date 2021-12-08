@@ -74,7 +74,11 @@ class ApiRequest {
                     break;
 
                 case 'update_user_profile':
-                    $response = $dc -> user_update_profile($request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> user_update_profile($request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'user_login':
@@ -126,19 +130,35 @@ class ApiRequest {
                     break;
 
                 case 'create_categories':
-                    $response = $dc -> create('Categories', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Categories', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_categories':
-                    $response = $dc -> update('Categories', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Categories', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_categories':
-                    $response = $dc -> toggle('Categories', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Categories', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_categories':
-                    $response = $dc -> delete('Categories', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Categories', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Deliveries **********/
@@ -153,19 +173,35 @@ class ApiRequest {
                     break;
 
                 case 'create_menu':
-                    $response = $dc -> create('Menu', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Menu', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_menu':
-                    $response = $dc -> update('Menu', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Menu', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_menu':
-                    $response = $dc -> toggle('Menu', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Menu', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_menu':
-                    $response = $dc -> delete('Menu', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Menu', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'get_menu_items':
@@ -173,19 +209,35 @@ class ApiRequest {
                     break;
 
                 case 'create_menu_items':
-                    $response = $dc -> create('MenuItems', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('MenuItems', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_menu_items':
-                    $response = $dc -> update('MenuItems', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('MenuItems', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_menu_items':
-                    $response = $dc -> toggle('MenuItems', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('MenuItems', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_menu_items':
-                    $response = $dc -> delete('MenuItems', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('MenuItems', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Orders **********/
@@ -196,19 +248,35 @@ class ApiRequest {
                     break;
 
                 case 'create_pages':
-                    $response = $dc -> create('Pages', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Pages', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_pages':
-                    $response = $dc -> update('Pages', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Pages', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_pages':
-                    $response = $dc -> toggle('Pages', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Pages', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_pages':
-                    $response = $dc -> delete('Pages', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Pages', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Payments **********/
@@ -219,19 +287,35 @@ class ApiRequest {
                     break;
 
                 case 'create_posts':
-                    $response = $dc -> create('Posts', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Posts', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_posts':
-                    $response = $dc -> update('Posts', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Posts', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_posts':
-                    $response = $dc -> toggle('Posts', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Posts', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_posts':
-                    $response = $dc -> delete('Posts', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Posts', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Producers **********/
@@ -246,19 +330,35 @@ class ApiRequest {
                     break;
 
                 case 'create_tags':
-                    $response = $dc -> create('Tags', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Tags', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_tags':
-                    $response = $dc -> update('Tags', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Tags', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_tags':
-                    $response = $dc -> toggle('Tags', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Tags', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_tags':
-                    $response = $dc -> delete('Tags', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Tags', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Translations **********/
@@ -267,19 +367,35 @@ class ApiRequest {
                     break;
 
                 case 'create_translations':
-                    $response = $dc -> create('Translations', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Translations', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_translations':
-                    $response = $dc -> update('Translations', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Translations', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_translations':
-                    $response = $dc -> toggle('Translations', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Translations', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_translations':
-                    $response = $dc -> delete('Translations', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Translations', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Uploads **********/
@@ -288,19 +404,35 @@ class ApiRequest {
                     break;
 
                 case 'create_uploads':
-                    $response = $dc -> create('Uploads', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Uploads', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_uploads':
-                    $response = $dc -> update('Uploads', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Uploads', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_uploads':
-                    $response = $dc -> toggle('Uploads', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Uploads', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_uploads':
-                    $response = $dc -> delete('Uploads', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Uploads', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Users (*) **********/
@@ -329,11 +461,19 @@ class ApiRequest {
                     break;
 
                 case 'toggle_users':
-                    $response = $dc -> toggle('Users', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Users', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'delete_users':
-                    $response = $dc -> delete('Users', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Users', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
             }
