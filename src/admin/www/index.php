@@ -1,6 +1,8 @@
 <?php
 const PATH_ROOT = '../../';
 require PATH_ROOT . 'core/index.php';
+
+$as = new \service\AuthService;
 ?>
 <!doctype html>
 <html lang="<?=(ADMIN_VIEW['meta']['lang']) ?>">
@@ -21,6 +23,7 @@ require PATH_ROOT . 'core/index.php';
         window.APPENV = window.APPENV || '<?=(ENV)?>';
         window.APPTIMESTAMP = window.APPTIMESTAMP || '<?=(TIMESTAMP)?>';
         window.TMP_TOKEN = window.TMP_TOKEN || '<?=(TMP_TOKEN)?>';
+        window.USER_TOKEN = window.USER_TOKEN || '<?=($as -> get_user_token())?>';
     </script>
 </head>
 <body class="page">

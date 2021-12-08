@@ -12,6 +12,9 @@ export default {
 	// Temporary token
 	tmp_token: window.TMP_TOKEN,
 
+	// Temporary token
+	user_token: window.USER_TOKEN,
+
 	// Project configuration object
 	project: project,
 

@@ -2,7 +2,7 @@ import config from '../config';
 
 export const init: any = {
 	headers: {
-		'X-App-Token': 'wmcyenyntbmxzanv', // TODO
+		'X-App-Token': config.user_token,
 		'Content-Type': 'application/json',
 	},
 };

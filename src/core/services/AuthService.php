@@ -10,7 +10,7 @@ class AuthService {
         return $_SESSION[SESSION_USER_NAME_PREFIX];
     }
 
-    public function get_user_session_token () {
+    public function get_user_token () {
         session_start();
 
         return $_SESSION[SESSION_USER_TOKEN_PREFIX];
@@ -20,7 +20,7 @@ class AuthService {
         session_start();
 
         return [
-            $_SESSION[SESSION_USER_TOKEN_PREFIX] = bin2hex(random_bytes(32)),
+            $_SESSION[SESSION_USER_TOKEN_PREFIX] = bin2hex(random_bytes(16)),
             $_SESSION[SESSION_USER_NAME_PREFIX] = $email,
         ];
     }

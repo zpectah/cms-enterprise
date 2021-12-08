@@ -64,7 +64,7 @@ class Profile {
         $password = $data['password'];
 
         // User object
-        $user = $Users -> get($conn, ['email' => $email, 'withPassword' => true]);
+        $user = $Users -> get($conn, ['email' => $email, 'withPassword' => true], []);
 
         if ($user !== 'anonymous') {
             $response['message'] = 'user_password_not_match';
@@ -102,7 +102,7 @@ class Profile {
         $utils = new \Utils;
 
         $email = $data['email'];
-        $user = $Users -> get($conn, ['email' => $email]);
+        $user = $Users -> get($conn, ['email' => $email], []);
 
         if ($user !== 'anonymous') {
             if ($user['active'] == 0) {
@@ -147,12 +147,12 @@ class Profile {
         $rd_token = $data['token'];
 
         if ($rd_token) {
-            $request_row = $CmsRequests -> get($conn, ['token' => $rd_token]);
+            $request_row = $CmsRequests -> get($conn, ['token' => $rd_token], []);
 
             if ($request_row) {
 
                 if ($request_row['status'] == 1) {
-                    $user_row = $Users -> get($conn, ['email' => $request_row['value']]);
+                    $user_row = $Users -> get($conn, ['email' => $request_row['value']], []);
                     $user_row['password'] = $rd_password_raw;
 
                     $response['user'] = $Users -> update($conn, $user_row);
@@ -189,12 +189,12 @@ class Profile {
         $utils = new \Utils;
 
         $token = $data['token'];
-        $request_row = $CmsRequests -> get($conn, ['token' => $token]);
+        $request_row = $CmsRequests -> get($conn, ['token' => $token], []);
 
         if ($token) {
             if ($request_row) {
                 if ($request_row['status'] == 1) {
-                    $user_row = $Users -> get($conn, ['email' => $request_row['value']]);
+                    $user_row = $Users -> get($conn, ['email' => $request_row['value']], []);
                     if ($user_row) {
                         $tmp_password = $utils -> getToken(4, '');
                         $response['email'] = $es -> sendStyledMessage(

@@ -3,9 +3,13 @@
 class ApiRequest {
 
     private function is_request_authorized (): bool {
+        $as = new \service\AuthService;
         $request_token = $_SERVER['HTTP_X_APP_TOKEN'];
+        $user_token = $as -> get_user_token();
 
-        return $request_token == 'wmcyenyntbmxzanv'; // TODO
+        // TODO - for web purpose should create another token
+
+        return ($request_token !== '' && $request_token == $user_token);
     }
 
     public function getResponse () {
@@ -21,13 +25,6 @@ class ApiRequest {
         $request_url = explode( "/", $request_url_trimmed );
         $request_data_raw = json_decode(file_get_contents('php://input'));
         $request_data = json_decode(json_encode($request_data_raw), true);
-
-        // Check user/member authorization
-        if (!$request_is_authorized) {
-            $response['status'] = 'unauthorized';
-
-            return $response;
-        }
 
         // Parsed url params
         $url_base = $request_url[1];
@@ -54,13 +51,21 @@ class ApiRequest {
                     $response = $dc -> get_log_list($params);
                     break;
 
-                /********** Settings **********/
+                /********** Settings (*) **********/
                 case 'get_cms_settings':
-                    $response = $dc -> get_cms_settings($params);
+                    if ($request_is_authorized) {
+                        $response = $dc -> get_cms_settings($params);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_cms_settings':
-                    $response = $dc -> update_cms_settings($request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update_cms_settings($request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 /********** Profile **********/
@@ -298,17 +303,29 @@ class ApiRequest {
                     $response = $dc -> delete('Uploads', $request_data);
                     break;
 
-                /********** Users **********/
+                /********** Users (*) **********/
                 case 'get_users':
-                    $response = $dc -> get('Users', $request_data, $params);
+                    if ($request_is_authorized) {
+                        $response = $dc -> get('Users', $request_data, $params);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'create_users':
-                    $response = $dc -> create('Users', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Users', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_users':
-                    $response = $dc -> update('Users', $request_data);
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Users', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'toggle_users':
