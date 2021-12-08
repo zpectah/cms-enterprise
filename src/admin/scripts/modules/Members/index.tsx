@@ -44,6 +44,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 		updateMembers,
 		toggleMembers,
 		deleteMembers,
+		reloadMembers,
 		members_loading,
 		members_error,
 	} = useMembers();
@@ -55,11 +56,11 @@ const MembersModule = ({}: MembersModuleProps) => {
 		detail: {},
 		table: {
 			tableCells: {
-				name: ['left', 'auto'],
+				email: ['left', 'auto'],
 				type: ['left', '150px'],
 				active: ['right', '125px'],
 			},
-			tableSearchProps: ['name'],
+			tableSearchProps: ['email'],
 		},
 	};
 
@@ -92,12 +93,9 @@ const MembersModule = ({}: MembersModuleProps) => {
 	const detailSubmitHandler = (data: MembersItemProps) => {
 		const master: MembersItemProps = _.cloneDeep(data);
 
-		console.log('AJAX ... create/save ...', master);
-
 		if (master.id == 'new') {
 			createMembers(master).then((response) => {
-				console.log('create response', response);
-
+				reloadMembers();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -107,8 +105,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 			});
 		} else {
 			updateMembers(master).then((response) => {
-				console.log('update response', response);
-
+				reloadMembers();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -156,11 +153,8 @@ const MembersModule = ({}: MembersModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 
-		console.log('AJAX ... toggle ...', master);
-
 		toggleMembers(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadMembers();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -175,11 +169,8 @@ const MembersModule = ({}: MembersModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 
-			console.log('AJAX ... delete ...', master);
-
 			deleteMembers(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadMembers();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({
@@ -205,8 +196,6 @@ const MembersModule = ({}: MembersModuleProps) => {
 	};
 
 	useEffect(() => {
-		console.log('Members', Members);
-
 		if (Members) toggleDetail();
 	}, [params.id, Members]);
 
@@ -241,6 +230,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							withoutLanguageToggle
 						/>
 					)}
 				</>

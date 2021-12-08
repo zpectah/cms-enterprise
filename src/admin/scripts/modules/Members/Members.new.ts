@@ -4,6 +4,7 @@ export default {
 	id: 'new',
 	type: 'default',
 	email: '',
+	phone: '',
 	password: '',
 	nick_name: '',
 	first_name: '',
@@ -13,7 +14,8 @@ export default {
 	city: '',
 	address: '',
 	zip: '',
-	phone: [],
+	phone_alt: [],
 	email_alt: [],
+	description: '',
 	active: true,
 } as MembersItemProps;

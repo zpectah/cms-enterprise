@@ -4,6 +4,14 @@ namespace model;
 
 class Users {
 
+    private function getUpdatedRow ($row, $rp_withPassword) {
+        if (!$rp_withPassword) unset($row['password']); // Unset password attribute
+        unset($row['deleted']); // Unset deleted attribute
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params) {
         $response = [];
 
@@ -28,31 +36,15 @@ class Users {
             // iterate by params
             if ($rp_id) {
                 while($row = $result -> fetch_assoc()) {
-                    if ($rp_id == $row['id']) {
-                        if (!$rp_withPassword) unset($row['password']); // Unset password attribute
-                        unset($row['deleted']); // Unset deleted attribute
-                        $row['active'] = $row['active'] == 1; // Set value as boolean
-
-                        $response = $row;
-                    }
+                    if ($rp_id == $row['id']) $response = self::getUpdatedRow($row, $rp_withPassword);
                 }
             } else if ($rp_email) {
                 while($row = $result -> fetch_assoc()) {
-                    if ($rp_email == $row['email']) {
-                        if (!$rp_withPassword) unset($row['password']); // Unset password attribute
-                        unset($row['deleted']); // Unset deleted attribute
-                        $row['active'] = $row['active'] == 1; // Set value as boolean
-
-                        $response = $row;
-                    }
+                    if ($rp_email == $row['email']) $response = self::getUpdatedRow($row, $rp_withPassword);
                 }
             } else {
                 while($row = $result -> fetch_assoc()) {
-                    if (!$rp_withPassword) unset($row['password']);
-                    unset($row['deleted']); // Unset deleted attribute
-                    $row['active'] = $row['active'] == 1; // Set value as boolean
-
-                    $response[] = $row;
+                    $response[] = self::getUpdatedRow($row, $rp_withPassword);
                 }
             }
         }
@@ -65,7 +57,21 @@ class Users {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO users (email, type, password, nick_name, first_name, middle_name, last_name, user_level, user_group, img_avatar, description, active, deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $query = ('INSERT INTO users (
+                email, 
+                type, 
+                password, 
+                nick_name, 
+                first_name, 
+                middle_name, 
+                last_name, 
+                user_level, 
+                user_group, 
+                img_avatar, 
+                description, 
+                active, 
+                deleted
+                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)');
         $types = 'sssssssisssii';
         $args = [
             $data['email'],
@@ -103,8 +109,33 @@ class Users {
 
         // prepare
         $password = $data['password'];
-        $query = $password ? ('UPDATE users SET email = ?, type = ?, password = ?, nick_name = ?, first_name = ?, middle_name = ?, last_name = ?, user_level = ?, user_group = ?, img_avatar = ?, description = ?, active = ? WHERE id = ?')
-            : ('UPDATE users SET email = ?, type = ?, nick_name = ?, first_name = ?, middle_name = ?, last_name = ?, user_level = ?, user_group = ?, img_avatar = ?, description = ?, active = ? WHERE id = ?');
+        $query = $password ? ('UPDATE users SET 
+                email = ?, 
+                type = ?, 
+                password = ?, 
+                nick_name = ?, 
+                first_name = ?, 
+                middle_name = ?, 
+                last_name = ?, 
+                user_level = ?, 
+                user_group = ?, 
+                img_avatar = ?, 
+                description = ?, 
+                active = ? 
+            WHERE id = ?')
+            : ('UPDATE users SET 
+                email = ?, 
+                type = ?, 
+                nick_name = ?, 
+                first_name = ?, 
+                middle_name = ?, 
+                last_name = ?, 
+                user_level = ?, 
+                user_group = ?, 
+                img_avatar = ?, 
+                description = ?, 
+                active = ? 
+            WHERE id = ?');
         $types = $password ? 'sssssssisssii' : 'ssssssisssii';
         $args = $password ? [
             $data['email'],

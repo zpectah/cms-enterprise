@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, EMAIL_REGEX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { MembersItemProps } from '../../types/model';
 import {
@@ -18,6 +18,7 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
+import Picker from '../../components/Picker';
 
 interface MembersDetailFormProps {
 	detailData: MembersItemProps;
@@ -51,7 +52,7 @@ const MembersDetailForm = ({
 		route: ROUTES.crm.members,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const { control, handleSubmit, reset, register, formState, watch } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
@@ -111,6 +112,8 @@ const MembersDetailForm = ({
 		[detailData],
 	);
 
+	const watchType = watch('type');
+
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
 	return (
@@ -131,12 +134,7 @@ const MembersDetailForm = ({
 					</ButtonCreate>
 				}
 			>
-				<ModuleLanguageToggle
-					language={lang}
-					languageList={languageList}
-					onChange={(lng) => setLang(lng)}
-					style={{ marginRight: '.75rem' }}
-				/>
+				<></>
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}
@@ -200,7 +198,7 @@ const MembersDetailForm = ({
 					<Controller
 						name="email"
 						control={control}
-						rules={{ required: true }}
+						rules={{ required: true, pattern: EMAIL_REGEX }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
 								<Input.Text
@@ -211,15 +209,262 @@ const MembersDetailForm = ({
 									name={name}
 									id={`${formOptions.id}__email`}
 									label={t('form:input.email')}
-									responsiveWidth={'75%'}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.email`}
 									required
 								/>
 							</Form.Row>
 						)}
 					/>
+					<Controller
+						name="phone"
+						control={control}
+						rules={{ required: watchType == 'customer' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="tel"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__phone`}
+									label={t('form:input.phone')}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.phone`}
+									required={watchType == 'customer'}
+								/>
+							</Form.Row>
+						)}
+					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				<Section>
+					<Controller
+						name="password"
+						control={control}
+						rules={{ required: watchType == 'customer' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="password"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value || ''}
+									name={name}
+									id={`${formOptions.id}__password`}
+									label={
+										detailData.id == 'new'
+											? t('form:input.password')
+											: t('form:input.password_new')
+									}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.password`}
+									required={watchType == 'customer'}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section>
+					<Controller
+						name="nick_name"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__nick_name`}
+									label={t('form:input.nick_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.nick_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="first_name"
+						control={control}
+						rules={{ required: watchType == 'customer' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__first_name`}
+									label={t('form:input.first_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.first_name`}
+									required={watchType == 'customer'}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="middle_name"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__middle_name`}
+									label={t('form:input.middle_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.middle_name`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="last_name"
+						control={control}
+						rules={{ required: watchType == 'customer' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__last_name`}
+									label={t('form:input.last_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.last_name`}
+									required={watchType == 'customer'}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section>
+					<Controller
+						name="country"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__country`}
+									label={t('form:input.country')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.country`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="city"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__city`}
+									label={t('form:input.city')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.city`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="address"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__address`}
+									label={t('form:input.address')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.address`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="zip"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__zip`}
+									label={t('form:input.zip')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.zip`}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="phone_alt"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Phone value={value} onChange={onChange} multiple />
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="email_alt"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Email value={value} onChange={onChange} multiple />
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section>
+					<Controller
+						name="description"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__description`}
+									label={t('form:input.description')}
+									dataTestId={`${formOptions.id}.input.description`}
+									multiline
+									rows={3}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

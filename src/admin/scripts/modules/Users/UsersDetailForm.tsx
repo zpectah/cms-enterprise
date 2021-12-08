@@ -266,7 +266,7 @@ const UsersDetailForm = ({
 									name={name}
 									id={`${formOptions.id}__email`}
 									label={t('form:input.email')}
-									responsiveWidth={'75%'}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.email`}
 									disabled={detailData.id !== 'new'}
 									required
@@ -294,7 +294,7 @@ const UsersDetailForm = ({
 											? t('form:input.password')
 											: t('form:input.password_new')
 									}
-									responsiveWidth={'75%'}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.password`}
 									required={detailData.id == 'new'}
 								/>
@@ -381,23 +381,6 @@ const UsersDetailForm = ({
 						)}
 					/>
 				</Section>
-				{/*
-				<Section>
-					<Controller
-						name="img_avatar"
-						control={control}
-						rules={{}}
-						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
-								<Picker.Avatar
-									value={value}
-									onChange={(blob) => onChange(blob)}
-								/>
-							</Form.Row>
-						)}
-					/>
-				</Section>
-				*/}
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

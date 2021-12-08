@@ -33,5 +33,7 @@
   "noarchive": "No archive",
   "page": "Page",
   "external": "External",
-  "gallery": "Gallery"
+  "gallery": "Gallery",
+  "customer": "Customer",
+  "subscriber": "Subscriber"
 }

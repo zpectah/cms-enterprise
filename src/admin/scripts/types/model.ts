@@ -132,6 +132,7 @@ export interface UsersItemProps extends commonItemProps {
 export interface MembersItemProps extends commonItemProps {
 	email: string;
 	password?: string;
+	phone?: string;
 	nick_name: string;
 	first_name?: string;
 	middle_name?: string;
@@ -140,8 +141,9 @@ export interface MembersItemProps extends commonItemProps {
 	city?: string;
 	address?: string;
 	zip?: string;
-	phone?: (number | string)[];
+	phone_alt?: (number | string)[];
 	email_alt?: (number | string)[];
+	description?: string;
 }
 
 export interface DeliveriesItemProps extends commonItemProps {

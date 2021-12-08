@@ -161,9 +161,79 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Deliveries **********/
+                /********** Deliveries (*) **********/
+                case 'get_deliveries':
+                    $response = $dc -> get('Deliveries', $request_data, $params);
+                    break;
 
-                /********** Distributors **********/
+                case 'create_deliveries':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Deliveries', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_deliveries':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Deliveries', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_deliveries':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Deliveries', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_deliveries':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Deliveries', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                /********** Distributors (*) **********/
+                case 'get_distributors':
+                    $response = $dc -> get('Distributors', $request_data, $params);
+                    break;
+
+                case 'create_distributors':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Distributors', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_distributors':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Distributors', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_distributors':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Distributors', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_distributors':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Distributors', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
 
                 /********** Members (*) **********/
                 case 'get_members':
@@ -202,7 +272,7 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Menu & MenuItems (*) **********/
+                /********** Menu (*) **********/
                 case 'get_menu':
                     $response = $dc -> get('Menu', $request_data, $params);
                     break;
@@ -239,6 +309,7 @@ class ApiRequest {
                     }
                     break;
 
+                /********** MenuItems (*) **********/
                 case 'get_menu_items':
                     $response = $dc -> get('MenuItems', $request_data, $params);
                     break;
@@ -275,7 +346,42 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Orders **********/
+                /********** Orders (*) **********/
+                case 'get_orders':
+                    $response = $dc -> get('Orders', $request_data, $params);
+                    break;
+
+                case 'create_orders':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Orders', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_orders':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Orders', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_orders':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Orders', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_orders':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Orders', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
 
                 /********** Pages (*) **********/
                 case 'get_pages':
@@ -315,6 +421,41 @@ class ApiRequest {
                     break;
 
                 /********** Payments **********/
+                case 'get_payments':
+                    $response = $dc -> get('Payments', $request_data, $params);
+                    break;
+
+                case 'create_payments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Payments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_payments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Payments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_payments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Payments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_payments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Payments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
 
                 /********** Posts (*) **********/
                 case 'get_posts':
@@ -353,11 +494,153 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Producers **********/
+                /********** Producers (*) **********/
+                case 'get_producers':
+                    $response = $dc -> get('Producers', $request_data, $params);
+                    break;
+
+                case 'create_producers':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Producers', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_producers':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Producers', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_producers':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Producers', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_producers':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Producers', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
 
                 /********** Products **********/
+                case 'get_products':
+                    $response = $dc -> get('Products', $request_data, $params);
+                    break;
 
-                /********** Stores **********/
+                case 'create_products':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Products', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_products':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Products', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_products':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Products', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_products':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Products', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                /********** Products Options (*) **********/
+                case 'get_productsOptions':
+                    $response = $dc -> get('ProductsOptions', $request_data, $params);
+                    break;
+
+                case 'create_productsOptions':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_productsOptions':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_productsOptions':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_productsOptions':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                /********** Stores (*) **********/
+                case 'get_stores':
+                    $response = $dc -> get('Stores', $request_data, $params);
+                    break;
+
+                case 'create_stores':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Stores', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_stores':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Stores', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_stores':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Stores', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_stores':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Stores', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
 
                 /********** Tags (*) **********/
                 case 'get_tags':

@@ -4,34 +4,228 @@ namespace model;
 
 class Members {
 
+    private function getUpdatedRow ($row, $rp_withPassword) {
+        if (!$rp_withPassword) unset($row['password']); // Unset password attribute
+        unset($row['deleted']); // Unset deleted attribute
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        $row['phone_alt'] = $row['phone_alt'] == '' ? [] : explode(",", $row['phone_alt']); // Set value as array
+        $row['email_alt'] = $row['email_alt'] == '' ? [] : explode(",", $row['email_alt']); // Set value as array
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params) {
         $response = [];
+
+        // prepare
+        $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM members WHERE deleted = ?');
+        $types = 'i';
+        $args = [ 0 ];
+
+        // execute
+        $stmt = $conn -> prepare($query);
+        $stmt -> bind_param($types, ...$args);
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+        $stmt -> close();
+
+        // request params
+        $rp_id = $data['id'] or $params['id'];
+        $rp_email = $data['email'] or $params['email'];
+        $rp_withPassword = $data['withPassword'] or $params['withPassword'];
+
+        if ($result -> num_rows > 0) {
+            // iterate by params
+            if ($rp_id) {
+                while($row = $result -> fetch_assoc()) {
+                    if ($rp_id == $row['id']) $response = self::getUpdatedRow($row, $rp_withPassword);
+                }
+            } else if ($rp_email) {
+                while($row = $result -> fetch_assoc()) {
+                    if ($rp_email == $row['email']) $response = self::getUpdatedRow($row, $rp_withPassword);
+                }
+            } else {
+                while($row = $result -> fetch_assoc()) {
+                    $response[] = self::getUpdatedRow($row, $rp_withPassword);
+                }
+            }
+        }
 
         return $response;
     }
 
     public function create ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
-        return $response; // last created ID
+        // prepare
+        $query = ('INSERT INTO members (
+                email, 
+                type, 
+                password, 
+                phone,
+                nick_name, 
+                first_name, 
+                middle_name, 
+                last_name, 
+                country,
+                city,
+                address,
+                zip,
+                phone_alt,
+                email_alt,
+                description,
+                active, 
+                deleted
+                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'sssssssssssssssii';
+        $args = [
+            $data['email'],
+            $data['type'],
+            $utils -> passwordHash($data['password']),
+            $data['phone'],
+            $data['nick_name'],
+            $data['first_name'],
+            $data['middle_name'],
+            $data['last_name'],
+            $data['country'],
+            $data['city'],
+            $data['address'],
+            $data['zip'],
+            $data['phone_alt'] ? implode(",", $data['phone_alt']) : '',
+            $data['email_alt'] ? implode(",", $data['email_alt']) : '',
+            $data['description'],
+            $data['active'],
+            0
+        ];
+
+        // execute
+        if ($conn -> connect_error) {
+            $response = $conn -> connect_error;
+        } else {
+            $stmt = $conn -> prepare($query);
+            $stmt -> bind_param($types, ...$args);
+            $stmt -> execute();
+            $response['id'] = $stmt -> insert_id;
+            $stmt -> close();
+        }
+
+        return $response;
     }
 
     public function update ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
-        return $response; // list of affected ids
+        // prepare
+        $password = $data['password'];
+        $query = $password ? ('UPDATE members SET 
+                email = ?, 
+                type = ?, 
+                password = ?, 
+                phone = ?,                    
+                nick_name = ?, 
+                first_name = ?, 
+                middle_name = ?, 
+                last_name = ?, 
+                country = ?, 
+                city = ?, 
+                address = ?, 
+                zip = ?, 
+                phone_alt = ?, 
+                email_alt = ?,                   
+                description = ?, 
+                active = ? 
+            WHERE id = ?')
+            : ('UPDATE members SET 
+                email = ?, 
+                type = ?, 
+                phone = ?,                  
+                nick_name = ?, 
+                first_name = ?, 
+                middle_name = ?, 
+                last_name = ?, 
+                country = ?, 
+                city = ?, 
+                address = ?, 
+                zip = ?, 
+                phone_alt = ?, 
+                email_alt = ?,  
+                description = ?, 
+                active = ? 
+            WHERE id = ?');
+        $types = $password ? 'sssssssssssssssii' : 'ssssssssssssssii';
+        $args = $password ? [
+            $data['email'],
+            $data['type'],
+            $utils -> passwordHash($data['password']),
+            $data['phone'],
+            $data['nick_name'],
+            $data['first_name'],
+            $data['middle_name'],
+            $data['last_name'],
+            $data['country'],
+            $data['city'],
+            $data['address'],
+            $data['zip'],
+            $data['phone_alt'] ? implode(",", $data['phone_alt']) : '',
+            $data['email_alt'] ? implode(",", $data['email_alt']) : '',
+            $data['description'],
+            $data['active'],
+            $data['id']
+        ] : [
+            $data['email'],
+            $data['type'],
+            $data['phone'],
+            $data['nick_name'],
+            $data['first_name'],
+            $data['middle_name'],
+            $data['last_name'],
+            $data['country'],
+            $data['city'],
+            $data['address'],
+            $data['zip'],
+            $data['phone_alt'] ? implode(",", $data['phone_alt']) : '',
+            $data['email_alt'] ? implode(",", $data['email_alt']) : '',
+            $data['description'],
+            $data['active'],
+            $data['id']
+        ];
+
+        // execute
+        if ($conn -> connect_error) {
+            $response = $conn -> connect_error;
+        } else {
+            $stmt = $conn -> prepare($query);
+            $stmt -> bind_param($types, ...$args);
+            $stmt -> execute();
+            $response['rows'] = $stmt -> affected_rows;
+            $stmt -> close();
+        }
+
+        return $response;
     }
 
     public function toggle ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
-        return $response; // list of affected ids
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE members SET active = IF(active=1, 0, 1) WHERE id = ?', $conn, $id);
+        }
+
+        return $response;
     }
 
     public function delete ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
 
-        return $response; // list of affected ids
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE members SET deleted = 1 WHERE id = ?', $conn, $id);
+        }
+
+        return $response;
     }
 
 }
