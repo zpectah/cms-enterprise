@@ -1,7 +1,9 @@
+import { selectedArrayProps } from './table';
+
 interface commonItemProps {
 	id: number | string;
 	type: string;
-	active: boolean; // Overrides default DB type
+	active: boolean;
 }
 
 export interface RequestsItemProps {
@@ -20,7 +22,9 @@ export interface CategoriesItemProps extends commonItemProps {
 	parent?: string;
 	img_main?: string;
 	img_thumbnail?: string;
-	lang: any; // TODO
+	lang: {
+		[k: string]: CategoriesItemLangProps;
+	};
 }
 
 export interface MenuItemLangProps {
@@ -29,7 +33,9 @@ export interface MenuItemLangProps {
 }
 export interface MenuItemProps extends commonItemProps {
 	name: string;
-	lang: any; // TODO
+	lang: {
+		[k: string]: MenuItemLangProps;
+	};
 }
 
 export interface MenuItemItemLangProps {
@@ -43,7 +49,9 @@ export interface MenuItemItemProps extends commonItemProps {
 	menu: number;
 	parent?: string;
 	item_order: number;
-	lang: any; // TODO
+	lang: {
+		[k: string]: MenuItemItemLangProps;
+	};
 }
 
 export interface PagesItemLangProps {
@@ -56,7 +64,9 @@ export interface PagesItemProps extends commonItemProps {
 	name: string;
 	type_id?: string;
 	meta_robots: string;
-	lang: any; // TODO
+	lang: {
+		[k: string]: PagesItemLangProps;
+	};
 }
 
 export interface PostsItemLangProps {
@@ -76,16 +86,18 @@ export interface PostsItemProps extends commonItemProps {
 	event_country?: string;
 	event_city?: string;
 	event_zip?: string;
-	media?: (number | string)[];
-	attachments?: (number | string)[];
+	media?: selectedArrayProps;
+	attachments?: selectedArrayProps;
 	img_main?: string;
 	img_thumbnail?: string;
-	published: any; // TODO: date
-	links: (number | string)[];
+	published: string;
+	links: selectedArrayProps;
 	author: number;
 	approved: boolean;
 	rating: number;
-	lang: any; // TODO
+	lang: {
+		[k: string]: PostsItemLangProps;
+	};
 }
 
 export interface TagsItemProps extends commonItemProps {
@@ -98,7 +110,9 @@ export interface TranslationsItemLangProps {
 }
 export interface TranslationsItemProps extends commonItemProps {
 	name: string;
-	lang: any; // TODO
+	lang: {
+		[k: string]: TranslationsItemLangProps;
+	};
 }
 
 export interface UploadsItemLangProps {
@@ -113,7 +127,9 @@ export interface UploadsItemProps extends commonItemProps {
 	file_name: string;
 	file_mime: string;
 	file_size: number | string;
-	lang: any; // TODO
+	lang: {
+		[k: string]: UploadsItemLangProps;
+	};
 }
 
 export interface UsersItemProps extends commonItemProps {
@@ -141,8 +157,8 @@ export interface MembersItemProps extends commonItemProps {
 	city?: string;
 	address?: string;
 	zip?: string;
-	phone_alt?: (number | string)[];
-	email_alt?: (number | string)[];
+	phone_alt?: selectedArrayProps;
+	email_alt?: selectedArrayProps;
 	description?: string;
 }
 
