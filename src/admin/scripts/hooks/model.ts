@@ -355,38 +355,7 @@ export function useProducers() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_producers`, get);
 
 	return {
-		Producers: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Producer 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Producer 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Producer 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Producer 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Producer 5 name`,
-				active: true,
-			},
-		] as ProducersItemProps[],
+		Producers: data?.data as ProducersItemProps[],
 		producers_loading: !data && !error,
 		producers_error: error,
 		reloadProducers: () => mutate(`${api_path_prefix}/get_producers`),
@@ -424,38 +393,7 @@ export function useDistributors() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_distributors`, get);
 
 	return {
-		Distributors: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Distributor 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Distributor 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Distributor 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Distributor 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Distributor 5 name`,
-				active: true,
-			},
-		] as DistributorsItemProps[],
+		Distributors: data?.data as DistributorsItemProps[],
 		distributors_loading: !data && !error,
 		distributors_error: error,
 		reloadDistributors: () => mutate(`${api_path_prefix}/get_distributors`),

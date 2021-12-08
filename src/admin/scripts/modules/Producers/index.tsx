@@ -45,6 +45,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		updateProducers,
 		toggleProducers,
 		deleteProducers,
+		reloadProducers,
 		producers_loading,
 		producers_error,
 	} = useProducers();
@@ -93,12 +94,11 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	const detailSubmitHandler = (data: ProducersItemProps) => {
 		const master: ProducersItemProps = _.cloneDeep(data);
 		setProcessing(true);
-		console.log('AJAX ... create/save ...', master);
-
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
 		if (master.id == 'new') {
 			createProducers(master).then((response) => {
-				console.log('create response', response);
-
+				reloadProducers();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -109,8 +109,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 			});
 		} else {
 			updateProducers(master).then((response) => {
-				console.log('update response', response);
-
+				reloadProducers();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -159,11 +158,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
-		console.log('AJAX ... toggle ...', master);
-
 		toggleProducers(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadProducers();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -179,11 +175,8 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 			setProcessing(true);
-			console.log('AJAX ... delete ...', master);
-
 			deleteProducers(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadProducers();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

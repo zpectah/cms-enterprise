@@ -18,6 +18,7 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
+import Picker from '../../components/Picker';
 
 interface ProducersDetailFormProps {
 	detailData: ProducersItemProps;
@@ -218,7 +219,25 @@ const ProducersDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				<Section title={t('form:section.title.mediaAndAttachments')}>
+					<Controller
+						name="img_thumbnail"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									dataTestId={`${formOptions.id}.input.img_thumbnail`}
+									label={t('form:input.img_thumbnail')}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

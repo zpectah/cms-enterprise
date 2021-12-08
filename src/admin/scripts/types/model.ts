@@ -179,6 +179,7 @@ export interface DeliveriesItemProps extends commonItemProps {
 
 export interface DistributorsItemProps extends commonItemProps {
 	name: string;
+	img_thumbnail?: string;
 }
 
 export interface OrdersItemProps extends commonItemProps {
@@ -202,6 +203,7 @@ export interface PaymentsItemProps extends commonItemProps {
 
 export interface ProducersItemProps extends commonItemProps {
 	name: string;
+	img_thumbnail?: string;
 }
 
 export interface ProductsItemProps extends commonItemProps {
