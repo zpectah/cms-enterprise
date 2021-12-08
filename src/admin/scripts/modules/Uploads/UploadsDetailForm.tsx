@@ -105,7 +105,7 @@ const UploadsDetailForm = ({
 	const cancelHandler = () => onCancel(isDirty);
 	const renderTitle = () => {
 		let title = t('new.Uploads');
-		if (detailData.id !== 'new') title = detailData.name;
+		if (detailData.id !== 'new') title = detailData.file_name;
 
 		return title;
 	};
@@ -272,6 +272,21 @@ const UploadsDetailForm = ({
 							</>
 						)}
 					</UploadSourceWrapper>
+					<div style={{ paddingTop: '1rem' }}>
+						<small>{`${config.environmental.root}${config.project.path.uploads}${detailData.type}/${detailData.file_name}`}</small>
+						{detailData.type == 'image' && (
+							<>
+								<br />
+								<small>{`${config.environmental.root}${config.project.path.uploads}image/thumbnail/${detailData.file_name}`}</small>
+								<br />
+								<small>{`${config.environmental.root}${config.project.path.uploads}image/medium/${detailData.file_name}`}</small>
+								<br />
+								<small>{`${config.environmental.root}${config.project.path.uploads}image/large/${detailData.file_name}`}</small>
+								<br />
+								<small>{`${config.environmental.root}${config.project.path.uploads}image/custom_1/${detailData.file_name}`}</small>
+							</>
+						)}
+					</div>
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>

@@ -262,8 +262,8 @@ const CategoriesDetailForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__${lng}__title`}
-												label={`${t('form:input.title')} (${lng})`}
-												// responsiveWidth={'75%'}
+												label={`${lng.toUpperCase()} ${t('form:input.title')}`}
+												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.${lng}.title`}
 												required
 											/>
@@ -284,34 +284,12 @@ const CategoriesDetailForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__${lng}__description`}
-												label={`${t('form:input.description')} (${lng})`}
-												// responsiveWidth={'75%'}
+												label={`${lng.toUpperCase()} ${t(
+													'form:input.description',
+												)}`}
 												dataTestId={`${formOptions.id}.input.${lng}.description`}
 												multiline
 												rows={5}
-											/>
-										</Form.Row>
-									)}
-								/>
-								<Controller
-									name={`lang.${lng}.content`}
-									control={control}
-									rules={{}}
-									render={({
-										field: { onChange, onBlur, value, ref, name },
-									}) => (
-										<Form.Row errors={[]}>
-											<Input.Text
-												onChange={onChange}
-												onBlur={onBlur}
-												value={value}
-												name={name}
-												id={`${formOptions.id}__${lng}__content`}
-												label={`${t('form:input.content')} (${lng})`}
-												// responsiveWidth={'75%'}
-												dataTestId={`${formOptions.id}.input.${lng}.content`}
-												multiline
-												rows={8}
 											/>
 										</Form.Row>
 									)}
@@ -322,29 +300,6 @@ const CategoriesDetailForm = ({
 					{/*  ============ \\ Language part section ============ */}
 				</Section>
 				<Section title={t('form:section.title.mediaAndAttachments')}>
-					{watchType == 'gallery' ? (
-						<Controller
-							name="media"
-							control={control}
-							rules={{ required: true }}
-							render={({ field: { onChange, onBlur, value, ref, name } }) => (
-								<Form.Row errors={[]}>
-									<Picker.Uploads
-										value={value}
-										onChange={onChange}
-										multiple
-										onlyImages
-										required
-										dataTestId={`${formOptions.id}.input.media`}
-										label={t('form:input.media')}
-										key={`${formOptions.id}_0_${String(value)}`} // Important to force reload when model changes
-									/>
-								</Form.Row>
-							)}
-						/>
-					) : (
-						<input type="hidden" {...register('media', {})} />
-					)}
 					<Controller
 						name="img_main"
 						control={control}

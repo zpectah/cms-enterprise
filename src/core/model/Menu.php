@@ -4,8 +4,9 @@ namespace model;
 
 class Menu {
 
-    public function get ($conn, $data, $params) {
+    public function get ($conn, $data, $params, $languages) {
         $response = [];
+        $utils = new \Utils;
 
         // prepare
         $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM menu WHERE deleted = ?');
@@ -21,6 +22,14 @@ class Menu {
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
+                foreach ($languages as $lang) {
+                    $row['lang'][$lang] = $utils -> get_language_row(
+                        $conn,
+                        $row['id'],
+                        'SELECT * FROM menu__' . $lang . ' WHERE id = ?'
+                    );
+                } // Set language object
+                //
                 $row['active'] = $row['active'] == 1; // Set value as boolean
                 unset($row['deleted']); // Unset deleted attribute
 
@@ -31,8 +40,9 @@ class Menu {
         return $response;
     }
 
-    public function create ($conn, $data) {
+    public function create ($conn, $data, $languages) {
         $response = [];
+        $utils = new \Utils;
 
         // prepare
         $query = ('INSERT INTO menu (type, name, active, deleted) VALUES (?,?,?,?)');
@@ -52,14 +62,27 @@ class Menu {
             $stmt -> bind_param($types, ...$args);
             $stmt -> execute();
             $response['id'] = $stmt -> insert_id;
+            foreach ($languages as $lang) {
+                $response['lang'][] = $utils -> update_language_row(
+                    $conn,
+                    $lang,
+                    'INSERT INTO menu__' . $lang . ' (id, label) VALUES (?,?)',
+                    'is',
+                    [
+                        $response['id'],
+                        $data['lang'][$lang]['label']
+                    ]
+                );
+            }
             $stmt -> close();
         }
 
         return $response; // last created ID
     }
 
-    public function update ($conn, $data) {
+    public function update ($conn, $data, $languages) {
         $response = [];
+        $utils = new \Utils;
 
         // prepare
         $query = ('UPDATE menu SET type = ?, name = ?, active = ? WHERE id = ?');
@@ -79,6 +102,18 @@ class Menu {
             $stmt -> bind_param($types, ...$args);
             $stmt -> execute();
             $response['rows'] = $stmt -> affected_rows;
+            foreach ($languages as $lang) {
+                $response['lang'][] = $utils -> update_language_row(
+                    $conn,
+                    $lang,
+                    'UPDATE menu__' . $lang . ' SET label = ? WHERE id = ?',
+                    'si',
+                    [
+                        $data['lang'][$lang]['label'],
+                        $data['lang'][$lang]['id']
+                    ]
+                );
+            }
             $stmt -> close();
         }
 

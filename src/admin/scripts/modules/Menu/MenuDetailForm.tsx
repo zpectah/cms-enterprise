@@ -202,7 +202,7 @@ const MenuDetailForm = ({
 						/>
 					) : (
 						<Alert severity="info">
-							{t('messages.info.menuMustBeCreated')}
+							{t('messages:info.menuMustBeCreated')}
 						</Alert>
 					)
 				}
@@ -232,6 +232,38 @@ const MenuDetailForm = ({
 							</Form.Row>
 						)}
 					/>
+				</Section>
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.label`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__label`}
+												label={`${lng.toUpperCase()} ${t('form:input.label')}`}
+												responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.label`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>

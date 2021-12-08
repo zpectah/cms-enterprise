@@ -314,8 +314,8 @@ const PagesDetailForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__${lng}__title`}
-												label={`${t('form:input.title')} (${lng})`}
-												// responsiveWidth={'75%'}
+												label={`${lng.toUpperCase()} ${t('form:input.title')}`}
+												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.${lng}.title`}
 												required
 											/>
@@ -336,8 +336,9 @@ const PagesDetailForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__${lng}__description`}
-												label={`${t('form:input.description')} (${lng})`}
-												// responsiveWidth={'75%'}
+												label={`${lng.toUpperCase()} ${t(
+													'form:input.description',
+												)}`}
 												dataTestId={`${formOptions.id}.input.${lng}.description`}
 												multiline
 												rows={3}
@@ -359,7 +360,9 @@ const PagesDetailForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__${lng}__content`}
-												label={`${t('form:input.content')} (${lng})`}
+												label={`${lng.toUpperCase()} ${t(
+													'form:input.content',
+												)}`}
 												// responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.${lng}.content`}
 												multiline

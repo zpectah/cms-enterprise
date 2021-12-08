@@ -7,7 +7,7 @@ import { getElTestAttr } from '../../../utils/tests';
 
 const StyledButton = styled(Button)`
 	&.MuiButton-root {
-		border-radius: 1.5rem;
+		/* border-radius: 1.5rem; */
 	}
 `;
 

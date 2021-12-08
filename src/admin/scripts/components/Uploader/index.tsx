@@ -36,14 +36,14 @@ const HiddenDropWrapper = styled.label`
 `;
 const UploaderInputWrapper = styled.div`
 	width: 100%;
-	height: 100px;
+	height: 200px;
 	display: block;
 	border: 5px dashed rgba(25, 25, 25, 0.5);
 	border-radius: 0.5rem;
 `;
 const UploaderInputInner = styled.div`
 	width: 100%;
-	height: 100px;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -67,7 +67,7 @@ const UploaderInputLabelText = styled.span`
 `;
 const UploaderHeading = styled.div`
 	width: 100%;
-	margin-bottom: ${(props) => props.theme.spacer};
+	margin-top: calc(${(props) => props.theme.spacer} * 1.5);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -314,32 +314,6 @@ const Uploader: React.FC<UploaderProps> = ({
 					</Stack>
 				</HiddenDropWrapper>
 			)}
-			{widthHeading && (
-				<UploaderHeading>
-					<Stack direction="row" alignItems="center">
-						{t('form:form.UploadsDetail.label.files_in_queue')}:{' '}
-						<b>{fileList.length}</b>
-					</Stack>
-					<Stack spacing={2} direction="row">
-						<Button
-							variant="contained"
-							color="success"
-							onClick={onSubmit}
-							disabled={fileList.length == 0}
-						>
-							{t('button.submitQueue')}
-						</Button>
-						<Button
-							variant="outlined"
-							color="error"
-							onClick={resetHandler}
-							disabled={fileList.length == 0}
-						>
-							{t('button.clearQueue')}
-						</Button>
-					</Stack>
-				</UploaderHeading>
-			)}
 			<UploadItemsWrapper>
 				{fileList.length == 0 ? (
 					<>
@@ -398,6 +372,32 @@ const Uploader: React.FC<UploaderProps> = ({
 					))
 				)}
 			</UploadItemsWrapper>
+			{widthHeading && (
+				<UploaderHeading>
+					<Stack direction="row" alignItems="center">
+						{t('form:form.UploadsDetail.label.files_in_queue')}:{' '}
+						<b>{fileList.length}</b>
+					</Stack>
+					<Stack spacing={2} direction="row">
+						<Button
+							variant="contained"
+							color="success"
+							onClick={onSubmit}
+							disabled={fileList.length == 0}
+						>
+							{t('button.submitQueue')}
+						</Button>
+						<Button
+							variant="outlined"
+							color="error"
+							onClick={resetHandler}
+							disabled={fileList.length == 0}
+						>
+							{t('button.clearQueue')}
+						</Button>
+					</Stack>
+				</UploaderHeading>
+			)}
 		</>
 	);
 };

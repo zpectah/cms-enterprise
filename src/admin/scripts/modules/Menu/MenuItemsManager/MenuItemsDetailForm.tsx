@@ -222,7 +222,7 @@ const MenuItemsDetailForm = ({
 											value={value}
 											name={name}
 											id={`${formOptions.id}__${lng}__label`}
-											label={`${t('form:input.label')} (${lng})`}
+											label={`${lng.toUpperCase()} ${t('form:input.label')}`}
 											dataTestId={`${formOptions.id}.input.${lng}.label`}
 											required
 										/>

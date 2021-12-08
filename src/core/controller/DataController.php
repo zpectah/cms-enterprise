@@ -79,7 +79,7 @@ class DataController {
                 break;
 
             case 'Menu':
-                $response['data'] = $Menu -> get($conn, $data, $params);
+                $response['data'] = $Menu -> get($conn, $data, $params, $language_active);
                 break;
 
             case 'MenuItems':
@@ -157,7 +157,7 @@ class DataController {
                 break;
 
             case 'Menu':
-                $response['data'] = $Menu -> create($conn, $data);
+                $response['data'] = $Menu -> create($conn, $data, $language_active);
                 break;
 
             case 'MenuItems':
@@ -235,7 +235,7 @@ class DataController {
                 break;
 
             case 'Menu':
-                $response['data'] = $Menu -> update($conn, $data);
+                $response['data'] = $Menu -> update($conn, $data, $language_active);
                 break;
 
             case 'MenuItems':

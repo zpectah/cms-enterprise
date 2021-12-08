@@ -10,7 +10,7 @@ import { getElTestAttr } from '../../../utils/tests';
 const Wrapper = styled.footer`
 	width: 100%;
 	margin-top: auto;
-	padding-top: calc(${(props) => props.theme.spacer} / 2);
+	padding-top: calc(${(props) => props.theme.spacer} * 2);
 	padding-bottom: calc(${(props) => props.theme.spacer} / 2);
 `;
 const WrapperInner = styled.div<{ align: FooterProps['align'] }>`

@@ -5,7 +5,6 @@ export default {
 	type: 'default',
 	name: '',
 	parent: '',
-	media: [],
 	img_main: '',
 	img_thumbnail: '',
 	active: true,

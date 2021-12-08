@@ -244,6 +244,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<PostsDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

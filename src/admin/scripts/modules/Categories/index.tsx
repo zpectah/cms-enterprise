@@ -79,7 +79,6 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			detail['lang'] = getLanguagesFields(Settings?.language_active, {
 				title: '',
 				description: '',
-				content: '',
 			} as CategoriesItemLangProps);
 
 		setDetail(id);
@@ -220,6 +219,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<CategoriesDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

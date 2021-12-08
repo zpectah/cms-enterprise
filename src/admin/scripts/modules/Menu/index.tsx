@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { MenuItemProps } from '../../types/model';
+import { MenuItemProps, MenuItemLangProps } from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -71,8 +71,14 @@ const MenuModule = ({}: MenuModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
+		const detail = getDetailData(id, 'Menu', Menu);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings?.language_active, {
+				label: '',
+			} as MenuItemLangProps);
+
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Menu', Menu));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -209,6 +215,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<MenuDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

@@ -212,6 +212,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<DistributorsDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

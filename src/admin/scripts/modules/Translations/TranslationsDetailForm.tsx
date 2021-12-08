@@ -238,8 +238,8 @@ const TranslationsDetailForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__${lng}__value`}
-												label={`${t('form:input.value')} (${lng})`}
-												// responsiveWidth={'75%'}
+												label={`${lng.toUpperCase()} ${t('form:input.value')}`}
+												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.${lng}.value`}
 												required
 											/>

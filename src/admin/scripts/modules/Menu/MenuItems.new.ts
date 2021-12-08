@@ -10,4 +10,5 @@ export default {
 	parent: '',
 	item_order: 0,
 	active: true,
+	lang: {},
 } as MenuItemItemProps;

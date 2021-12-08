@@ -208,6 +208,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<TagsDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

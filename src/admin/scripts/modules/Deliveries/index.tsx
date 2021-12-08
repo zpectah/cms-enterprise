@@ -221,6 +221,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<DeliveriesDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

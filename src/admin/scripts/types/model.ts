@@ -14,19 +14,22 @@ export interface CategoriesItemLangProps {
 	id?: number | string;
 	title: string;
 	description?: string;
-	content?: string;
 }
 export interface CategoriesItemProps extends commonItemProps {
 	name: string;
 	parent?: string;
-	media?: (number | string)[];
 	img_main?: string;
 	img_thumbnail?: string;
 	lang: any; // TODO
 }
 
+export interface MenuItemLangProps {
+	id?: number | string;
+	label: string;
+}
 export interface MenuItemProps extends commonItemProps {
 	name: string;
+	lang: any; // TODO
 }
 
 export interface MenuItemItemLangProps {

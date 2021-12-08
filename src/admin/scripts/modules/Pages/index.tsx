@@ -219,6 +219,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<PagesDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

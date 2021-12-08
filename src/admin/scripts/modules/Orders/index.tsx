@@ -214,6 +214,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<OrdersDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

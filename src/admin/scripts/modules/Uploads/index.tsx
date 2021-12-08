@@ -226,6 +226,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 								/>
 							) : (
 								<UploadsDetailForm
+									key={`${moduleObject.model}-${detail}`}
 									detailData={detailData}
 									detailOptions={moduleObject.detail}
 									onSubmit={detailSubmitHandler}

@@ -221,6 +221,7 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<PaymentsDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}

@@ -1,7 +1,7 @@
 {
   "model": {
     "Categories": {
-      "type": ["default", "gallery"]
+      "type": ["default"]
     },
     "Menu": {
       "type": ["primary", "secondary", "tertiary", "custom"]
@@ -13,7 +13,7 @@
       "type": ["default", "system", "category", "tag"]
     },
     "Posts": {
-      "type": ["article", "blog", "media", "event", "reference", "testimonial"]
+      "type": ["article", "blog", "media", "gallery", "event", "reference", "testimonial"]
     },
     "Tags": {
       "type": ["default"]

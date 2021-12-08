@@ -46,13 +46,12 @@ class Categories {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO categories (name, type, parent, media, img_main, img_thumbnail, active, deleted) VALUES (?,?,?,?,?,?,?,?)');
-        $types = 'ssssssii';
+        $query = ('INSERT INTO categories (name, type, parent, img_main, img_thumbnail, active, deleted) VALUES (?,?,?,?,?,?,?)');
+        $types = 'sssssii';
         $args = [
             $data['name'],
             $data['type'],
             $data['parent'],
-            $data['media'] ? implode(",", $data['media']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
             $data['active'],
@@ -71,13 +70,12 @@ class Categories {
                 $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
-                    'INSERT INTO categories__' . $lang . ' (id, title, description, content) VALUES (?,?,?,?)',
-                    'isss',
+                    'INSERT INTO categories__' . $lang . ' (id, title, description) VALUES (?,?,?)',
+                    'iss',
                     [
                         $response['id'],
                         $data['lang'][$lang]['title'],
-                        $data['lang'][$lang]['description'],
-                        $data['lang'][$lang]['content'],
+                        $data['lang'][$lang]['description']
                     ]
                 );
             }
@@ -92,13 +90,12 @@ class Categories {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE categories SET name = ?, type = ?, parent = ?, media = ?, img_main = ?, img_thumbnail = ?, active = ? WHERE id = ?');
-        $types = 'ssssssii';
+        $query = ('UPDATE categories SET name = ?, type = ?, parent = ?, img_main = ?, img_thumbnail = ?, active = ? WHERE id = ?');
+        $types = 'sssssii';
         $args = [
             $data['name'],
             $data['type'],
             $data['parent'],
-            $data['media'] ? implode(",", $data['media']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
             $data['active'],
@@ -117,12 +114,11 @@ class Categories {
                 $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
-                    'UPDATE categories__' . $lang . ' SET title = ?, description = ?, content = ? WHERE id = ?',
-                    'sssi',
+                    'UPDATE categories__' . $lang . ' SET title = ?, description = ? WHERE id = ?',
+                    'ssi',
                     [
                         $data['lang'][$lang]['title'],
                         $data['lang'][$lang]['description'],
-                        $data['lang'][$lang]['content'],
                         $data['lang'][$lang]['id']
                     ]
                 );

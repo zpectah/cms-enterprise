@@ -213,6 +213,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 				<>
 					{detail && detailData ? (
 						<UsersDetailForm
+							key={`${moduleObject.model}-${detail}`}
 							detailData={detailData}
 							detailOptions={moduleObject.detail}
 							onSubmit={detailSubmitHandler}
