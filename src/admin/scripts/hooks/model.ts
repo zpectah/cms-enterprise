@@ -436,38 +436,7 @@ export function usePayments() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_payments`, get);
 
 	return {
-		Payments: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Payment 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Payment 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Payment 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Payment 4 name`,
-				active: false,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Payment 5 name`,
-				active: true,
-			},
-		] as PaymentsItemProps[],
+		Payments: data?.data as PaymentsItemProps[],
 		payments_loading: !data && !error,
 		payments_error: error,
 		reloadPayments: () => mutate(`${api_path_prefix}/get_payments`),
@@ -536,38 +505,7 @@ export function useDeliveries() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_deliveries`, get);
 
 	return {
-		Deliveries: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Delivery 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Delivery 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Delivery 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Delivery 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Delivery 5 name`,
-				active: true,
-			},
-		] as DeliveriesItemProps[],
+		Deliveries: data?.data as DeliveriesItemProps[],
 		deliveries_loading: !data && !error,
 		deliveries_error: error,
 		reloadDeliveries: () => mutate(`${api_path_prefix}/get_deliveries`),

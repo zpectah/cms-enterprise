@@ -13,9 +13,10 @@ export const UI_VIEW_TOLERANCE = 50;
 export const EMAIL_REGEX =
 	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
 export const DEFAULT_UNITS = {
-	price: 'EUR',
-	weight: 'Kg',
+	price: 'eur',
+	weight: 'kg',
 	length: 'mm',
+	units: 'pcs',
 };
 export const FORM_INPUT_MIN_LENGTH = 3;
 export const FORM_INPUT_MAX_LENGTH = 500;

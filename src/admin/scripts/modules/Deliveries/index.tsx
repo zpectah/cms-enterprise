@@ -6,7 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { DeliveriesItemProps } from '../../types/model';
+import {
+	DeliveriesItemProps,
+	DeliveriesItemLangProps,
+} from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -46,6 +49,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 		updateDeliveries,
 		toggleDeliveries,
 		deleteDeliveries,
+		reloadDeliveries,
 		deliveries_loading,
 		deliveries_error,
 	} = useDeliveries();
@@ -71,14 +75,15 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		// const detail = getDetailData(id, 'Translations', Translations);
-		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings?.language_active, {
-		// 		value: '',
-		// 	});
+		const detail = getDetailData(id, 'Deliveries', Deliveries);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings?.language_active, {
+				title: '',
+				description: '',
+			} as DeliveriesItemLangProps);
 
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Deliveries', Deliveries));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -100,12 +105,11 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 	const detailSubmitHandler = (data: DeliveriesItemProps) => {
 		const master: DeliveriesItemProps = _.cloneDeep(data);
 		setProcessing(true);
-		console.log('AJAX ... create/save ...', master);
-
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
 		if (master.id == 'new') {
 			createDeliveries(master).then((response) => {
-				console.log('create response', response);
-
+				reloadDeliveries();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -116,8 +120,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 			});
 		} else {
 			updateDeliveries(master).then((response) => {
-				console.log('update response', response);
-
+				reloadDeliveries();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -166,11 +169,8 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
-		console.log('AJAX ... toggle ...', master);
-
 		toggleDeliveries(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadDeliveries();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -186,11 +186,8 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 			setProcessing(true);
-			console.log('AJAX ... delete ...', master);
-
 			deleteDeliveries(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadDeliveries();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

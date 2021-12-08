@@ -42,7 +42,11 @@
     "address": "Addresa",
     "zip": "PSČ",
     "phone": "Telefon",
-    "location": "Místo"
+    "location": "Místo",
+    "price": "Cena",
+    "tax": "Daň",
+    "weight_limit": "Váhový limit",
+    "unit_limit": "Max počet jednotek"
   },
   "label": {
     "no_parent": "Bez rodiče",
@@ -53,7 +57,8 @@
     "title": {
       "eventOptions": "Nabídka události",
       "mediaAndAttachments": "Media a přílohy",
-      "linksAndSources": "Odkazy a zdroje"
+      "linksAndSources": "Odkazy a zdroje",
+      "details": "Podrobnosti"
     }
   },
   "form": {

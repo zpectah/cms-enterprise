@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import InputAdornment from '@mui/material/InputAdornment';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, DEFAULT_UNITS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { DeliveriesItemProps } from '../../types/model';
 import {
@@ -219,7 +220,151 @@ const DeliveriesDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.title`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__title`}
+												label={`${lng.toUpperCase()} ${t('form:input.title')}`}
+												responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.title`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.description`}
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__description`}
+												label={`${lng.toUpperCase()} ${t(
+													'form:input.description',
+												)}`}
+												dataTestId={`${formOptions.id}.input.${lng}.description`}
+												multiline
+												rows={5}
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
+				</Section>
+				<Section title={t('form:section.title.details')}>
+					<Controller
+						name="item_price"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_price`}
+									label={t('form:input.price')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_price`}
+									required
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.price}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="item_limit_weight"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_limit_weight`}
+									label={t('form:input.weight_limit')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_limit_weight`}
+									required
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.weight}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="item_limit_units"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_limit_units`}
+									label={t('form:input.unit_limit')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_limit_units`}
+									required
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.units}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

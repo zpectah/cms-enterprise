@@ -162,8 +162,19 @@ export interface MembersItemProps extends commonItemProps {
 	description?: string;
 }
 
+export interface DeliveriesItemLangProps {
+	id?: number | string;
+	title: string;
+	description?: string;
+}
 export interface DeliveriesItemProps extends commonItemProps {
 	name: string;
+	item_price: number;
+	item_limit_weight: number;
+	item_limit_units: number;
+	lang: {
+		[k: string]: DeliveriesItemLangProps;
+	};
 }
 
 export interface DistributorsItemProps extends commonItemProps {
@@ -174,8 +185,19 @@ export interface OrdersItemProps extends commonItemProps {
 	name: string;
 }
 
+export interface PaymentsItemLangProps {
+	id?: number | string;
+	title: string;
+	description?: string;
+}
 export interface PaymentsItemProps extends commonItemProps {
 	name: string;
+	item_price: number;
+	item_limit_weight: number;
+	item_limit_units: number;
+	lang: {
+		[k: string]: PaymentsItemLangProps;
+	};
 }
 
 export interface ProducersItemProps extends commonItemProps {

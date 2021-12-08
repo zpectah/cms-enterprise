@@ -62,5 +62,11 @@
     "about": "O systému",
     "language": "Jazyky",
     "web": "Web"
+  },
+  "units": {
+    "eur": "EUR",
+    "kg": "Kg",
+    "pcs": "ks",
+    "mm": "mm"
   }
 }
