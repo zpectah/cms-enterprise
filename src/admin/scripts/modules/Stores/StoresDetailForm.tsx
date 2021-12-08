@@ -399,7 +399,6 @@ const StoresDetailForm = ({
 									multiple
 									dataTestId={`${formOptions.id}.input.attachments`}
 									label={t('form:input.attachments')}
-									key={`${formOptions.id}_1_${String(value)}`} // Important to force reload when model changes
 								/>
 							</Form.Row>
 						)}
@@ -417,7 +416,6 @@ const StoresDetailForm = ({
 									onlyImages
 									dataTestId={`${formOptions.id}.input.img_main`}
 									label={t('form:input.img_main')}
-									key={`${formOptions.id}_2_${String(value)}`} // Important to force reload when model changes
 								/>
 							</Form.Row>
 						)}
@@ -435,7 +433,6 @@ const StoresDetailForm = ({
 									onlyImages
 									dataTestId={`${formOptions.id}.input.img_thumbnail`}
 									label={t('form:input.img_thumbnail')}
-									key={`${formOptions.id}_3_${String(value)}`} // Important to force reload when model changes
 								/>
 							</Form.Row>
 						)}
