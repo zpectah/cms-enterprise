@@ -212,8 +212,26 @@ export interface ProductsOptionsItemProps extends commonItemProps {
 	name: string;
 }
 
+export interface StoresItemLangProps {
+	id?: number | string;
+	title: string;
+	description?: string;
+}
 export interface StoresItemProps extends commonItemProps {
 	name: string;
+	country?: string;
+	city?: string;
+	address?: string;
+	zip?: string;
+	location?: string;
+	phone?: selectedArrayProps;
+	email?: selectedArrayProps;
+	attachments?: selectedArrayProps;
+	img_main?: string;
+	img_thumbnail?: string;
+	lang: {
+		[k: string]: StoresItemLangProps;
+	};
 }
 
 export type oneOfModelItemProps =

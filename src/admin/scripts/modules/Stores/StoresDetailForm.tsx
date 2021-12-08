@@ -18,6 +18,7 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
+import Picker from '../../components/Picker';
 
 interface StoresDetailFormProps {
 	detailData: StoresItemProps;
@@ -51,7 +52,7 @@ const StoresDetailForm = ({
 		route: ROUTES.market.stores,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const { control, handleSubmit, reset, register, formState, watch } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
@@ -110,6 +111,8 @@ const StoresDetailForm = ({
 		() => getOptionsList(config.options.model.Stores.type, t),
 		[detailData],
 	);
+
+	const watchType = watch('type');
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -218,7 +221,226 @@ const StoresDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.title`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__title`}
+												label={`${lng.toUpperCase()} ${t('form:input.title')}`}
+												responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.title`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.description`}
+									control={control}
+									rules={{
+										required: watchType == 'branch' || watchType == 'virtual',
+									}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__description`}
+												label={`${lng.toUpperCase()} ${t(
+													'form:input.description',
+												)}`}
+												dataTestId={`${formOptions.id}.input.${lng}.description`}
+												multiline
+												rows={5}
+												required={
+													watchType == 'branch' || watchType == 'virtual'
+												}
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
+				</Section>
+				<Section>
+					<Controller
+						name="country"
+						control={control}
+						rules={{ required: watchType == 'branch' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__country`}
+									label={t('form:input.country')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.country`}
+									required={watchType == 'branch'}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="city"
+						control={control}
+						rules={{ required: watchType == 'branch' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__city`}
+									label={t('form:input.city')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.city`}
+									required={watchType == 'branch'}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="address"
+						control={control}
+						rules={{ required: watchType == 'branch' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__address`}
+									label={t('form:input.address')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.address`}
+									required={watchType == 'branch'}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="zip"
+						control={control}
+						rules={{ required: watchType == 'branch' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__zip`}
+									label={t('form:input.zip')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.zip`}
+									required={watchType == 'branch'}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section>
+					<Controller
+						name="phone"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Phone value={value} onChange={onChange} multiple />
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="email"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Email value={value} onChange={onChange} multiple />
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section title={t('form:section.title.mediaAndAttachments')}>
+					<Controller
+						name="attachments"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									multiple
+									dataTestId={`${formOptions.id}.input.attachments`}
+									label={t('form:input.attachments')}
+									key={`${formOptions.id}_1_${String(value)}`} // Important to force reload when model changes
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="img_main"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									dataTestId={`${formOptions.id}.input.img_main`}
+									label={t('form:input.img_main')}
+									key={`${formOptions.id}_2_${String(value)}`} // Important to force reload when model changes
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="img_thumbnail"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									dataTestId={`${formOptions.id}.input.img_thumbnail`}
+									label={t('form:input.img_thumbnail')}
+									key={`${formOptions.id}_3_${String(value)}`} // Important to force reload when model changes
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

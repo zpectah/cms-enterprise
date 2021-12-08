@@ -336,38 +336,7 @@ export function useStores() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_stores`, get);
 
 	return {
-		Stores: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Store 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Store 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Store 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Store 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Store 5 name`,
-				active: true,
-			},
-		] as StoresItemProps[],
+		Stores: data?.data as StoresItemProps[],
 		stores_loading: !data && !error,
 		stores_error: error,
 		reloadStores: () => mutate(`${api_path_prefix}/get_stores`),

@@ -35,5 +35,7 @@
   "external": "Externí",
   "gallery": "Galerie",
   "customer": "Zákazník",
-  "subscriber": "Odběratel"
+  "subscriber": "Odběratel",
+  "virtual": "Virtuální",
+  "branch": "Pobočka"
 }

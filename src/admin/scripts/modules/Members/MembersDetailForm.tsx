@@ -422,6 +422,8 @@ const MembersDetailForm = ({
 							</Form.Row>
 						)}
 					/>
+				</Section>
+				<Section>
 					<Controller
 						name="phone_alt"
 						control={control}

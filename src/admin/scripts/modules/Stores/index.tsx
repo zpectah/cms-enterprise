@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { StoresItemProps } from '../../types/model';
+import { StoresItemProps, StoresItemLangProps } from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -46,6 +46,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 		updateStores,
 		toggleStores,
 		deleteStores,
+		reloadStores,
 		stores_loading,
 		stores_error,
 	} = useStores();
@@ -71,14 +72,15 @@ const StoresModule = ({}: StoresModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		// const detail = getDetailData(id, 'Translations', Translations);
-		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings?.language_active, {
-		// 		value: '',
-		// 	});
+		const detail = getDetailData(id, 'Stores', Stores);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings?.language_active, {
+				title: '',
+				description: '',
+			} as StoresItemLangProps);
 
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Stores', Stores));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -100,12 +102,11 @@ const StoresModule = ({}: StoresModuleProps) => {
 	const detailSubmitHandler = (data: StoresItemProps) => {
 		const master: StoresItemProps = _.cloneDeep(data);
 		setProcessing(true);
-		console.log('AJAX ... create/save ...', master);
-
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
 		if (master.id == 'new') {
 			createStores(master).then((response) => {
-				console.log('create response', response);
-
+				reloadStores();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -116,8 +117,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 			});
 		} else {
 			updateStores(master).then((response) => {
-				console.log('update response', response);
-
+				reloadStores();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -166,11 +166,8 @@ const StoresModule = ({}: StoresModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
-		console.log('AJAX ... toggle ...', master);
-
 		toggleStores(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadStores();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -186,11 +183,8 @@ const StoresModule = ({}: StoresModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 			setProcessing(true);
-			console.log('AJAX ... delete ...', master);
-
 			deleteStores(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadStores();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

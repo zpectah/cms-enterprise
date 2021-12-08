@@ -106,7 +106,7 @@
       "type": ["default"]
     },
     "Stores": {
-      "type": ["default"]
+      "type": ["default", "virtual", "branch"]
     }
   },
   "module": {},

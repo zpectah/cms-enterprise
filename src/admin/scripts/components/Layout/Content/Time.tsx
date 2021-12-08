@@ -32,7 +32,7 @@ const Time = ({}: TimeProps) => {
 
 	return (
 		<>
-			<MuiBreadcrumbs aria-label="breadcrumbs">
+			<MuiBreadcrumbs aria-label="breadcrumbs" separator={'|'}>
 				<StyledText small>
 					{t(`calendar:day.${time.dayOfTheWeek}`)} {time.day}.{' '}
 					{t(`calendar:month.${time.month}`)} {time.year}
