@@ -420,6 +420,23 @@ const PostsDetailForm = ({
 						)}
 					/>
 				</Section>
+				<Section title={t('form:section.title.linksAndSources')}>
+					<Controller
+						name={'links'}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.String
+									onChange={onChange}
+									value={value}
+									multiple
+									inputLabel={`${t('form:input.new_link')}`}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{watchType == 'event' ? (
 					<Section title={t('form:section.title.eventOptions')}>
 						<Controller

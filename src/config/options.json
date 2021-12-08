@@ -37,6 +37,13 @@
       },
       "image": {
         "extension": ["jpg", "jpeg", "png"],
+        "cropped": {
+          "key": "cropped",
+          "width": null,
+          "height": null,
+          "quality": 75,
+          "crop": true
+        },
         "format": [
           {
             "key": "thumbnail",

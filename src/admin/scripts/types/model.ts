@@ -81,6 +81,7 @@ export interface PostsItemProps extends commonItemProps {
 	img_main?: string;
 	img_thumbnail?: string;
 	published: any; // TODO: date
+	links: (number | string)[];
 	author: number;
 	approved: boolean;
 	rating: number;

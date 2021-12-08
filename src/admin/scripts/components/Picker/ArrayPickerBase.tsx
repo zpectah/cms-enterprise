@@ -15,6 +15,8 @@ export interface ArrayPickerInitialProps {
 	onChange: (value: any) => void;
 	multiple?: boolean;
 	dataTestId?: string;
+	inputWidth?: string;
+	inputLabel?: string;
 }
 
 interface ArrayPickerBaseProps extends ArrayPickerInitialProps {
@@ -27,6 +29,8 @@ const ArrayPickerBase = ({
 	onChange,
 	multiple,
 	dataTestId = 'ArrayPickerBase',
+	inputWidth = '75%',
+	inputLabel,
 }: ArrayPickerBaseProps) => {
 	const [selectedItems, setSelectedItems] = useState(
 		getPickerInitialValue(value),
@@ -38,8 +42,8 @@ const ArrayPickerBase = ({
 		},
 	});
 	const { isDirty, isValid } = formState;
-	const submitHandler = (data: { email: string }) => {
-		const new_item = data.email;
+	const submitHandler = (data: { value: string }) => {
+		const new_item = data.value;
 		const tmp_list = [...selectedItems];
 		const index = tmp_list.indexOf(new_item);
 		if (!(index > -1)) {
@@ -63,6 +67,7 @@ const ArrayPickerBase = ({
 	const should_show_input =
 		(multiple && selectedItems.length >= 0) ||
 		(!multiple && selectedItems.length == 0);
+	const input_label = inputLabel ? inputLabel : `New ${type}`;
 	const input_rules = {
 		required: true,
 		pattern: type == 'email' && EMAIL_REGEX,
@@ -92,7 +97,8 @@ const ArrayPickerBase = ({
 								onBlur={onBlur}
 								value={value}
 								name={name}
-								label={`New ${type}`}
+								label={input_label}
+								responsiveWidth={inputWidth}
 								dataTestId={`${dataTestId}.input.${type}_new`}
 							/>
 						)}
@@ -117,7 +123,7 @@ const ArrayPickerBase = ({
 								color="secondary"
 								label={item}
 								onDelete={() => removeHandler(item)}
-								key={item}
+								key={`${type}_${item}_${index}`}
 								{...getElTestAttr(`${dataTestId}.chip.${type}_${index}.delete`)}
 							/>
 						))}

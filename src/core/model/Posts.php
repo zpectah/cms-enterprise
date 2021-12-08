@@ -34,6 +34,7 @@ class Posts {
                 $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
                 $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
                 $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
+                $row['links'] = $row['links'] == '' ? [] : explode(",", $row['links']); // Set value as array
                 $row['approved'] = $row['approved'] == 1; // Set value as boolean
                 $row['active'] = $row['active'] == 1; // Set value as boolean
                 unset($row['deleted']); // Unset deleted attribute
@@ -67,13 +68,14 @@ class Posts {
                    img_main, 
                    img_thumbnail, 
                    published, 
+                   links,
                    author, 
                    approved, 
                    rating, 
                    active, 
                    deleted
-                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'ssssssssssssssssiiiii';
+                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'sssssssssssssssssiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -91,6 +93,7 @@ class Posts {
             $data['img_main'],
             $data['img_thumbnail'],
             $data['published'],
+            $data['links'] ? implode(",", $data['links']) : '',
             $data['author'],
             $data['approved'],
             $data['rating'],
@@ -131,8 +134,8 @@ class Posts {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE posts SET name = ?, type = ?, categories = ?, tags = ?, event_start = ?, event_end = ?, event_location = ?, event_address = ?, event_country = ?, event_city = ?, event_zip = ?, media = ?, attachments = ?, img_main = ?, img_thumbnail = ?, published = ?, author = ?, approved = ?, rating = ?, active = ? WHERE id = ?');
-        $types = 'ssssssssssssssssiiiii';
+        $query = ('UPDATE posts SET name = ?, type = ?, categories = ?, tags = ?, event_start = ?, event_end = ?, event_location = ?, event_address = ?, event_country = ?, event_city = ?, event_zip = ?, media = ?, attachments = ?, img_main = ?, img_thumbnail = ?, published = ?, links = ?, author = ?, approved = ?, rating = ?, active = ? WHERE id = ?');
+        $types = 'sssssssssssssssssiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -150,6 +153,7 @@ class Posts {
             $data['img_main'],
             $data['img_thumbnail'],
             $data['published'],
+            $data['links'] ? implode(",", $data['links']) : '',
             $data['author'],
             $data['approved'],
             $data['rating'],

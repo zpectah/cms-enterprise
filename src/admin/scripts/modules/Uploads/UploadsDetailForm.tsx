@@ -238,7 +238,7 @@ const UploadsDetailForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__${lng}__label`}
-												label={`${lng.toUpperCase()}: ${t('form:input.label')}`}
+												label={`${lng.toUpperCase()} ${t('form:input.label')}`}
 												dataTestId={`${formOptions.id}.input.${lng}.label`}
 											/>
 										</Form.Row>
@@ -273,17 +273,20 @@ const UploadsDetailForm = ({
 						)}
 					</UploadSourceWrapper>
 					<div style={{ paddingTop: '1rem' }}>
-						<small>{`${config.environmental.root}${config.project.path.uploads}${detailData.type}/${detailData.file_name}`}</small>
+						<small
+							style={{ display: 'block' }}
+						>{`${config.environmental.root}${config.project.path.uploads}${detailData.type}/${detailData.file_name}`}</small>
 						{detailData.type == 'image' && (
 							<>
-								<br />
-								<small>{`${config.environmental.root}${config.project.path.uploads}image/thumbnail/${detailData.file_name}`}</small>
-								<br />
-								<small>{`${config.environmental.root}${config.project.path.uploads}image/medium/${detailData.file_name}`}</small>
-								<br />
-								<small>{`${config.environmental.root}${config.project.path.uploads}image/large/${detailData.file_name}`}</small>
-								<br />
-								<small>{`${config.environmental.root}${config.project.path.uploads}image/custom_1/${detailData.file_name}`}</small>
+								<small
+									style={{ display: 'block', marginTop: '.5rem' }}
+								>{`${config.environmental.root}${config.project.path.uploads}image/${config.options.model.Uploads.image.cropped.key}/${detailData.file_name}`}</small>
+								{config.options.model.Uploads.image.format.map((format) => (
+									<small
+										key={format.key}
+										style={{ display: 'block', marginTop: '.5rem' }}
+									>{`${config.environmental.root}${config.project.path.uploads}image/${format.key}/${detailData.file_name}`}</small>
+								))}
 							</>
 						)}
 					</div>

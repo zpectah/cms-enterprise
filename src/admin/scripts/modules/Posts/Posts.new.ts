@@ -20,6 +20,7 @@ export default {
 	img_main: '',
 	img_thumbnail: '',
 	published: moment().format(),
+	links: [],
 	author: 0,
 	approved: false,
 	rating: 0,

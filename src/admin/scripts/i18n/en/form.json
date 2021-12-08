@@ -40,7 +40,8 @@
     "page": "Page",
     "path_url": "Path url",
     "order": "Order",
-    "label": "Label"
+    "label": "Label",
+    "new_link": "New link"
   },
   "label": {
     "no_parent": "No parent",
@@ -50,7 +51,8 @@
   "section": {
     "title": {
       "eventOptions": "Event options",
-      "mediaAndAttachments": "Media and attachments"
+      "mediaAndAttachments": "Media and attachments",
+      "linksAndSources": "Links and sources"
     }
   },
   "form": {
