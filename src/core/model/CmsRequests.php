@@ -4,7 +4,7 @@ namespace model;
 
 class CmsRequests {
 
-    public function get ($conn, $data) {
+    public function get ($conn, $data, $params) {
         $response = [];
 
         // prepare
@@ -19,7 +19,7 @@ class CmsRequests {
         $result = $stmt -> get_result();
         $stmt -> close();
 
-        // params
+        // request params
         $rp_id = $data['id'];
         $rp_token = $data['token'];
 

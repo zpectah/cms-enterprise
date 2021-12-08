@@ -4,7 +4,7 @@ namespace module\admin;
 
 class Settings {
 
-    public function get_cms_settings ($conn): array {
+    public function get_cms_settings ($conn, $params): array {
         $sql = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM cms_settings');
         $result = $conn -> query($sql);
         $response = [];
@@ -14,16 +14,16 @@ class Settings {
                 switch ($row['format']) {
 
                     case 'boolean':
-                        $nv = $row['value'] == 'true';
+                        $nv = $row['value'] == 'true'; // Set value as boolean
                         break;
 
                     case 'array':
-                        $nv = $row['value'] ? explode(",", $row['value']) : [];
+                        $nv = $row['value'] ? explode(",", $row['value']) : []; // Set value as array
                         break;
 
                     case 'json':
                     default:
-                        $nv = $row['value'];
+                        $nv = $row['value']; // Set value as string
                         break;
 
                 }
@@ -55,16 +55,16 @@ class Settings {
                 switch ($row['format']) {
 
                     case 'array':
-                        $new_value = $value ? implode(",", $value) : '';
+                        $new_value = $value ? implode(",", $value) : ''; // Set value from array
                         break;
 
                     case 'boolean':
-                        $new_value = $value ? 'true' : 'false';
+                        $new_value = $value ? 'true' : 'false'; // Set value from boolean
                         break;
 
                     case 'json':
                     default:
-                        $new_value = $value;
+                        $new_value = $value; // Set value from string
                         break;
 
                 }
@@ -109,8 +109,8 @@ class Settings {
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
                 if ($row['name'] == 'language_default') $response['language_default'] = $row['value'];
-                if ($row['name'] == 'language_installed') $response['language_installed'] = explode(",", $row['value']);
-                if ($row['name'] == 'language_active') $response['language_active'] = explode(",", $row['value']);
+                if ($row['name'] == 'language_installed') $response['language_installed'] = explode(",", $row['value']); // Set value as array
+                if ($row['name'] == 'language_active') $response['language_active'] = explode(",", $row['value']); // Set value as array
             }
         }
 

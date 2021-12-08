@@ -4,7 +4,7 @@ namespace model;
 
 class Categories {
 
-    public function get ($conn, $data, $languages) {
+    public function get ($conn, $data, $params, $languages) {
         $response = [];
         $utils = new \Utils;
 
@@ -28,12 +28,11 @@ class Categories {
                         $row['id'],
                         'SELECT * FROM categories__' . $lang . ' WHERE id = ?'
                     );
-                }
+                } // Set language object
 
-                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']);
-                $row['active'] = $row['active'] == 1;
-
-                unset($row['deleted']);
+                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']); // Set value as array
+                $row['active'] = $row['active'] == 1; // Set value as boolean
+                unset($row['deleted']); // Unset deleted attribute
 
                 $response[] = $row;
             }

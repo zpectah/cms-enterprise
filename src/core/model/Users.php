@@ -4,7 +4,7 @@ namespace model;
 
 class Users {
 
-    public function get ($conn, $data) {
+    public function get ($conn, $data, $params) {
         $response = [];
 
         // prepare
@@ -20,20 +20,18 @@ class Users {
         $stmt -> close();
 
         // request params
-        $rp_id = $data['id'];
-        $rp_email = $data['email'];
-        $rp_withPassword = $data['withPassword'];
+        $rp_id = $data['id'] || $params['id'];
+        $rp_email = $data['email'] || $params['email'];
+        $rp_withPassword = $data['withPassword'] || $params['withPassword'];
 
         if ($result -> num_rows > 0) {
             // iterate by params
             if ($rp_id) {
                 while($row = $result -> fetch_assoc()) {
                     if ($rp_id == $row['id']) {
-                        if (!$rp_withPassword) unset($row['password']);
-
-                        $row['active'] = $row['active'] == 1;
-
-                        unset($row['deleted']);
+                        if (!$rp_withPassword) unset($row['password']); // Unset password attribute
+                        unset($row['deleted']); // Unset deleted attribute
+                        $row['active'] = $row['active'] == 1; // Set value as boolean
 
                         $response = $row;
                     }
@@ -41,11 +39,9 @@ class Users {
             } else if ($rp_email) {
                 while($row = $result -> fetch_assoc()) {
                     if ($rp_email == $row['email']) {
-                        if (!$rp_withPassword) unset($row['password']);
-
-                        $row['active'] = $row['active'] == 1;
-
-                        unset($row['deleted']);
+                        if (!$rp_withPassword) unset($row['password']); // Unset password attribute
+                        unset($row['deleted']); // Unset deleted attribute
+                        $row['active'] = $row['active'] == 1; // Set value as boolean
 
                         $response = $row;
                     }
@@ -53,10 +49,8 @@ class Users {
             } else {
                 while($row = $result -> fetch_assoc()) {
                     if (!$rp_withPassword) unset($row['password']);
-
-                    $row['active'] = $row['active'] == 1;
-
-                    unset($row['deleted']);
+                    unset($row['deleted']); // Unset deleted attribute
+                    $row['active'] = $row['active'] == 1; // Set value as boolean
 
                     $response[] = $row;
                 }
@@ -76,7 +70,6 @@ class Users {
         $args = [
             $data['email'],
             $data['type'],
-            // password_hash($data['password'], PASS_CRYPT, PASS_CRYPT_OPTIONS),
             $utils -> passwordHash($data['password']),
             $data['nick_name'],
             $data['first_name'],

@@ -10,7 +10,7 @@ use service\EmailService;
 class Profile {
 
     // Returns user profile object when logged in, else returns null
-    public function get_user_profile ($conn) {
+    public function get_user_profile ($conn, $params) {
         $response = 'anonymous';
         $as = new AuthService;
         $email = $as -> get_user_session();
@@ -30,10 +30,9 @@ class Profile {
 
             if ($result -> num_rows > 0) {
                 while($row = $result -> fetch_assoc()) {
-                    unset($row['password']);
-                    unset($row['deleted']);
-
-                    $row['active'] = $row['active'] == 1;
+                    unset($row['password']); // Unset password attribute
+                    unset($row['deleted']); // Unset deleted attribute
+                    $row['active'] = $row['active'] == 1; // Set value as boolean
 
                     $response = $row;
                 }

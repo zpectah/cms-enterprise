@@ -4,7 +4,7 @@ namespace model;
 
 class MenuItems {
 
-    public function get ($conn, $data, $languages) {
+    public function get ($conn, $data, $params, $languages) {
         $response = [];
         $utils = new \Utils;
 
@@ -28,11 +28,10 @@ class MenuItems {
                         $row['id'],
                         'SELECT * FROM menu_items__' . $lang . ' WHERE id = ?'
                     );
-                }
+                } // Set language object
 
-                $row['active'] = $row['active'] == 1;
-
-                unset($row['deleted']);
+                $row['active'] = $row['active'] == 1; // Set value as boolean
+                unset($row['deleted']); // Unset deleted attribute
 
                 $response[] = $row;
             }

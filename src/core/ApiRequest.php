@@ -22,14 +22,24 @@ class ApiRequest {
         $request_data_raw = json_decode(file_get_contents('php://input'));
         $request_data = json_decode(json_encode($request_data_raw), true);
 
+        // Check user/member authorization
         if (!$request_is_authorized) {
             $response['status'] = 'unauthorized';
 
             return $response;
         }
 
-        // Parsed url and additional params
+        // Parsed url params
         $url_base = $request_url[1];
+
+        // Parsed additional get params
+        $params = [
+            'id' => $_GET['id'],
+            'name' => $_GET['name'],
+            'email' => $_GET['email'],
+            'withPassword' => $_GET['withPassword'],
+            'token' => $_GET['token'],
+        ];
 
         // Switching and executing
         if ($url_base) {
@@ -41,12 +51,12 @@ class ApiRequest {
                     break;
 
                 case 'get_log_list':
-                    $response = $dc -> get_log_list();
+                    $response = $dc -> get_log_list($params);
                     break;
 
                 /********** Settings **********/
                 case 'get_cms_settings':
-                    $response = $dc -> get_cms_settings();
+                    $response = $dc -> get_cms_settings($params);
                     break;
 
                 case 'update_cms_settings':
@@ -55,7 +65,7 @@ class ApiRequest {
 
                 /********** Profile **********/
                 case 'get_user_profile':
-                    $response = $dc -> get_user_profile();
+                    $response = $dc -> get_user_profile($params);
                     break;
 
                 case 'update_user_profile':
@@ -86,7 +96,7 @@ class ApiRequest {
 
                 /********** CmsRequests **********/
                 case 'get_cms_requests':
-                    $response = $dc -> get('CmsRequests', $request_data);
+                    $response = $dc -> get('CmsRequests', $request_data, $params);
                     break;
 
                 case 'create_cms_requests':
@@ -107,7 +117,7 @@ class ApiRequest {
 
                 /********** Categories **********/
                 case 'get_categories':
-                    $response = $dc -> get('Categories', $request_data);
+                    $response = $dc -> get('Categories', $request_data, $params);
                     break;
 
                 case 'create_categories':
@@ -134,7 +144,7 @@ class ApiRequest {
 
                 /********** Menu & MenuItems **********/
                 case 'get_menu':
-                    $response = $dc -> get('Menu', $request_data);
+                    $response = $dc -> get('Menu', $request_data, $params);
                     break;
 
                 case 'create_menu':
@@ -154,7 +164,7 @@ class ApiRequest {
                     break;
 
                 case 'get_menu_items':
-                    $response = $dc -> get('MenuItems', $request_data);
+                    $response = $dc -> get('MenuItems', $request_data, $params);
                     break;
 
                 case 'create_menu_items':
@@ -177,7 +187,7 @@ class ApiRequest {
 
                 /********** Pages **********/
                 case 'get_pages':
-                    $response = $dc -> get('Pages', $request_data);
+                    $response = $dc -> get('Pages', $request_data, $params);
                     break;
 
                 case 'create_pages':
@@ -200,7 +210,7 @@ class ApiRequest {
 
                 /********** Posts **********/
                 case 'get_posts':
-                    $response = $dc -> get('Posts', $request_data);
+                    $response = $dc -> get('Posts', $request_data, $params);
                     break;
 
                 case 'create_posts':
@@ -227,7 +237,7 @@ class ApiRequest {
 
                 /********** Tags **********/
                 case 'get_tags':
-                    $response = $dc -> get('Tags', $request_data);
+                    $response = $dc -> get('Tags', $request_data, $params);
                     break;
 
                 case 'create_tags':
@@ -248,7 +258,7 @@ class ApiRequest {
 
                 /********** Translations **********/
                 case 'get_translations':
-                    $response = $dc -> get('Translations', $request_data);
+                    $response = $dc -> get('Translations', $request_data, $params);
                     break;
 
                 case 'create_translations':
@@ -269,7 +279,7 @@ class ApiRequest {
 
                 /********** Uploads **********/
                 case 'get_uploads':
-                    $response = $dc -> get('Uploads', $request_data);
+                    $response = $dc -> get('Uploads', $request_data, $params);
                     break;
 
                 case 'create_uploads':
@@ -290,7 +300,7 @@ class ApiRequest {
 
                 /********** Users **********/
                 case 'get_users':
-                    $response = $dc -> get('Users', $request_data);
+                    $response = $dc -> get('Users', $request_data, $params);
                     break;
 
                 case 'create_users':

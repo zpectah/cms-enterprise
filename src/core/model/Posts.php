@@ -4,7 +4,7 @@ namespace model;
 
 class Posts {
 
-    public function get ($conn, $data, $languages) {
+    public function get ($conn, $data, $params, $languages) {
         $response = [];
         $utils = new \Utils;
 
@@ -28,16 +28,15 @@ class Posts {
                         $row['id'],
                         'SELECT * FROM posts__' . $lang . ' WHERE id = ?'
                     );
-                }
+                } // Set language object
 
-                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']);
-                $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']);
-                $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']);
-                $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']);
-                $row['approved'] = $row['approved'] == 1;
-                $row['active'] = $row['active'] == 1;
-
-                unset($row['deleted']);
+                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']); // Set value as array
+                $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
+                $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
+                $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
+                $row['approved'] = $row['approved'] == 1; // Set value as boolean
+                $row['active'] = $row['active'] == 1; // Set value as boolean
+                unset($row['deleted']); // Unset deleted attribute
 
                 $response[] = $row;
             }

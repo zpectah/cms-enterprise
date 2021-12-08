@@ -4,7 +4,7 @@ namespace model;
 
 class Menu {
 
-    public function get ($conn, $data) {
+    public function get ($conn, $data, $params) {
         $response = [];
 
         // prepare
@@ -21,9 +21,8 @@ class Menu {
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                $row['active'] = $row['active'] == 1;
-
-                unset($row['deleted']);
+                $row['active'] = $row['active'] == 1; // Set value as boolean
+                unset($row['deleted']); // Unset deleted attribute
 
                 $response[] = $row;
             }

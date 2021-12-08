@@ -12,7 +12,7 @@ class System {
         return $ls -> create($data['user'], $data['method'], $data['status']);
     }
 
-    public function get_log_list () {
+    public function get_log_list ($params) {
         $ls = new LogService;
 
         return $ls -> getList();

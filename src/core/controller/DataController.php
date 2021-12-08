@@ -19,7 +19,7 @@ use mysqli;
 
 class DataController {
 
-    public function get ($model, $data): array {
+    public function get ($model, $data, $params): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
@@ -51,43 +51,43 @@ class DataController {
         switch ($model) {
 
             case 'CmsRequests':
-                $response['data'] = $CmsRequests -> get($conn, $data);
+                $response['data'] = $CmsRequests -> get($conn, $data, $params);
                 break;
 
             case 'Users':
-                $response['data'] = $Users -> get($conn, $data);
+                $response['data'] = $Users -> get($conn, $data, $params);
                 break;
 
             case 'Tags':
-                $response['data'] = $Tags -> get($conn, $data);
+                $response['data'] = $Tags -> get($conn, $data, $params);
                 break;
 
             case 'Translations':
-                $response['data'] = $Translations -> get($conn, $data, $language_active);
+                $response['data'] = $Translations -> get($conn, $data, $params, $language_active);
                 break;
 
             case 'Categories':
-                $response['data'] = $Categories -> get($conn, $data, $language_active);
+                $response['data'] = $Categories -> get($conn, $data, $params, $language_active);
                 break;
 
             case 'Posts':
-                $response['data'] = $Posts -> get($conn, $data, $language_active);
+                $response['data'] = $Posts -> get($conn, $data, $params, $language_active);
                 break;
 
             case 'Pages':
-                $response['data'] = $Pages -> get($conn, $data, $language_active);
+                $response['data'] = $Pages -> get($conn, $data, $params, $language_active);
                 break;
 
             case 'Menu':
-                $response['data'] = $Menu -> get($conn, $data);
+                $response['data'] = $Menu -> get($conn, $data, $params);
                 break;
 
             case 'MenuItems':
-                $response['data'] = $MenuItems -> get($conn, $data, $language_active);
+                $response['data'] = $MenuItems -> get($conn, $data, $params, $language_active);
                 break;
 
             case 'Uploads':
-                $response['data'] = $Uploads -> get($conn, $data, $language_active);
+                $response['data'] = $Uploads -> get($conn, $data, $params, $language_active);
                 break;
 
         }
@@ -398,17 +398,17 @@ class DataController {
 
         return $System -> create_log($data);
     }
-    public function get_log_list (): array {
+    public function get_log_list ($params): array {
         $System = new System;
 
-        return $System -> get_log_list();
+        return $System -> get_log_list($params);
     }
 
     /********** Settings **********/
-    public function get_cms_settings (): array {
+    public function get_cms_settings ($params): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $Settings = new Settings;
-        $response = $Settings -> get_cms_settings($conn);
+        $response = $Settings -> get_cms_settings($conn, $params);
         $conn -> close();
 
         return $response;
@@ -423,10 +423,10 @@ class DataController {
     }
 
     /********** Profile **********/
-    public function get_user_profile () {
+    public function get_user_profile ($params) {
         $conn = new mysqli(...CFG_DB_CONN);
         $Profile = new Profile;
-        $response = $Profile -> get_user_profile($conn);
+        $response = $Profile -> get_user_profile($conn, $params);
         $conn -> close();
 
         return $response;
