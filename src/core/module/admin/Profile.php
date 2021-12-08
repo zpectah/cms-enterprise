@@ -14,30 +14,8 @@ class Profile {
         $response = 'anonymous';
         $as = new AuthService;
         $email = $as -> get_user_session();
-
-        if ($email) {
-            // prepare
-            $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM users WHERE email = ?');
-            $types = 's';
-            $args = [ $email ];
-
-            // execute
-            $stmt = $conn -> prepare($query);
-            $stmt -> bind_param($types, ...$args);
-            $stmt -> execute();
-            $result = $stmt -> get_result();
-            $stmt -> close();
-
-            if ($result -> num_rows > 0) {
-                while($row = $result -> fetch_assoc()) {
-                    unset($row['password']); // Unset password attribute
-                    unset($row['deleted']); // Unset deleted attribute
-                    $row['active'] = $row['active'] == 1; // Set value as boolean
-
-                    $response = $row;
-                }
-            }
-        }
+        $Users = new Users;
+        if ($email) $response = $Users -> get($conn, ['email' => $email], $params);
 
         return $response;
     }
@@ -68,7 +46,6 @@ class Profile {
 
         if ($user !== 'anonymous') {
             $response['message'] = 'user_password_not_match';
-
             if ($user['active'] == 0) {
                 $response['message'] = 'user_not_active';
             } else if ($user['deleted'] == 1) {
@@ -82,7 +59,7 @@ class Profile {
         return $response;
     }
 
-    // User log out / destroys all sessions
+    // User log out / destroys all user sessions
     public function user_logout (): array {
         $as = new AuthService;
 
@@ -101,7 +78,10 @@ class Profile {
         $CmsRequests = new CmsRequests;
         $utils = new \Utils;
 
+        // Form data
         $email = $data['email'];
+
+        // User object
         $user = $Users -> get($conn, ['email' => $email], []);
 
         if ($user !== 'anonymous') {
@@ -112,7 +92,6 @@ class Profile {
             } else {
                 $token = $utils -> getToken(16, '');
                 $confirm_url = URL_USER_LOST_PASSWORD_TOKEN . $token;
-
                 $response['email'] = $es -> sendStyledMessage(
                     $email,
                     "Lost password request",
@@ -143,24 +122,21 @@ class Profile {
         $Users = new Users;
         $CmsRequests = new CmsRequests;
 
+        // Form data
         $rd_password_raw = $data['password'];
         $rd_token = $data['token'];
 
         if ($rd_token) {
             $request_row = $CmsRequests -> get($conn, ['token' => $rd_token], []);
-
             if ($request_row) {
-
                 if ($request_row['status'] == 1) {
                     $user_row = $Users -> get($conn, ['email' => $request_row['value']], []);
                     $user_row['password'] = $rd_password_raw;
-
                     $response['user'] = $Users -> update($conn, $user_row);
                     $response['request'] = $CmsRequests -> update($conn, [
                         'status' => 2,
                         'token' => $rd_token
                     ]);
-
                     $response['message'] = 'user_password_reset_success';
                 } else {
                     $response['message'] = 'user_password_already_reset';
@@ -188,7 +164,10 @@ class Profile {
         $CmsRequests = new CmsRequests;
         $utils = new \Utils;
 
+        // Form data
         $token = $data['token'];
+
+        // Request object
         $request_row = $CmsRequests -> get($conn, ['token' => $token], []);
 
         if ($token) {
@@ -204,7 +183,6 @@ class Profile {
                             null,
                             'password_reset'
                         );
-
                         $response['request'] = $CmsRequests -> update($conn, [
                             'status' => 2,
                             'token' => $request_row['token']

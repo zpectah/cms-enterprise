@@ -51,7 +51,7 @@ class ApiRequest {
                     $response = $dc -> get_log_list($params);
                     break;
 
-                /********** Settings (*) **********/
+                /********** Settings (**) **********/
                 case 'get_cms_settings':
                     if ($request_is_authorized) {
                         $response = $dc -> get_cms_settings($params);
@@ -68,7 +68,7 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Profile **********/
+                /********** Profile (*) **********/
                 case 'get_user_profile':
                     $response = $dc -> get_user_profile($params);
                     break;
@@ -124,7 +124,7 @@ class ApiRequest {
                     $response = $dc -> delete('CmsRequests', $request_data);
                     break;
 
-                /********** Categories **********/
+                /********** Categories (*) **********/
                 case 'get_categories':
                     $response = $dc -> get('Categories', $request_data, $params);
                     break;
@@ -167,7 +167,7 @@ class ApiRequest {
 
                 /********** Members **********/
 
-                /********** Menu & MenuItems **********/
+                /********** Menu & MenuItems (*) **********/
                 case 'get_menu':
                     $response = $dc -> get('Menu', $request_data, $params);
                     break;
@@ -242,7 +242,7 @@ class ApiRequest {
 
                 /********** Orders **********/
 
-                /********** Pages **********/
+                /********** Pages (*) **********/
                 case 'get_pages':
                     $response = $dc -> get('Pages', $request_data, $params);
                     break;
@@ -281,7 +281,7 @@ class ApiRequest {
 
                 /********** Payments **********/
 
-                /********** Posts **********/
+                /********** Posts (*) **********/
                 case 'get_posts':
                     $response = $dc -> get('Posts', $request_data, $params);
                     break;
@@ -324,7 +324,7 @@ class ApiRequest {
 
                 /********** Stores **********/
 
-                /********** Tags **********/
+                /********** Tags (*) **********/
                 case 'get_tags':
                     $response = $dc -> get('Tags', $request_data, $params);
                     break;
@@ -361,7 +361,7 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Translations **********/
+                /********** Translations (*) **********/
                 case 'get_translations':
                     $response = $dc -> get('Translations', $request_data, $params);
                     break;
@@ -398,7 +398,7 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Uploads **********/
+                /********** Uploads (*) **********/
                 case 'get_uploads':
                     $response = $dc -> get('Uploads', $request_data, $params);
                     break;
@@ -435,7 +435,7 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Users (*) **********/
+                /********** Users (**) **********/
                 case 'get_users':
                     if ($request_is_authorized) {
                         $response = $dc -> get('Users', $request_data, $params);

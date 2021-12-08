@@ -20,9 +20,9 @@ class Users {
         $stmt -> close();
 
         // request params
-        $rp_id = $data['id'] || $params['id'];
-        $rp_email = $data['email'] || $params['email'];
-        $rp_withPassword = $data['withPassword'] || $params['withPassword'];
+        $rp_id = $data['id'] or $params['id'];
+        $rp_email = $data['email'] or $params['email'];
+        $rp_withPassword = $data['withPassword'] or $params['withPassword'];
 
         if ($result -> num_rows > 0) {
             // iterate by params

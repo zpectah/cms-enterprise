@@ -20,8 +20,8 @@ class CmsRequests {
         $stmt -> close();
 
         // request params
-        $rp_id = $data['id'];
-        $rp_token = $data['token'];
+        $rp_id = $data['id'] or $params['id'];
+        $rp_token = $data['token'] or $params['token'];
 
         if ($result -> num_rows > 0) {
             // iterate by params
