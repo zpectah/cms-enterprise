@@ -236,15 +236,6 @@ const App = () => {
 								auth={ROUTES.app.help.auth}
 								exact
 							/>
-							<Route
-								path={[
-									ROUTES.app.lostPassword.path,
-									ROUTES.app.lostPassword.path + ROUTE_PATH_PARAMS.token,
-								]}
-								component={LostPasswordPage}
-								exact
-							/>
-							<Route path={ROUTES.app.login.path} component={LoginPage} />
 							<AuthRoute
 								path={ROUTES.app.profile.path}
 								component={ProfilePage}
@@ -257,6 +248,16 @@ const App = () => {
 								auth={ROUTES.app.dashboard.auth}
 								exact
 							/>
+
+							<Route
+								path={[
+									ROUTES.app.lostPassword.path,
+									ROUTES.app.lostPassword.path + ROUTE_PATH_PARAMS.token,
+								]}
+								component={LostPasswordPage}
+								exact
+							/>
+							<Route path={ROUTES.app.login.path} component={LoginPage} />
 							<Route component={Error404Page} />
 						</Switch>
 					</Router>

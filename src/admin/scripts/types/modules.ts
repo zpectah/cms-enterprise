@@ -33,4 +33,4 @@ export interface cmsSettingsObjectProps {
 	web_mode_maintenance: boolean;
 }
 
-export type ProfileItemProps = UsersItemProps | 'anonymous';
+export type ProfileItemProps = UsersItemProps;

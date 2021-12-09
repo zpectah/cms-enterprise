@@ -11,7 +11,7 @@ class Profile {
 
     // Returns user profile object when logged in, else returns null
     public function get_user_profile ($conn, $params) {
-        $response = 'anonymous';
+        $response = false;
         $as = new AuthService;
         $email = $as -> get_user_session();
         $Users = new Users;
@@ -44,7 +44,7 @@ class Profile {
         // User object
         $user = $Users -> get($conn, ['email' => $email, 'withPassword' => true], []);
 
-        if ($user !== 'anonymous') {
+        if ($user) {
             $response['message'] = 'user_password_not_match';
             if ($user['active'] == 0) {
                 $response['message'] = 'user_not_active';
@@ -84,7 +84,7 @@ class Profile {
         // User object
         $user = $Users -> get($conn, ['email' => $email], []);
 
-        if ($user !== 'anonymous') {
+        if ($user) {
             if ($user['active'] == 0) {
                 $response['message'] = 'user_not_active';
             } else if ($user['deleted'] == 1) {

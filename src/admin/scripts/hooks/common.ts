@@ -27,10 +27,11 @@ export function useSystem() {
 
 export function useProfile() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_user_profile`, get);
+	const data_loading = !(!(!data && data == null) && !error);
 
 	return {
 		Profile: data as UsersItemProps,
-		profile_loading: !data && !error,
+		profile_loading: data_loading,
 		profile_error: error,
 		reloadProfile: () => mutate(`${api_path_prefix}/get_user_profile`),
 		updateProfile: (data: UsersItemProps) =>
@@ -51,10 +52,11 @@ export function useProfile() {
 
 export function useSettings() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_cms_settings`, get);
+	const data_loading = !(!(!data && data == null) && !error);
 
 	return {
 		Settings: data as cmsSettingsObjectProps,
-		settings_loading: !data && !error,
+		settings_loading: data_loading,
 		settings_error: error,
 		reloadSettings: () => mutate(`${api_path_prefix}/get_cms_settings`),
 		updateSettings: (data: cmsSettingsObjectProps) =>

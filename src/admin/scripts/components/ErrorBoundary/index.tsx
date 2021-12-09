@@ -1,4 +1,6 @@
 import React, { ErrorInfo } from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import WarningIcon from '@mui/icons-material/Warning';
 
 import LogsService from '../../services/Logs.service';
 
@@ -25,18 +27,35 @@ class ErrorBoundary extends React.Component<
 
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 		this.setState({ isError: true, error, errorInfo });
-		console.error(error, errorInfo);
+		console.error(error);
+		console.info(errorInfo);
 		LogsService.create({
 			user: 'anonymous',
-			method: '' + error,
+			method: 'ReactError',
 			status: 'error',
 		});
 	}
 
 	render() {
 		if (this.state.isError) {
-			// TODO: create error view with error message
-			return <h1>Something went wrong.</h1>;
+			return (
+				<Backdrop sx={{ color: '#fff', zIndex: 999 }} open={true}>
+					<div>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								paddingBottom: '1.5rem',
+							}}
+						>
+							<WarningIcon fontSize="large" />
+						</div>
+						<div>Something went wrong, see details in console</div>
+					</div>
+				</Backdrop>
+			);
 		}
 
 		return this.props.children;
