@@ -43,6 +43,20 @@ export const USER_LEVEL = {
 		key: 'super_admin',
 	},
 };
+// TODO: switch model from above to below !!!
+export const USER_LEVEL_NUMS = {
+	demo: 1,
+	redactor: 2,
+	chief_redactor: 3,
+	admin: 5,
+	super_admin: 7,
+};
+export const ORDER_STATUS_NUMS = {
+	0: 'canceled',
+	1: 'created',
+	2: 'settled',
+	3: 'deleted',
+};
 export const IMAGE_CROP_OPTIONS = [
 	{
 		label: '1:1',

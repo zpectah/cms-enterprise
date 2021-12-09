@@ -57,7 +57,12 @@
     "depth": "Hloubka",
     "height": "Délka",
     "width": "Šířka",
-    "gallery": "Galerie"
+    "gallery": "Galerie",
+    "customer_name": "Jméno zákazníka",
+    "delivery": "Způsob dopravy",
+    "payment": "Způsob platby",
+    "order_description": "Poznámka k objednávce",
+    "status": "Stav"
   },
   "label": {
     "no_parent": "Bez rodiče",

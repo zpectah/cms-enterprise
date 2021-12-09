@@ -1,10 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Input, Preloader } from '../ui';
 
 export interface PickerBaseInitialProps {
 	value: any;
-	onChange: () => void;
+	onChange: (e: any) => void;
 	responsiveWidth?: string;
 	dataTestId?: string;
 	multiple?: boolean;
@@ -31,11 +32,23 @@ const PickerBase = ({
 	required,
 	disabled,
 }: PickerBaseProps) => {
+	const { t } = useTranslation(['common', 'form']);
+	const getOptionsList = () => {
+		const placeholder = {
+			label: t('form:label.no_selected'),
+			value: '0',
+			disabled: false,
+		};
+
+		return !multiple ? [placeholder, ...items] : items;
+	};
+	const options = getOptionsList();
+
 	return (
 		<>
-			{items ? (
+			{options.length > (!multiple ? 1 : 0) ? (
 				<Input.Select
-					options={items}
+					options={options}
 					value={value}
 					onChange={onChange}
 					responsiveWidth={responsiveWidth}

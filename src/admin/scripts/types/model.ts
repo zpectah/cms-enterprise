@@ -182,8 +182,23 @@ export interface DistributorsItemProps extends commonItemProps {
 	img_thumbnail?: string;
 }
 
-export interface OrdersItemProps extends commonItemProps {
+export interface OrdersItemProps {
+	id: number | string;
+	type: string;
 	name: string;
+	email: string;
+	phone?: string;
+	customer_name: string;
+	country?: string;
+	city?: string;
+	address?: string;
+	zip?: string;
+	delivery: string;
+	payment: string;
+	description: string;
+	items: any[]; // TODO
+	price_total: number;
+	status: number;
 }
 
 export interface PaymentsItemLangProps {
@@ -213,7 +228,6 @@ export interface ProductsItemLangProps {
 }
 export interface ProductsItemProps extends commonItemProps {
 	name: string;
-
 	categories?: string[];
 	tags?: string[];
 	item_price: number;
@@ -222,7 +236,6 @@ export interface ProductsItemProps extends commonItemProps {
 	item_depth: number;
 	item_height: number;
 	item_width: number;
-
 	related: selectedArrayProps;
 	gallery: selectedArrayProps;
 	attachments: selectedArrayProps;
@@ -230,11 +243,9 @@ export interface ProductsItemProps extends commonItemProps {
 	img_thumbnail?: string;
 	rating: number;
 	manager: number;
-
 	is_new: boolean;
 	is_used: boolean;
 	is_unboxed: boolean;
-
 	lang: {
 		[k: string]: ProductsItemLangProps;
 	};

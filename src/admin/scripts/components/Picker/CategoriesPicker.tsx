@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useCategories } from '../../hooks/model';
 import PickerBase, { PickerBaseInitialProps } from './PickerBase';
@@ -12,18 +11,10 @@ const CategoriesPicker = (
 	props: CategoriesPickerProps & PickerBaseInitialProps,
 ) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { t } = useTranslation(['common', 'form']);
 	const { Categories } = useCategories();
 
 	const getOptionsList = () => {
 		let options = [];
-		if (!props.multiple)
-			options.push({
-				label: t('form:label.no_selected'),
-				value: '0',
-				disabled: false,
-			});
-
 		Categories?.map((item) => {
 			options.push({
 				label: item.name,

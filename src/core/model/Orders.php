@@ -7,11 +7,81 @@ class Orders {
     public function get ($conn, $data, $params) {
         $response = [];
 
+        // prepare
+        $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM orders WHERE status < ?');
+        $types = 'i';
+        $args = [ 3 ];
+
+        // execute
+        $stmt = $conn -> prepare($query);
+        $stmt -> bind_param($types, ...$args);
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+        $stmt -> close();
+
+        if ($result -> num_rows > 0) {
+            while($row = $result -> fetch_assoc()) {
+                // $row['active'] = $row['active'] == 1; // Set value as boolean
+                // unset($row['deleted']); // Unset deleted attribute
+                $row['items'] = $row['items'] == '' ? [] : explode(",", $row['items']); // Set value as array
+
+                $response[] = $row;
+            }
+        }
+
         return $response;
     }
 
     public function create ($conn, $data) {
         $response = [];
+
+        // prepare
+        $query = ('INSERT INTO orders (
+                    type, 
+                    name, 
+                    email,
+                    phone,
+                    customer_name,
+                    country,
+                    city,
+                    address,
+                    zip,
+                    delivery,
+                    payment,
+                    description,
+                    items,
+                    price_total,
+                    status
+                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'sssssssssssssii';
+        $args = [
+            $data['type'],
+            $data['name'],
+            $data['email'],
+            $data['phone'],
+            $data['customer_name'],
+            $data['country'],
+            $data['city'],
+            $data['address'],
+            $data['zip'],
+            $data['delivery'],
+            $data['payment'],
+            $data['description'],
+            $data['items'] ? implode(",", $data['items']) : '',
+            $data['price_total'],
+            1
+        ];
+
+        // execute
+        if ($conn -> connect_error) {
+            $response = $conn -> connect_error;
+        } else {
+            $stmt = $conn -> prepare($query);
+            $stmt -> bind_param($types, ...$args);
+            $stmt -> execute();
+            $response['id'] = $stmt -> insert_id;
+            $stmt -> close();
+        }
 
         return $response; // last created ID
     }
@@ -19,17 +89,76 @@ class Orders {
     public function update ($conn, $data) {
         $response = [];
 
+        // prepare
+        $query = ('UPDATE orders SET 
+                    type = ?, 
+                    name = ?, 
+                    email = ?, 
+                    phone = ?, 
+                    customer_name = ?, 
+                    country = ?, 
+                    city = ?, 
+                    address = ?, 
+                    zip = ?, 
+                    delivery = ?, 
+                    payment = ?, 
+                    description = ?, 
+                    items = ?, 
+                    price_total = ?, 
+                    status = ?
+                WHERE id = ?');
+        $types = 'sssssssssssssiii';
+        $args = [
+            $data['type'],
+            $data['name'],
+            $data['email'],
+            $data['phone'],
+            $data['customer_name'],
+            $data['country'],
+            $data['city'],
+            $data['address'],
+            $data['zip'],
+            $data['delivery'],
+            $data['payment'],
+            $data['description'],
+            $data['items'] ? implode(",", $data['items']) : '',
+            $data['price_total'],
+            $data['status'],
+            $data['id']
+        ];
+
+        // execute
+        if ($conn -> connect_error) {
+            $response = $conn -> connect_error;
+        } else {
+            $stmt = $conn -> prepare($query);
+            $stmt -> bind_param($types, ...$args);
+            $stmt -> execute();
+            $response['rows'] = $stmt -> affected_rows;
+            $stmt -> close();
+        }
+
         return $response; // list of affected ids
     }
 
     public function toggle ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
+
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE orders SET active = IF(status=2, 1, 2) WHERE id = ?', $conn, $id);
+        }
 
         return $response; // list of affected ids
     }
 
     public function delete ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
+
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE orders SET status = 3 WHERE id = ?', $conn, $id);
+        }
 
         return $response; // list of affected ids
     }

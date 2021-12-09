@@ -1,19 +1,21 @@
 import React from 'react';
 
-import { useTags } from '../../hooks/model';
+import { usePayments } from '../../hooks/model';
 import PickerBase, { PickerBaseInitialProps } from './PickerBase';
 
-interface TagsPickerProps {
+interface PaymentsPickerProps {
 	ignored?: any[];
 }
 
-const TagsPicker = (props: TagsPickerProps & PickerBaseInitialProps) => {
+const PaymentsPicker = (
+	props: PaymentsPickerProps & PickerBaseInitialProps,
+) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { Tags } = useTags();
+	const { Payments } = usePayments();
 
 	const getOptionsList = () => {
 		let options = [];
-		Tags?.map((item) => {
+		Payments?.map((item) => {
 			options.push({
 				label: item.name,
 				value: item.id as string,
@@ -27,11 +29,11 @@ const TagsPicker = (props: TagsPickerProps & PickerBaseInitialProps) => {
 	return (
 		<PickerBase
 			items={getOptionsList()}
-			dataTestId={`TagsPicker.${dataTestId}`}
+			dataTestId={`PaymentsPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
 			{...rest}
 		/>
 	);
 };
 
-export default TagsPicker;
+export default PaymentsPicker;

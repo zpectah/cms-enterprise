@@ -9,6 +9,8 @@ import PhonePicker from './PhonePicker';
 import StringPicker from './StringPicker';
 import ProductsPicker from './ProductsPicker';
 import UsersPicker from './UsersPicker';
+import DeliveriesPicker from './DeliveriesPicker';
+import PaymentsPicker from './PaymentsPicker';
 
 export default {
 	Uploads: UploadsPicker,
@@ -22,4 +24,6 @@ export default {
 	String: StringPicker,
 	Products: ProductsPicker,
 	Users: UsersPicker,
+	Deliveries: DeliveriesPicker,
+	Payments: PaymentsPicker,
 };

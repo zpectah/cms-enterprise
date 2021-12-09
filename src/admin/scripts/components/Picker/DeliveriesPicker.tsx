@@ -1,19 +1,21 @@
 import React from 'react';
 
-import { useTags } from '../../hooks/model';
+import { useDeliveries } from '../../hooks/model';
 import PickerBase, { PickerBaseInitialProps } from './PickerBase';
 
-interface TagsPickerProps {
+interface DeliveriesPickerProps {
 	ignored?: any[];
 }
 
-const TagsPicker = (props: TagsPickerProps & PickerBaseInitialProps) => {
+const DeliveriesPicker = (
+	props: DeliveriesPickerProps & PickerBaseInitialProps,
+) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { Tags } = useTags();
+	const { Deliveries } = useDeliveries();
 
 	const getOptionsList = () => {
 		let options = [];
-		Tags?.map((item) => {
+		Deliveries?.map((item) => {
 			options.push({
 				label: item.name,
 				value: item.id as string,
@@ -27,11 +29,11 @@ const TagsPicker = (props: TagsPickerProps & PickerBaseInitialProps) => {
 	return (
 		<PickerBase
 			items={getOptionsList()}
-			dataTestId={`TagsPicker.${dataTestId}`}
+			dataTestId={`DeliveriesPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
 			{...rest}
 		/>
 	);
 };
 
-export default TagsPicker;
+export default DeliveriesPicker;

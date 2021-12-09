@@ -400,38 +400,7 @@ export function useOrders() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_orders`, get);
 
 	return {
-		Orders: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Order 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Order 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Order 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Order 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Order 5 name`,
-				active: true,
-			},
-		] as OrdersItemProps[],
+		Orders: data?.data as OrdersItemProps[],
 		orders_loading: !data && !error,
 		orders_error: error,
 		reloadOrders: () => mutate(`${api_path_prefix}/get_orders`),

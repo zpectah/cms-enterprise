@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
+import { string } from '../../../../../utils/utils';
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
 import { OrdersItemProps } from '../../types/model';
@@ -45,6 +46,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		updateOrders,
 		toggleOrders,
 		deleteOrders,
+		reloadOrders,
 		orders_loading,
 		orders_error,
 	} = useOrders();
@@ -93,12 +95,10 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 	const detailSubmitHandler = (data: OrdersItemProps) => {
 		const master: OrdersItemProps = _.cloneDeep(data);
 		setProcessing(true);
-		console.log('AJAX ... create/save ...', master);
-
 		if (master.id == 'new') {
+			master.name = new Date().valueOf() + `-${string.getRandom(4)}`;
 			createOrders(master).then((response) => {
-				console.log('create response', response);
-
+				reloadOrders();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -109,8 +109,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			});
 		} else {
 			updateOrders(master).then((response) => {
-				console.log('update response', response);
-
+				reloadOrders();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -159,11 +158,8 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
-		console.log('AJAX ... toggle ...', master);
-
 		toggleOrders(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadOrders();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -179,11 +175,8 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 			setProcessing(true);
-			console.log('AJAX ... delete ...', master);
-
 			deleteOrders(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadOrders();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

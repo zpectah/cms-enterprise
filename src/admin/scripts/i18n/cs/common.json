@@ -71,5 +71,11 @@
     "pcs": "ks",
     "mm": "mm",
     "inch": "Inch"
+  },
+  "status": {
+    "canceled": "Zrušeno",
+    "created": "Vytvořeno",
+    "settled": "Vyřízeno",
+    "deleted": "Smazáno"
   }
 }

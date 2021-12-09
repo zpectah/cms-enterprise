@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useUsers } from '../../hooks/model';
 import { USER_LEVEL } from '../../constants';
@@ -18,18 +17,10 @@ const UsersPicker = (props: UsersPickerProps & PickerBaseInitialProps) => {
 		ignoreRedactor,
 		...rest
 	} = props;
-	const { t } = useTranslation(['common', 'form']);
 	const { Users } = useUsers();
 
 	const getOptionsList = () => {
 		let options = [];
-		if (!props.multiple)
-			options.push({
-				label: t('form:label.no_selected'),
-				value: '0',
-				disabled: false,
-			});
-
 		Users?.map((item) => {
 			options.push({
 				label: item.nick_name,
