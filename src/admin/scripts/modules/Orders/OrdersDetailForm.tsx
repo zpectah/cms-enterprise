@@ -24,6 +24,7 @@ import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
+import OrderItemsManager from './OrderItemsManager';
 
 interface OrdersDetailFormProps {
 	detailData: OrdersItemProps;
@@ -396,7 +397,18 @@ const OrdersDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>items & price</Section>
+				<Section>
+					<Controller
+						name={`items`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<OrderItemsManager onChange={onChange} value={value} />
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				<Section>
 					<Controller
 						name="description"

@@ -17,6 +17,7 @@ const StyledInput = styled(TextField)<{ responsive: string }>`
 interface TextInputProps {
 	dataTestId?: string;
 	responsiveWidth?: string;
+	readOnly?: boolean;
 }
 
 const TextInput = (props: TextInputProps & TextFieldProps) => {
