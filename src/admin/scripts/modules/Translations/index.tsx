@@ -253,7 +253,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
-			<Preloader.Bar isProcessing={isProcessing} />
+			<Preloader.Bar isProcessing={isProcessing || translations_loading} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

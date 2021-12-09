@@ -251,7 +251,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
-			<Preloader.Bar isProcessing={isProcessing} />
+			<Preloader.Bar isProcessing={isProcessing || stores_loading} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

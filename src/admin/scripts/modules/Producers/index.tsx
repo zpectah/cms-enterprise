@@ -243,7 +243,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
-			<Preloader.Bar isProcessing={isProcessing} />
+			<Preloader.Bar isProcessing={isProcessing || producers_loading} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}

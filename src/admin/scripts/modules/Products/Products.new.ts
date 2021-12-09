@@ -23,4 +23,5 @@ export default {
 	is_used: false,
 	is_unboxed: false,
 	active: true,
+	lang: {},
 } as ProductsItemProps;

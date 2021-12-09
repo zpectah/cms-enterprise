@@ -254,7 +254,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
-			<Preloader.Bar isProcessing={isProcessing} />
+			<Preloader.Bar isProcessing={isProcessing || categories_loading} />
 			<ConfirmDialog
 				isOpen={confirmDialog}
 				onClose={closeConfirmHandler}
