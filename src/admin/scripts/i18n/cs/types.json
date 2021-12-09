@@ -37,5 +37,7 @@
   "customer": "Zákazník",
   "subscriber": "Odběratel",
   "virtual": "Virtuální",
-  "branch": "Pobočka"
+  "branch": "Pobočka",
+  "licence": "Licence",
+  "service": "Služba"
 }

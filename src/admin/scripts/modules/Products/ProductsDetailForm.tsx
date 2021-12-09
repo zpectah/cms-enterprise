@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, DEFAULT_UNITS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { ProductsItemProps } from '../../types/model';
 import {
@@ -18,6 +18,8 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
+import Picker from '../../components/Picker';
+import InputAdornment from '@mui/material/InputAdornment';
 
 interface ProductsDetailFormProps {
 	detailData: ProductsItemProps;
@@ -51,7 +53,7 @@ const ProductsDetailForm = ({
 		route: ROUTES.market.products,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const { control, handleSubmit, reset, register, formState, watch } = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
@@ -110,6 +112,8 @@ const ProductsDetailForm = ({
 		() => getOptionsList(config.options.model.Products.type, t),
 		[detailData],
 	);
+
+	const watchType = watch('type');
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -170,6 +174,84 @@ const ProductsDetailForm = ({
 						</Section>
 						<Section>
 							<Controller
+								name="rating"
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.Rating
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											name={name}
+											id={`${formOptions.id}__rating`}
+											label={t('form:input.rating')}
+											dataTestId={`${formOptions.id}.input.rating`}
+											readOnly
+											disabled={detailData.id == 'new'}
+										/>
+									</Form.Row>
+								)}
+							/>
+						</Section>
+						<Section>
+							<Controller
+								name="is_new"
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.SwitchControl
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__is_new`}
+											dataTestId={`${formOptions.id}.switch.is_new`}
+											label={t('form:input.is_new')}
+										/>
+									</Form.Row>
+								)}
+							/>
+							<Controller
+								name="is_used"
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.SwitchControl
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__is_used`}
+											dataTestId={`${formOptions.id}.switch.is_used`}
+											label={t('form:input.is_used')}
+										/>
+									</Form.Row>
+								)}
+							/>
+							<Controller
+								name="is_unboxed"
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.SwitchControl
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__is_unboxed`}
+											dataTestId={`${formOptions.id}.switch.is_unboxed`}
+											label={t('form:input.is_unboxed')}
+										/>
+									</Form.Row>
+								)}
+							/>
+						</Section>
+						<Section>
+							<Controller
 								name="active"
 								control={control}
 								rules={{}}
@@ -218,7 +300,389 @@ const ProductsDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>...form...{JSON.stringify(detailData)}...</Section>
+
+				<Section noSpacing>
+					{/*  ============ Language part section ============ */}
+					{languageList.map((lng) => {
+						return (
+							<Section key={lng} visible={lang == lng}>
+								<Controller
+									name={`lang.${lng}.title`}
+									control={control}
+									rules={{ required: true }}
+									defaultValue={detailData.lang[lng].title}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__title`}
+												label={`${lng.toUpperCase()} ${t('form:input.title')}`}
+												responsiveWidth={'75%'}
+												dataTestId={`${formOptions.id}.input.${lng}.title`}
+												required
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.description`}
+									control={control}
+									rules={{ required: true }}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Input.Text
+												onChange={onChange}
+												onBlur={onBlur}
+												value={value}
+												name={name}
+												id={`${formOptions.id}__${lng}__description`}
+												label={`${lng.toUpperCase()} ${t(
+													'form:input.description',
+												)}`}
+												dataTestId={`${formOptions.id}.input.${lng}.description`}
+												required
+												multiline
+												rows={5}
+											/>
+										</Form.Row>
+									)}
+								/>
+							</Section>
+						);
+					})}
+					{/*  ============ \\ Language part section ============ */}
+				</Section>
+				<Section>
+					<Controller
+						name={`categories`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Categories
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__categories`}
+									label={`${t('form:input.categories')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.categories`}
+									multiple
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name={`tags`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Tags
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__tags`}
+									label={`${t('form:input.tags')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.tags`}
+									multiple
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section>
+					<Controller
+						name={`manager`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Users
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__manager`}
+									label={`${t('form:input.product_manager')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.manager`}
+									ignoreRedactor
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name={`related`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Products
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__related`}
+									label={`${t('form:input.related_products')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.related`}
+									multiple
+									ignored={[detailData.id]}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section title={t('form:section.title.details')}>
+					<Controller
+						name="item_price"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_price`}
+									label={t('form:input.price')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_price`}
+									required
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.price}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="item_discount"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_discount`}
+									label={t('form:input.discount')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_discount`}
+									required
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">%</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="item_weight"
+						control={control}
+						rules={{ required: watchType == 'default' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_weight`}
+									label={t('form:input.weight')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_weight`}
+									required={watchType == 'default'}
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.weight}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="item_depth"
+						control={control}
+						rules={{ required: watchType == 'default' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_depth`}
+									label={t('form:input.depth')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_depth`}
+									required={watchType == 'default'}
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.length}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="item_height"
+						control={control}
+						rules={{ required: watchType == 'default' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_height`}
+									label={t('form:input.height')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_height`}
+									required={watchType == 'default'}
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.length}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="item_width"
+						control={control}
+						rules={{ required: watchType == 'default' }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									type="number"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__item_width`}
+									label={t('form:input.width')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.item_width`}
+									required={watchType == 'default'}
+									InputProps={{
+										inputProps: { min: 0 },
+										startAdornment: (
+											<InputAdornment position="start">
+												{t(`units.${DEFAULT_UNITS.length}`)}
+											</InputAdornment>
+										),
+									}}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section title={t('form:section.title.mediaAndAttachments')}>
+					<Controller
+						name="gallery"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									multiple
+									dataTestId={`${formOptions.id}.input.gallery`}
+									label={t('form:input.gallery')}
+									onlyImages
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="attachments"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									multiple
+									dataTestId={`${formOptions.id}.input.attachments`}
+									label={t('form:input.attachments')}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="img_main"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									dataTestId={`${formOptions.id}.input.img_main`}
+									label={t('form:input.img_main')}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="img_thumbnail"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Uploads
+									value={value}
+									onChange={onChange}
+									filenameAsValue
+									onlyImages
+									dataTestId={`${formOptions.id}.input.img_thumbnail`}
+									label={t('form:input.img_thumbnail')}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>
 		</>

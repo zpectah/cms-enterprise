@@ -100,7 +100,7 @@
       "type": ["default"]
     },
     "Products": {
-      "type": ["default"]
+      "type": ["default", "licence", "service"]
     },
     "ProductsOptions": {
       "type": ["default"]

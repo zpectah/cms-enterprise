@@ -46,7 +46,18 @@
     "price": "Cena",
     "tax": "Daň",
     "weight_limit": "Váhový limit",
-    "unit_limit": "Max počet jednotek"
+    "unit_limit": "Max počet jednotek",
+    "is_new": "Novinka",
+    "is_used": "Použité zboží",
+    "is_unboxed": "Vybalené zboží",
+    "product_manager": "Manažer produktu",
+    "related_products": "Související produkty",
+    "discount": "Sleva",
+    "weight": "Hmotnost",
+    "depth": "Hloubka",
+    "height": "Délka",
+    "width": "Šířka",
+    "gallery": "Galerie"
   },
   "label": {
     "no_parent": "Bez rodiče",

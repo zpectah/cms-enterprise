@@ -2,22 +2,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCategories } from '../../hooks/model';
-import PickerBase from './PickerBase';
+import PickerBase, { PickerBaseInitialProps } from './PickerBase';
 
 interface CategoriesPickerProps {
-	value: any;
-	onChange: () => void;
-	responsiveWidth?: string;
-	dataTestId?: string;
-	name?: string;
-	id?: string;
-	label?: string;
 	ignored?: any[];
-	multiple?: boolean;
-	required?: boolean;
 }
 
-const CategoriesPicker = (props: CategoriesPickerProps) => {
+const CategoriesPicker = (
+	props: CategoriesPickerProps & PickerBaseInitialProps,
+) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
 	const { t } = useTranslation(['common', 'form']);
 	const { Categories } = useCategories();
@@ -27,7 +20,7 @@ const CategoriesPicker = (props: CategoriesPickerProps) => {
 		if (!props.multiple)
 			options.push({
 				label: t('form:label.no_selected'),
-				value: '',
+				value: '0',
 				disabled: false,
 			});
 

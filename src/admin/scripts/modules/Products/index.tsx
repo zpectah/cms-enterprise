@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { ProductsItemProps } from '../../types/model';
+import { ProductsItemProps, ProductsItemLangProps } from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -46,6 +46,7 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 		updateProducts,
 		toggleProducts,
 		deleteProducts,
+		reloadProducts,
 		products_loading,
 		products_error,
 	} = useProducts();
@@ -71,14 +72,15 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 
 	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
-		// const detail = getDetailData(id, 'Translations', Translations);
-		// if (id == 'new')
-		// 	detail['lang'] = getLanguagesFields(Settings?.language_active, {
-		// 		value: '',
-		// 	});
+		const detail = getDetailData(id, 'Products', Products);
+		if (id == 'new')
+			detail['lang'] = getLanguagesFields(Settings?.language_active, {
+				title: '',
+				description: '',
+			} as ProductsItemLangProps);
 
 		setDetail(id);
-		setDetailData(getDetailData(id, 'Products', Products));
+		setDetailData(detail);
 
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
@@ -100,12 +102,11 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 	const detailSubmitHandler = (data: ProductsItemProps) => {
 		const master: ProductsItemProps = _.cloneDeep(data);
 		setProcessing(true);
-		console.log('AJAX ... create/save ...', master);
-
+		// reformat data before save
+		master.name = master.name.split(' ').join('-');
 		if (master.id == 'new') {
 			createProducts(master).then((response) => {
-				console.log('create response', response);
-
+				reloadProducts();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -116,8 +117,7 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 			});
 		} else {
 			updateProducts(master).then((response) => {
-				console.log('update response', response);
-
+				reloadProducts();
 				closeDetailHandler();
 				createToasts({
 					title: t('messages:success.itemUpdated', { count: 1 }),
@@ -166,11 +166,8 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
-		console.log('AJAX ... toggle ...', master);
-
 		toggleProducts(master).then((response) => {
-			console.log('toggle response', response);
-
+			reloadProducts();
 			setSelectedItems([]);
 			createToasts({
 				title: t('messages:success.itemUpdated', { count: master.length }),
@@ -186,11 +183,8 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
 			setProcessing(true);
-			console.log('AJAX ... delete ...', master);
-
 			deleteProducts(master).then((response) => {
-				console.log('delete response', response);
-
+				reloadProducts();
 				setSelectedItems([]);
 				closeConfirmHandler();
 				createToasts({

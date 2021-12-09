@@ -2,22 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useTags } from '../../hooks/model';
-import PickerBase from './PickerBase';
+import PickerBase, { PickerBaseInitialProps } from './PickerBase';
 
 interface TagsPickerProps {
-	value: any;
-	onChange: () => void;
-	responsiveWidth?: string;
-	dataTestId?: string;
-	name?: string;
-	id?: string;
-	label?: string;
 	ignored?: any[];
-	multiple?: boolean;
-	required?: boolean;
 }
 
-const TagsPicker = (props: TagsPickerProps) => {
+const TagsPicker = (props: TagsPickerProps & PickerBaseInitialProps) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
 	const { t } = useTranslation(['common', 'form']);
 	const { Tags } = useTags();
@@ -27,7 +18,7 @@ const TagsPicker = (props: TagsPickerProps) => {
 		if (!props.multiple)
 			options.push({
 				label: t('form:label.no_selected'),
-				value: '',
+				value: '0',
 				disabled: false,
 			});
 

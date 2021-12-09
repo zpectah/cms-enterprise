@@ -7,6 +7,8 @@ import AvatarPicker from './AvatarPicker';
 import EmailPicker from './EmailPicker';
 import PhonePicker from './PhonePicker';
 import StringPicker from './StringPicker';
+import ProductsPicker from './ProductsPicker';
+import UsersPicker from './UsersPicker';
 
 export default {
 	Uploads: UploadsPicker,
@@ -18,4 +20,6 @@ export default {
 	Email: EmailPicker,
 	Phone: PhonePicker,
 	String: StringPicker,
+	Products: ProductsPicker,
+	Users: UsersPicker,
 };

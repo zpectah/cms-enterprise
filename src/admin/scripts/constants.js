@@ -13,7 +13,7 @@ export const UI_VIEW_TOLERANCE = 50;
 export const EMAIL_REGEX =
 	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
 export const DEFAULT_UNITS = {
-	price: 'eur',
+	price: 'czk',
 	weight: 'kg',
 	length: 'mm',
 	units: 'pcs',

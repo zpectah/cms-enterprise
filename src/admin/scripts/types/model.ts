@@ -206,8 +206,38 @@ export interface ProducersItemProps extends commonItemProps {
 	img_thumbnail?: string;
 }
 
+export interface ProductsItemLangProps {
+	id?: number | string;
+	title: string;
+	description?: string;
+}
 export interface ProductsItemProps extends commonItemProps {
 	name: string;
+
+	categories?: string[];
+	tags?: string[];
+	item_price: number;
+	item_discount: number;
+	item_weight: number;
+	item_depth: number;
+	item_height: number;
+	item_width: number;
+
+	related: selectedArrayProps;
+	gallery: selectedArrayProps;
+	attachments: selectedArrayProps;
+	img_main?: string;
+	img_thumbnail?: string;
+	rating: number;
+	manager: number;
+
+	is_new: boolean;
+	is_used: boolean;
+	is_unboxed: boolean;
+
+	lang: {
+		[k: string]: ProductsItemLangProps;
+	};
 }
 
 export interface ProductsOptionsItemProps extends commonItemProps {

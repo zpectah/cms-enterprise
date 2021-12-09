@@ -65,8 +65,11 @@
   },
   "units": {
     "eur": "EUR",
+    "czk": "CZK",
     "kg": "Kg",
+    "lbs": "Lbs",
     "pcs": "ks",
-    "mm": "mm"
+    "mm": "mm",
+    "inch": "Inch"
   }
 }

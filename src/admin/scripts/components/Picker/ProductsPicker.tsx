@@ -1,19 +1,19 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useMenuItems } from '../../hooks/model';
+import { useProducts } from '../../hooks/model';
 import PickerBase, { PickerBaseInitialProps } from './PickerBase';
 
-interface MenuItemsPickerProps {
+interface ProductsPickerProps {
 	ignored?: any[];
 }
 
-const MenuItemsPicker = (
-	props: MenuItemsPickerProps & PickerBaseInitialProps,
+const ProductsPicker = (
+	props: ProductsPickerProps & PickerBaseInitialProps,
 ) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
 	const { t } = useTranslation(['common', 'form']);
-	const { MenuItems } = useMenuItems();
+	const { Products } = useProducts();
 
 	const getOptionsList = () => {
 		let options = [];
@@ -24,7 +24,7 @@ const MenuItemsPicker = (
 				disabled: false,
 			});
 
-		MenuItems?.map((item) => {
+		Products?.map((item) => {
 			options.push({
 				label: item.name,
 				value: item.id as string,
@@ -38,11 +38,11 @@ const MenuItemsPicker = (
 	return (
 		<PickerBase
 			items={getOptionsList()}
-			dataTestId={`MenuItemsPicker.${dataTestId}`}
+			dataTestId={`ProductsPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
 			{...rest}
 		/>
 	);
 };
 
-export default MenuItemsPicker;
+export default ProductsPicker;

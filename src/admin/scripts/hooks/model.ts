@@ -235,38 +235,7 @@ export function useProducts() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_products`, get);
 
 	return {
-		Products: [
-			{
-				id: 1,
-				type: `default`,
-				name: `Product 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `Product 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `Product 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `Product 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `Product 5 name`,
-				active: true,
-			},
-		] as ProductsItemProps[],
+		Products: data?.data as ProductsItemProps[],
 		products_loading: !data && !error,
 		products_error: error,
 		reloadProducts: () => mutate(`${api_path_prefix}/get_products`),

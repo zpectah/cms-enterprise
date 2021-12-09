@@ -2,22 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { usePages } from '../../hooks/model';
-import PickerBase from './PickerBase';
+import PickerBase, { PickerBaseInitialProps } from './PickerBase';
 
 interface PagesPickerProps {
-	value: any;
-	onChange: () => void;
-	responsiveWidth?: string;
-	dataTestId?: string;
-	name?: string;
-	id?: string;
-	label?: string;
 	ignored?: any[];
-	multiple?: boolean;
-	required?: boolean;
 }
 
-const PagesPicker = (props: PagesPickerProps) => {
+const PagesPicker = (props: PagesPickerProps & PickerBaseInitialProps) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
 	const { t } = useTranslation(['common', 'form']);
 	const { Pages } = usePages();
@@ -27,7 +18,7 @@ const PagesPicker = (props: PagesPickerProps) => {
 		if (!props.multiple)
 			options.push({
 				label: t('form:label.no_selected'),
-				value: '',
+				value: '0',
 				disabled: false,
 			});
 
