@@ -241,6 +241,8 @@ export interface ProductsItemProps extends commonItemProps {
 	attachments: selectedArrayProps;
 	img_main?: string;
 	img_thumbnail?: string;
+	producers?: any[];
+	distributors?: any[];
 	rating: number;
 	manager: number;
 	is_new: boolean;

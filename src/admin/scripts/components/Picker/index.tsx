@@ -11,6 +11,8 @@ import ProductsPicker from './ProductsPicker';
 import UsersPicker from './UsersPicker';
 import DeliveriesPicker from './DeliveriesPicker';
 import PaymentsPicker from './PaymentsPicker';
+import DistributorsPicker from './DistributorsPicker';
+import ProducersPicker from './ProducersPicker';
 
 export default {
 	Uploads: UploadsPicker,
@@ -26,4 +28,6 @@ export default {
 	Users: UsersPicker,
 	Deliveries: DeliveriesPicker,
 	Payments: PaymentsPicker,
+	Distributors: DistributorsPicker,
+	Producers: ProducersPicker,
 };

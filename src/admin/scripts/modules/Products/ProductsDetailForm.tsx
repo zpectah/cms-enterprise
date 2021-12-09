@@ -401,25 +401,6 @@ const ProductsDetailForm = ({
 				</Section>
 				<Section>
 					<Controller
-						name={`manager`}
-						control={control}
-						rules={{}}
-						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
-								<Picker.Users
-									onChange={onChange}
-									value={value}
-									name={name}
-									id={`${formOptions.id}__manager`}
-									label={`${t('form:input.product_manager')}`}
-									responsiveWidth={'50%'}
-									dataTestId={`${formOptions.id}.input.manager`}
-									ignoreRedactor
-								/>
-							</Form.Row>
-						)}
-					/>
-					<Controller
 						name={`related`}
 						control={control}
 						rules={{}}
@@ -435,6 +416,63 @@ const ProductsDetailForm = ({
 									dataTestId={`${formOptions.id}.input.related`}
 									multiple
 									ignored={[detailData.id]}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name={`producers`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Producers
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__producers`}
+									label={`${t('form:input.producers')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.producers`}
+									multiple
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name={`distributors`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Distributors
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__distributors`}
+									label={`${t('form:input.distributors')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.distributors`}
+									multiple
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name={`manager`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Users
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__manager`}
+									label={`${t('form:input.product_manager')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.manager`}
+									ignoreRedactor
 								/>
 							</Form.Row>
 						)}

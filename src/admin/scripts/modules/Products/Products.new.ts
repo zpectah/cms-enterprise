@@ -17,6 +17,8 @@ export default {
 	attachments: [],
 	img_main: '',
 	img_thumbnail: '',
+	producers: [],
+	distributors: [],
 	rating: 0,
 	manager: 0,
 	is_new: true,

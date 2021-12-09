@@ -62,7 +62,9 @@
     "delivery": "Způsob dopravy",
     "payment": "Způsob platby",
     "order_description": "Poznámka k objednávce",
-    "status": "Stav"
+    "status": "Stav",
+    "producers": "Výrobce",
+    "distributors": "Dodavatel"
   },
   "label": {
     "no_parent": "Bez rodiče",

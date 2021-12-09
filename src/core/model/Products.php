@@ -30,6 +30,8 @@ class Products {
                     );
                 } // Set language object
 
+                $row['producers'] = $row['producers'] == '' ? [] : explode(",", $row['producers']); // Set value as array
+                $row['distributors'] = $row['distributors'] == '' ? [] : explode(",", $row['distributors']); // Set value as array
                 $row['related'] = $row['related'] == '' ? [] : explode(",", $row['related']); // Set value as array
                 $row['gallery'] = $row['gallery'] == '' ? [] : explode(",", $row['gallery']); // Set value as array
                 $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
@@ -69,6 +71,8 @@ class Products {
                     attachments,
                     img_main,
                     img_thumbnail,
+                    producers,
+                    distributors,
                     rating,
                     manager,
                     is_new,
@@ -76,8 +80,8 @@ class Products {
                     is_unboxed,
                     active, 
                     deleted
-                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'ssssiiiiiisssssiiiiiii';
+                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'ssssiiiiiisssssssiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -94,6 +98,8 @@ class Products {
             $data['attachments'] ? implode(",", $data['attachments']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
+            $data['producers'] ? implode(",", $data['producers']) : '',
+            $data['distributors'] ? implode(",", $data['distributors']) : '',
             $data['rating'],
             $data['manager'],
             $data['is_new'],
@@ -151,6 +157,8 @@ class Products {
                     attachments = ?, 
                     img_main = ?, 
                     img_thumbnail = ?, 
+                    producers = ?, 
+                    distributors = ?, 
                     rating = ?, 
                     manager = ?, 
                     is_new = ?, 
@@ -158,7 +166,7 @@ class Products {
                     is_unboxed = ?,                 
                     active = ? 
                 WHERE id = ?');
-        $types = 'ssssiiiiiisssssiiiiiii';
+        $types = 'ssssiiiiiisssssssiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -175,6 +183,8 @@ class Products {
             $data['attachments'] ? implode(",", $data['attachments']) : '',
             $data['img_main'],
             $data['img_thumbnail'],
+            $data['producers'] ? implode(",", $data['producers']) : '',
+            $data['distributors'] ? implode(",", $data['distributors']) : '',
             $data['rating'],
             $data['manager'],
             $data['is_new'],
