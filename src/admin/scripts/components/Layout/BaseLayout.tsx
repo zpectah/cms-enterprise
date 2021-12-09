@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import Container, { ContainerProps } from '@mui/material/Container';
 import { isDesktop } from 'react-device-detect';
@@ -19,8 +20,9 @@ import Footer from './Footer';
 import Sidebar from './Sidebar';
 import ContentHeading from './Content/ContentHeading';
 import ContentTitle from './Content/ContentTitle';
+import { Preloader } from '../ui';
+import { useProfile } from '../../hooks/common';
 import { getElTestAttr } from '../../utils/tests';
-import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div`
 	${layoutOuterWrapper}
@@ -80,7 +82,10 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 	dataTestId = 'layout.base',
 	listIncluded = false,
 }) => {
+	const { Profile } = useProfile();
 	const { sideBarOpen } = useSelector((store: storeProps) => store);
+	const page_ready =
+		pageObject.route.auth == 0 ? true : Profile && pageObject.route.auth > 0;
 
 	return (
 		<>
@@ -89,32 +94,36 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 					{config.project.admin.name} {titleMeta && `| ${titleMeta}`}
 				</title>
 			</Helmet>
-			<Wrapper
-				{...getElTestAttr(dataTestId)}
-				data-layout-page={pageObject.name}
-			>
-				<Sidebar app={pageObject.app} dataTestId={`${dataTestId}.sidebar`} />
-				<WrapperInner sideBarOpen={sideBarOpen}>
-					{isDesktop && <ContentHeading pageObject={pageObject} />}
-					<Container maxWidth={containerMaxWidth}>
-						<ContentOuter>
-							<Content>
-								<ContentInner>
-									{titlePage && (
-										<ContentTitle
-											title={titlePage}
-											listPath={listIncluded && pageObject.route.path}
-										/>
-									)}
-									{children}
-								</ContentInner>
-							</Content>
-						</ContentOuter>
-					</Container>
-					{withFooter && <Footer dataTestId={`${dataTestId}.footer`} />}
-				</WrapperInner>
-				<Header dataTestId={`${dataTestId}.header`} />
-			</Wrapper>
+			{page_ready ? (
+				<Wrapper
+					{...getElTestAttr(dataTestId)}
+					data-layout-page={pageObject.name}
+				>
+					<Sidebar app={pageObject.app} dataTestId={`${dataTestId}.sidebar`} />
+					<WrapperInner sideBarOpen={sideBarOpen}>
+						{isDesktop && <ContentHeading pageObject={pageObject} />}
+						<Container maxWidth={containerMaxWidth}>
+							<ContentOuter>
+								<Content>
+									<ContentInner>
+										{titlePage && (
+											<ContentTitle
+												title={titlePage}
+												listPath={listIncluded && pageObject.route.path}
+											/>
+										)}
+										{children}
+									</ContentInner>
+								</Content>
+							</ContentOuter>
+						</Container>
+						{withFooter && <Footer dataTestId={`${dataTestId}.footer`} />}
+					</WrapperInner>
+					<Header dataTestId={`${dataTestId}.header`} />
+				</Wrapper>
+			) : (
+				<Preloader.Page />
+			)}
 		</>
 	);
 };
