@@ -5,7 +5,7 @@ import palette from './palette';
 export default createTheme({
 	palette: {
 		primary: {
-			main: palette.blue,
+			main: palette.deepPurple,
 			contrastText: palette.white,
 		},
 		secondary: {

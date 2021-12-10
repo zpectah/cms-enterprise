@@ -120,7 +120,8 @@ const ArrayPickerBase = ({
 					<Stack spacing={1} direction="row">
 						{selectedItems.map((item, index) => (
 							<Chip
-								color="secondary"
+								color="info"
+								size="small"
 								label={item}
 								onDelete={() => removeHandler(item)}
 								key={`${type}_${item}_${index}`}

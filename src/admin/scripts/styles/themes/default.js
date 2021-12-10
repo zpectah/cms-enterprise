@@ -4,7 +4,7 @@ export default {
 	palette: {
 		...palette,
 		//
-		primary: palette.indigo,
+		primary: palette.deepPurple,
 	},
 	fontSizeBase: '14px',
 	spacer: '1.5rem',

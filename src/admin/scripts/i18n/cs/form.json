@@ -121,10 +121,10 @@
         "form_email_recipients": "Příjemci e-mailů",
         "web_meta_title": "Titulek webu",
         "web_meta_description": "Popisek webu",
-        "web_meta_robots": "Web meta roboti",
-        "web_meta_keywords": "Klíčová slova webu",
-        "web_mode_maintenance": "V módu údržby",
-        "web_mode_debug": "V debug módu",
+        "web_meta_robots": "Meta roboti",
+        "web_meta_keywords": "Klíčová slova",
+        "web_mode_maintenance": "Mód údržby",
+        "web_mode_debug": "Debug mód",
         "company_name": "Název společnosti",
         "company_description": "Popis společnosti",
         "company_id": "ID společnosti",
@@ -154,7 +154,7 @@
         "title": {
           "company": "Společnost",
           "forms": "Formuláře",
-          "modes": "Módy",
+          "modes": "Stav webu",
           "content": "Obsah"
         }
       }

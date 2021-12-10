@@ -15,6 +15,8 @@ import { cmsSettingsObjectProps } from '../../types/modules';
 import { Button, Form, Input, Section } from '../../components/ui';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
+import LanguageInstaller from './LanguageInstaller';
+import ModuleInstaller from './ModuleInstaller';
 
 interface SettingsFormProps {
 	formData: cmsSettingsObjectProps;
@@ -751,6 +753,9 @@ const SettingsForm = ({
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>
+								<LanguageInstaller />
+							</Section>
+							<Section>
 								<div>language installed</div>
 								<div>language active</div>
 								<div>language default</div>
@@ -764,6 +769,9 @@ const SettingsForm = ({
 							value={panels.modules.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
+							<Section>
+								<ModuleInstaller />
+							</Section>
 							<Section>
 								<div>module crm installed</div>
 								<div>module crm active</div>

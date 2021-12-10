@@ -219,13 +219,10 @@ const PostsModule = ({}: PostsModuleProps) => {
 	};
 
 	const shouldApproveHandler = () => {
-		if (
-			Settings.content_redactor_approval &&
-			Profile.user_level <= USER_LEVEL_NUMS.redactor
-		)
-			return true;
-
-		return false;
+		return (
+			Settings?.content_redactor_approval &&
+			Profile?.user_level <= USER_LEVEL_NUMS.redactor
+		);
 	};
 
 	const toggleDetail = () => {

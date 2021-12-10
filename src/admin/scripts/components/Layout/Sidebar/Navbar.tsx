@@ -31,7 +31,7 @@ const StyledItem = styled(ListItemButton)`
 			position: absolute;
 			top: 0;
 			right: 0;
-			background-color: ${(props) => props.theme.palette.lightBlue};
+			background-color: ${(props) => props.theme.palette.primary};
 		}
 	}
 `;
