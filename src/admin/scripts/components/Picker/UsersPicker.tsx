@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useUsers } from '../../hooks/model';
-import { USER_LEVEL } from '../../constants';
+import { USER_LEVEL_NUMS } from '../../constants';
 import PickerBase, { PickerBaseInitialProps } from './PickerBase';
 
 interface UsersPickerProps {
@@ -27,7 +27,7 @@ const UsersPicker = (props: UsersPickerProps & PickerBaseInitialProps) => {
 				value: item.id as string,
 				disabled:
 					ignored.includes(item.id) ||
-					(ignoreRedactor && item.user_level < USER_LEVEL.chief_redactor.id),
+					(ignoreRedactor && item.user_level < USER_LEVEL_NUMS.chief_redactor),
 			});
 		});
 

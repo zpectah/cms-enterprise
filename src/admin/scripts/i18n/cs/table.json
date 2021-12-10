@@ -11,7 +11,10 @@
   "options": {
     "searchInTable": "Hledat v tabulce",
     "filterByType": "Filtrovat podle typu",
-    "selectedItems": "Vybrané položky"
+    "selectedItems": "Vybrané položky",
+    "rowsPerPage": "Řádků na stránku",
+    "of": "ze",
+    "moreThan": "Více než"
   },
   "message": {
     "itemsLoading": "Načítání položek",

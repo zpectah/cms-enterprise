@@ -12,7 +12,11 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
 import styled from 'styled-components';
 
-import { NAV_ITEMS, ROUTES } from '../../../constants';
+import {
+	NAV_ITEMS,
+	ROUTES,
+	ROUTE_SETTINGS_DEFAULT_PANEL,
+} from '../../../constants';
 import { navItemProps, pageObjectProps } from '../../../types/pages';
 import { useProfile } from '../../../hooks/common';
 import { sidebarToggle } from '../../../store/actions';
@@ -75,7 +79,8 @@ const Navbar = ({ dataTestId = 'navbar.primary', app }: NavbarProps) => {
 	const linkTriggerHandler = (path: string) => {
 		isMobileOnly && dispatch(sidebarToggle(false));
 
-		if (path == ROUTES.app.settings.path) path = path + '/global'; // correct path to settings panels
+		if (path == ROUTES.app.settings.path)
+			path = path + ROUTE_SETTINGS_DEFAULT_PANEL; // correct path to settings panels
 
 		history.push(path);
 	};

@@ -132,12 +132,7 @@ const ProducersDetailForm = ({
 					</ButtonCreate>
 				}
 			>
-				<ModuleLanguageToggle
-					language={lang}
-					languageList={languageList}
-					onChange={(lng) => setLang(lng)}
-					style={{ marginRight: '.75rem' }}
-				/>
+				<></>
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}

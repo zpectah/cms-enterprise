@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, EMAIL_REGEX, USER_LEVEL } from '../../constants';
+import { ROUTES, EMAIL_REGEX, USER_LEVEL_NUMS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { UsersItemProps } from '../../types/model';
 import {
@@ -120,7 +120,7 @@ const UsersDetailForm = ({
 		config.options.model.Users.level.map((type) => {
 			options.push({
 				label: t(`types:${type}`),
-				value: USER_LEVEL[type].id,
+				value: USER_LEVEL_NUMS[type],
 			});
 		});
 

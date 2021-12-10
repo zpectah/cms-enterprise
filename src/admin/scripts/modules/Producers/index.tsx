@@ -95,7 +95,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		const master: ProducersItemProps = _.cloneDeep(data);
 		setProcessing(true);
 		// reformat data before save
-		master.name = master.name.split(' ').join('-');
+		// master.name = master.name.split(' ').join('-');
 		if (master.id == 'new') {
 			createProducers(master).then((response) => {
 				reloadProducers();
@@ -237,6 +237,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							withoutLanguageToggle
 						/>
 					)}
 				</>

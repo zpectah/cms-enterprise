@@ -95,7 +95,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 		const master: DistributorsItemProps = _.cloneDeep(data);
 		setProcessing(true);
 		// reformat data before save
-		master.name = master.name.split(' ').join('-');
+		// master.name = master.name.split(' ').join('-');
 		if (master.id == 'new') {
 			createDistributors(master).then((response) => {
 				reloadDistributors();
@@ -237,6 +237,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							withoutLanguageToggle
 						/>
 					)}
 				</>

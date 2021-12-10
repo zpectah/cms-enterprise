@@ -21,7 +21,7 @@ const HelpModule = ({}: HelpModuleProps) => {
 	const { t } = useTranslation(['common']);
 	const [panel, setPanel] = React.useState('about');
 
-	const panels_list = ['about', 'content', 'modules'];
+	const panels_list = ['common', 'content', 'modules', 'about'];
 	const getPanels = () => {
 		const tmp = {};
 		panels_list.map((panel) => {
@@ -63,12 +63,12 @@ const HelpModule = ({}: HelpModuleProps) => {
 							</TabList>
 						</Box>
 						{/*  ============ Main form panels ============ */}
-						{/*  ===== about ============== */}
+						{/*  ===== common ============== */}
 						<TabPanel
-							value={panels.about.key}
+							value={panels.common.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>Item about</Section>
+							<Section>Item common</Section>
 						</TabPanel>
 						{/*  ===== content ============== */}
 						<TabPanel
@@ -83,6 +83,13 @@ const HelpModule = ({}: HelpModuleProps) => {
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>Item modules</Section>
+						</TabPanel>
+						{/*  ===== about ============== */}
+						<TabPanel
+							value={panels.about.key}
+							style={{ paddingLeft: 0, paddingRight: 0 }}
+						>
+							<Section>Item about</Section>
 						</TabPanel>
 						{/*  ============ \\ Main form panels ============ */}
 					</TabContext>

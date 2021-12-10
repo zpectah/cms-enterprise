@@ -460,13 +460,22 @@ const Table = ({
 				</MuiTable>
 			</TableContainer>
 			<TablePagination
-				rowsPerPageOptions={DATA_TABLE.rowsPerPage}
+				rowsPerPageOptions={[
+					...DATA_TABLE.rowsPerPage,
+					{ value: -1, label: 'All' },
+				]}
 				component="div"
 				count={tableData.length}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				onPageChange={changePageHandler}
 				onRowsPerPageChange={changeRowsPerPageHandler}
+				labelRowsPerPage={t('table:options.rowsPerPage')}
+				labelDisplayedRows={({ from, to, count }) => {
+					return `${from}–${to} ${t('table:options.of')} ${
+						count !== -1 ? count : `${t('table:options.of')} ${to}`
+					}`;
+				}}
 			/>
 		</Box>
 	);

@@ -131,6 +131,7 @@ const SettingsForm = ({
 											label={t('form:form.Settings.input.project_name')}
 											id={`${formOptions.id}__project_name`}
 											errors={[]}
+											required
 										>
 											<Input.Text
 												onChange={onChange}
@@ -160,6 +161,7 @@ const SettingsForm = ({
 											label={t('form:form.Settings.input.company_name')}
 											id={`${formOptions.id}__company_name`}
 											errors={[]}
+											required
 										>
 											<Input.Text
 												onChange={onChange}
@@ -179,7 +181,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_description"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -200,7 +202,6 @@ const SettingsForm = ({
 												)}
 												// responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_description`}
-												required
 												multiline
 												rows={3}
 											/>
@@ -210,7 +211,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_id"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -229,7 +230,6 @@ const SettingsForm = ({
 												placeholder={t('form:form.Settings.input.company_id')}
 												responsiveWidth={'50%'}
 												dataTestId={`${formOptions.id}.input.company_id`}
-												required
 											/>
 										</Form.Row>
 									)}
@@ -237,7 +237,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_address"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -258,7 +258,6 @@ const SettingsForm = ({
 												)}
 												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_address`}
-												required
 											/>
 										</Form.Row>
 									)}
@@ -266,7 +265,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_city"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -285,7 +284,6 @@ const SettingsForm = ({
 												placeholder={t('form:form.Settings.input.company_city')}
 												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_city`}
-												required
 											/>
 										</Form.Row>
 									)}
@@ -293,7 +291,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_country"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -314,7 +312,6 @@ const SettingsForm = ({
 												)}
 												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_country`}
-												required
 											/>
 										</Form.Row>
 									)}
@@ -322,7 +319,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_zip"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -341,7 +338,6 @@ const SettingsForm = ({
 												placeholder={t('form:form.Settings.input.company_zip')}
 												responsiveWidth={'35%'}
 												dataTestId={`${formOptions.id}.input.company_zip`}
-												required
 											/>
 										</Form.Row>
 									)}
@@ -349,7 +345,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_location"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -370,7 +366,6 @@ const SettingsForm = ({
 												)}
 												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_location`}
-												required
 											/>
 										</Form.Row>
 									)}
@@ -418,7 +413,7 @@ const SettingsForm = ({
 								<Controller
 									name="company_bank"
 									control={control}
-									rules={{ required: true }}
+									rules={{}}
 									render={({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
@@ -435,7 +430,6 @@ const SettingsForm = ({
 												id={`${formOptions.id}__company_bank`}
 												placeholder={t('form:form.Settings.input.company_bank')}
 												dataTestId={`${formOptions.id}.input.company_bank`}
-												required
 												multiline
 												rows={3}
 											/>
@@ -461,6 +455,7 @@ const SettingsForm = ({
 											label={t('form:form.Settings.input.web_meta_title')}
 											id={`${formOptions.id}__web_meta_title`}
 											errors={[]}
+											required
 										>
 											<Input.Text
 												onChange={onChange}
@@ -490,6 +485,7 @@ const SettingsForm = ({
 											label={t('form:form.Settings.input.web_meta_description')}
 											id={`${formOptions.id}__project_name`}
 											errors={[]}
+											required
 										>
 											<Input.Text
 												onChange={onChange}
@@ -521,6 +517,7 @@ const SettingsForm = ({
 											label={t('form:form.Settings.input.web_meta_robots')}
 											id={`${formOptions.id}__web_meta_robots`}
 											errors={[]}
+											required
 										>
 											<Input.Select
 												id={`${formOptions.id}__web_meta_robots`}
@@ -548,6 +545,7 @@ const SettingsForm = ({
 											label={t('form:form.Settings.input.web_meta_keywords')}
 											id={`${formOptions.id}__web_meta_keywords`}
 											errors={[]}
+											required
 										>
 											<Picker.String
 												value={value}
@@ -622,6 +620,7 @@ const SettingsForm = ({
 											label={t('form:form.Settings.input.form_email_sender')}
 											id={`${formOptions.id}__form_email_sender`}
 											errors={[]}
+											required
 										>
 											<Input.Text
 												type="email"
@@ -654,6 +653,7 @@ const SettingsForm = ({
 											)}
 											id={`${formOptions.id}__form_email_recipients`}
 											errors={[]}
+											required
 										>
 											<Picker.Email
 												value={value}

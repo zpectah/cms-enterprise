@@ -25,7 +25,7 @@
   "new": {
     "Categories": "Nová kategorie",
     "Menu": "Nové menu",
-    "MenuItems": "Nová menu položka",
+    "MenuItems": "Nová položka menu",
     "Pages": "Nová stránka",
     "Posts": "Nový post",
     "Tags": "Nový tag",
@@ -61,7 +61,8 @@
     "modules": "Moduly",
     "about": "O systému",
     "language": "Jazyky",
-    "web": "Web"
+    "web": "Web",
+    "common": "Obecné"
   },
   "units": {
     "eur": "EUR",

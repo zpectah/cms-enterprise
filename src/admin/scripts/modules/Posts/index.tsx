@@ -9,7 +9,7 @@ import {
 	ROUTES,
 	ROUTE_SUFFIX,
 	TOASTS_TIMEOUT_DEFAULT,
-	USER_LEVEL,
+	USER_LEVEL_NUMS,
 } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
 import { PostsItemProps, PostsItemLangProps } from '../../types/model';
@@ -221,7 +221,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 	const shouldApproveHandler = () => {
 		if (
 			Settings.content_redactor_approval &&
-			Profile.user_level <= USER_LEVEL.redactor.id
+			Profile.user_level <= USER_LEVEL_NUMS.redactor
 		)
 			return true;
 

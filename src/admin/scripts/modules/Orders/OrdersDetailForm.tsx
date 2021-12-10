@@ -3,12 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import {
-	ROUTES,
-	ROUTE_SUFFIX,
-	ORDER_STATUS_NUMS,
-	USER_LEVEL_NUMS,
-} from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, ORDER_STATUS_NUMS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { OrdersItemProps } from '../../types/model';
 import {
@@ -25,7 +20,6 @@ import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
 import OrderItemsManager from './OrderItemsManager';
-import _ from 'lodash';
 
 interface OrdersDetailFormProps {
 	detailData: OrdersItemProps;

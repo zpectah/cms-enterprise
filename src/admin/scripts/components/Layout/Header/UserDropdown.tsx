@@ -10,7 +10,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { ROUTES } from '../../../constants';
+import { ROUTES, ROUTE_HELP_DEFAULT_PANEL } from '../../../constants';
 import { Avatar, ConfirmDialog } from '../../ui';
 import { useProfile } from '../../../hooks/common';
 import media from '../../../styles/responsive';
@@ -40,7 +40,8 @@ const UserDropdown = ({ dataTestId = 'user.dropdown' }: UserDropdownProps) => {
 		setAnchorEl(event.currentTarget);
 	const dropdownCloseHandler = () => setAnchorEl(null);
 	const profileClickHandler = () => history.push(ROUTES.app.profile.path);
-	const helpClickHandler = () => history.push(ROUTES.app.help.path + '/about');
+	const helpClickHandler = () =>
+		history.push(ROUTES.app.help.path + ROUTE_HELP_DEFAULT_PANEL);
 	const logoutClickHandler = () => setConfirmDialog(true);
 	const logoutConfirmHandler = () => {
 		userLogout().then(() => {
