@@ -1,7 +1,8 @@
 import React from 'react';
+import Skeleton from '@mui/material/Skeleton';
 import { useTranslation } from 'react-i18next';
 
-import { Input, Preloader } from '../ui';
+import { Input } from '../ui';
 
 export interface PickerBaseInitialProps {
 	value: any;
@@ -61,7 +62,7 @@ const PickerBase = ({
 					disabled={disabled || items.length == 0}
 				/>
 			) : (
-				<Preloader.Block />
+				<Skeleton animation="wave" width={'50%'} />
 			)}
 		</>
 	);

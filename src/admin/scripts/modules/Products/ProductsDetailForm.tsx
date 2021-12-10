@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import InputAdornment from '@mui/material/InputAdornment';
 
 import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX, DEFAULT_UNITS } from '../../constants';
@@ -19,7 +20,7 @@ import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
-import InputAdornment from '@mui/material/InputAdornment';
+import ProductsOptionsManager from './ProductsOptionsManager';
 
 interface ProductsDetailFormProps {
 	detailData: ProductsItemProps;
@@ -277,6 +278,7 @@ const ProductsDetailForm = ({
 				{/*  ============ Main form body ============ */}
 				<div>
 					<input type="hidden" {...register('id', { required: true })} />
+					<input type="hidden" {...register('options', {})} />
 				</div>
 				<Section>
 					<Controller
@@ -652,6 +654,20 @@ const ProductsDetailForm = ({
 						)}
 					/>
 				</Section>
+				{/*
+				<Section title={'Products options'}>
+					<Controller
+						name="options"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<ProductsOptionsManager value={value} onChange={onChange} />
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				*/}
 				<Section title={t('form:section.title.mediaAndAttachments')}>
 					<Controller
 						name="gallery"

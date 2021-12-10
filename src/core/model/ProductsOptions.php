@@ -6,7 +6,6 @@ class ProductsOptions {
 
     public function get ($conn, $data, $params, $languages): array {
         $response = [];
-        $utils = new \Utils;
 
         // prepare
         $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM products_options WHERE deleted = ?');
@@ -22,14 +21,6 @@ class ProductsOptions {
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                foreach ($languages as $lang) {
-                    $row['lang'][$lang] = $utils -> get_language_row(
-                        $conn,
-                        $row['id'],
-                        'SELECT * FROM products_options__' . $lang . ' WHERE id = ?'
-                    );
-                } // Set language object
-
                 $row['active'] = $row['active'] == 1; // Set value as boolean
                 unset($row['deleted']); // Unset deleted attribute
 
@@ -45,12 +36,11 @@ class ProductsOptions {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO products_options (name, type, value, active, deleted) VALUES (?,?,?,?,?)');
-        $types = 'sssii';
+        $query = ('INSERT INTO products_options (name, type, active, deleted) VALUES (?,?,?,?)');
+        $types = 'ssii';
         $args = [
             $data['name'],
             $data['type'],
-            $data['value'],
             $data['active'],
             0
         ];
@@ -63,18 +53,6 @@ class ProductsOptions {
             $stmt -> bind_param($types, ...$args);
             $stmt -> execute();
             $response['id'] = $stmt -> insert_id;
-            foreach ($languages as $lang) {
-                $response['lang'][] = $utils -> update_language_row(
-                    $conn,
-                    $lang,
-                    'INSERT INTO products_options__' . $lang . ' (id, label) VALUES (?,?)',
-                    'is',
-                    [
-                        $response['id'],
-                        $data['lang'][$lang]['label']
-                    ]
-                );
-            }
             $stmt -> close();
         }
 
@@ -86,12 +64,11 @@ class ProductsOptions {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE products_options SET name = ?, type = ?, value = ?, active = ? WHERE id = ?');
-        $types = 'sssii';
+        $query = ('UPDATE products_options SET name = ?, type = ?, active = ? WHERE id = ?');
+        $types = 'ssii';
         $args = [
             $data['name'],
             $data['type'],
-            $data['value'],
             $data['active'],
             $data['id']
         ];
@@ -104,18 +81,6 @@ class ProductsOptions {
             $stmt -> bind_param($types, ...$args);
             $stmt -> execute();
             $response['rows'] = $stmt -> affected_rows;
-            foreach ($languages as $lang) {
-                $response['lang'][] = $utils -> update_language_row(
-                    $conn,
-                    $lang,
-                    'UPDATE products_options__' . $lang . ' SET label = ? WHERE id = ?',
-                    'si',
-                    [
-                        $data['lang'][$lang]['label'],
-                        $data['lang'][$lang]['id']
-                    ]
-                );
-            }
             $stmt -> close();
         }
 
