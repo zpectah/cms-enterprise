@@ -16,5 +16,15 @@
   },
   "UploadsPicker": {
     "title": "vyberte soubory"
+  },
+  "OrderItemsManager": {
+    "label": {
+      "rows": "Řádků",
+      "items": "Položek",
+      "price": "Celková cena"
+    },
+    "title": {
+      "no_items_created": "Nebyly vytvořeny žádné položky"
+    }
   }
 }

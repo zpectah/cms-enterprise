@@ -25,6 +25,7 @@ import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
 import OrderItemsManager from './OrderItemsManager';
+import _ from 'lodash';
 
 interface OrdersDetailFormProps {
 	detailData: OrdersItemProps;
@@ -58,12 +59,13 @@ const OrdersDetailForm = ({
 		route: ROUTES.market.orders,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
-		mode: 'all',
-		defaultValues: {
-			...detailData,
-		},
-	});
+	const { control, handleSubmit, reset, register, formState, setValue } =
+		useForm({
+			mode: 'all',
+			defaultValues: {
+				...detailData,
+			},
+		});
 	const { isDirty, isValid } = formState;
 
 	const submitHandler = (data: OrdersItemProps, e: any) => onSubmit(data, e);
@@ -152,12 +154,7 @@ const OrdersDetailForm = ({
 					</ButtonCreate>
 				}
 			>
-				<ModuleLanguageToggle
-					language={lang}
-					languageList={languageList}
-					onChange={(lng) => setLang(lng)}
-					style={{ marginRight: '.75rem' }}
-				/>
+				<></>
 			</ModuleViewHeading>
 			<Form.Layout
 				formName={formOptions.id}
@@ -219,6 +216,7 @@ const OrdersDetailForm = ({
 				<div>
 					<input type="hidden" {...register('id', { required: true })} />
 					<input type="hidden" {...register('name', {})} />
+					<input type="hidden" {...register('price_total', {})} />
 				</div>
 				<Section>
 					<Controller
@@ -399,18 +397,6 @@ const OrdersDetailForm = ({
 				</Section>
 				<Section>
 					<Controller
-						name={`items`}
-						control={control}
-						rules={{}}
-						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
-								<OrderItemsManager onChange={onChange} value={value} />
-							</Form.Row>
-						)}
-					/>
-				</Section>
-				<Section>
-					<Controller
 						name="description"
 						control={control}
 						rules={{}}
@@ -426,6 +412,25 @@ const OrdersDetailForm = ({
 									dataTestId={`${formOptions.id}.input.description`}
 									multiline
 									rows={4}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section title={t('form:section.title.products')}>
+					<Controller
+						name={`items`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<OrderItemsManager
+									onChange={onChange}
+									value={value}
+									updateDisabled={detailData.status !== 1}
+									onPriceChange={(price) =>
+										detailData.status == 1 && setValue('price_total', price)
+									}
 								/>
 							</Form.Row>
 						)}

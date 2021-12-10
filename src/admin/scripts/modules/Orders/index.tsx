@@ -108,6 +108,10 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 				setProcessing(false);
 			});
 		} else {
+			if (master.status !== 1) {
+				master.items = detailData.items;
+				master.price_total = detailData.price_total;
+			}
 			updateOrders(master).then((response) => {
 				reloadOrders();
 				closeDetailHandler();
@@ -237,6 +241,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							withoutLanguageToggle
 							//
 							customActionTriggers={[
 								{
