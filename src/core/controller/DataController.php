@@ -622,6 +622,51 @@ class DataController {
         return $response;
     }
 
+    public function confirm ($model, $data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $response = [
+            'status' => 'ok',
+            'data' => [], // data -> [id]
+        ];
+
+        // Model
+        $Orders = new Orders;
+
+        switch ($model) {
+
+            case 'Orders':
+                $response['data'] = $Orders -> confirm($conn, $data);
+                break;
+
+        }
+
+        $conn -> close();
+
+        return $response;
+    }
+
+    public function cancel ($model, $data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $response = [
+            'status' => 'ok',
+            'data' => [], // data -> [id]
+        ];
+
+        // Model
+        $Orders = new Orders;
+
+        switch ($model) {
+
+            case 'Orders':
+                $response['data'] = $Orders -> cancel($conn, $data);
+                break;
+
+        }
+
+        $conn -> close();
+
+        return $response;
+    }
 
     /********** System **********/
     public function create_log ($data) {

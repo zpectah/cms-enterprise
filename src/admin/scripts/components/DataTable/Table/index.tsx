@@ -23,7 +23,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import styled from 'styled-components';
 
-import { DATA_TABLE, FORM_INPUT_MIN_LENGTH } from '../../../constants';
+import {
+	DATA_TABLE,
+	FORM_INPUT_MIN_LENGTH,
+	ORDER_STATUS_NUMS,
+} from '../../../constants';
 import { getComparator, stableSort } from '../../../utils/table';
 import {
 	cellsTypesProps,
@@ -321,6 +325,27 @@ const Table = ({
 
 		// --
 
+		if (tableCells.order_status)
+			cells.push({
+				key: 'status',
+				padding: 'none',
+				align: tableCells.order_status[0],
+				width: tableCells.order_status[1],
+				numeric: true,
+				children: (
+					<div>
+						<Chip
+							label={t(`status.${ORDER_STATUS_NUMS[row.status]}`)}
+							color={
+								row.status == 2 ? 'success' : row.status == 0 ? 'error' : 'info'
+							}
+							variant="outlined"
+							size="small"
+						/>
+					</div>
+				),
+			});
+
 		if (tableCells.active)
 			cells.push({
 				key: 'active',
@@ -345,6 +370,19 @@ const Table = ({
 		return cells;
 	};
 
+	const cellTypes: string[] = [
+		'name',
+		'email',
+		'file_name',
+		'type',
+		'order_status',
+		'active',
+
+		// ****
+		// TODO: new cells
+		// ***
+	];
+
 	const getCellsInRow = useCallback(() => {
 		const cells = [] as string[];
 
@@ -352,6 +390,7 @@ const Table = ({
 		if (tableCells.email) cells.push('email');
 		if (tableCells.file_name) cells.push('file_name');
 		if (tableCells.type) cells.push('type');
+		if (tableCells.order_status) cells.push('order_status');
 		if (tableCells.active) cells.push('active');
 
 		// ****
@@ -381,6 +420,7 @@ const Table = ({
 						onRequestSort={sortRequestHandler}
 						rowCount={tableData.length}
 						tableCells={tableCells}
+						cellTypes={cellTypes}
 					/>
 					<TableBody>
 						{stableSort(tableData, getComparator(order, orderBy))
@@ -460,10 +500,7 @@ const Table = ({
 				</MuiTable>
 			</TableContainer>
 			<TablePagination
-				rowsPerPageOptions={[
-					...DATA_TABLE.rowsPerPage,
-					{ value: -1, label: 'All' },
-				]}
+				rowsPerPageOptions={DATA_TABLE.rowsPerPage}
 				component="div"
 				count={tableData.length}
 				rowsPerPage={rowsPerPage}

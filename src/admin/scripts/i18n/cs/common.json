@@ -20,7 +20,9 @@
     "clearQueue": "Smazat frontu",
     "submitQueue": "Nahrát frontu",
     "close": "Zavřít",
-    "open": "Otevřít"
+    "open": "Otevřít",
+    "cancelOrder": "Zrušit objednávku",
+    "confirmOrder": "Potvrdit objednávku"
   },
   "new": {
     "Categories": "Nová kategorie",
@@ -76,7 +78,7 @@
   "status": {
     "canceled": "Zrušeno",
     "created": "Vytvořeno",
-    "settled": "Vyřízeno",
+    "confirmed": "Potvrzeno",
     "deleted": "Smazáno"
   }
 }

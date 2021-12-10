@@ -6,7 +6,8 @@
     "type": "Typ",
     "active": "Aktivní",
     "actions": "Akce",
-    "file_name": "Název souboru"
+    "file_name": "Název souboru",
+    "order_status": "Stav objednávky"
   },
   "options": {
     "searchInTable": "Hledat v tabulce",

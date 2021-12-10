@@ -32,7 +32,7 @@ export const USER_LEVEL_NUMS = {
 export const ORDER_STATUS_NUMS = {
 	0: 'canceled',
 	1: 'created',
-	2: 'settled',
+	2: 'confirmed',
 	3: 'deleted',
 };
 export const IMAGE_CROP_OPTIONS = [

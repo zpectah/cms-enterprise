@@ -410,6 +410,10 @@ export function useOrders() {
 			post(`${api_path_prefix}/update_orders`, data),
 		toggleOrders: (data: (number | string)[]) =>
 			post(`${api_path_prefix}/toggle_orders`, data),
+		confirmOrders: (data: (number | string)[]) =>
+			post(`${api_path_prefix}/confirm_orders`, data),
+		cancelOrders: (data: (number | string)[]) =>
+			post(`${api_path_prefix}/cancel_orders`, data),
 		deleteOrders: (data: (number | string)[]) =>
 			post(`${api_path_prefix}/delete_orders`, data),
 	};

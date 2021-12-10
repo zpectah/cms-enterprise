@@ -34,6 +34,7 @@ interface TableHeaderProps {
 	orderBy: any; // TODO
 	rowCount: number;
 	tableCells: cellsTypesProps;
+	cellTypes: string[];
 }
 
 const TableHeader = ({
@@ -44,21 +45,10 @@ const TableHeader = ({
 	rowCount,
 	onRequestSort,
 	tableCells,
+	cellTypes,
 }: TableHeaderProps) => {
 	const { t } = useTranslation(['common', 'components', 'table']);
 	const getHeadCells = () => {
-		const cellTypes: string[] = [
-			// !!! Keep same order as getBodyCells(row) in Table/index.ts !!!
-			'name',
-			'email',
-			'file_name',
-			'type',
-			'active',
-
-			// ****
-			// TODO: new cells
-			// ***
-		];
 		const cells = [] as tableHeaderCellItemProps[];
 		cellTypes.map((type) => {
 			if (tableCells[type])

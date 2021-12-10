@@ -7,9 +7,12 @@ class ApiRequest {
         $request_token = $_SERVER['HTTP_X_APP_TOKEN'];
         $user_token = $as -> get_user_token();
 
-        // TODO - for web purpose should create another token
+        $is_valid = ($request_token !== '' && $request_token == $user_token);
 
-        return ($request_token !== '' && $request_token == $user_token);
+        // TODO
+        // For web purpose should create another token
+
+        return $is_valid;
     }
 
     public function getResponse () {
@@ -383,6 +386,22 @@ class ApiRequest {
                     }
                     break;
 
+                case 'confirm_orders':
+                    if ($request_is_authorized) {
+                        $response = $dc -> confirm('Orders', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'cancel_orders':
+                    if ($request_is_authorized) {
+                        $response = $dc -> cancel('Orders', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
                 /********** Pages (*) **********/
                 case 'get_pages':
                     $response = $dc -> get('Pages', $request_data, $params);
@@ -420,7 +439,7 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Payments **********/
+                /********** Payments (*) **********/
                 case 'get_payments':
                     $response = $dc -> get('Payments', $request_data, $params);
                     break;
@@ -531,7 +550,7 @@ class ApiRequest {
                     }
                     break;
 
-                /********** Products **********/
+                /********** Products (*) **********/
                 case 'get_products':
                     $response = $dc -> get('Products', $request_data, $params);
                     break;
@@ -796,6 +815,11 @@ class ApiRequest {
 
             }
         }
+
+        /** LEGEND
+         - (*) Partial or base authorization
+         - (**) Full authorization
+        **/
 
         return $response;
     }

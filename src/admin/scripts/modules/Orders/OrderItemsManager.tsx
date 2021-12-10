@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import { DEFAULT_UNITS } from '../../constants';
 import { useProducts } from '../../hooks/model';
@@ -13,6 +14,20 @@ import { Form, Input, Button } from '../../components/ui';
 import Picker from '../../components/Picker';
 import { getElTestAttr } from '../../utils/tests';
 import InputAdornment from '@mui/material/InputAdornment';
+
+const StyledTotalPrice = styled.div`
+	font-size: 2rem;
+	font-weight: 700;
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	line-height: 1;
+
+	& > span {
+		margin-left: 0.5rem;
+		font-size: 1.25rem;
+	}
+`;
 
 interface OrderItemsManagerProps {
 	value: string[]; // model: [1:1,2:1] -> [id:amount]
@@ -144,21 +159,17 @@ const OrderItemsManager = ({
 						onChange={onAmountChange}
 						value={item.amount}
 						disabled={item.product_id == 0 || updateDisabled}
-						style={{ width: '75px', flex: 'none' }}
+						style={{ width: '80px', flex: 'none' }}
 						InputProps={{
 							inputProps: { min: 0 },
-							startAdornment: (
-								<InputAdornment position="start">
-									{t(`units.${DEFAULT_UNITS.units}`)}
-								</InputAdornment>
-							),
+							endAdornment: <InputAdornment position="end">⨯</InputAdornment>,
 						}}
 					/>
 					<Input.Text
 						type="number"
 						id={`item_${item.id}_${index}_price`}
 						value={item.price}
-						style={{ width: '100px', flex: 'none' }}
+						style={{ width: '125px', flex: 'none' }}
 						readOnly
 						disabled
 					/>
@@ -190,7 +201,7 @@ const OrderItemsManager = ({
 							}`,
 						)}
 					>
-						{item.id == 'new' ? <AddCircleIcon /> : <RemoveCircleIcon />}
+						{item.id == 'new' ? <AddCircleIcon /> : <CancelIcon />}
 					</IconButton>
 				</Stack>
 			</div>
@@ -270,11 +281,19 @@ const OrderItemsManager = ({
 			<div style={{ marginBottom: '.75rem' }} />
 			<Divider />
 			<div style={{ marginTop: '.75rem' }}>
-				{t('components:OrderItemsManager.label.rows')}:{' '}
-				<b>{tmpSelected.length}</b> |{' '}
-				{t('components:OrderItemsManager.label.items')}: <b>{totalItems}</b> |{' '}
-				{t('components:OrderItemsManager.label.price')}: <b>{totalPrice}</b>{' '}
-				{t(`units.${DEFAULT_UNITS.price}`)}
+				<Stack spacing={2} direction="row" justifyContent="space-between">
+					<div>
+						{t('components:OrderItemsManager.label.rows')}:{' '}
+						<b>{tmpSelected.length}</b> |{' '}
+						{t('components:OrderItemsManager.label.items')}: <b>{totalItems}</b>
+					</div>
+					<Stack spacing={2} direction="row" alignItems="top">
+						<span>{t('components:OrderItemsManager.label.price')}</span>
+						<StyledTotalPrice>
+							{totalPrice} <span>{t(`units.${DEFAULT_UNITS.price}`)}</span>
+						</StyledTotalPrice>
+					</Stack>
+				</Stack>
 			</div>
 		</>
 	);

@@ -46,6 +46,8 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		updateOrders,
 		toggleOrders,
 		deleteOrders,
+		confirmOrders,
+		cancelOrders,
 		reloadOrders,
 		orders_loading,
 		orders_error,
@@ -60,9 +62,17 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			tableCells: {
 				name: ['left', 'auto'],
 				type: ['left', '150px'],
-				active: ['right', '125px'],
+				order_status: ['center', '125px'],
 			},
-			tableSearchProps: ['name'],
+			tableSearchProps: [
+				'name',
+				'email',
+				'phone',
+				'customer_name',
+				'country',
+				'city',
+				'address',
+			],
 		},
 	};
 
@@ -96,7 +106,8 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		const master: OrdersItemProps = _.cloneDeep(data);
 		setProcessing(true);
 		if (master.id == 'new') {
-			master.name = new Date().valueOf() + `-${string.getRandom(4)}`;
+			master.name =
+				new Date().valueOf() + `-${string.getRandom(5, 'uppercase')}`;
 			createOrders(master).then((response) => {
 				reloadOrders();
 				closeDetailHandler();
@@ -206,6 +217,36 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		}
 	};
 
+	const confirmOrderHandler = (id: number | string) => {
+		const master: selectedArrayProps = [id];
+		setProcessing(true);
+		confirmOrders(master).then((response) => {
+			reloadOrders();
+			setSelectedItems([]);
+			createToasts({
+				title: t('messages:success.itemUpdated', { count: master.length }),
+				context: 'success',
+				timeout: TOASTS_TIMEOUT_DEFAULT,
+			});
+			setProcessing(false);
+		});
+	};
+
+	const cancelOrderHandler = (id: number | string) => {
+		const master: selectedArrayProps = [id];
+		setProcessing(true);
+		cancelOrders(master).then((response) => {
+			reloadOrders();
+			setSelectedItems([]);
+			createToasts({
+				title: t('messages:success.itemUpdated', { count: master.length }),
+				context: 'success',
+				timeout: TOASTS_TIMEOUT_DEFAULT,
+			});
+			setProcessing(false);
+		});
+	};
+
 	useEffect(() => {
 		if (Orders) toggleDetail();
 	}, [params.id, Orders]);
@@ -242,21 +283,16 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							withoutLanguageToggle
-							//
 							customActionTriggers={[
 								{
-									label: 'Demo custom trigger 2',
-									callback: (id) => {
-										console.log('customActionTriggers 2', id);
-									},
+									label: t('button.confirmOrder'),
+									callback: confirmOrderHandler,
 									disabled: false,
 								},
 								{
-									label: 'Demo custom trigger 3',
-									callback: (id) => {
-										console.log('customActionTriggers 3', id);
-									},
-									disabled: true,
+									label: t('button.cancelOrder'),
+									callback: cancelOrderHandler,
+									disabled: false,
 								},
 							]}
 						/>

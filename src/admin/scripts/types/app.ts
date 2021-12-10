@@ -1,10 +1,8 @@
 import { APP_MODEL_TYPES } from '../constants.ts';
-
 import { routeItemProps } from './pages';
 import { cellsTypesProps } from './table';
 
 export type appModelProps = typeof APP_MODEL_TYPES[number];
-
 export interface moduleObjectProps {
 	model: appModelProps;
 	route: routeItemProps;
@@ -14,14 +12,12 @@ export interface moduleObjectProps {
 		tableSearchProps: string[];
 	};
 }
-
 export interface formLayoutObjectProps {
 	model: appModelProps;
 	id: string;
 	route?: routeItemProps;
 	detailOptions?: {};
 }
-
 export interface utilsDateObjectProps {
 	year: number;
 	month: number;

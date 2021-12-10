@@ -46,6 +46,7 @@ const OrdersDetailForm = ({
 }: OrdersDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
+	const is_closed = detailData.status !== 1;
 
 	const formOptions: formLayoutObjectProps = {
 		model: 'Orders',
@@ -109,10 +110,6 @@ const OrdersDetailForm = ({
 	};
 
 	// Model options list
-	const getTypeOptions = useCallback(
-		() => getOptionsList(config.options.model.Orders.type, t),
-		[detailData],
-	);
 	const getStatusOptions = () => {
 		let options = [];
 
@@ -127,6 +124,10 @@ const OrdersDetailForm = ({
 
 		return options;
 	};
+	const getTypeOptions = useCallback(
+		() => getOptionsList(config.options.model.Orders.type, t),
+		[detailData],
+	);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -175,6 +176,7 @@ const OrdersDetailForm = ({
 											name={name}
 											options={getTypeOptions()}
 											dataTestId={`${formOptions.id}.select.type`}
+											disabled={is_closed}
 										/>
 									</Form.Row>
 								)}
@@ -229,6 +231,7 @@ const OrdersDetailForm = ({
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.customer_name`}
 									required
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -249,6 +252,7 @@ const OrdersDetailForm = ({
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.email`}
 									required
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -268,6 +272,7 @@ const OrdersDetailForm = ({
 									label={t('form:input.phone')}
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.phone`}
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -289,6 +294,7 @@ const OrdersDetailForm = ({
 									label={t('form:input.country')}
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.country`}
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -308,6 +314,7 @@ const OrdersDetailForm = ({
 									label={t('form:input.city')}
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.city`}
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -327,6 +334,7 @@ const OrdersDetailForm = ({
 									label={t('form:input.address')}
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.address`}
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -346,12 +354,13 @@ const OrdersDetailForm = ({
 									label={t('form:input.zip')}
 									responsiveWidth={'35%'}
 									dataTestId={`${formOptions.id}.input.zip`}
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
 					/>
 				</Section>
-				<Section>
+				<Section title={t('form:section.title.details')}>
 					<Controller
 						name={`delivery`}
 						control={control}
@@ -366,6 +375,7 @@ const OrdersDetailForm = ({
 									label={`${t('form:input.delivery')}`}
 									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.delivery`}
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -384,6 +394,7 @@ const OrdersDetailForm = ({
 									label={`${t('form:input.payment')}`}
 									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.payment`}
+									disabled={is_closed}
 								/>
 							</Form.Row>
 						)}
@@ -421,7 +432,7 @@ const OrdersDetailForm = ({
 								<OrderItemsManager
 									onChange={onChange}
 									value={value}
-									updateDisabled={detailData.status !== 1}
+									updateDisabled={is_closed}
 									onPriceChange={(price) =>
 										detailData.status == 1 && setValue('price_total', price)
 									}

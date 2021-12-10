@@ -146,7 +146,27 @@ class Orders {
         $utils = new \Utils;
 
         foreach ($data as $id) {
-            $response[] = $utils -> proceed_update_row('UPDATE orders SET active = IF(status=2, 1, 2) WHERE id = ?', $conn, $id);
+            $response[] = $utils -> proceed_update_row('UPDATE orders SET status = IF(status=2, 1, 2) WHERE id = ?', $conn, $id);
+        }
+
+        return $response; // list of affected ids
+    }
+    public function confirm ($conn, $data) {
+        $response = [];
+        $utils = new \Utils;
+
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE orders SET status = 2 WHERE id = ?', $conn, $id);
+        }
+
+        return $response; // list of affected ids
+    }
+    public function cancel ($conn, $data) {
+        $response = [];
+        $utils = new \Utils;
+
+        foreach ($data as $id) {
+            $response[] = $utils -> proceed_update_row('UPDATE orders SET status = 0 WHERE id = ?', $conn, $id);
         }
 
         return $response; // list of affected ids
