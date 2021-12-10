@@ -104,8 +104,6 @@ class ApiRequest {
                     $response = $dc -> user_create_new_password($request_data);
                     break;
 
-
-
                 /********** CmsRequests **********/
                 case 'get_cms_requests':
                     $response = $dc -> get('CmsRequests', $request_data, $params);

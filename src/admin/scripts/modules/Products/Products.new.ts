@@ -19,6 +19,7 @@ export default {
 	img_thumbnail: '',
 	producers: [],
 	distributors: [],
+	options: [],
 	rating: 0,
 	manager: 0,
 	is_new: true,

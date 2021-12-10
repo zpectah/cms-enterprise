@@ -196,7 +196,7 @@ export interface OrdersItemProps {
 	delivery: string;
 	payment: string;
 	description: string;
-	items: any[]; // TODO
+	items: string[];
 	price_total: number;
 	status: number;
 }
@@ -241,8 +241,9 @@ export interface ProductsItemProps extends commonItemProps {
 	attachments: selectedArrayProps;
 	img_main?: string;
 	img_thumbnail?: string;
-	producers?: any[];
-	distributors?: any[];
+	producers?: selectedArrayProps;
+	distributors?: selectedArrayProps;
+	options?: selectedArrayProps;
 	rating: number;
 	manager: number;
 	is_new: boolean;
@@ -253,8 +254,16 @@ export interface ProductsItemProps extends commonItemProps {
 	};
 }
 
+export interface ProductsOptionsItemLangProps {
+	id?: number | string;
+	label: string;
+}
 export interface ProductsOptionsItemProps extends commonItemProps {
 	name: string;
+	value: string;
+	lang: {
+		[k: string]: ProductsOptionsItemLangProps;
+	};
 }
 
 export interface StoresItemLangProps {
@@ -279,6 +288,15 @@ export interface StoresItemProps extends commonItemProps {
 	};
 }
 
+export interface CmsRequestsItemProps {
+	id: number;
+	type: string;
+	context: string;
+	value: string;
+	token: string;
+	status: number;
+}
+
 export type oneOfModelItemProps =
 	| CategoriesItemProps
 	| MenuItemProps
@@ -296,12 +314,3 @@ export type oneOfModelItemProps =
 	| ProducersItemProps
 	| ProductsItemProps
 	| StoresItemProps;
-
-export interface CmsRequestsItemProps {
-	id: number;
-	type: string;
-	context: string;
-	value: string;
-	token: string;
-	status: number;
-}

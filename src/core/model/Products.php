@@ -37,6 +37,7 @@ class Products {
                 $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
                 $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
                 $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
+                $row['options'] = $row['options'] == '' ? [] : explode(",", $row['options']); // Set value as array
                 $row['is_new'] = $row['is_new'] == 1; // Set value as boolean
                 $row['is_used'] = $row['is_used'] == 1; // Set value as boolean
                 $row['is_unboxed'] = $row['is_unboxed'] == 1; // Set value as boolean
@@ -73,6 +74,7 @@ class Products {
                     img_thumbnail,
                     producers,
                     distributors,
+                    options,
                     rating,
                     manager,
                     is_new,
@@ -80,8 +82,8 @@ class Products {
                     is_unboxed,
                     active, 
                     deleted
-                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'ssssiiiiiisssssssiiiiiii';
+                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'ssssiiiiiissssssssiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -100,6 +102,7 @@ class Products {
             $data['img_thumbnail'],
             $data['producers'] ? implode(",", $data['producers']) : '',
             $data['distributors'] ? implode(",", $data['distributors']) : '',
+            $data['options'] ? implode(",", $data['options']) : '',
             $data['rating'],
             $data['manager'],
             $data['is_new'],
@@ -159,6 +162,7 @@ class Products {
                     img_thumbnail = ?, 
                     producers = ?, 
                     distributors = ?, 
+                    options = ?,
                     rating = ?, 
                     manager = ?, 
                     is_new = ?, 
@@ -166,7 +170,7 @@ class Products {
                     is_unboxed = ?,                 
                     active = ? 
                 WHERE id = ?');
-        $types = 'ssssiiiiiisssssssiiiiiii';
+        $types = 'ssssiiiiiissssssssiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -185,6 +189,7 @@ class Products {
             $data['img_thumbnail'],
             $data['producers'] ? implode(",", $data['producers']) : '',
             $data['distributors'] ? implode(",", $data['distributors']) : '',
+            $data['options'] ? implode(",", $data['options']) : '',
             $data['rating'],
             $data['manager'],
             $data['is_new'],

@@ -254,38 +254,7 @@ export function useProductsOptions() {
 	const { data, error } = useSWR(`${api_path_prefix}/get_productsOptions`, get);
 
 	return {
-		ProductsOptions: [
-			{
-				id: 1,
-				type: `default`,
-				name: `ProductsOption 1 name`,
-				active: true,
-			},
-			{
-				id: 2,
-				type: `default`,
-				name: `ProductsOption 2 name`,
-				active: false,
-			},
-			{
-				id: 3,
-				type: `default`,
-				name: `ProductsOption 3 name`,
-				active: true,
-			},
-			{
-				id: 4,
-				type: `default`,
-				name: `ProductsOption 4 name`,
-				active: true,
-			},
-			{
-				id: 5,
-				type: `default`,
-				name: `ProductsOption 5 name`,
-				active: true,
-			},
-		] as ProductsOptionsItemProps[],
+		ProductsOptions: data?.data as ProductsOptionsItemProps[],
 		productsOptions_loading: !data && !error,
 		productsOptions_error: error,
 		reloadProductsOptions: () =>
