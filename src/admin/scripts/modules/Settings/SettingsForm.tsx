@@ -7,6 +7,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import SendIcon from '@mui/icons-material/Send';
 
 import config from '../../config';
 import { ROUTES, EMAIL_REGEX } from '../../constants';
@@ -56,7 +57,6 @@ const SettingsForm = ({
 	const {
 		control,
 		handleSubmit,
-		reset,
 		register,
 		formState: { isDirty, isValid },
 		setValue,
@@ -66,10 +66,8 @@ const SettingsForm = ({
 			...formData,
 		},
 	});
-	const submitHandler = (data: cmsSettingsObjectProps, e: any) => {
+	const submitHandler = (data: cmsSettingsObjectProps, e: any) =>
 		onSubmit(data, e);
-		// reset();
-	};
 	const errorSubmitHandler = (errors: any, e: any) => onSubmitError(errors, e);
 	const panelChangeHandler = (event: React.SyntheticEvent, panel: string) => {
 		setPanel(panel);
@@ -78,7 +76,12 @@ const SettingsForm = ({
 	const renderFooter = () => {
 		return (
 			<>
-				<Button type="submit" variant="contained" disabled={!isValid}>
+				<Button
+					type="submit"
+					variant="contained"
+					disabled={!isValid}
+					endIcon={<SendIcon style={{ fontSize: '1rem' }} />}
+				>
 					{t('button.update')}
 				</Button>
 			</>

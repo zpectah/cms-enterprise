@@ -54,6 +54,7 @@ require PATH_ROOT . 'core/model/Tags.php';
 require PATH_ROOT . 'core/model/Translations.php';
 require PATH_ROOT . 'core/model/Uploads.php';
 require PATH_ROOT . 'core/model/Users.php';
+require PATH_ROOT . 'core/model/Comments.php';
 
 /*
  * Modules

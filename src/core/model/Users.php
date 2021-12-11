@@ -33,17 +33,13 @@ class Users {
         $rp_withPassword = $data['withPassword'] or $params['withPassword'];
 
         if ($result -> num_rows > 0) {
-            // iterate by params
-            if ($rp_id) {
-                while($row = $result -> fetch_assoc()) {
+            while($row = $result -> fetch_assoc()) {
+                // iterate by params
+                if ($rp_id) {
                     if ($rp_id == $row['id']) $response = self::getUpdatedRow($row, $rp_withPassword);
-                }
-            } else if ($rp_email) {
-                while($row = $result -> fetch_assoc()) {
+                } else if ($rp_email) {
                     if ($rp_email == $row['email']) $response = self::getUpdatedRow($row, $rp_withPassword);
-                }
-            } else {
-                while($row = $result -> fetch_assoc()) {
+                } else {
                     $response[] = self::getUpdatedRow($row, $rp_withPassword);
                 }
             }

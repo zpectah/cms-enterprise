@@ -24,7 +24,7 @@ const ButtonCreate = forwardRef(
 				aria-label={`create new item`}
 				color="success"
 				variant="contained"
-				startIcon={<AddIcon />}
+				startIcon={<AddIcon style={{ fontSize: 'inherit' }} />}
 				{...rest}
 				{...getElTestAttr(dataTestId)}
 			/>

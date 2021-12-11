@@ -21,8 +21,6 @@ class Orders {
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                // $row['active'] = $row['active'] == 1; // Set value as boolean
-                // unset($row['deleted']); // Unset deleted attribute
                 $row['items'] = $row['items'] == '' ? [] : explode(",", $row['items']); // Set value as array
 
                 $response[] = $row;
@@ -151,6 +149,7 @@ class Orders {
 
         return $response; // list of affected ids
     }
+
     public function confirm ($conn, $data) {
         $response = [];
         $utils = new \Utils;
@@ -161,6 +160,7 @@ class Orders {
 
         return $response; // list of affected ids
     }
+
     public function cancel ($conn, $data) {
         $response = [];
         $utils = new \Utils;

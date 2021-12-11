@@ -34,6 +34,6 @@
   "ArrayPickerBase": {
     "new_email": "Zadejte nový e-mail",
     "new_phone": "Zadejte nový telefon",
-    "new_string": "Zadejte nový řetězec"
+    "new_text": "Zadejte nový řetězec"
   }
 }

@@ -4,6 +4,7 @@ namespace controller;
 
 use model\Categories;
 use model\CmsRequests;
+use model\Comments;
 use model\Deliveries;
 use model\Distributors;
 use model\Members;
@@ -55,6 +56,7 @@ class DataController {
         $Products = new Products;
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
+        $Comments = new Comments;
 
         // Additional
         $Settings = new Settings;
@@ -142,6 +144,10 @@ class DataController {
                 $response['data'] = $module_market_installed ? $Stores -> get($conn, $data, $params, $language_active) : [];
                 break;
 
+            case 'Comments':
+                $response['data'] = $module_market_installed ? $Comments -> get($conn, $data, $params, $language_active) : [];
+                break;
+
         }
 
         $conn -> close();
@@ -176,6 +182,7 @@ class DataController {
         $Products = new Products;
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
+        $Comments = new Comments;
 
         // Additional
         $Settings = new Settings;
@@ -263,6 +270,10 @@ class DataController {
                 $response['data'] = $module_market_installed ? $Stores -> create($conn, $data, $language_active) : [];
                 break;
 
+            case 'Comments':
+                $response['data'] = $module_market_installed ? $Comments -> create($conn, $data) : [];
+                break;
+
         }
 
         $conn -> close();
@@ -297,6 +308,7 @@ class DataController {
         $Products = new Products;
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
+        $Comments = new Comments;
 
         // Additional
         $Settings = new Settings;
@@ -384,6 +396,10 @@ class DataController {
                 $response['data'] = $module_market_installed ? $Stores -> update($conn, $data, $language_active) : [];
                 break;
 
+            case 'Comments':
+                $response['data'] = $module_market_installed ? $Comments -> update($conn, $data) : [];
+                break;
+
         }
 
         $conn -> close();
@@ -418,6 +434,7 @@ class DataController {
         $Products = new Products;
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
+        $Comments = new Comments;
 
         switch ($model) {
 
@@ -497,6 +514,10 @@ class DataController {
                 $response['data'] = $Stores -> toggle($conn, $data);
                 break;
 
+            case 'Comments':
+                $response['data'] = $Comments -> toggle($conn, $data);
+                break;
+
         }
 
         $conn -> close();
@@ -531,6 +552,7 @@ class DataController {
         $Products = new Products;
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
+        $Comments = new Comments;
 
         switch ($model) {
 
@@ -610,6 +632,10 @@ class DataController {
                 $response['data'] = $Stores -> delete($conn, $data);
                 break;
 
+            case 'Comments':
+                $response['data'] = $Comments -> delete($conn, $data);
+                break;
+
         }
 
         $conn -> close();
@@ -626,11 +652,16 @@ class DataController {
 
         // Model
         $Orders = new Orders;
+        $Comments = new Comments;
 
         switch ($model) {
 
             case 'Orders':
                 $response['data'] = $Orders -> confirm($conn, $data);
+                break;
+
+            case 'Comments':
+                $response['data'] = $Comments -> confirm($conn, $data);
                 break;
 
         }
@@ -649,11 +680,16 @@ class DataController {
 
         // Model
         $Orders = new Orders;
+        $Comments = new Comments;
 
         switch ($model) {
 
             case 'Orders':
                 $response['data'] = $Orders -> cancel($conn, $data);
+                break;
+
+            case 'Comments':
+                $response['data'] = $Comments -> cancel($conn, $data);
                 break;
 
         }

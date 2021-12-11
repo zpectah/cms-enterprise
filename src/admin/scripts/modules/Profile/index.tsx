@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -14,12 +14,12 @@ interface ProfileModuleProps {}
 const ProfileModule = ({}: ProfileModuleProps) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation(['common', 'messages']);
-	const { Profile, updateProfile } = useProfile();
+	const { Profile, updateProfile, profile_loading } = useProfile();
 	const { createToasts } = useToasts(dispatch);
-
+	const [processing, setProcessing] = useState(false);
 	const formSubmitHandler = (data: UsersItemProps, e: any) => {
 		const master: UsersItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		updateProfile(master).then((response) => {
 			if (response.rows == 1) {
 				createToasts({
@@ -34,6 +34,7 @@ const ProfileModule = ({}: ProfileModuleProps) => {
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
 			}
+			setProcessing(false);
 		});
 	};
 
@@ -56,6 +57,7 @@ const ProfileModule = ({}: ProfileModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={profile_loading || processing} />
 		</>
 	);
 };

@@ -21,6 +21,7 @@ import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
 import DetailFormActions from '../../components/DetailFormActions';
+import CommentsManager from '../../components/CommentsManager';
 
 interface PostsDetailFormProps {
 	detailData: PostsItemProps;
@@ -218,6 +219,9 @@ const PostsDetailForm = ({
 						</Section>
 						{/*  ============ \\ Form sidebar ============ */}
 					</>
+				}
+				outerChildren={
+					<CommentsManager assigned="post" assignedId={detailData.id} />
 				}
 			>
 				{/*  ============ Main form body ============ */}

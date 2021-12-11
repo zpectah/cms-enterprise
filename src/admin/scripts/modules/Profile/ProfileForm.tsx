@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import SendIcon from '@mui/icons-material/Send';
 import { useTranslation } from 'react-i18next';
 
 import { UsersItemProps } from '../../types/model';
@@ -21,26 +22,32 @@ const ProfileForm = ({
 }: ProfileFormProps) => {
 	const { t } = useTranslation(['common', 'form', 'messages']);
 	const [tmpAvatar, setTmpAvatar] = useState<any>(null);
-
 	const formOptions: formLayoutObjectProps = {
 		model: 'Profile',
 		id: 'ProfileForm',
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const {
+		control,
+		handleSubmit,
+		register,
+		formState: { isDirty, isValid },
+	} = useForm({
 		mode: 'all',
 		defaultValues: {
 			...formData,
 		},
 	});
-	const { isDirty, isValid } = formState;
-
 	const submitHandler = (data: any, e: any) => onSubmit(data, e);
 	const errorSubmitHandler = (error: any, e: any) => onSubmitError(error, e);
-
 	const renderFooter = () => {
 		return (
 			<>
-				<Button type="submit" variant="contained" disabled={!isValid}>
+				<Button
+					type="submit"
+					variant="contained"
+					disabled={!isValid}
+					endIcon={<SendIcon style={{ fontSize: '1rem' }} />}
+				>
 					{t('button.update')}
 				</Button>
 			</>

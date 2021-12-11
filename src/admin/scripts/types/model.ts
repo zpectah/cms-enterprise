@@ -297,6 +297,18 @@ export interface CmsRequestsItemProps {
 	status: number;
 }
 
+export interface CommentsItemProps {
+	id: number | string;
+	email?: string;
+	title: string;
+	content: string;
+	assigned?: string;
+	assigned_id?: number;
+	parent?: number;
+	status: number;
+	created?: string; // TODO - date time format
+}
+
 export type oneOfModelItemProps =
 	| CategoriesItemProps
 	| MenuItemProps

@@ -28,7 +28,7 @@ const DetailFormActions = ({
 				variant="contained"
 				disabled={!isValid}
 				dataTestId={`${formId}.button.submit`}
-				endIcon={<SendIcon style={{ fontSize: '16px' }} />}
+				endIcon={<SendIcon style={{ fontSize: '1rem' }} />}
 			>
 				{id == 'new' ? t('button.create') : t('button.update')}
 			</Button>

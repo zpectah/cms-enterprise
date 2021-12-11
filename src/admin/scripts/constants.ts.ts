@@ -15,7 +15,6 @@ export const APP_MODEL_TYPES = [
 	'LostPassword',
 	'NewPassword',
 	'Requests',
-	// TODO
 	'Members',
 	'Deliveries',
 	'Distributors',

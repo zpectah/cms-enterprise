@@ -827,6 +827,59 @@ class ApiRequest {
                     }
                     break;
 
+                /********** Comments (*) **********/
+                case 'get_comments':
+                    $response = $dc -> get('Comments', $request_data, $params);
+                    break;
+
+                case 'create_comments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Comments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_comments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Comments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_comments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Comments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_comments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Comments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'confirm_comments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> confirm('Comments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'cancel_comments':
+                    if ($request_is_authorized) {
+                        $response = $dc -> cancel('Comments', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
             }
         }
 

@@ -22,6 +22,7 @@ import {
 	DistributorsItemProps,
 	DeliveriesItemProps,
 	OrdersItemProps,
+	CommentsItemProps,
 } from '../types/model';
 
 export function useCmsRequests() {
@@ -420,5 +421,31 @@ export function useOrders() {
 			post(`${config.project.api.base}/cancel_orders`, data),
 		deleteOrders: (data: (number | string)[]) =>
 			post(`${config.project.api.base}/delete_orders`, data),
+	};
+}
+
+export function useComments() {
+	const { data, error } = useSWR(
+		`${config.project.api.base}/get_comments`,
+		get,
+	);
+
+	return {
+		Comments: data?.data as CommentsItemProps[],
+		comments_loading: !data && !error,
+		comments_error: error,
+		reloadComments: () => mutate(`${config.project.api.base}/get_comments`),
+		createComments: (data: CommentsItemProps) =>
+			post(`${config.project.api.base}/create_comments`, data),
+		updateComments: (data: CommentsItemProps) =>
+			post(`${config.project.api.base}/update_comments`, data),
+		toggleComments: (data: (number | string)[]) =>
+			post(`${config.project.api.base}/toggle_comments`, data),
+		confirmComments: (data: (number | string)[]) =>
+			post(`${config.project.api.base}/confirm_comments`, data),
+		cancelComments: (data: (number | string)[]) =>
+			post(`${config.project.api.base}/cancel_comments`, data),
+		deleteComments: (data: (number | string)[]) =>
+			post(`${config.project.api.base}/delete_comments`, data),
 	};
 }

@@ -20,6 +20,7 @@ import Picker from '../../components/Picker';
 import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import DetailFormActions from '../../components/DetailFormActions';
+import CommentsManager from '../../components/CommentsManager';
 
 interface CategoriesDetailFormProps {
 	detailData: CategoriesItemProps;
@@ -172,6 +173,9 @@ const CategoriesDetailForm = ({
 						</Section>
 						{/*  ============ \\ Form sidebar ============ */}
 					</>
+				}
+				outerChildren={
+					<CommentsManager assigned="category" assignedId={detailData.id} />
 				}
 			>
 				{/*  ============ Main form body ============ */}
