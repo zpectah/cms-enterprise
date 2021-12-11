@@ -18,6 +18,7 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
+import DetailFormActions from '../../components/DetailFormActions';
 
 interface UsersDetailFormProps {
 	detailData: UsersItemProps;
@@ -44,66 +45,45 @@ const UsersDetailForm = ({
 }: UsersDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
-
 	const formOptions: formLayoutObjectProps = {
 		model: 'Users',
 		id: 'UsersDetailForm',
 		route: ROUTES.app.users,
 		...detailOptions,
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
+	const {
+		control,
+		handleSubmit,
+		reset,
+		register,
+		formState: { isDirty, isValid },
+	} = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 		},
 	});
-	const { isDirty, isValid } = formState;
-
 	const submitHandler = (data: UsersItemProps, e: any) => onSubmit(data, e);
 	const errorSubmitHandler = (errors: any, e: any) => {
 		if (onSubmitError) onSubmitError(errors, e);
 	};
 	const deleteHandler = () => onDelete(detailData.id);
 	const cancelHandler = () => onCancel(isDirty);
-
 	const renderTitle = () => {
 		let title = t('new.Users');
 		if (detailData.id !== 'new') title = detailData.email;
 
 		return title;
 	};
-	const renderFooter = () => {
-		return (
-			<>
-				<Button
-					type="submit"
-					variant="contained"
-					disabled={!isValid}
-					dataTestId={`${formOptions.id}.button.submit`}
-				>
-					{detailData.id == 'new' ? t('button.create') : t('button.update')}
-				</Button>
-				{detailData.id !== 'new' && (
-					<Button
-						variant="outlined"
-						color="error"
-						onClick={deleteHandler}
-						dataTestId={`${formOptions.id}.button.delete`}
-					>
-						{t('button.delete')}
-					</Button>
-				)}
-				<Button
-					variant="outlined"
-					color="secondary"
-					onClick={cancelHandler}
-					dataTestId={`${formOptions.id}.button.return`}
-				>
-					{t('button.return')}
-				</Button>
-			</>
-		);
-	};
+	const renderFooter = () => (
+		<DetailFormActions
+			id={detailData.id}
+			formId={formOptions.id}
+			isValid={isValid}
+			onDelete={deleteHandler}
+			onCancel={cancelHandler}
+		/>
+	);
 
 	// Model options list
 	const getTypeOptions = useCallback(
