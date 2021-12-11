@@ -24,6 +24,8 @@ interface SettingsFormProps {
 	onSubmitError: (error: any, e: any) => void;
 	languageList: string[];
 	languageDefault: string;
+	afterLanguageInstall: (installed: string[]) => void;
+	afterModuleInstall: () => void;
 }
 
 const SettingsForm = ({
@@ -32,6 +34,7 @@ const SettingsForm = ({
 	onSubmitError,
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
+	afterLanguageInstall,
 }: SettingsFormProps) => {
 	const params: any = useParams();
 	const history = useHistory();
@@ -94,6 +97,7 @@ const SettingsForm = ({
 	return (
 		<>
 			<Form.Layout
+				key={`SettingsForm_${formOptions.id}`}
 				formName={formOptions.id}
 				dataTestId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
@@ -753,18 +757,24 @@ const SettingsForm = ({
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>
-								<div>language installed</div>
-								<div>language active</div>
-								<div>language default</div>
+								<div>
+									language installed:{' '}
+									{JSON.stringify(formData.language_installed)}
+								</div>
+								<div>
+									language active: {JSON.stringify(formData.language_active)}
+								</div>
+								<div>
+									language default: {JSON.stringify(formData.language_default)}
+								</div>
 							</Section>
 							<Section
 								title={t('form:form.Settings.section.title.installNewLanguage')}
 							>
 								<LanguageInstaller
 									installedLanguages={formData.language_installed}
-									afterInstall={() => {
-										console.log('LanguageInstaller ...afterInstall');
-									}}
+									defaultLanguage={formData.language_default}
+									afterInstall={afterLanguageInstall}
 								/>
 							</Section>
 						</TabPanel>

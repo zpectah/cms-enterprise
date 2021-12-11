@@ -47,6 +47,8 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 					onSubmitError={formSubmitErrorHandler}
 					languageList={Settings.language_active}
 					languageDefault={Settings.language_default}
+					afterLanguageInstall={(installed) => reloadSettings()}
+					afterModuleInstall={() => reloadSettings()}
 				/>
 			) : (
 				<Preloader.Block />

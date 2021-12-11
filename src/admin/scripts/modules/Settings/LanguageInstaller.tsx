@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import config from '../../config';
 import { Input, Button, Preloader } from '../../components/ui';
-import { useSystem } from '../../hooks/common';
+import { useSystem, useSettings } from '../../hooks/common';
 
 const StyledList = styled.ul`
 	width: 200px;
@@ -37,7 +37,8 @@ const NoItemsLabel = styled.span`
 
 interface LanguageInstallerProps {
 	installedLanguages: string[];
-	afterInstall: () => void;
+	defaultLanguage: string;
+	afterInstall: (installed: string[]) => void;
 }
 
 interface langItemProps {
@@ -47,9 +48,11 @@ interface langItemProps {
 
 const LanguageInstaller = ({
 	installedLanguages,
+	defaultLanguage,
 	afterInstall,
 }: LanguageInstallerProps) => {
 	const { installLanguage } = useSystem();
+	const { updateSettings } = useSettings();
 	const { t } = useTranslation(['common', 'form', 'components']);
 	const [queue, setQueue] = useState<langItemProps[]>([]);
 	const [selected, setSelected] = useState<langItemProps[]>([]);
@@ -58,40 +61,51 @@ const LanguageInstaller = ({
 	);
 	const [processing, setProcessing] = useState(false);
 
+	const onFinishHandler = (items: langItemProps[], array: string[]) => {
+		let new_field = Array.from(new Set(installedLanguages.concat(array)));
+		updateSettings({ language_installed: new_field }).then((response) => {
+			setSelectedProcessed(items);
+			setSelected([]);
+			setQueue([]);
+			setProcessing(false);
+			afterInstall(array);
+		});
+	};
+	const installQueueHandler = () => {
+		setProcessing(true);
+		let tmp = [];
+		let array = [];
+		queue.map((lng) => {
+			installLanguage({
+				lang_new: lng.lang,
+				lang_default: defaultLanguage,
+			}).then((response) => {
+				tmp.push(response);
+				array.push(lng.lang);
+				if (tmp.length == queue.length) onFinishHandler(tmp, array);
+			});
+		});
+	};
+
 	const getLanguageOptions = useCallback(() => {
 		const languagesObjects = config.locales;
 		const languagesKeys = Object.keys(languagesObjects);
 		let options = [];
 		languagesKeys.map((lang) => {
+			let item_disabled = !!(
+				installedLanguages.find((lng) => lng == lang) ||
+				selectedProcessed.find((lng) => lng.lang == lang)
+			);
 			options.push({
 				label: languagesObjects[lang].label,
 				value: lang,
-				disabled: !!installedLanguages.find((lng) => lng == lang),
+				disabled: item_disabled,
 			});
 		});
 
 		return options;
-	}, []);
+	}, [selectedProcessed]);
 	const languageOptions = getLanguageOptions();
-
-	const onFinishHandler = (items: langItemProps[]) => {
-		setSelectedProcessed(items);
-		setSelected([]);
-		setQueue([]);
-		setProcessing(false);
-		afterInstall();
-	};
-
-	const installQueueHandler = () => {
-		setProcessing(true);
-		let tmp = [];
-		queue.map((lang) => {
-			installLanguage({ lang: lang.lang }).then((response) => {
-				tmp.push(response);
-				if (tmp.length == queue.length) onFinishHandler(tmp);
-			});
-		});
-	};
 
 	useEffect(() => {
 		if (selected) {
@@ -152,7 +166,7 @@ const LanguageInstaller = ({
 					<Chip
 						key={lng.lang}
 						label={config.locales[lng.lang].label}
-						color="success"
+						color={lng.status == 'done' ? 'success' : 'error'}
 						variant="outlined"
 					/>
 				))}

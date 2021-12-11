@@ -682,14 +682,18 @@ class DataController {
     public function install_language ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $System = new System;
+        $Settings = new Settings;
+        $modules = $Settings -> get_cms_settings_modules($conn);
 
-        return $System -> install_language($conn, $data);
+        return $System -> install_language($conn, $modules, $data);
     }
     public function install_module ($data): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $System = new System;
+        $Settings = new Settings;
+        $modules = $Settings -> get_cms_settings_modules($conn);
 
-        return $System -> install_module($conn, $data);
+        return $System -> install_module($conn, $modules, $data);
     }
 
     /********** Settings **********/
