@@ -6,6 +6,18 @@ use service\LogService;
 
 class System {
 
+    public function create_log ($data) {
+        $ls = new LogService;
+
+        return $ls -> create($data['user'], $data['method'], $data['status']);
+    }
+
+    public function get_log_list ($params) {
+        $ls = new LogService;
+
+        return $ls -> getList();
+    }
+
     private function createLanguageTables ($conn, $tablePrefix, $lang_default, $lang_new) {
         $response = null;
         $tableName_from = $tablePrefix . '__' . $lang_default;
@@ -46,19 +58,6 @@ class System {
         }
 
         return $response;
-    }
-
-
-    public function create_log ($data) {
-        $ls = new LogService;
-
-        return $ls -> create($data['user'], $data['method'], $data['status']);
-    }
-
-    public function get_log_list ($params) {
-        $ls = new LogService;
-
-        return $ls -> getList();
     }
 
     public function install_language ($conn, $modules, $data) {

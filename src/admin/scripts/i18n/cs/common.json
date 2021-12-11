@@ -22,7 +22,8 @@
     "close": "Zavřít",
     "open": "Otevřít",
     "cancelOrder": "Zrušit objednávku",
-    "confirmOrder": "Potvrdit objednávku"
+    "confirmOrder": "Potvrdit objednávku",
+    "install": "Instalovat"
   },
   "new": {
     "Categories": "Nová kategorie",

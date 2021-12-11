@@ -9,30 +9,13 @@ import config from '../../config';
 import { Input, Button, Preloader } from '../../components/ui';
 import { useSystem, useSettings } from '../../hooks/common';
 
-const StyledList = styled.ul`
-	width: 200px;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-`;
-const StyledListItem = styled.li`
-	width: 100%;
-	margin: 0 0 0.5rem 0;
-	padding: 0.5rem 1rem;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background-color: rgba(69, 90, 100, 0.125);
-	border-radius: 0.25rem;
-`;
 const NoItemsLabel = styled.span`
 	width: 200px;
 	margin: 0 0 0.5rem 0;
-	padding: 0.6125rem 1rem;
+	padding: 0.6125rem 0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: transparent;
 `;
 
 interface LanguageInstallerProps {
@@ -134,21 +117,6 @@ const LanguageInstaller = ({
 					)}
 				</div>
 				<div>
-					{queue.length > 0 ? (
-						<StyledList>
-							{queue.map((lng) => (
-								<StyledListItem key={lng.lang}>
-									<span>{config.locales[lng.lang].label}</span>
-								</StyledListItem>
-							))}
-						</StyledList>
-					) : (
-						<NoItemsLabel>
-							{t('components:LanguageInstaller.noItemsSelected')}
-						</NoItemsLabel>
-					)}
-				</div>
-				<div>
 					<Button
 						variant="contained"
 						color="success"
@@ -156,21 +124,36 @@ const LanguageInstaller = ({
 						disabled={processing || selected.length == 0}
 						loading={processing}
 					>
-						{t('components:LanguageInstaller.button_install')}
+						{t('button.install')}
 					</Button>
 				</div>
 			</Stack>
 			<Stack spacing={1} direction="row" style={{ paddingTop: '1rem' }}>
-				{processing && <Preloader.Block />}
+				{queue.length > 0 ? (
+					queue.map((lng) => (
+						<Chip
+							key={lng.lang}
+							label={config.locales[lng.lang].label}
+							variant="outlined"
+							size="small"
+						/>
+					))
+				) : (
+					<NoItemsLabel>
+						{t('components:LanguageInstaller.noItemsSelected')}
+					</NoItemsLabel>
+				)}
 				{selectedProcessed.map((lng) => (
 					<Chip
 						key={lng.lang}
 						label={config.locales[lng.lang].label}
 						color={lng.status == 'done' ? 'success' : 'error'}
 						variant="outlined"
+						size="small"
 					/>
 				))}
 			</Stack>
+			<Preloader.Bar isProcessing={processing} />
 		</>
 	);
 };

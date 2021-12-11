@@ -18,7 +18,7 @@ import {
 	ROUTE_SETTINGS_DEFAULT_PANEL,
 } from '../../../constants';
 import { navItemProps, pageObjectProps } from '../../../types/pages';
-import { useProfile } from '../../../hooks/common';
+import { useProfile, useSettings } from '../../../hooks/common';
 import { sidebarToggle } from '../../../store/actions';
 import { getElTestAttr } from '../../../utils/tests';
 
@@ -47,13 +47,14 @@ const Navbar = ({ dataTestId = 'navbar.primary', app }: NavbarProps) => {
 	const history = useHistory();
 	const location = useLocation();
 	const { userShouldDisplay } = useProfile();
+	const { Settings } = useSettings();
 	const [openSectionCrm, setOpenSectionCrm] = useState<boolean>(app == 'crm');
 	const [openSectionMarket, setOpenSectionMarket] = useState<boolean>(
 		app == 'market',
 	);
 	const sectionAppActive = true;
-	const sectionCrmActive = true;
-	const sectionMarketActive = true;
+	const sectionCrmActive = Settings?.module_crm_active;
+	const sectionMarketActive = Settings?.module_market_active;
 	const sectionCrmToggle = () => setOpenSectionCrm(!openSectionCrm);
 	const sectionMarketToggle = () => setOpenSectionMarket(!openSectionMarket);
 	const selectedItem = useRef(null);

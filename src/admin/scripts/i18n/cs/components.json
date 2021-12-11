@@ -29,7 +29,6 @@
   },
   "LanguageInstaller": {
     "input_label": "Vyberte jazyk(y)",
-    "button_install": "Instalovat vybrané",
     "noItemsSelected": "Žádný jazyk není vybrán"
   }
 }

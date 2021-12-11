@@ -60,12 +60,13 @@ const SettingsForm = ({
 		model: 'Settings',
 		id: 'SettingsForm',
 	};
-	const { control, handleSubmit, reset, register, formState } = useForm({
-		mode: 'all',
-		defaultValues: {
-			...formData,
-		},
-	});
+	const { control, handleSubmit, reset, register, formState, setValue } =
+		useForm({
+			mode: 'all',
+			defaultValues: {
+				...formData,
+			},
+		});
 	const { isDirty, isValid } = formState;
 
 	const submitHandler = (data: any, e: any) => onSubmit(data, e);
@@ -78,11 +79,27 @@ const SettingsForm = ({
 	const renderFooter = () => {
 		return (
 			<>
-				<Button type="submit" variant="contained" disabled={!isValid}>
+				<Button
+					type="submit"
+					variant="contained"
+					disabled={!isValid || !isDirty}
+				>
 					{t('button.update')}
 				</Button>
 			</>
 		);
+	};
+
+	const afterLanguageInstallHandler = (installed: string[]) => {
+		setValue('language_installed', installed);
+		afterLanguageInstall(installed);
+	};
+	const afterModuleInstallHandler = (
+		type: keyof cmsSettingsObjectProps,
+		value: boolean,
+	) => {
+		setValue(type, value);
+		afterModuleInstall();
 	};
 
 	// Model options list
@@ -832,11 +849,16 @@ const SettingsForm = ({
 							<Section
 								title={t('form:form.Settings.section.title.installNewLanguage')}
 							>
-								<LanguageInstaller
-									installedLanguages={formData.language_installed}
-									defaultLanguage={formData.language_default}
-									afterInstall={afterLanguageInstall}
-								/>
+								<Form.Row
+									blankLabel
+									id={`${formOptions.id}__language_installer`}
+								>
+									<LanguageInstaller
+										installedLanguages={formData.language_installed}
+										defaultLanguage={formData.language_default}
+										afterInstall={afterLanguageInstallHandler}
+									/>
+								</Form.Row>
 							</Section>
 						</TabPanel>
 						{/*  ===== modules ============== */}
@@ -845,17 +867,23 @@ const SettingsForm = ({
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section title={t('form:form.Settings.section.title.module_crm')}>
-								<Form.Row
-									blankLabel
-									id={`${formOptions.id}__module_market_installer`}
-								>
-									<ModuleInstaller
-										module={'crm'}
-										afterInstall={afterModuleInstall}
-										crmInstalled={formData.module_crm_installed}
-										marketInstalled={formData.module_market_installed}
-									/>
-								</Form.Row>
+								<input
+									type="hidden"
+									{...register('module_crm_installed', {})}
+								/>
+								{!formData.module_crm_installed && (
+									<Form.Row
+										blankLabel
+										id={`${formOptions.id}__module_market_installer`}
+									>
+										<ModuleInstaller
+											module={'crm'}
+											afterInstall={() =>
+												afterModuleInstallHandler('module_crm_installed', true)
+											}
+										/>
+									</Form.Row>
+								)}
 								<Controller
 									name="module_crm_active"
 									control={control}
@@ -993,17 +1021,26 @@ const SettingsForm = ({
 							<Section
 								title={t('form:form.Settings.section.title.module_market')}
 							>
-								<Form.Row
-									blankLabel
-									id={`${formOptions.id}__module_market_installer`}
-								>
-									<ModuleInstaller
-										module={'market'}
-										afterInstall={afterModuleInstall}
-										crmInstalled={formData.module_crm_installed}
-										marketInstalled={formData.module_market_installed}
-									/>
-								</Form.Row>
+								<input
+									type="hidden"
+									{...register('module_market_installed', {})}
+								/>
+								{!formData.module_market_installed && (
+									<Form.Row
+										blankLabel
+										id={`${formOptions.id}__module_market_installer`}
+									>
+										<ModuleInstaller
+											module={'market'}
+											afterInstall={() =>
+												afterModuleInstallHandler(
+													'module_market_installed',
+													true,
+												)
+											}
+										/>
+									</Form.Row>
+								)}
 								<Controller
 									name="module_market_active"
 									control={control}

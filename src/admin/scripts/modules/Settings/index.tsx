@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -23,9 +23,11 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 		settings_loading,
 		settings_error,
 	} = useSettings();
+	const [processing, setProcessing] = useState<boolean>(false);
 
 	const formSubmitHandler = (data: any, e: any) => {
 		const master: cmsSettingsObjectProps = _.cloneDeep(data);
+		setProcessing(true);
 		updateSettings(master).then((response) => {
 			reloadSettings();
 			createToasts({
@@ -33,6 +35,7 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
@@ -53,6 +56,7 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 			) : (
 				<Preloader.Block />
 			)}
+			<Preloader.Bar isProcessing={processing || settings_loading} />
 		</>
 	);
 };
