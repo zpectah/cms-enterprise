@@ -753,15 +753,19 @@ const SettingsForm = ({
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>
-								<LanguageInstaller />
-							</Section>
-							<Section>
 								<div>language installed</div>
 								<div>language active</div>
 								<div>language default</div>
 							</Section>
-							<Section>
-								<div>install new language</div>
+							<Section
+								title={t('form:form.Settings.section.title.installNewLanguage')}
+							>
+								<LanguageInstaller
+									installedLanguages={formData.language_installed}
+									afterInstall={() => {
+										console.log('LanguageInstaller ...afterInstall');
+									}}
+								/>
 							</Section>
 						</TabPanel>
 						{/*  ===== modules ============== */}
@@ -770,7 +774,11 @@ const SettingsForm = ({
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
 							<Section>
-								<ModuleInstaller />
+								<ModuleInstaller
+									afterInstall={() => {
+										console.log('ModuleInstaller ...afterInstall');
+									}}
+								/>
 							</Section>
 							<Section>
 								<div>module crm installed</div>

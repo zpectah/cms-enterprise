@@ -20,7 +20,11 @@ class System {
 
 
     public function install_language ($conn, $data) {
-        return [];
+        $lang = $data['lang'];
+        return [
+            'lang' => $lang,
+            'status' => 'done'
+        ];
     }
 
     public function install_module ($conn, $data) {

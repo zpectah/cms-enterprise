@@ -1,0 +1,114 @@
+{
+	"en": {
+		"label": "English",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"cs": {
+		"label": "Čeština",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"sk": {
+		"label": "Slovenčina",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"be": {
+		"label": "беларуская мова",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"zh": {
+		"label": "中文",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"hr": {
+		"label": "Hrvatski jezik",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"da": {
+		"label": "Dansk",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"nl": {
+		"label": "Nederlands",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"eo": {
+		"label": "Esperanto",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"et": {
+		"label": "Eesti",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"fi": {
+		"label": "Suomi",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"fr": {
+		"label": "Français",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"de": {
+		"label": "Deutsch",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"el": {
+		"label": "ελληνικά",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"hu": {
+		"label": "Magyar",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"it": {
+		"label": "Italiano",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"lt": {
+		"label": "Lietuvių kalba",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"lv": {
+		"label": "Latviešu valoda",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"no": {
+		"label": "Norsk",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"pt": {
+		"label": "Português",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"ru": {
+		"label": "Pусский",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"sr": {
+		"label": "српски језик",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"sl": {
+		"label": "Slovenski jezik",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"es": {
+		"label": "Español",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"sv": {
+		"label": "Svenska",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"uk": {
+		"label": "Українська",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"vi": {
+		"label": "Tiếng Việt",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	},
+	"cy": {
+		"label": "Cymraeg",
+		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+	}
+}

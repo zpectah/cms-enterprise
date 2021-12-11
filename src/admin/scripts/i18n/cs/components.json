@@ -26,5 +26,10 @@
     "title": {
       "no_items_created": "Nebyly vytvořeny žádné položky"
     }
+  },
+  "LanguageInstaller": {
+    "input_label": "Vyberte jazyk(y)",
+    "button_install": "Instalovat vybrané",
+    "noItemsSelected": "Žádný jazyk není vybrán"
   }
 }

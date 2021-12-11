@@ -6,6 +6,7 @@ require_once PATH_ROOT . 'config/env.php';
 $JSON_ENV = json_decode(file_get_contents(PATH_ROOT . 'config/environmental.json'), true);
 $JSON_OPTIONS = json_decode(file_get_contents(PATH_ROOT . 'config/options.json'), true);
 $JSON_PROJECT = json_decode(file_get_contents(PATH_ROOT . 'config/project.json'), true);
+$JSON_LOCALES = json_decode(file_get_contents(PATH_ROOT . 'config/locales.json'), true);
 
 $utils = new Utils;
 

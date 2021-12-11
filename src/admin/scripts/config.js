@@ -1,6 +1,7 @@
 import project from '../../config/project.json';
 import environmental from '../../config/environmental.json';
 import options from '../../config/options.json';
+import locales from '../../config/locales.json';
 
 export default {
 	// Environment name (development, test, production)
@@ -20,6 +21,9 @@ export default {
 
 	// Project options object
 	options: options,
+
+	// Locales object
+	locales: locales,
 
 	// Environmental configuration object
 	environmental: environmental[window.APPENV],

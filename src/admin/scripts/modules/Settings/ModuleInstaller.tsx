@@ -1,8 +1,10 @@
 import React from 'react';
 
-interface ModuleInstallerProps {}
+interface ModuleInstallerProps {
+	afterInstall: () => void; // to be reload main form
+}
 
-const ModuleInstaller = ({}: ModuleInstallerProps) => {
+const ModuleInstaller = ({ afterInstall }: ModuleInstallerProps) => {
 	return (
 		<>
 			<div>...ModuleInstaller...</div>

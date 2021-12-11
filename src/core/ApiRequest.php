@@ -71,6 +71,22 @@ class ApiRequest {
                     }
                     break;
 
+                case 'install_language':
+                    if ($request_is_authorized) {
+                        $response = $dc -> install_language($request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'install_module':
+                    if ($request_is_authorized) {
+                        $response = $dc -> install_module($request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
                 /********** Profile (*) **********/
                 case 'get_user_profile':
                     $response = $dc -> get_user_profile($params);

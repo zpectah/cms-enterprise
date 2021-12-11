@@ -679,6 +679,18 @@ class DataController {
 
         return $System -> get_log_list($params);
     }
+    public function install_language ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $System = new System;
+
+        return $System -> install_language($conn, $data);
+    }
+    public function install_module ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $System = new System;
+
+        return $System -> install_module($conn, $data);
+    }
 
     /********** Settings **********/
     public function get_cms_settings ($params): array {

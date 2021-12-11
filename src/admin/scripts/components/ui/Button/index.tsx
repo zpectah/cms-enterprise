@@ -5,11 +5,12 @@ import { getElTestAttr } from '../../../utils/tests';
 
 export interface ButtonBaseProps {
 	dataTestId?: string;
+	loading?: boolean;
 }
 
 const Button = forwardRef((props: ButtonBaseProps & ButtonProps, ref) => {
-	const { dataTestId = 'button.default', ...rest } = props;
-
+	const { dataTestId = 'button.default', loading, ...rest } = props;
+	// TODO: loading
 	return <MuiButton {...rest} {...getElTestAttr(dataTestId)} />;
 });
 
