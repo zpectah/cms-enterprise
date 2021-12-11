@@ -324,13 +324,11 @@ class System {
         return $response;
     }
 
-    public function repair_language_tables ($conn, $data) {
-        return [];
-    }
+    public function repair_language_tables ($conn, $data) { return null; }
 
-    public function export_sql_dump () { return; }
+    public function export_sql_dump () { return null; }
 
-    public function import_sql_dump () { return; }
+    public function import_sql_dump () { return null; }
 
 
 }

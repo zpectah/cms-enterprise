@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -24,8 +24,7 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 		settings_error,
 	} = useSettings();
 	const [processing, setProcessing] = useState<boolean>(false);
-
-	const formSubmitHandler = (data: any, e: any) => {
+	const formSubmitHandler = (data: cmsSettingsObjectProps, e: any) => {
 		const master: cmsSettingsObjectProps = _.cloneDeep(data);
 		setProcessing(true);
 		updateSettings(master).then((response) => {
@@ -38,7 +37,6 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
 	const formSubmitErrorHandler = (error: any, e: any) => console.warn(error, e);
 
 	return (
@@ -48,8 +46,6 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 					formData={Settings}
 					onSubmit={formSubmitHandler}
 					onSubmitError={formSubmitErrorHandler}
-					languageList={Settings.language_active}
-					languageDefault={Settings.language_default}
 					afterLanguageInstall={(installed) => reloadSettings()}
 					afterModuleInstall={() => reloadSettings()}
 				/>

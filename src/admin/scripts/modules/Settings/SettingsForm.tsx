@@ -22,8 +22,6 @@ interface SettingsFormProps {
 	formData: cmsSettingsObjectProps;
 	onSubmit: (data: any, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
-	languageList: string[];
-	languageDefault: string;
 	afterLanguageInstall: (installed: string[]) => void;
 	afterModuleInstall: () => void;
 }
@@ -32,17 +30,13 @@ const SettingsForm = ({
 	formData,
 	onSubmit,
 	onSubmitError,
-	languageList = config.tmp.languageList,
-	languageDefault = config.tmp.languageDefault,
 	afterLanguageInstall,
 	afterModuleInstall,
 }: SettingsFormProps) => {
 	const params: any = useParams();
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'page', 'form']);
-	const [lang, setLang] = useState(languageDefault);
 	const [panel, setPanel] = useState('global');
-
 	const panels_list = ['global', 'web', 'language', 'modules'];
 	const getPanels = () => {
 		const tmp = {};
@@ -55,41 +49,41 @@ const SettingsForm = ({
 		return tmp as any;
 	};
 	const panels = getPanels();
-
 	const formOptions: formLayoutObjectProps = {
 		model: 'Settings',
 		id: 'SettingsForm',
 	};
-	const { control, handleSubmit, reset, register, formState, setValue } =
-		useForm({
-			mode: 'all',
-			defaultValues: {
-				...formData,
-			},
-		});
-	const { isDirty, isValid } = formState;
-
-	const submitHandler = (data: any, e: any) => onSubmit(data, e);
+	const {
+		control,
+		handleSubmit,
+		reset,
+		register,
+		formState: { isDirty, isValid },
+		setValue,
+	} = useForm({
+		mode: 'all',
+		defaultValues: {
+			...formData,
+		},
+	});
+	const submitHandler = (data: cmsSettingsObjectProps, e: any) => {
+		onSubmit(data, e);
+		// reset();
+	};
 	const errorSubmitHandler = (errors: any, e: any) => onSubmitError(errors, e);
 	const panelChangeHandler = (event: React.SyntheticEvent, panel: string) => {
 		setPanel(panel);
 		history.push(`${ROUTES.app.settings.path}/${panel}`);
 	};
-
 	const renderFooter = () => {
 		return (
 			<>
-				<Button
-					type="submit"
-					variant="contained"
-					disabled={!isValid || !isDirty}
-				>
+				<Button type="submit" variant="contained" disabled={!isValid}>
 					{t('button.update')}
 				</Button>
 			</>
 		);
 	};
-
 	const afterLanguageInstallHandler = (installed: string[]) => {
 		setValue('language_installed', installed);
 		afterLanguageInstall(installed);
@@ -109,7 +103,6 @@ const SettingsForm = ({
 	);
 	const getLanguageInstalledOptions = useCallback(() => {
 		let tmp = [];
-
 		formData.language_installed.map((lng) => {
 			tmp.push({
 				value: lng,
@@ -176,7 +169,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__project_name`}
-												// label={t('form:input.project_name')}
 												placeholder={t('form:form.Settings.input.project_name')}
 												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.project_name`}
@@ -206,7 +198,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_name`}
-												// label={t('form:input.project_name')}
 												placeholder={t('form:form.Settings.input.company_name')}
 												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_name`}
@@ -233,11 +224,9 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_description`}
-												// label={t('form:input.project_name')}
 												placeholder={t(
 													'form:form.Settings.input.company_description',
 												)}
-												// responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_description`}
 												multiline
 												rows={3}
@@ -263,7 +252,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_id`}
-												// label={t('form:input.project_name')}
 												placeholder={t('form:form.Settings.input.company_id')}
 												responsiveWidth={'50%'}
 												dataTestId={`${formOptions.id}.input.company_id`}
@@ -289,7 +277,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_address`}
-												// label={t('form:input.project_name')}
 												placeholder={t(
 													'form:form.Settings.input.company_address',
 												)}
@@ -317,7 +304,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_city`}
-												// label={t('form:input.project_name')}
 												placeholder={t('form:form.Settings.input.company_city')}
 												responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.company_city`}
@@ -343,7 +329,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_country`}
-												// label={t('form:input.project_name')}
 												placeholder={t(
 													'form:form.Settings.input.company_country',
 												)}
@@ -371,7 +356,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_zip`}
-												// label={t('form:input.project_name')}
 												placeholder={t('form:form.Settings.input.company_zip')}
 												responsiveWidth={'35%'}
 												dataTestId={`${formOptions.id}.input.company_zip`}
@@ -397,7 +381,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__company_location`}
-												// label={t('form:input.project_name')}
 												placeholder={t(
 													'form:form.Settings.input.company_location',
 												)}
@@ -500,7 +483,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__web_meta_title`}
-												// label={t('form:input.project_name')}
 												placeholder={t(
 													'form:form.Settings.input.web_meta_title',
 												)}
@@ -530,11 +512,9 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__web_meta_description`}
-												// label={t('form:input.project_name')}
 												placeholder={t(
 													'form:form.Settings.input.web_meta_description',
 												)}
-												// responsiveWidth={'75%'}
 												dataTestId={`${formOptions.id}.input.web_meta_description`}
 												required
 												multiline
@@ -558,8 +538,6 @@ const SettingsForm = ({
 										>
 											<Input.Select
 												id={`${formOptions.id}__web_meta_robots`}
-												// labelId={`${formOptions.id}__type.web_meta_robots`}
-												// label={t('form:input.robots')}
 												onChange={onChange}
 												onBlur={onBlur}
 												value={value}
@@ -666,7 +644,6 @@ const SettingsForm = ({
 												value={value}
 												name={name}
 												id={`${formOptions.id}__form_email_sender`}
-												// label={t('form:input.project_name')}
 												placeholder={t(
 													'form:form.Settings.input.form_email_sender',
 												)}
