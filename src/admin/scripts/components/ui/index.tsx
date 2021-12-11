@@ -11,3 +11,4 @@ export { default as Dialog } from './Dialog';
 export { default as ConfirmDialog } from './Dialog/ConfirmDialog';
 export { default as Drawer } from './Drawer';
 export { default as Input } from './Input';
+export { default as Wysiwyg } from './Wysiwyg';

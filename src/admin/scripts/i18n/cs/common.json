@@ -23,7 +23,9 @@
     "open": "Otevřít",
     "cancelOrder": "Zrušit objednávku",
     "confirmOrder": "Potvrdit objednávku",
-    "install": "Instalovat"
+    "install": "Instalovat",
+    "viewSource": "Zobrazit zdroj",
+    "viewEditor": "Zobrazit editor"
   },
   "new": {
     "Categories": "Nová kategorie",

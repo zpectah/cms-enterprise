@@ -64,7 +64,8 @@
     "order_description": "Poznámka k objednávce",
     "status": "Stav",
     "producers": "Výrobce",
-    "distributors": "Dodavatel"
+    "distributors": "Dodavatel",
+    "notes": "Poznámky"
   },
   "label": {
     "no_parent": "Bez rodiče",

@@ -39,5 +39,6 @@
   "virtual": "Virtuální",
   "branch": "Pobočka",
   "licence": "Licence",
-  "service": "Služba"
+  "service": "Služba",
+  "hidden": "Skrytý"
 }

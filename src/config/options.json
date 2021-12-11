@@ -82,7 +82,7 @@
       "group": ["default", "redactor", "admin"]
     },
     "Members": {
-      "type": ["default", "customer" ,"subscriber"]
+      "type": ["default", "customer", "subscriber", "hidden"]
     },
     "Deliveries": {
       "type": ["default"]

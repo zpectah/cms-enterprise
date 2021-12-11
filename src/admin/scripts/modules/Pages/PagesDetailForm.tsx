@@ -12,6 +12,7 @@ import {
 	ButtonCreate,
 	Section,
 	Input,
+	Wysiwyg,
 } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
@@ -354,20 +355,14 @@ const PagesDetailForm = ({
 										field: { onChange, onBlur, value, ref, name },
 									}) => (
 										<Form.Row errors={[]}>
-											<Input.Text
-												onChange={onChange}
-												onBlur={onBlur}
-												value={value}
-												name={name}
+											<Wysiwyg
 												id={`${formOptions.id}__${lng}__content`}
-												label={`${lng.toUpperCase()} ${t(
+												placeholder={`${lng.toUpperCase()} ${t(
 													'form:input.content',
 												)}`}
-												// responsiveWidth={'75%'}
-												dataTestId={`${formOptions.id}.input.${lng}.content`}
-												multiline
-												rows={10}
-												required
+												onChange={onChange}
+												value={value}
+												height={'500px'}
 											/>
 										</Form.Row>
 									)}

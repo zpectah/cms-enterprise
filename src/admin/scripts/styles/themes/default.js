@@ -75,4 +75,7 @@ export default {
 		block: {},
 		page: {},
 	},
+	wysiwyg: {
+		border: '1px solid rgba(150,150,150,.5)',
+	},
 };

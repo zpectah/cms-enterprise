@@ -458,7 +458,7 @@ const MembersDetailForm = ({
 									value={value}
 									name={name}
 									id={`${formOptions.id}__description`}
-									label={t('form:input.description')}
+									label={t('form:input.notes')}
 									dataTestId={`${formOptions.id}.input.description`}
 									multiline
 									rows={3}
