@@ -11,7 +11,7 @@ const DistributorsPicker = (
 	props: DistributorsPickerProps & PickerBaseInitialProps,
 ) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { Distributors } = useDistributors();
+	const { Distributors, distributors_loading } = useDistributors();
 
 	const getOptionsList = () => {
 		let options = [];
@@ -31,6 +31,7 @@ const DistributorsPicker = (
 			items={getOptionsList()}
 			dataTestId={`DistributorsPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
+			loading={distributors_loading}
 			{...rest}
 		/>
 	);

@@ -30,5 +30,10 @@
   "LanguageInstaller": {
     "input_label": "Vyberte jazyk(y)",
     "noItemsSelected": "Žádný jazyk není vybrán"
+  },
+  "ArrayPickerBase": {
+    "new_email": "Zadejte nový e-mail",
+    "new_phone": "Zadejte nový telefon",
+    "new_string": "Zadejte nový řetězec"
   }
 }

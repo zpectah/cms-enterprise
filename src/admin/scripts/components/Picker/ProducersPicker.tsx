@@ -11,7 +11,7 @@ const ProducersPicker = (
 	props: ProducersPickerProps & PickerBaseInitialProps,
 ) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { Producers } = useProducers();
+	const { Producers, producers_loading } = useProducers();
 
 	const getOptionsList = () => {
 		let options = [];
@@ -31,6 +31,7 @@ const ProducersPicker = (
 			items={getOptionsList()}
 			dataTestId={`ProducersPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
+			loading={producers_loading}
 			{...rest}
 		/>
 	);

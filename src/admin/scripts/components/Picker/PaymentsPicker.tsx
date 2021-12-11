@@ -11,7 +11,7 @@ const PaymentsPicker = (
 	props: PaymentsPickerProps & PickerBaseInitialProps,
 ) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { Payments } = usePayments();
+	const { Payments, payments_loading } = usePayments();
 
 	const getOptionsList = () => {
 		let options = [];
@@ -31,6 +31,7 @@ const PaymentsPicker = (
 			items={getOptionsList()}
 			dataTestId={`PaymentsPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
+			loading={payments_loading}
 			{...rest}
 		/>
 	);

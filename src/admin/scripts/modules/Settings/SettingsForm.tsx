@@ -149,7 +149,7 @@ const SettingsForm = ({
 							value={panels.global.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>
+							<Section title={t('form:form.Settings.section.title.project')}>
 								<Controller
 									name="project_name"
 									control={control}
@@ -463,7 +463,7 @@ const SettingsForm = ({
 							value={panels.web.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>
+							<Section title={t('form:form.Settings.section.title.webMeta')}>
 								<Controller
 									name="web_meta_title"
 									control={control}

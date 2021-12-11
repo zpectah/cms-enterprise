@@ -11,7 +11,7 @@ const DeliveriesPicker = (
 	props: DeliveriesPickerProps & PickerBaseInitialProps,
 ) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { Deliveries } = useDeliveries();
+	const { Deliveries, deliveries_loading } = useDeliveries();
 
 	const getOptionsList = () => {
 		let options = [];
@@ -31,6 +31,7 @@ const DeliveriesPicker = (
 			items={getOptionsList()}
 			dataTestId={`DeliveriesPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
+			loading={deliveries_loading}
 			{...rest}
 		/>
 	);

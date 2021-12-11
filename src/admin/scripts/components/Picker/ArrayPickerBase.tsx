@@ -4,6 +4,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
 import { useForm, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { EMAIL_REGEX } from '../../constants';
 import { Input } from '../ui';
@@ -32,6 +33,7 @@ const ArrayPickerBase = ({
 	inputWidth = '75%',
 	inputLabel,
 }: ArrayPickerBaseProps) => {
+	const { t } = useTranslation(['components']);
 	const [selectedItems, setSelectedItems] = useState(
 		getPickerInitialValue(value),
 	);
@@ -67,7 +69,9 @@ const ArrayPickerBase = ({
 	const should_show_input =
 		(multiple && selectedItems.length >= 0) ||
 		(!multiple && selectedItems.length == 0);
-	const input_label = inputLabel ? inputLabel : `New ${type}`;
+	const input_label = inputLabel
+		? inputLabel
+		: t(`components:ArrayPickerBase.new_${type}`);
 	const input_rules = {
 		required: true,
 		pattern: type == 'email' && EMAIL_REGEX,

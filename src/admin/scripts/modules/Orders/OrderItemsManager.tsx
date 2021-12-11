@@ -152,6 +152,7 @@ const OrderItemsManager = ({
 						onChange={onProductChange}
 						value={item.product_id}
 						disabled={item.id !== 'new' || updateDisabled}
+						style={{ width: '100%' }}
 					/>
 					<Input.Text
 						type="number"

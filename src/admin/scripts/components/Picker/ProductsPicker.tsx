@@ -11,7 +11,7 @@ const ProductsPicker = (
 	props: ProductsPickerProps & PickerBaseInitialProps,
 ) => {
 	const { responsiveWidth, dataTestId, ignored = [], ...rest } = props;
-	const { Products } = useProducts();
+	const { Products, products_loading } = useProducts();
 
 	const getOptionsList = () => {
 		let options = [];
@@ -31,6 +31,7 @@ const ProductsPicker = (
 			items={getOptionsList()}
 			dataTestId={`ProductsPicker.${dataTestId}`}
 			responsiveWidth={responsiveWidth}
+			loading={products_loading}
 			{...rest}
 		/>
 	);
