@@ -89,6 +89,19 @@ const SettingsForm = ({
 		() => getOptionsList(config.options.common.meta_robots, t),
 		[formData],
 	);
+	const getLanguageInstalledOptions = useCallback(() => {
+		let tmp = [];
+
+		formData.language_installed.map((lng) => {
+			tmp.push({
+				value: lng,
+				label: config.locales[lng].label,
+				disabled: !formData.language_active.find((l) => l == lng),
+			});
+		});
+
+		return tmp;
+	}, [formData]);
 
 	useEffect(() => {
 		if (params.panel) setPanel(params.panel);
@@ -758,14 +771,59 @@ const SettingsForm = ({
 						>
 							<Section>
 								<div>
-									language installed:{' '}
-									{JSON.stringify(formData.language_installed)}
+									<Controller
+										name="language_active"
+										control={control}
+										rules={{ required: true }}
+										render={({
+											field: { onChange, onBlur, value, ref, name },
+										}) => (
+											<Form.Row
+												errors={[]}
+												label={t('form:form.Settings.input.language_active')}
+												id={`${formOptions.id}_select_language_active`}
+											>
+												<Input.Select
+													id={`${formOptions.id}__language_active`}
+													onChange={onChange}
+													onBlur={onBlur}
+													value={value}
+													name={name}
+													options={getLanguageInstalledOptions()}
+													dataTestId={`${formOptions.id}.select.language_active`}
+													responsiveWidth={'50%'}
+													multiple
+												/>
+											</Form.Row>
+										)}
+									/>
 								</div>
 								<div>
-									language active: {JSON.stringify(formData.language_active)}
-								</div>
-								<div>
-									language default: {JSON.stringify(formData.language_default)}
+									<Controller
+										name="language_default"
+										control={control}
+										rules={{ required: true }}
+										render={({
+											field: { onChange, onBlur, value, ref, name },
+										}) => (
+											<Form.Row
+												errors={[]}
+												label={t('form:form.Settings.input.language_default')}
+												id={`${formOptions.id}_select_language_default`}
+											>
+												<Input.Select
+													id={`${formOptions.id}__language_default`}
+													onChange={onChange}
+													onBlur={onBlur}
+													value={value}
+													name={name}
+													options={getLanguageInstalledOptions()}
+													dataTestId={`${formOptions.id}.select.language_default`}
+													responsiveWidth={'50%'}
+												/>
+											</Form.Row>
+										)}
+									/>
 								</div>
 							</Section>
 							<Section

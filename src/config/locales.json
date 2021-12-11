@@ -1,114 +1,142 @@
 {
 	"en": {
 		"label": "English",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"cs": {
 		"label": "Čeština",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"sk": {
 		"label": "Slovenčina",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"be": {
 		"label": "беларуская мова",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"zh": {
 		"label": "中文",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"hr": {
 		"label": "Hrvatski jezik",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"da": {
 		"label": "Dansk",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"nl": {
 		"label": "Nederlands",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"eo": {
 		"label": "Esperanto",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"et": {
 		"label": "Eesti",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"fi": {
 		"label": "Suomi",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"fr": {
 		"label": "Français",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"de": {
 		"label": "Deutsch",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"el": {
 		"label": "ελληνικά",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"hu": {
 		"label": "Magyar",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"it": {
 		"label": "Italiano",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"lt": {
 		"label": "Lietuvių kalba",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"lv": {
 		"label": "Latviešu valoda",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"no": {
 		"label": "Norsk",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"pt": {
 		"label": "Português",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"ru": {
 		"label": "Pусский",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"sr": {
 		"label": "српски језик",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"sl": {
 		"label": "Slovenski jezik",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"es": {
 		"label": "Español",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"sv": {
 		"label": "Svenska",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"uk": {
 		"label": "Українська",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"vi": {
 		"label": "Tiếng Việt",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	},
 	"cy": {
 		"label": "Cymraeg",
-		"dateTimeFormat": "YYYY-MM-DD HH:mm"
+		"dateTimeFormat": "YYYY-MM-DD HH:mm",
+		"ltr": "ltr"
 	}
 }
