@@ -35,6 +35,7 @@ const SettingsForm = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	afterLanguageInstall,
+	afterModuleInstall,
 }: SettingsFormProps) => {
 	const params: any = useParams();
 	const history = useHistory();
@@ -769,7 +770,9 @@ const SettingsForm = ({
 							value={panels.language.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>
+							<Section
+								title={t('form:form.Settings.section.title.manageLanguages')}
+							>
 								<div>
 									<Controller
 										name="language_active"
@@ -841,22 +844,193 @@ const SettingsForm = ({
 							value={panels.modules.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>
-								<ModuleInstaller
-									afterInstall={() => {
-										console.log('ModuleInstaller ...afterInstall');
-									}}
+							<Section title={t('form:form.Settings.section.title.module_crm')}>
+								<Form.Row
+									blankLabel
+									id={`${formOptions.id}__module_market_installer`}
+								>
+									<ModuleInstaller
+										module={'crm'}
+										afterInstall={afterModuleInstall}
+										crmInstalled={formData.module_crm_installed}
+										marketInstalled={formData.module_market_installed}
+									/>
+								</Form.Row>
+								<Controller
+									name="module_crm_active"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											blankLabel
+											id={`${formOptions.id}__module_crm_active`}
+											errors={[]}
+										>
+											<Input.SwitchControl
+												onChange={onChange}
+												onBlur={onBlur}
+												checked={value}
+												name={name}
+												id={`${formOptions.id}__module_crm_active`}
+												dataTestId={`${formOptions.id}.switch.module_crm_active`}
+												label={t('form:form.Settings.input.module_crm_active')}
+												disabled={!formData.module_crm_installed}
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name="members_login_active"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											blankLabel
+											id={`${formOptions.id}__members_login_active`}
+											errors={[]}
+										>
+											<Input.SwitchControl
+												onChange={onChange}
+												onBlur={onBlur}
+												checked={value}
+												name={name}
+												id={`${formOptions.id}__members_login_active`}
+												dataTestId={`${formOptions.id}.switch.members_login_active`}
+												label={t(
+													'form:form.Settings.input.members_login_active',
+												)}
+												disabled={!formData.module_crm_active}
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name="members_lostPassword_active"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											blankLabel
+											id={`${formOptions.id}__members_lostPassword_active`}
+											errors={[]}
+										>
+											<Input.SwitchControl
+												onChange={onChange}
+												onBlur={onBlur}
+												checked={value}
+												name={name}
+												id={`${formOptions.id}__members_lostPassword_active`}
+												dataTestId={`${formOptions.id}.switch.members_lostPassword_active`}
+												label={t(
+													'form:form.Settings.input.members_lostPassword_active',
+												)}
+												disabled={!formData.module_crm_active}
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name="members_profile_active"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											blankLabel
+											id={`${formOptions.id}__members_profile_active`}
+											errors={[]}
+										>
+											<Input.SwitchControl
+												onChange={onChange}
+												onBlur={onBlur}
+												checked={value}
+												name={name}
+												id={`${formOptions.id}__members_profile_active`}
+												dataTestId={`${formOptions.id}.switch.members_profile_active`}
+												label={t(
+													'form:form.Settings.input.members_profile_active',
+												)}
+												disabled={!formData.module_crm_active}
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name="members_register_active"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											blankLabel
+											id={`${formOptions.id}__members_register_active`}
+											errors={[]}
+										>
+											<Input.SwitchControl
+												onChange={onChange}
+												onBlur={onBlur}
+												checked={value}
+												name={name}
+												id={`${formOptions.id}__members_register_active`}
+												dataTestId={`${formOptions.id}.switch.members_register_active`}
+												label={t(
+													'form:form.Settings.input.members_register_active',
+												)}
+												disabled={!formData.module_crm_active}
+											/>
+										</Form.Row>
+									)}
 								/>
 							</Section>
-							<Section>
-								<div>module crm installed</div>
-								<div>module crm active</div>
-								<div>module market installed</div>
-								<div>module market active</div>
-								<div>members register active</div>
-								<div>members login active</div>
-								<div>members lost password active</div>
-								<div>members profile active</div>
+							<Section
+								title={t('form:form.Settings.section.title.module_market')}
+							>
+								<Form.Row
+									blankLabel
+									id={`${formOptions.id}__module_market_installer`}
+								>
+									<ModuleInstaller
+										module={'market'}
+										afterInstall={afterModuleInstall}
+										crmInstalled={formData.module_crm_installed}
+										marketInstalled={formData.module_market_installed}
+									/>
+								</Form.Row>
+								<Controller
+									name="module_market_active"
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row
+											blankLabel
+											id={`${formOptions.id}__module_market_active`}
+											errors={[]}
+										>
+											<Input.SwitchControl
+												onChange={onChange}
+												onBlur={onBlur}
+												checked={value}
+												name={name}
+												id={`${formOptions.id}__module_market_active`}
+												dataTestId={`${formOptions.id}.switch.module_market_active`}
+												label={t(
+													'form:form.Settings.input.module_market_active',
+												)}
+												disabled={!formData.module_market_installed}
+											/>
+										</Form.Row>
+									)}
+								/>
 							</Section>
 						</TabPanel>
 						{/*  ============ \\ Main form panels ============ */}

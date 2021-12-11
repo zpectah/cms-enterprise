@@ -143,12 +143,13 @@
         "language_active": "Aktivní jazyky",
         "language_default": "Výchozí jazyk",
         "module_crm_installed": "Crm instalováno",
-        "module_crm_active": "Crm aktivní",
+        "module_crm_active": "Modul CRM aktivní",
         "module_market_installed": "Market instalován",
-        "module_market_active": "Market aktivní",
+        "module_market_active": "Modul Market aktivní",
         "members_login_active": "Přihlašování memberů",
         "members_lostPassword_active": "Možnost memberů obnovit heslo",
-        "members_profile_active": "AKtivní profil membera"
+        "members_register_active": "Možnost memberů registrovat se",
+        "members_profile_active": "Aktivní profil membera"
       },
       "section": {
         "title": {
@@ -156,7 +157,10 @@
           "forms": "Formuláře",
           "modes": "Stav webu",
           "content": "Obsah",
-          "installNewLanguage": "Instalovat nový jazyk"
+          "manageLanguages": "Správa jazyků",
+          "installNewLanguage": "Instalovat nový jazyk",
+          "module_crm": "CRM",
+          "module_market": "Market"
         }
       }
     }

@@ -31,6 +31,10 @@ export interface cmsSettingsObjectProps {
 	web_meta_title?: string;
 	web_mode_debug?: boolean;
 	web_mode_maintenance?: boolean;
+	members_login_active?: boolean;
+	members_lostPassword_active?: boolean;
+	members_profile_active?: boolean;
+	members_register_active?: boolean;
 }
 
 export type ProfileItemProps = UsersItemProps;

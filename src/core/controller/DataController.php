@@ -35,8 +35,6 @@ class DataController {
             'data' => [], // data -> [items]
         ];
 
-        $Settings = new Settings;
-
         // Model
         $CmsRequests = new CmsRequests;
         $Users = new Users;
@@ -58,12 +56,13 @@ class DataController {
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
 
-
         // Additional
+        $Settings = new Settings;
         $languages = $Settings -> get_cms_settings_languages($conn);
         $modules = $Settings -> get_cms_settings_modules($conn);
-
         $language_active = $languages['language_active'];
+        $module_crm_installed = $modules['module_crm_installed'];
+        $module_market_installed = $modules['module_market_installed'];
 
         switch ($model) {
 
@@ -108,39 +107,39 @@ class DataController {
                 break;
 
             case 'Members':
-                $response['data'] = $Members -> get($conn, $data, $params);
+                $response['data'] = $module_crm_installed ? $Members -> get($conn, $data, $params) : [];
                 break;
 
             case 'Deliveries':
-                $response['data'] = $Deliveries -> get($conn, $data, $params, $language_active);
+                $response['data'] = $module_market_installed ? $Deliveries -> get($conn, $data, $params, $language_active) : [];
                 break;
 
             case 'Distributors':
-                $response['data'] = $Distributors -> get($conn, $data, $params);
+                $response['data'] = $module_market_installed ? $Distributors -> get($conn, $data, $params) : [];
                 break;
 
             case 'Orders':
-                $response['data'] = $Orders -> get($conn, $data, $params);
+                $response['data'] = $module_market_installed ? $Orders -> get($conn, $data, $params) : [];
                 break;
 
             case 'Payments':
-                $response['data'] = $Payments -> get($conn, $data, $params, $language_active);
+                $response['data'] = $module_market_installed ? $Payments -> get($conn, $data, $params, $language_active) : [];
                 break;
 
             case 'Producers':
-                $response['data'] = $Producers -> get($conn, $data, $params);
+                $response['data'] = $module_market_installed ? $Producers -> get($conn, $data, $params) : [];
                 break;
 
             case 'Products':
-                $response['data'] = $Products -> get($conn, $data, $params, $language_active);
+                $response['data'] = $module_market_installed ? $Products -> get($conn, $data, $params, $language_active) : [];
                 break;
 
             case 'ProductsOptions':
-                $response['data'] = $ProductsOptions -> get($conn, $data, $params, $language_active);
+                $response['data'] = $module_market_installed ? $ProductsOptions -> get($conn, $data, $params, $language_active) : [];
                 break;
 
             case 'Stores':
-                $response['data'] = $Stores -> get($conn, $data, $params, $language_active);
+                $response['data'] = $module_market_installed ? $Stores -> get($conn, $data, $params, $language_active) : [];
                 break;
 
         }
@@ -156,8 +155,6 @@ class DataController {
             'status' => 'ok',
             'data' => [], // data -> id (int)
         ];
-
-        $Settings = new Settings;
 
         // Model
         $CmsRequests = new CmsRequests;
@@ -180,12 +177,13 @@ class DataController {
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
 
-
         // Additional
+        $Settings = new Settings;
         $languages = $Settings -> get_cms_settings_languages($conn);
         $modules = $Settings -> get_cms_settings_modules($conn);
-
         $language_active = $languages['language_active'];
+        $module_crm_installed = $modules['module_crm_installed'];
+        $module_market_installed = $modules['module_market_installed'];
 
         switch ($model) {
 
@@ -230,39 +228,39 @@ class DataController {
                 break;
 
             case 'Members':
-                $response['data'] = $Members -> create($conn, $data);
+                $response['data'] = $module_crm_installed ? $Members -> create($conn, $data) : [];
                 break;
 
             case 'Deliveries':
-                $response['data'] = $Deliveries -> create($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Deliveries -> create($conn, $data, $language_active) : [];
                 break;
 
             case 'Distributors':
-                $response['data'] = $Distributors -> create($conn, $data);
+                $response['data'] = $module_market_installed ? $Distributors -> create($conn, $data) : [];
                 break;
 
             case 'Orders':
-                $response['data'] = $Orders -> create($conn, $data);
+                $response['data'] = $module_market_installed ? $Orders -> create($conn, $data) : [];
                 break;
 
             case 'Payments':
-                $response['data'] = $Payments -> create($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Payments -> create($conn, $data, $language_active) : [];
                 break;
 
             case 'Producers':
-                $response['data'] = $Producers -> create($conn, $data);
+                $response['data'] = $module_market_installed ? $Producers -> create($conn, $data) : [];
                 break;
 
             case 'Products':
-                $response['data'] = $Products -> create($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Products -> create($conn, $data, $language_active) : [];
                 break;
 
             case 'ProductsOptions':
-                $response['data'] = $ProductsOptions -> create($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $ProductsOptions -> create($conn, $data, $language_active) : [];
                 break;
 
             case 'Stores':
-                $response['data'] = $Stores -> create($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Stores -> create($conn, $data, $language_active) : [];
                 break;
 
         }
@@ -278,8 +276,6 @@ class DataController {
             'status' => 'ok',
             'data' => [], // data -> rows (int)
         ];
-
-        $Settings = new Settings;
 
         // Model
         $CmsRequests = new CmsRequests;
@@ -302,12 +298,13 @@ class DataController {
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
 
-
         // Additional
+        $Settings = new Settings;
         $languages = $Settings -> get_cms_settings_languages($conn);
         $modules = $Settings -> get_cms_settings_modules($conn);
-
         $language_active = $languages['language_active'];
+        $module_crm_installed = $modules['module_crm_installed'];
+        $module_market_installed = $modules['module_market_installed'];
 
         switch ($model) {
 
@@ -352,39 +349,39 @@ class DataController {
                 break;
 
             case 'Members':
-                $response['data'] = $Members -> update($conn, $data);
+                $response['data'] = $module_crm_installed ? $Members -> update($conn, $data) : [];
                 break;
 
             case 'Deliveries':
-                $response['data'] = $Deliveries -> update($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Deliveries -> update($conn, $data, $language_active) : [];
                 break;
 
             case 'Distributors':
-                $response['data'] = $Distributors -> update($conn, $data);
+                $response['data'] = $module_market_installed ? $Distributors -> update($conn, $data) : [];
                 break;
 
             case 'Orders':
-                $response['data'] = $Orders -> update($conn, $data);
+                $response['data'] = $module_market_installed ? $Orders -> update($conn, $data) : [];
                 break;
 
             case 'Payments':
-                $response['data'] = $Payments -> update($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Payments -> update($conn, $data, $language_active) : [];
                 break;
 
             case 'Producers':
-                $response['data'] = $Producers -> update($conn, $data);
+                $response['data'] = $module_market_installed ? $Producers -> update($conn, $data) : [];
                 break;
 
             case 'Products':
-                $response['data'] = $Products -> update($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Products -> update($conn, $data, $language_active) : [];
                 break;
 
             case 'ProductsOptions':
-                $response['data'] = $ProductsOptions -> update($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $ProductsOptions -> update($conn, $data, $language_active) : [];
                 break;
 
             case 'Stores':
-                $response['data'] = $Stores -> update($conn, $data, $language_active);
+                $response['data'] = $module_market_installed ? $Stores -> update($conn, $data, $language_active) : [];
                 break;
 
         }
@@ -421,7 +418,6 @@ class DataController {
         $Products = new Products;
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
-
 
         switch ($model) {
 
@@ -535,7 +531,6 @@ class DataController {
         $Products = new Products;
         $ProductsOptions = new ProductsOptions;
         $Stores = new Stores;
-
 
         switch ($model) {
 
@@ -691,9 +686,9 @@ class DataController {
         $conn = new mysqli(...CFG_DB_CONN);
         $System = new System;
         $Settings = new Settings;
-        $modules = $Settings -> get_cms_settings_modules($conn);
+        $languages = $Settings -> get_cms_settings_languages($conn);
 
-        return $System -> install_module($conn, $modules, $data);
+        return $System -> install_module($conn, $languages['language_installed'], $data);
     }
 
     /********** Settings **********/

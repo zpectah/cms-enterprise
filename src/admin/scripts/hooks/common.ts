@@ -14,7 +14,7 @@ export function useSystem() {
 			post(`${config.project.api.base}/get_log_list`, data),
 		installLanguage: (data: { lang_new: string; lang_default: string }) =>
 			post(`${config.project.api.base}/install_language`, data),
-		installModule: (data: any) =>
+		installModule: (data: { module: string }) =>
 			post(`${config.project.api.base}/install_module`, data),
 		repairLanguageTables: (data: any) =>
 			post(`${config.project.api.base}/repair_language_tables`, data),
