@@ -44,6 +44,32 @@ const DashboardModule = ({}: DashboardModuleProps) => {
 							warning
 						</Button>
 					</Stack>
+					<Stack spacing={2} direction="row">
+						<Button color="primary" variant="outlined" loading>
+							Primary
+						</Button>
+						<Button color="primary" variant="contained" loading>
+							Primary
+						</Button>
+						<Button variant="outlined" color="secondary" loading>
+							Secondary
+						</Button>
+						<Button variant="contained" color="secondary" loading>
+							Secondary
+						</Button>
+						<Button color="success" variant="outlined" loading>
+							Success
+						</Button>
+						<Button color="success" variant="contained" loading>
+							Success
+						</Button>
+						<Button variant="outlined" color="error" loading>
+							Error
+						</Button>
+						<Button variant="contained" color="warning" loading>
+							Warning
+						</Button>
+					</Stack>
 				</Section>
 				<Section title={'Section title'}>
 					<Typography.Paragraph p>
