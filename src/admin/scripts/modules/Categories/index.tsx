@@ -234,6 +234,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Categories}
 						/>
 					) : (
 						<DataTable

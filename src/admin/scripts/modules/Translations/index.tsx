@@ -233,6 +233,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Translations}
 						/>
 					) : (
 						<DataTable

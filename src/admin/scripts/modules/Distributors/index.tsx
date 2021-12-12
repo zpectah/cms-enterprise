@@ -223,6 +223,7 @@ const DistributorsModule = ({}: DistributorsModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Distributors}
 						/>
 					) : (
 						<DataTable

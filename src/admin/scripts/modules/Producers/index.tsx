@@ -223,6 +223,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Producers}
 						/>
 					) : (
 						<DataTable

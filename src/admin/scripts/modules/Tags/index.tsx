@@ -223,6 +223,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Tags}
 						/>
 					) : (
 						<DataTable

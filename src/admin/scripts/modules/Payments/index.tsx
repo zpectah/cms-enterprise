@@ -231,6 +231,7 @@ const PaymentsModule = ({}: PaymentsModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Payments}
 						/>
 					) : (
 						<DataTable

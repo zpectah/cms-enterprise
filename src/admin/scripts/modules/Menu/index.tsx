@@ -230,6 +230,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Menu}
 						/>
 					) : (
 						<DataTable

@@ -231,6 +231,7 @@ const StoresModule = ({}: StoresModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Stores}
 						/>
 					) : (
 						<DataTable

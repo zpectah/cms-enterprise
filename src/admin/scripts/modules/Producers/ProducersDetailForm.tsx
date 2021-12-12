@@ -20,8 +20,11 @@ import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
 import DetailFormActions from '../../components/DetailFormActions';
+import inputErrorHandler from '../../utils/inputErrorHandler';
+import checkInputDuplicates from '../../utils/checkInputDuplicates';
 
 interface ProducersDetailFormProps {
+	allItems: ProducersItemProps[];
 	detailData: ProducersItemProps;
 	onSubmit: (data: ProducersItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
@@ -35,6 +38,7 @@ interface ProducersDetailFormProps {
 }
 
 const ProducersDetailForm = ({
+	allItems,
 	detailData,
 	onSubmit,
 	onSubmitError,
@@ -59,7 +63,8 @@ const ProducersDetailForm = ({
 		handleSubmit,
 		reset,
 		register,
-		formState: { isDirty, isValid },
+		watch,
+		formState: { isDirty, isValid, errors },
 	} = useForm({
 		mode: 'all',
 		defaultValues: {
@@ -82,7 +87,7 @@ const ProducersDetailForm = ({
 		<DetailFormActions
 			id={detailData.id}
 			formId={formOptions.id}
-			isValid={isValid}
+			isValid={isValid && !name_duplicates}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
 			isProcessing={isProcessing}
@@ -93,6 +98,13 @@ const ProducersDetailForm = ({
 	const getTypeOptions = useCallback(
 		() => getOptionsList(config.options.model.Producers.type, t),
 		[detailData],
+	);
+
+	const name_duplicates = checkInputDuplicates(
+		allItems,
+		detailData.id,
+		'name',
+		watch('name'),
 	);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
@@ -181,7 +193,16 @@ const ProducersDetailForm = ({
 						control={control}
 						rules={{ required: true }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								errors={inputErrorHandler(
+									{
+										duplicate: name_duplicates,
+										required: errors?.name?.type == 'required',
+									},
+									t,
+								)}
+								responsiveMessages={'75%'}
+							>
 								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}

@@ -234,6 +234,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Deliveries}
 						/>
 					) : (
 						<DataTable

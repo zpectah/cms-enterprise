@@ -81,6 +81,14 @@
       "products": "Produkty"
     }
   },
+  "messages": {
+    "error_duplicate": "Stejný název pro jinou položku již existuje, použijte prosím jiný",
+    "error_minLength": "Nebyla dosažena minimální délka řetězce",
+    "error_maxLength": "Byla překročena maximální délka řetězce",
+    "error_minValue": "Nebyla dosažena minimální hodnota",
+    "error_maxValue": "Byla překročena maximální hodnota",
+    "error_required": "Toto pole je povinné"
+  },
   "form": {
     "Login": {
       "msg": {

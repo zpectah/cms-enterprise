@@ -221,6 +221,7 @@ const MembersModule = ({}: MembersModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Members}
 						/>
 					) : (
 						<DataTable

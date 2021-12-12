@@ -18,8 +18,11 @@ import ContentTitle from '../../components/Layout/Content/ContentTitle';
 import ModuleLanguageToggle from '../../components/ModuleLanguageToggle';
 import Uploader from '../../components/Uploader';
 import { getElTestAttr } from '../../utils/tests';
+import inputErrorHandler from '../../utils/inputErrorHandler';
+import checkInputDuplicates from '../../utils/checkInputDuplicates';
 
 interface UploadsDetailNewFormProps {
+	allItems: UploadsItemProps[];
 	detailData: UploadsItemProps;
 	onSubmit: (data: UploadsItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;

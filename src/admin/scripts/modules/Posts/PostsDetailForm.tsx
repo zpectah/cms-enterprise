@@ -22,8 +22,11 @@ import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
 import DetailFormActions from '../../components/DetailFormActions';
 import CommentsManager from '../../components/CommentsManager';
+import inputErrorHandler from '../../utils/inputErrorHandler';
+import checkInputDuplicates from '../../utils/checkInputDuplicates';
 
 interface PostsDetailFormProps {
+	allItems: PostsItemProps[];
 	detailData: PostsItemProps;
 	onSubmit: (data: PostsItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
@@ -38,6 +41,7 @@ interface PostsDetailFormProps {
 }
 
 const PostsDetailForm = ({
+	allItems,
 	detailData,
 	onSubmit,
 	onSubmitError,
@@ -63,7 +67,7 @@ const PostsDetailForm = ({
 		handleSubmit,
 		reset,
 		register,
-		formState: { isDirty, isValid },
+		formState: { isDirty, isValid, errors },
 		watch,
 	} = useForm({
 		mode: 'all',
@@ -87,7 +91,7 @@ const PostsDetailForm = ({
 		<DetailFormActions
 			id={detailData.id}
 			formId={formOptions.id}
-			isValid={isValid}
+			isValid={isValid && !name_duplicates}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
 			isProcessing={isProcessing}
@@ -101,6 +105,13 @@ const PostsDetailForm = ({
 	);
 
 	const watchType = watch('type');
+
+	const name_duplicates = checkInputDuplicates(
+		allItems,
+		detailData.id,
+		'name',
+		watch('name'),
+	);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -237,7 +248,16 @@ const PostsDetailForm = ({
 						control={control}
 						rules={{ required: true }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								errors={inputErrorHandler(
+									{
+										duplicate: name_duplicates,
+										required: errors?.name?.type == 'required',
+									},
+									t,
+								)}
+								responsiveMessages={'75%'}
+							>
 								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}

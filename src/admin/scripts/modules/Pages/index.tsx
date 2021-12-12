@@ -234,6 +234,7 @@ const PagesModule = ({}: PagesModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
+							allItems={Pages}
 						/>
 					) : (
 						<DataTable

@@ -20,8 +20,11 @@ import { getElTestAttr } from '../../utils/tests';
 import getOptionsList from '../../utils/getOptionsList';
 import Picker from '../../components/Picker';
 import DetailFormActions from '../../components/DetailFormActions';
+import inputErrorHandler from '../../utils/inputErrorHandler';
+import checkInputDuplicates from '../../utils/checkInputDuplicates';
 
 interface MembersDetailFormProps {
+	allItems: MembersItemProps[];
 	detailData: MembersItemProps;
 	onSubmit: (data: MembersItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
@@ -35,6 +38,7 @@ interface MembersDetailFormProps {
 }
 
 const MembersDetailForm = ({
+	allItems,
 	detailData,
 	onSubmit,
 	onSubmitError,
@@ -59,7 +63,7 @@ const MembersDetailForm = ({
 		handleSubmit,
 		reset,
 		register,
-		formState: { isDirty, isValid },
+		formState: { isDirty, isValid, errors },
 		watch,
 	} = useForm({
 		mode: 'all',
@@ -83,7 +87,7 @@ const MembersDetailForm = ({
 		<DetailFormActions
 			id={detailData.id}
 			formId={formOptions.id}
-			isValid={isValid}
+			isValid={isValid && !email_duplicates}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
 			isProcessing={isProcessing}
@@ -97,6 +101,13 @@ const MembersDetailForm = ({
 	);
 
 	const watchType = watch('type');
+
+	const email_duplicates = checkInputDuplicates(
+		allItems,
+		detailData.id,
+		'email',
+		watch('email'),
+	);
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -184,7 +195,16 @@ const MembersDetailForm = ({
 						control={control}
 						rules={{ required: true, pattern: EMAIL_REGEX }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								errors={inputErrorHandler(
+									{
+										duplicate: email_duplicates,
+										required: errors?.email?.type == 'required',
+									},
+									t,
+								)}
+								responsiveMessages={'75%'}
+							>
 								<Input.Text
 									type="email"
 									onChange={onChange}

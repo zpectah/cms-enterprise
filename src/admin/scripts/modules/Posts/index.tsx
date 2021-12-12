@@ -256,6 +256,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 							onCreateCallback={createNewCallback}
 							shouldApprove={shouldApproveHandler()}
 							isProcessing={isProcessing}
+							allItems={Posts}
 						/>
 					) : (
 						<DataTable
