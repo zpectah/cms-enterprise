@@ -114,11 +114,9 @@ const Uploader: React.FC<UploaderProps> = ({
 }) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
-
 	const [rawFileList, setRawFileList] = useState([]);
 	const [fileList, setFileList] = useState([]);
 	const [formsValid, setFormsValid] = useState<boolean>(false);
-
 	const inputFileRef = useRef(null);
 	const inputFileProps = {
 		type: 'file',
@@ -177,7 +175,6 @@ const Uploader: React.FC<UploaderProps> = ({
 			return false;
 		},
 	};
-
 	const getFileObject = (blob, file) => {
 		const ext = file.name.split('.').pop().toLowerCase();
 		const type = getFileType(ext);
@@ -201,7 +198,6 @@ const Uploader: React.FC<UploaderProps> = ({
 
 		return model;
 	};
-
 	const getBlobSource = async (file) => {
 		const blob = await fileUtils.toBase64(file);
 		let tmp_file;
@@ -220,10 +216,10 @@ const Uploader: React.FC<UploaderProps> = ({
 	const resetHandler = () => {
 		setRawFileList([]);
 		setFileList([]);
+		setFormsValid(false);
 		if (inputFileRef.current) inputFileRef.current.value = '';
 		if (onReset) onReset();
 	};
-
 	const cropChangeHandler = (blob: any, index: number) => {
 		let tmp = [...fileList];
 		if (avatarOnly) {
@@ -246,11 +242,12 @@ const Uploader: React.FC<UploaderProps> = ({
 		let tmp = [...fileList];
 		tmp[index] = {
 			...model,
+			valid: valid,
 		};
-		setFormsValid(valid);
+		setFormsValid(!tmp.find((item) => item.valid == false));
+		setFileList(tmp);
 		onChange(tmp, valid);
 	};
-
 	const onInit = () => {
 		window.addEventListener('mouseup', dragEvents.onDragLeave);
 		window.addEventListener('dragover', dragEvents.onDragOver);
@@ -263,21 +260,18 @@ const Uploader: React.FC<UploaderProps> = ({
 		window.removeEventListener('dragenter', dragEvents.onDragEnter);
 		window.removeEventListener('drop', dragEvents.onDrop);
 	};
-
 	const handleSources = () => {
 		Promise.all(rawFileList).then((result) => {
 			setFileList(result);
 			onChange(result, formsValid);
 		});
 	};
-
 	const removeFromQueue = (index: number) => {
 		let tmp = [...fileList];
 		tmp.splice(index, 1);
 		setFileList(tmp);
 		onChange(tmp, formsValid);
 	};
-
 	const renderForm = (file: any, index: number) => (
 		<UploadItemFormWrapper>
 			<UploadsItemForm
@@ -383,7 +377,7 @@ const Uploader: React.FC<UploaderProps> = ({
 							variant="contained"
 							color="success"
 							onClick={onSubmit}
-							disabled={fileList.length == 0}
+							disabled={fileList.length == 0 || !formsValid}
 						>
 							{t('button.submitQueue')}
 						</Button>

@@ -22,7 +22,6 @@ import inputErrorHandler from '../../utils/inputErrorHandler';
 import checkInputDuplicates from '../../utils/checkInputDuplicates';
 
 interface UploadsDetailNewFormProps {
-	allItems: UploadsItemProps[];
 	detailData: UploadsItemProps;
 	onSubmit: (data: UploadsItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;

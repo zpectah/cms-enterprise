@@ -12,7 +12,10 @@ import styled from 'styled-components';
 
 import { Button, Form, Input, Section } from '../ui';
 import { formLayoutObjectProps } from '../../types/app';
+import { useUploads } from '../../hooks/model';
 import { getLanguagesFields } from '../../utils/detail';
+import inputErrorHandler from '../../utils/inputErrorHandler';
+import checkInputDuplicates from '../../utils/checkInputDuplicates';
 
 interface UploadsItemFormProps {
 	file: any;
@@ -36,23 +39,35 @@ const UploadsItemForm = ({
 	languageList,
 	onRemove,
 }: UploadsItemFormProps) => {
+	const { Uploads } = useUploads();
 	const { t } = useTranslation(['common', 'form']);
 	const formOptions: formLayoutObjectProps = {
 		model: 'Uploads',
 		id: `UploadsItemDetailForm_${index}`,
 	};
-	const { control, formState, watch, handleSubmit } = useForm({
+	const {
+		control,
+		formState: { isDirty, isValid, errors },
+		watch,
+		handleSubmit,
+		register,
+		setValue,
+	} = useForm({
 		mode: 'all',
 		defaultValues: {
 			...file,
 		},
 	});
-	const { isDirty, isValid } = formState;
-	const watchAllFields = watch();
-	const changeModelHandler = useCallback(
-		() => onModelChange(watchAllFields, index, isDirty, isValid),
-		[watchAllFields],
+	const name_duplicates = checkInputDuplicates(
+		Uploads,
+		0,
+		'name',
+		watch('name'),
 	);
+	const watchAllFields = watch();
+	const changeModelHandler = useCallback(() => {
+		onModelChange(watchAllFields, index, isDirty, isValid && !name_duplicates);
+	}, [watchAllFields, isDirty, isValid, name_duplicates]);
 
 	useEffect(changeModelHandler, [isDirty, isValid]);
 
@@ -65,6 +80,12 @@ const UploadsItemForm = ({
 		>
 			{/*  ============ Main form body ============ */}
 			<Section>
+				<div>
+					<input
+						type="hidden"
+						{...register('valid', { value: !name_duplicates })}
+					/>
+				</div>
 				<Controller
 					name="active"
 					control={control}
@@ -90,7 +111,16 @@ const UploadsItemForm = ({
 					control={control}
 					rules={{ required: true }}
 					render={({ field: { onChange, onBlur, value, ref, name } }) => (
-						<Form.Row errors={[]}>
+						<Form.Row
+							errors={inputErrorHandler(
+								{
+									duplicate: name_duplicates,
+									required: errors?.name?.type == 'required',
+								},
+								t,
+							)}
+							responsiveMessages={'50%'}
+						>
 							<Input.Text
 								onChange={onChange}
 								onBlur={onBlur}

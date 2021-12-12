@@ -223,7 +223,6 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 									languageList={Settings?.language_active}
 									languageDefault={Settings?.language_default}
 									onCreateCallback={createNewCallback}
-									allItems={Uploads} // TODO
 								/>
 							) : (
 								<UploadsDetailForm

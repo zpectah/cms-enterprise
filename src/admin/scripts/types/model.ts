@@ -130,6 +130,7 @@ export interface UploadsItemProps extends commonItemProps {
 	lang: {
 		[k: string]: UploadsItemLangProps;
 	};
+	valid?: boolean;
 }
 
 export interface UsersItemProps extends commonItemProps {
