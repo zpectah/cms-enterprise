@@ -25,7 +25,8 @@
     "confirmOrder": "Potvrdit objednávku",
     "install": "Instalovat",
     "viewSource": "Zobrazit zdroj",
-    "viewEditor": "Zobrazit editor"
+    "viewEditor": "Zobrazit editor",
+    "reply": "Odpovědět"
   },
   "new": {
     "Categories": "Nová kategorie",

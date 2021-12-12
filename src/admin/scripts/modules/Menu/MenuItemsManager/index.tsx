@@ -55,6 +55,7 @@ const MenuItemsManager = ({
 	const [confirmDialog, setConfirmDialog] = useState<boolean>(false);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [isProcessing, setProcessing] = useState(false);
 
 	const { createToasts } = useToasts(dispatch);
 	const {
@@ -92,10 +93,9 @@ const MenuItemsManager = ({
 	// When detail is submitted (create/update)
 	const itemSubmitHandler = (data: MenuItemItemProps) => {
 		const master: MenuItemItemProps = _.cloneDeep(data);
-
+		setProcessing(true);
 		// reformat data before save
 		master.name = master.name.split(' ').join('-');
-
 		if (master.id == 'new') {
 			createMenuItems(master).then((response) => {
 				reloadMenuItems();
@@ -105,6 +105,7 @@ const MenuItemsManager = ({
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		} else {
 			updateMenuItems(master).then((response) => {
@@ -115,6 +116,7 @@ const MenuItemsManager = ({
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
+				setProcessing(false);
 			});
 		}
 	};
@@ -130,7 +132,7 @@ const MenuItemsManager = ({
 	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
+		setProcessing(true);
 		toggleMenuItems(master).then((response) => {
 			reloadMenuItems();
 			createToasts({
@@ -138,13 +140,13 @@ const MenuItemsManager = ({
 				context: 'success',
 				timeout: TOASTS_TIMEOUT_DEFAULT,
 			});
+			setProcessing(false);
 		});
 	};
 
 	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogData(master);
 	};
@@ -152,7 +154,7 @@ const MenuItemsManager = ({
 	// When item/row is confirmed to submit confirm dialog
 	const itemDeleteConfirmHandler = () => {
 		const master: selectedArrayProps = [...confirmDialogData];
-
+		setProcessing(true);
 		deleteMenuItems(master).then((response) => {
 			reloadMenuItems();
 			createToasts({
@@ -162,6 +164,7 @@ const MenuItemsManager = ({
 			});
 			closeConfirmHandler();
 			closeDetailHandler();
+			setProcessing(false);
 		});
 	};
 

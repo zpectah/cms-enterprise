@@ -298,15 +298,16 @@ export interface CmsRequestsItemProps {
 }
 
 export interface CommentsItemProps {
-	id: number | string;
+	id?: number | string;
 	email?: string;
 	title: string;
 	content: string;
 	assigned?: string;
 	assigned_id?: number;
-	parent?: number;
-	status: number;
-	created?: string; // TODO - date time format
+	parent?: number | string;
+	status?: number;
+	created?: string;
+	mode?: 'new' | 'edit' | 'reply';
 }
 
 export type oneOfModelItemProps =

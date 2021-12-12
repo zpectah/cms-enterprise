@@ -99,7 +99,7 @@ class Comments {
         $utils = new \Utils;
 
         foreach ($data as $id) {
-            $response[] = $utils -> proceed_update_row('UPDATE comments SET active = IF(active=1, 2, 1) WHERE id = ?', $conn, $id);
+            $response[] = $utils -> proceed_update_row('UPDATE comments SET status = IF(status=1, 2, 1) WHERE id = ?', $conn, $id);
         }
 
         return $response; // list of affected ids
@@ -132,10 +132,7 @@ class Comments {
         $utils = new \Utils;
 
         foreach ($data as $id) {
-            $response[] = $utils -> proceed_update_row('UPDATE comments SET deleted = 3 WHERE id = ?', $conn, $id);
-
-            // TODO: find children and delete too
-
+            $response[] = $utils -> proceed_update_row('UPDATE comments SET status = 3 WHERE id = ?', $conn, $id);
         }
 
         return $response; // list of affected ids
