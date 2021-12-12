@@ -9,9 +9,7 @@
     "profileUpdated": "Profil byl aktualizován"
   },
   "error": {
-    "noAccess": "Bez přístupu! / No access!",
     "unauthorizedAccess": "Neautorizovaný přístup",
-    "profileLoadError": "Došlo k chybě při načítání profilu",
     "profileUpdateError": "Došlo k chybě při ukládání profilu, zkuste prosím znovu"
   },
   "info": {

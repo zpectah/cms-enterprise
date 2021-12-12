@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -25,27 +25,13 @@ const AuthRoute = ({ exact, path, component, auth }: AuthRouteProps) => {
 	const authorizeAccess = () => {
 		const user = Profile;
 
-		if (profile_error) {
-			createToasts({
-				title: t('messages:error.profileLoadError'),
-				context: 'error',
-				timeout: TOASTS_TIMEOUT_ERROR,
-			});
-		}
-
 		if (!user && !profile_loading) {
 			setRedirect(ROUTES.app.login.path);
-			createToasts({
-				title: t('messages:error.noAccess'),
-				context: 'error',
-				timeout: TOASTS_TIMEOUT_ERROR,
-			});
 
 			return;
 		} else if (user && !profile_loading) {
-			if (user?.user_level <= auth) {
-				console.log('C');
-				setRedirect(ROUTES.app.dashboard.path);
+			if (user?.user_level < auth) {
+				setRedirect(ROUTES.app.dashboard.path + '/');
 				createToasts({
 					title: t('messages:error.unauthorizedAccess'),
 					context: 'error',
@@ -61,10 +47,11 @@ const AuthRoute = ({ exact, path, component, auth }: AuthRouteProps) => {
 		authorizeAccess();
 	}, [Profile, auth]);
 
-	if (profile_loading) return <Preloader.Page />;
+	if (profile_loading || profile_error) return <Preloader.Page />;
 
 	if (redirect) {
-		return <Redirect to={redirect} />;
+		window.location.href = redirect;
+		return <></>;
 	} else if (userReady) {
 		return <Route exact={exact} path={path} component={component} />;
 	} else {

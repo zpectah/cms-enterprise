@@ -11,7 +11,12 @@ import MenuItem from '@mui/material/MenuItem';
 import config from '../../config';
 import { array, file } from '../../../../../utils/utils';
 import { getSearchAttrs, getTypesFromData } from '../../utils/table';
-import { ROUTE_SUFFIX, FORM_INPUT_MIN_LENGTH } from '../../constants';
+import {
+	ROUTE_SUFFIX,
+	FORM_INPUT_MIN_LENGTH,
+	USER_LEVEL_NUMS,
+} from '../../constants';
+import { useProfile } from '../../hooks/common';
 import { routeItemProps } from '../../types/pages';
 import { appModelProps } from '../../types/app';
 import { cellsTypesProps, customActionCellItemProps } from '../../types/table';
@@ -59,6 +64,7 @@ const DataTable = ({
 	customActionTriggers,
 }: DataTableProps) => {
 	const { t } = useTranslation(['common', 'components', 'types']);
+	const { Profile } = useProfile();
 	const [lang, setLang] = useState(languageDefault);
 	const [selectedRows, setSelectedRows] = useState(selectedItems);
 	const [searchInput, setSearchInput] = useState('');
@@ -66,7 +72,7 @@ const DataTable = ({
 	const [selectedAnchEl, setSelectedAnchEl] = useState<null | HTMLElement>(
 		null,
 	);
-
+	const should_delete = Profile?.user_level > USER_LEVEL_NUMS.redactor;
 	const selectedDropdownOpen = Boolean(selectedAnchEl);
 
 	const selectedDropdownOpenHandler = (
@@ -215,7 +221,7 @@ const DataTable = ({
 									onClick={selectedDropdownOpenHandler}
 									variant="outlined"
 									color="secondary"
-									disabled={selectedRows.length == 0}
+									disabled={selectedRows.length == 0 || !should_delete}
 									dataTestId={`${dataTestId}.options.selected.dropdown.trigger`}
 								>
 									{t(`table:options.selectedItems`)}&nbsp;&nbsp;(
@@ -235,6 +241,7 @@ const DataTable = ({
 										{...getElTestAttr(
 											`${dataTestId}.options.selected.dropdown.toggleSelected`,
 										)}
+										disabled={!should_delete}
 									>
 										{t(`button.toggle`)}
 									</MenuItem>
@@ -243,6 +250,7 @@ const DataTable = ({
 										{...getElTestAttr(
 											`${dataTestId}.options.selected.dropdown.deleteSelected`,
 										)}
+										disabled={!should_delete}
 									>
 										{t(`button.delete`)}
 									</MenuItem>
@@ -276,6 +284,7 @@ const DataTable = ({
 					dataTestId={dataTestId}
 					customActionTriggers={customActionTriggers}
 					searchLength={searchInput.length}
+					shouldDelete={should_delete}
 				/>
 			</Section>
 		</>

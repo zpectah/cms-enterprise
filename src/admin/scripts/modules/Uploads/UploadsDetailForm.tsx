@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 import config from '../../config';
 import { file as fileUtils } from '../../../../../utils/utils';
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, USER_LEVEL_NUMS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { UploadsItemProps } from '../../types/model';
 import {
@@ -70,6 +70,7 @@ interface UploadsDetailFormProps {
 	languageDefault: string;
 	onCreateCallback: () => void;
 	isProcessing?: boolean;
+	profileLevel: number;
 }
 
 const UploadsDetailForm = ({
@@ -83,6 +84,7 @@ const UploadsDetailForm = ({
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
 	isProcessing,
+	profileLevel,
 }: UploadsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -121,6 +123,7 @@ const UploadsDetailForm = ({
 			id={detailData.id}
 			formId={formOptions.id}
 			isValid={isValid}
+			shouldDelete={profileLevel > USER_LEVEL_NUMS.redactor}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
 			isProcessing={isProcessing}

@@ -14,7 +14,7 @@ import {
 } from '../../types/table';
 import { useTags } from '../../hooks/model';
 import getDetailData from '../../utils/getDetailData';
-import { useSettings } from '../../hooks/common';
+import { useProfile, useSettings } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import TagsDetailForm from './TagsDetailForm';
@@ -39,6 +39,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
+	const { Profile } = useProfile();
 	const {
 		Tags,
 		createTags,
@@ -224,6 +225,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
 							allItems={Tags}
+							profileLevel={Profile?.user_level}
 						/>
 					) : (
 						<DataTable

@@ -67,6 +67,7 @@ export interface TableProps {
 	minWidth?: number;
 	customActionTriggers?: customActionCellItemProps[];
 	searchLength?: number;
+	shouldDelete: boolean;
 }
 
 interface TableRowActionsButtonsProps {
@@ -74,6 +75,7 @@ interface TableRowActionsButtonsProps {
 	onDelete: TableProps['onDelete'];
 	rowIdPrefix: string;
 	customActionTriggers?: customActionCellItemProps[];
+	shouldDelete: boolean;
 }
 
 const TableRowActionButtons = ({
@@ -81,6 +83,7 @@ const TableRowActionButtons = ({
 	onDelete,
 	rowIdPrefix,
 	customActionTriggers = [],
+	shouldDelete,
 }: TableRowActionsButtonsProps) => {
 	const { t } = useTranslation(['common']);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -119,7 +122,9 @@ const TableRowActionButtons = ({
 						'aria-labelledby': `${rowIdPrefix}_button`,
 					}}
 				>
-					<MenuItem onClick={deleteClickHandler}>{t('button.delete')}</MenuItem>
+					<MenuItem onClick={deleteClickHandler} disabled={!shouldDelete}>
+						{t('button.delete')}
+					</MenuItem>
 					{customActionTriggers.length > 0 &&
 						customActionTriggers.map((trigger) => (
 							<MenuItem
@@ -152,6 +157,7 @@ const Table = ({
 	minWidth = 750,
 	customActionTriggers,
 	searchLength = 0,
+	shouldDelete,
 }: TableProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components', 'types']);
@@ -359,6 +365,7 @@ const Table = ({
 						checked={row.active}
 						onClick={() => onRowToggleHandler(row.id)}
 						dataTestId={`${tableRowIdPrefix}.cell.active.switch.${row.id}`}
+						disabled={!shouldDelete}
 					/>
 				),
 			});
@@ -469,6 +476,7 @@ const Table = ({
 												rowIdPrefix={`${tableRowIdPrefix}_${index}`}
 												onDelete={onRowDeleteHandler}
 												customActionTriggers={customActionTriggers}
+												shouldDelete={shouldDelete}
 											/>
 										</TableCell>
 									</TableRow>

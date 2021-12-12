@@ -95,6 +95,17 @@ export const ROUTE_PATH_MARKET = '/market';
 export const ROUTE_SETTINGS_DEFAULT_PANEL = '/global';
 export const ROUTE_HELP_DEFAULT_PANEL = '/common';
 export const ROUTES = {
+	module: {
+		app: {
+			auth: USER_LEVEL_NUMS.redactor,
+		},
+		crm: {
+			auth: USER_LEVEL_NUMS.chief_redactor,
+		},
+		market: {
+			auth: USER_LEVEL_NUMS.chief_redactor,
+		},
+	},
 	app: {
 		error404: {
 			path: null,

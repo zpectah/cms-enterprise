@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 
-import { TOASTS_TIMEOUT_DEFAULT } from '../../constants';
-import { useSettings } from '../../hooks/common';
+import { TOASTS_TIMEOUT_DEFAULT, USER_LEVEL_NUMS } from '../../constants';
+import { useProfile, useSettings } from '../../hooks/common';
 import { cmsSettingsObjectProps } from '../../types/modules';
 import SettingsForm from './SettingsForm';
 import { useToasts } from '../../hooks/common';
@@ -16,6 +16,7 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 	const { t } = useTranslation(['common', 'messages', 'form']);
 	const dispatch = useDispatch();
 	const { createToasts } = useToasts(dispatch);
+	const { Profile } = useProfile();
 	const {
 		Settings,
 		updateSettings,
@@ -49,6 +50,7 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 					afterLanguageInstall={(installed) => reloadSettings()}
 					afterModuleInstall={() => reloadSettings()}
 					isProcessing={processing}
+					isDeveloper={Profile?.user_level == USER_LEVEL_NUMS.super_admin}
 				/>
 			) : (
 				<Preloader.Block />

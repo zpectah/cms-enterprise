@@ -32,15 +32,20 @@ const Wrapper = styled.aside<{ sideBarOpen: boolean }>`
 interface SidebarProps {
 	app: pageObjectProps['app'];
 	dataTestId?: string;
+	profileLevel: number;
 }
 
-const Sidebar = ({ dataTestId = 'sidebar', app }: SidebarProps) => {
+const Sidebar = ({
+	dataTestId = 'sidebar',
+	app,
+	profileLevel,
+}: SidebarProps) => {
 	const { sideBarOpen } = useSelector((store: storeProps) => store);
 
 	return (
 		<Wrapper sideBarOpen={sideBarOpen} {...getElTestAttr(dataTestId)}>
 			<Scrollable>
-				<Navbar app={app} />
+				<Navbar app={app} profileLevel={profileLevel} />
 			</Scrollable>
 		</Wrapper>
 	);

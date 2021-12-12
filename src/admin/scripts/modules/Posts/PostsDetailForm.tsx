@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, USER_LEVEL_NUMS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { PostsItemProps } from '../../types/model';
 import {
@@ -38,6 +38,8 @@ interface PostsDetailFormProps {
 	onCreateCallback: () => void;
 	shouldApprove?: boolean;
 	isProcessing?: boolean;
+	profileLevel: number;
+	profileId: number | string;
 }
 
 const PostsDetailForm = ({
@@ -53,6 +55,8 @@ const PostsDetailForm = ({
 	onCreateCallback,
 	shouldApprove,
 	isProcessing,
+	profileLevel,
+	profileId,
 }: PostsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -87,15 +91,41 @@ const PostsDetailForm = ({
 
 		return title;
 	};
+	const should_update =
+		profileLevel > USER_LEVEL_NUMS.redactor ||
+		(profileLevel == USER_LEVEL_NUMS.redactor &&
+			(detailData.id == 'new' || detailData.author == Number(profileId)));
 	const renderFooter = () => (
-		<DetailFormActions
-			id={detailData.id}
-			formId={formOptions.id}
-			isValid={isValid && !name_duplicates}
-			onDelete={deleteHandler}
-			onCancel={cancelHandler}
-			isProcessing={isProcessing}
-		/>
+		<>
+			<Button
+				type="submit"
+				variant="contained"
+				disabled={!(isValid && !name_duplicates) || !should_update}
+				dataTestId={`${formOptions.id}.button.submit`}
+				loading={isProcessing}
+			>
+				{detailData.id == 'new' ? t('button.create') : t('button.update')}
+			</Button>
+			{detailData.id !== 'new' && (
+				<Button
+					variant="outlined"
+					color="error"
+					onClick={deleteHandler}
+					dataTestId={`${formOptions.id}.button.delete`}
+					disabled={!should_update}
+				>
+					{t('button.delete')}
+				</Button>
+			)}
+			<Button
+				variant="outlined"
+				color="secondary"
+				onClick={cancelHandler}
+				dataTestId={`${formOptions.id}.button.return`}
+			>
+				{t('button.return')}
+			</Button>
+		</>
 	);
 
 	// Model options list

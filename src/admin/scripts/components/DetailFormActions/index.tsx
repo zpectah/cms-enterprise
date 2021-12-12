@@ -11,6 +11,7 @@ interface DetailFormActionsProps {
 	onDelete: () => void;
 	onCancel: () => void;
 	isProcessing?: boolean;
+	shouldDelete?: boolean;
 }
 
 const DetailFormActions = ({
@@ -20,6 +21,7 @@ const DetailFormActions = ({
 	onDelete,
 	onCancel,
 	isProcessing,
+	shouldDelete = true,
 }: DetailFormActionsProps) => {
 	const { t } = useTranslation(['common']);
 
@@ -40,6 +42,7 @@ const DetailFormActions = ({
 					color="error"
 					onClick={onDelete}
 					dataTestId={`${formId}.button.delete`}
+					disabled={!shouldDelete}
 				>
 					{t('button.delete')}
 				</Button>

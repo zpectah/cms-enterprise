@@ -14,7 +14,7 @@ import {
 } from '../../types/table';
 import { useUploads } from '../../hooks/model';
 import getDetailData from '../../utils/getDetailData';
-import { useSettings } from '../../hooks/common';
+import { useProfile, useSettings } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import UploadsDetailForm from './UploadsDetailForm';
@@ -40,6 +40,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const [isProcessing, setProcessing] = useState<boolean>(false);
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
+	const { Profile } = useProfile();
 	const {
 		Uploads,
 		createUploads,
@@ -237,6 +238,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 									languageDefault={Settings?.language_default}
 									onCreateCallback={createNewCallback}
 									isProcessing={isProcessing}
+									profileLevel={Profile?.user_level}
 								/>
 							)}
 						</>

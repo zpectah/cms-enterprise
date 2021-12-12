@@ -17,7 +17,7 @@ import {
 } from '../../types/table';
 import { useCategories } from '../../hooks/model';
 import getDetailData from '../../utils/getDetailData';
-import { useSettings } from '../../hooks/common';
+import { useProfile, useSettings } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import CategoriesDetailForm from './CategoriesDetailForm';
@@ -43,6 +43,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 
 	const { createToasts } = useToasts(dispatch);
 	const { Settings } = useSettings();
+	const { Profile } = useProfile();
 	const {
 		Categories,
 		createCategories,
@@ -235,6 +236,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
 							allItems={Categories}
+							profileLevel={Profile?.user_level}
 						/>
 					) : (
 						<DataTable

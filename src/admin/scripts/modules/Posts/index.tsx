@@ -257,6 +257,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 							shouldApprove={shouldApproveHandler()}
 							isProcessing={isProcessing}
 							allItems={Posts}
+							profileLevel={Profile?.user_level}
+							profileId={Profile?.id}
 						/>
 					) : (
 						<DataTable

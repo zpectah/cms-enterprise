@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX, USER_LEVEL_NUMS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { CategoriesItemProps } from '../../types/model';
 import {
@@ -36,6 +36,7 @@ interface CategoriesDetailFormProps {
 	languageDefault: string;
 	onCreateCallback: () => void;
 	isProcessing?: boolean;
+	profileLevel: number;
 }
 
 const CategoriesDetailForm = ({
@@ -50,6 +51,7 @@ const CategoriesDetailForm = ({
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
 	isProcessing,
+	profileLevel,
 }: CategoriesDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -90,6 +92,7 @@ const CategoriesDetailForm = ({
 			id={detailData.id}
 			formId={formOptions.id}
 			isValid={isValid && !name_duplicates}
+			shouldDelete={profileLevel > USER_LEVEL_NUMS.redactor}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
 			isProcessing={isProcessing}

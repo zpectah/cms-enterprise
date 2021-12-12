@@ -99,7 +99,11 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 					{...getElTestAttr(dataTestId)}
 					data-layout-page={pageObject.name}
 				>
-					<Sidebar app={pageObject.app} dataTestId={`${dataTestId}.sidebar`} />
+					<Sidebar
+						app={pageObject.app}
+						dataTestId={`${dataTestId}.sidebar`}
+						profileLevel={Profile?.user_level}
+					/>
 					<WrapperInner sideBarOpen={sideBarOpen}>
 						{isDesktop && <ContentHeading pageObject={pageObject} />}
 						<Container maxWidth={containerMaxWidth}>

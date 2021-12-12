@@ -39,9 +39,14 @@ const StyledItem = styled(ListItemButton)`
 interface NavbarProps {
 	app: pageObjectProps['app'];
 	dataTestId?: string;
+	profileLevel: number;
 }
 
-const Navbar = ({ dataTestId = 'navbar.primary', app }: NavbarProps) => {
+const Navbar = ({
+	dataTestId = 'navbar.primary',
+	app,
+	profileLevel,
+}: NavbarProps) => {
 	const { t } = useTranslation(['common', 'page']);
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -145,10 +150,14 @@ const Navbar = ({ dataTestId = 'navbar.primary', app }: NavbarProps) => {
 				disablePadding
 				{...getElTestAttr(dataTestId)}
 			>
-				{sectionAppActive && renderItems('app')}
+				{sectionAppActive &&
+					profileLevel >= ROUTES.module.app.auth &&
+					renderItems('app')}
 				{sectionCrmActive &&
+					profileLevel >= ROUTES.module.crm.auth &&
 					renderList('crm', sectionCrmToggle, openSectionCrm)}
 				{sectionMarketActive &&
+					profileLevel >= ROUTES.module.market.auth &&
 					renderList('market', sectionMarketToggle, openSectionMarket)}
 			</List>
 		</>
