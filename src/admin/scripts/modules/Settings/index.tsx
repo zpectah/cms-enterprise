@@ -48,6 +48,7 @@ const SettingsModule = ({}: SettingsModuleProps) => {
 					onSubmitError={formSubmitErrorHandler}
 					afterLanguageInstall={(installed) => reloadSettings()}
 					afterModuleInstall={() => reloadSettings()}
+					isProcessing={processing}
 				/>
 			) : (
 				<Preloader.Block />

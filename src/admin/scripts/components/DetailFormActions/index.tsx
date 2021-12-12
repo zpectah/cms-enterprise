@@ -10,6 +10,7 @@ interface DetailFormActionsProps {
 	isValid: boolean;
 	onDelete: () => void;
 	onCancel: () => void;
+	isProcessing?: boolean;
 }
 
 const DetailFormActions = ({
@@ -18,6 +19,7 @@ const DetailFormActions = ({
 	isValid,
 	onDelete,
 	onCancel,
+	isProcessing,
 }: DetailFormActionsProps) => {
 	const { t } = useTranslation(['common']);
 
@@ -28,7 +30,7 @@ const DetailFormActions = ({
 				variant="contained"
 				disabled={!isValid}
 				dataTestId={`${formId}.button.submit`}
-				endIcon={<SendIcon style={{ fontSize: '1rem' }} />}
+				loading={isProcessing}
 			>
 				{id == 'new' ? t('button.create') : t('button.update')}
 			</Button>

@@ -34,6 +34,7 @@ interface PostsDetailFormProps {
 	languageDefault: string;
 	onCreateCallback: () => void;
 	shouldApprove?: boolean;
+	isProcessing?: boolean;
 }
 
 const PostsDetailForm = ({
@@ -47,6 +48,7 @@ const PostsDetailForm = ({
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
 	shouldApprove,
+	isProcessing,
 }: PostsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -88,6 +90,7 @@ const PostsDetailForm = ({
 			isValid={isValid}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
+			isProcessing={isProcessing}
 		/>
 	);
 

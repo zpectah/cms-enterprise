@@ -33,6 +33,7 @@ interface ProductsDetailFormProps {
 	languageList: string[];
 	languageDefault: string;
 	onCreateCallback: () => void;
+	isProcessing?: boolean;
 }
 
 const ProductsDetailForm = ({
@@ -45,6 +46,7 @@ const ProductsDetailForm = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
+	isProcessing,
 }: ProductsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -86,6 +88,7 @@ const ProductsDetailForm = ({
 			isValid={isValid}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
+			isProcessing={isProcessing}
 		/>
 	);
 

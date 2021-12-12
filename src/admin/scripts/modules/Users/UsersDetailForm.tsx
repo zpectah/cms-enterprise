@@ -30,6 +30,7 @@ interface UsersDetailFormProps {
 	languageList: string[];
 	languageDefault: string;
 	onCreateCallback: () => void;
+	isProcessing?: boolean;
 }
 
 const UsersDetailForm = ({
@@ -42,6 +43,7 @@ const UsersDetailForm = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
+	isProcessing,
 }: UsersDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -82,6 +84,7 @@ const UsersDetailForm = ({
 			isValid={isValid}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
+			isProcessing={isProcessing}
 		/>
 	);
 
@@ -96,7 +99,6 @@ const UsersDetailForm = ({
 	);
 	const getLevelOptions = useCallback(() => {
 		let options = [];
-
 		config.options.model.Users.level.map((type) => {
 			options.push({
 				label: t(`types:${type}`),

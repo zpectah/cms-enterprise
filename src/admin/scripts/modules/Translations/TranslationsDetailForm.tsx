@@ -30,6 +30,7 @@ interface TranslationsDetailFormProps {
 	languageList: string[];
 	languageDefault: string;
 	onCreateCallback: () => void;
+	isProcessing?: boolean;
 }
 
 const TranslationsDetailForm = ({
@@ -42,6 +43,7 @@ const TranslationsDetailForm = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
+	isProcessing,
 }: TranslationsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -83,6 +85,7 @@ const TranslationsDetailForm = ({
 			isValid={isValid}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
+			isProcessing={isProcessing}
 		/>
 	);
 

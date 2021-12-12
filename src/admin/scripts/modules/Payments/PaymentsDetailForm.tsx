@@ -31,6 +31,7 @@ interface PaymentsDetailFormProps {
 	languageList: string[];
 	languageDefault: string;
 	onCreateCallback: () => void;
+	isProcessing?: boolean;
 }
 
 const PaymentsDetailForm = ({
@@ -43,6 +44,7 @@ const PaymentsDetailForm = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
+	isProcessing,
 }: PaymentsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -83,6 +85,7 @@ const PaymentsDetailForm = ({
 			isValid={isValid}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
+			isProcessing={isProcessing}
 		/>
 	);
 

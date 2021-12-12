@@ -29,6 +29,14 @@ export const USER_LEVEL_NUMS = {
 	admin: 5,
 	super_admin: 7,
 };
+export const USER_NUMS_LEVEL = {
+	0: 'none',
+	1: 'demo',
+	2: 'redactor',
+	3: 'chief_redactor',
+	5: 'admin',
+	7: 'super_admin',
+};
 export const ORDER_STATUS_NUMS = {
 	0: 'canceled',
 	1: 'created',

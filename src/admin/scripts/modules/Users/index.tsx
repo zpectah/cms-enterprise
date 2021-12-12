@@ -226,6 +226,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							isProcessing={isProcessing}
 						/>
 					) : (
 						<DataTable

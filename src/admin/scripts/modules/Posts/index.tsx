@@ -255,6 +255,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							shouldApprove={shouldApproveHandler()}
+							isProcessing={isProcessing}
 						/>
 					) : (
 						<DataTable

@@ -1,26 +1,44 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import SendIcon from '@mui/icons-material/Send';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import { useTranslation } from 'react-i18next';
+import styled from '@emotion/styled';
 
+import { USER_NUMS_LEVEL } from '../../constants';
 import { UsersItemProps } from '../../types/model';
 import { formLayoutObjectProps } from '../../types/app';
-import { Form, Button, Section, Input } from '../../components/ui';
+import { Form, Button, Section, Input, Typography } from '../../components/ui';
 
 import Picker from '../../components/Picker';
+
+const AvatarHeadingWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+`;
+const HeadingDetail = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+`;
 
 interface ProfileFormProps {
 	formData: any;
 	onSubmit: (data: UsersItemProps, e: any) => void;
 	onSubmitError: (error: any, e: any) => void;
+	isProcessing?: boolean;
 }
 
 const ProfileForm = ({
 	formData,
 	onSubmit,
 	onSubmitError,
+	isProcessing,
 }: ProfileFormProps) => {
-	const { t } = useTranslation(['common', 'form', 'messages']);
+	const { t } = useTranslation(['common', 'form', 'messages', 'types']);
 	const [tmpAvatar, setTmpAvatar] = useState<any>(null);
 	const formOptions: formLayoutObjectProps = {
 		model: 'Profile',
@@ -46,7 +64,7 @@ const ProfileForm = ({
 					type="submit"
 					variant="contained"
 					disabled={!isValid}
-					endIcon={<SendIcon style={{ fontSize: '1rem' }} />}
+					loading={isProcessing}
 				>
 					{t('button.update')}
 				</Button>
@@ -83,20 +101,47 @@ const ProfileForm = ({
 						control={control}
 						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
-								<Picker.Avatar
-									value={value}
-									onChange={(blob) => {
-										setTmpAvatar(blob);
-										onChange(blob);
-									}}
-								/>
+							<Form.Row
+								blankLabel
+								id={`${formOptions.id}__img_avatar`}
+								errors={[]}
+							>
+								<AvatarHeadingWrapper>
+									<Picker.Avatar
+										value={value}
+										onChange={(blob) => {
+											setTmpAvatar(blob);
+											onChange(blob);
+										}}
+									/>
+									<HeadingDetail>
+										<Typography.Title h4>
+											{formData.first_name}
+											{formData.middle_name ? ` ${formData.middle_name} ` : ' '}
+											{formData.last_name}
+										</Typography.Title>
+										<Typography.Paragraph small>
+											{formData.email}
+										</Typography.Paragraph>
+										<Stack
+											spacing={2}
+											direction="row"
+											style={{ marginTop: '1rem' }}
+										>
+											<Chip
+												label={t(
+													`types:${USER_NUMS_LEVEL[formData.user_level]}`,
+												)}
+												size="small"
+												color="info"
+											/>
+											<Chip label={formData.user_group} size="small" />
+										</Stack>
+									</HeadingDetail>
+								</AvatarHeadingWrapper>
 							</Form.Row>
 						)}
 					/>
-				</Section>
-				<Section>
-					<div>{formData.email}</div>
 				</Section>
 				<Section>
 					<Controller
@@ -104,7 +149,11 @@ const ProfileForm = ({
 						control={control}
 						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								id={`${formOptions.id}__password`}
+								label={t('form:input.password_new')}
+								errors={[]}
+							>
 								<Input.Text
 									type="password"
 									onChange={onChange}
@@ -112,8 +161,8 @@ const ProfileForm = ({
 									value={value || ''}
 									name={name}
 									id={`${formOptions.id}__password`}
-									label={t('form:input.password_new')}
-									responsiveWidth={'75%'}
+									placeholder={t('form:input.password_new')}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.password`}
 								/>
 							</Form.Row>
@@ -126,15 +175,18 @@ const ProfileForm = ({
 						control={control}
 						rules={{ required: true }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								id={`${formOptions.id}__nick_name`}
+								label={t('form:input.nick_name')}
+							>
 								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
 									id={`${formOptions.id}__nick_name`}
-									label={t('form:input.nick_name')}
-									responsiveWidth={'75%'}
+									placeholder={t('form:input.nick_name')}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.nick_name`}
 									required
 								/>
@@ -146,15 +198,18 @@ const ProfileForm = ({
 						control={control}
 						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								label={t('form:input.first_name')}
+								id={`${formOptions.id}__password`}
+							>
 								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
 									id={`${formOptions.id}__first_name`}
-									label={t('form:input.first_name')}
-									responsiveWidth={'75%'}
+									placeholder={t('form:input.first_name')}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.first_name`}
 								/>
 							</Form.Row>
@@ -165,15 +220,18 @@ const ProfileForm = ({
 						control={control}
 						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								id={`${formOptions.id}__middle_name`}
+								label={t('form:input.middle_name')}
+							>
 								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
 									id={`${formOptions.id}__middle_name`}
-									label={t('form:input.middle_name')}
-									responsiveWidth={'75%'}
+									placeholder={t('form:input.middle_name')}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.middle_name`}
 								/>
 							</Form.Row>
@@ -184,15 +242,18 @@ const ProfileForm = ({
 						control={control}
 						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								id={`${formOptions.id}__last_name`}
+								label={t('form:input.last_name')}
+							>
 								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
 									id={`${formOptions.id}__last_name`}
-									label={t('form:input.last_name')}
-									responsiveWidth={'75%'}
+									placeholder={t('form:input.last_name')}
+									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.last_name`}
 								/>
 							</Form.Row>
@@ -205,15 +266,18 @@ const ProfileForm = ({
 						control={control}
 						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
-							<Form.Row errors={[]}>
+							<Form.Row
+								label={t('form:input.description')}
+								id={`${formOptions.id}__description`}
+							>
 								<Input.Text
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value}
 									name={name}
 									id={`${formOptions.id}__description`}
-									label={t('form:input.description')}
-									// responsiveWidth={'75%'}
+									placeholder={t('form:input.description')}
+									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.description`}
 									multiline
 									rows={5}

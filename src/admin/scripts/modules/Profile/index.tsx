@@ -53,6 +53,7 @@ const ProfileModule = ({}: ProfileModuleProps) => {
 					formData={Profile}
 					onSubmit={formSubmitHandler}
 					onSubmitError={formSubmitErrorHandler}
+					isProcessing={processing}
 				/>
 			) : (
 				<Preloader.Block />

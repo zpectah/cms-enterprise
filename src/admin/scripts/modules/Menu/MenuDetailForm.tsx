@@ -32,6 +32,7 @@ interface MenuDetailFormProps {
 	languageList: string[];
 	languageDefault: string;
 	onCreateCallback: () => void;
+	isProcessing?: boolean;
 }
 
 const MenuDetailForm = ({
@@ -44,6 +45,7 @@ const MenuDetailForm = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
+	isProcessing,
 }: MenuDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form', 'messages']);
 	const [lang, setLang] = useState(languageDefault);
@@ -84,6 +86,7 @@ const MenuDetailForm = ({
 			isValid={isValid}
 			onDelete={deleteHandler}
 			onCancel={cancelHandler}
+			isProcessing={isProcessing}
 		/>
 	);
 

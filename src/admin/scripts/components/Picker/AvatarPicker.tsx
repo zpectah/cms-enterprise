@@ -10,6 +10,9 @@ const ImageWrapper = styled.div`
 	display: inline-flex;
 	position: relative;
 	color: ${(props) => props.theme.palette.light};
+	border-radius: 100%;
+	overflow: hidden;
+	flex: none;
 `;
 const UndoButton = styled.div`
 	width: 40px;
@@ -26,10 +29,10 @@ const UndoButton = styled.div`
 const ChangeTrigger = styled.div`
 	width: 30px;
 	height: 30px;
-	margin-bottom: -37px;
+	margin-bottom: -30px;
 	position: relative;
-	top: -37px;
-	right: 0;
+	top: 0;
+	right: 30px;
 	cursor: pointer;
 `;
 

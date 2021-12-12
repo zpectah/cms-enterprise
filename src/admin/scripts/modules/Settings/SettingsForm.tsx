@@ -25,6 +25,7 @@ interface SettingsFormProps {
 	onSubmitError: (error: any, e: any) => void;
 	afterLanguageInstall: (installed: string[]) => void;
 	afterModuleInstall: () => void;
+	isProcessing?: boolean;
 }
 
 const SettingsForm = ({
@@ -33,6 +34,7 @@ const SettingsForm = ({
 	onSubmitError,
 	afterLanguageInstall,
 	afterModuleInstall,
+	isProcessing,
 }: SettingsFormProps) => {
 	const params: any = useParams();
 	const history = useHistory();
@@ -80,7 +82,7 @@ const SettingsForm = ({
 					type="submit"
 					variant="contained"
 					disabled={!isValid}
-					endIcon={<SendIcon style={{ fontSize: '1rem' }} />}
+					loading={isProcessing}
 				>
 					{t('button.update')}
 				</Button>
@@ -98,24 +100,26 @@ const SettingsForm = ({
 		setValue(type, value);
 		afterModuleInstall();
 	};
-
-	// Model options list
 	const getIndexOptions = useCallback(
 		() => getOptionsList(config.options.common.meta_robots, t),
 		[formData],
 	);
-	const getLanguageInstalledOptions = useCallback(() => {
-		let tmp = [];
-		formData.language_installed.map((lng) => {
-			tmp.push({
-				value: lng,
-				label: config.locales[lng].label,
-				disabled: !formData.language_active.find((l) => l == lng),
+	const getLanguageInstalledOptions = useCallback(
+		(onlyActive?: boolean) => {
+			let tmp = [];
+			formData.language_installed.map((lng) => {
+				tmp.push({
+					value: lng,
+					label: config.locales[lng].label,
+					disabled:
+						onlyActive && !formData.language_active.find((l) => l == lng),
+				});
 			});
-		});
 
-		return tmp;
-	}, [formData]);
+			return tmp;
+		},
+		[formData],
+	);
 
 	useEffect(() => {
 		if (params.panel) setPanel(params.panel);
@@ -124,7 +128,7 @@ const SettingsForm = ({
 	return (
 		<>
 			<Form.Layout
-				key={`SettingsForm_${formOptions.id}`}
+				key={`FormLayout_${formOptions.id}`}
 				formName={formOptions.id}
 				dataTestId={formOptions.id}
 				onSubmit={handleSubmit(submitHandler, errorSubmitHandler)}
@@ -163,7 +167,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.project_name')}
 											id={`${formOptions.id}__project_name`}
-											errors={[]}
 											required
 										>
 											<Input.Text
@@ -192,7 +195,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_name')}
 											id={`${formOptions.id}__company_name`}
-											errors={[]}
 											required
 										>
 											<Input.Text
@@ -219,7 +221,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_description')}
 											id={`${formOptions.id}__company_description`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -247,7 +248,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_id')}
 											id={`${formOptions.id}__company_id`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -272,7 +272,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_address')}
 											id={`${formOptions.id}__company_address`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -299,7 +298,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_city')}
 											id={`${formOptions.id}__company_city`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -324,7 +322,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_country')}
 											id={`${formOptions.id}__company_country`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -351,7 +348,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_zip')}
 											id={`${formOptions.id}__company_zip`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -376,7 +372,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_location')}
 											id={`${formOptions.id}__company_location`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -403,7 +398,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_email')}
 											id={`${formOptions.id}__company_email`}
-											errors={[]}
 										>
 											<Picker.Email
 												value={value}
@@ -423,7 +417,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_phone')}
 											id={`${formOptions.id}__company_phone`}
-											errors={[]}
 										>
 											<Picker.Phone
 												value={value}
@@ -443,7 +436,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.company_bank')}
 											id={`${formOptions.id}__company_bank`}
-											errors={[]}
 										>
 											<Input.Text
 												onChange={onChange}
@@ -477,7 +469,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.web_meta_title')}
 											id={`${formOptions.id}__web_meta_title`}
-											errors={[]}
 											required
 										>
 											<Input.Text
@@ -506,7 +497,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.web_meta_description')}
 											id={`${formOptions.id}__project_name`}
-											errors={[]}
 											required
 										>
 											<Input.Text
@@ -536,7 +526,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.web_meta_robots')}
 											id={`${formOptions.id}__web_meta_robots`}
-											errors={[]}
 											required
 										>
 											<Input.Select
@@ -562,7 +551,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.web_meta_keywords')}
 											id={`${formOptions.id}__web_meta_keywords`}
-											errors={[]}
 											required
 										>
 											<Picker.String
@@ -585,7 +573,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__web_mode_maintenance`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -611,7 +598,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__web_mode_debug`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -637,7 +623,6 @@ const SettingsForm = ({
 										<Form.Row
 											label={t('form:form.Settings.input.form_email_sender')}
 											id={`${formOptions.id}__form_email_sender`}
-											errors={[]}
 											required
 										>
 											<Input.Text
@@ -669,7 +654,6 @@ const SettingsForm = ({
 												'form:form.Settings.input.form_email_recipients',
 											)}
 											id={`${formOptions.id}__form_email_recipients`}
-											errors={[]}
 											required
 										>
 											<Picker.Email
@@ -692,7 +676,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__content_redactor_approval`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -718,7 +701,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__comments_global_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -744,7 +726,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__comments_anonymous_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -779,7 +760,6 @@ const SettingsForm = ({
 											field: { onChange, onBlur, value, ref, name },
 										}) => (
 											<Form.Row
-												errors={[]}
 												label={t('form:form.Settings.input.language_active')}
 												id={`${formOptions.id}_select_language_active`}
 											>
@@ -807,7 +787,6 @@ const SettingsForm = ({
 											field: { onChange, onBlur, value, ref, name },
 										}) => (
 											<Form.Row
-												errors={[]}
 												label={t('form:form.Settings.input.language_default')}
 												id={`${formOptions.id}_select_language_default`}
 											>
@@ -817,7 +796,7 @@ const SettingsForm = ({
 													onBlur={onBlur}
 													value={value}
 													name={name}
-													options={getLanguageInstalledOptions()}
+													options={getLanguageInstalledOptions(true)}
 													dataTestId={`${formOptions.id}.select.language_default`}
 													responsiveWidth={'50%'}
 												/>
@@ -874,7 +853,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__module_crm_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -899,7 +877,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__members_login_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -926,7 +903,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__members_lostPassword_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -953,7 +929,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__members_profile_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -980,7 +955,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__members_register_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
@@ -1031,7 +1005,6 @@ const SettingsForm = ({
 										<Form.Row
 											blankLabel
 											id={`${formOptions.id}__module_market_active`}
-											errors={[]}
 										>
 											<Input.SwitchControl
 												onChange={onChange}
