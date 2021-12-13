@@ -19,6 +19,7 @@ const AvatarHeadingWrapper = styled.div`
 `;
 const HeadingDetail = styled.div`
 	width: 100%;
+	margin-left: 2rem;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;

@@ -177,9 +177,11 @@ const ImageCropper = ({
 			</CropperSource>
 			<CropperOptions>
 				<CropperOptionsBlock>
-					<Button onClick={onCancel}>
-						{avatarOnly ? t('button.close') : t('button.removeFromQueue')}
-					</Button>
+					{onCancel && (
+						<Button onClick={onCancel}>
+							{avatarOnly ? t('button.close') : t('button.removeFromQueue')}
+						</Button>
+					)}
 				</CropperOptionsBlock>
 				<CropperOptionsBlock>
 					<small>
@@ -197,6 +199,7 @@ const ImageCropper = ({
 						value={zoom}
 						onChange={zoomHandleChange}
 						dataTestId={`ImageCropper.options.zoom`}
+						style={{ width: '200px' }}
 					/>
 				</CropperOptionsAltBlock>
 				<CropperOptionsBlock>

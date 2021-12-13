@@ -95,7 +95,6 @@ interface UploaderProps {
 	languageList?: string[];
 	widthHeading?: boolean;
 	multiple?: boolean;
-	avatarOnly?: boolean;
 }
 
 const Uploader: React.FC<UploaderProps> = ({
@@ -110,7 +109,6 @@ const Uploader: React.FC<UploaderProps> = ({
 	languageList = config.tmp.languageList,
 	widthHeading = true,
 	multiple = true,
-	avatarOnly,
 }) => {
 	const { t } = useTranslation(['common', 'component', 'message']);
 	const [dragOver, setDragOver] = useState(false);
@@ -222,16 +220,8 @@ const Uploader: React.FC<UploaderProps> = ({
 	};
 	const cropChangeHandler = (blob: any, index: number) => {
 		let tmp = [...fileList];
-		if (avatarOnly) {
-			// Resize image only for avatar picker
-			fileUtils.resizeBase64Image(blob, 150, 150).then((result) => {
-				tmp[index].fileBase64_cropped = result;
-				onChange(tmp, formsValid);
-			});
-		} else {
-			tmp[index].fileBase64_cropped = blob;
-			onChange(tmp, formsValid);
-		}
+		tmp[index].fileBase64_cropped = blob;
+		onChange(tmp, formsValid);
 	};
 	const formChangeHandler = (
 		model: any,
@@ -347,7 +337,6 @@ const Uploader: React.FC<UploaderProps> = ({
 										cropChangeHandler(fileBase64, index)
 									}
 									aspect={aspect}
-									avatarOnly={avatarOnly}
 									onConfirm={() => {}}
 									onCancel={() => removeFromQueue(index)}
 								/>

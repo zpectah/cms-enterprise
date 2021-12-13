@@ -244,4 +244,49 @@ export const file = {
 			};
 		});
 	},
+	resizeBase64AndReduceQualityImage: function (
+		base64Str,
+		alpha,
+		maxWidth = 100,
+		maxHeight = 100,
+	) {
+		// https://www.smashingmagazine.com/2011/08/optimize-images-with-html5-canvas/
+		return new Promise((resolve) => {
+			let img = new Image();
+			img.src = base64Str;
+			img.onload = () => {
+				const canvas = document.createElement('canvas');
+				let width = img.width;
+				let height = img.height;
+				if (width > height) {
+					if (width > maxWidth) {
+						height *= maxWidth / width;
+						width = maxWidth;
+					}
+				} else {
+					if (height > maxHeight) {
+						width *= maxHeight / height;
+						height = maxHeight;
+					}
+				}
+				canvas.width = width;
+				canvas.height = height;
+				let ctx = canvas.getContext('2d');
+				ctx.drawImage(img, 0, 0, width, height);
+				let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+				let pixels = imageData.data;
+				let alpha1 = 1 - alpha;
+				let rl = Math.round(ctx.canvas.width * 3.3);
+				let randoms = new Array(rl);
+				for (let i = 0; i < rl; i++) {
+					randoms[i] = Math.random() * alpha + alpha1;
+				}
+				for (let i = 0, il = pixels.length; i < il; i += 2) {
+					pixels[i] = (pixels[i] * randoms[i % rl]) | 0;
+				}
+				ctx.putImageData(imageData, 0, 0);
+				resolve(canvas.toDataURL());
+			};
+		});
+	},
 };

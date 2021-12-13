@@ -10,7 +10,7 @@
   },
   "error": {
     "unauthorizedAccess": "Neautorizovaný přístup",
-    "profileUpdateError": "Došlo k chybě při ukládání profilu, zkuste prosím znovu"
+    "profileUpdateError": "Došlo k chybě při ukládání profilu, pravděpodobně je obrázek příliš velký, zkuste prosím znovu"
   },
   "info": {
     "menuMustBeCreated": "Pro vytváření položek musí být menu nejdříve uloženo"
