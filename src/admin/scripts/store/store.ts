@@ -2,13 +2,11 @@ import { storage } from '../../../../utils/utils';
 import CFG from '../config';
 import LangService from '../services/Language.service';
 import ThemeService from '../services/Theme.service';
-import HelpService from '../services/Help.service';
 import { storeProps } from '../types/store';
 
 const UiStoreState: storeProps = {
 	language: LangService.get(),
 	theme: ThemeService.get(),
-	help: HelpService.get(),
 	sideBarOpen: storage.get(CFG.project.keys.sidebar) === 'true',
 	toasts: [],
 };

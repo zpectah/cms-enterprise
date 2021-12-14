@@ -9,7 +9,7 @@ class System {
     public function create_log ($data) {
         $ls = new LogService;
 
-        return $ls -> create($data['user'], $data['method'], $data['status']);
+        return $ls -> create($data['method'], $data['status'], $data['content']);
     }
 
     public function get_log_list ($params) {

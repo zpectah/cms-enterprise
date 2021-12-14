@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES, TOASTS_TIMEOUT_ERROR } from '../../constants';
 import { useProfile, useToasts } from '../../hooks/common';
 import { Preloader } from '../ui';
+import LogsService from '../../services/Logs.service';
 
 interface AuthRouteProps {
 	exact?: true | false;
@@ -36,6 +37,11 @@ const AuthRoute = ({ exact, path, component, auth }: AuthRouteProps) => {
 					title: t('messages:error.unauthorizedAccess'),
 					context: 'error',
 					timeout: TOASTS_TIMEOUT_ERROR,
+				});
+				LogsService.create({
+					method: 'AuthRoute',
+					status: 'error',
+					content: 'unauthorizedAccess',
 				});
 			}
 		}

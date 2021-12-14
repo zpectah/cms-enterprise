@@ -10,7 +10,6 @@ import themes from './styles/themes';
 import muiTheme from './styles/mui.theme';
 import { GlobalStyles } from './styles/global';
 import ThemeService from './services/Theme.service';
-import HelpService from './services/Help.service';
 import LanguageService from './services/Language.service';
 import ToastsModule from './modules/Toasts';
 import { ROUTES, ROUTE_PATH_PARAMS } from './constants';
@@ -47,7 +46,6 @@ const App = () => {
 
 	useEffect(() => {
 		ThemeService.init();
-		HelpService.init();
 		LanguageService.init();
 
 		return () => {};

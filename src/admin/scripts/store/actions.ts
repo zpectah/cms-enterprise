@@ -1,10 +1,4 @@
-import {
-	SIDEBAR_TOGGLE,
-	THEME_TOGGLE,
-	HELP_TOGGLE,
-	ADD_TOAST,
-	REMOVE_TOAST,
-} from './types';
+import { SIDEBAR_TOGGLE, THEME_TOGGLE, ADD_TOAST, REMOVE_TOAST } from './types';
 
 export function sidebarToggle(payload) {
 	return { type: SIDEBAR_TOGGLE, payload };
@@ -12,10 +6,6 @@ export function sidebarToggle(payload) {
 
 export function themeToggle(payload) {
 	return { type: THEME_TOGGLE, payload };
-}
-
-export function helpToggle(payload) {
-	return { type: HELP_TOGGLE, payload };
 }
 
 export function addToast(payload) {

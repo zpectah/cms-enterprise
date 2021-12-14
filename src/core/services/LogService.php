@@ -8,12 +8,21 @@ class LogService {
         return null;
     }
 
-    public function create ($user, $method, $status) {
-        $log = date("G:i:s e") . ' [' . $user . '][' . $_SERVER['REMOTE_ADDR'] . '][' . $method . ':' . $status . '];' . PHP_EOL;
+    public function create ( $method, $status, $content) {
+        $response = [
+            'status' => 'ok',
+            'file' => null,
+        ];
+        $utils = new \Utils;
+        $utils -> createFolder(PATH_LOGS);
+        $ip = $utils -> getClientIpAddress();
+        $browser = $utils -> getBrowser();
 
-        if (!file_exists(PATH_LOGS)) mkdir(PATH_LOGS, 0777, true);
+        $log = '[' . date("G:i:s") . '][' . $ip . '][' . $browser['platform'] .  '][' . $browser['name'] . ' v' . $browser['version'] . '][' . $method . '][' . $status . '][' . $content . '];' . PHP_EOL;
 
-        return file_put_contents(PATH_LOGS . date("j.n.Y").'.log', $log, FILE_APPEND);
+        $response['file'] = file_put_contents(PATH_LOGS . date("Y-n-j").'.log', $log, FILE_APPEND);
+
+        return $response;
     }
 
 }

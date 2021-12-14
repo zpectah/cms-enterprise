@@ -6,10 +6,12 @@ import config from '../config';
 class LogsService {
 	init(): void {}
 
-	create(data: { user: string; method: string; status: string }) {
-		return post(`api/create_log`, data).then((response) => {
-			console.log('log created', response);
-		});
+	create(data: { method: string; status: string; content?: string }) {
+		return post(`${config.project.api.base}/create_log`, data).then(
+			(response) => {
+				return response;
+			},
+		);
 	}
 }
 

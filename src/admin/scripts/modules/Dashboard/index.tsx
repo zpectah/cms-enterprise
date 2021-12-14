@@ -14,6 +14,7 @@ import {
 	Dialog,
 } from '../../components/ui';
 import DashboardTile from '../../components/DashboardTile';
+import LogsService from '../../services/Logs.service';
 
 interface DashboardModuleProps {}
 
@@ -27,6 +28,23 @@ const DashboardModule = ({}: DashboardModuleProps) => {
 	return (
 		<>
 			<div>
+				<Section>
+					<Stack spacing={2} direction="row">
+						<Button
+							color="primary"
+							variant="outlined"
+							onClick={() => {
+								LogsService.create({
+									method: 'react',
+									status: 'info',
+									content: 'Message content ...',
+								});
+							}}
+						>
+							Primary
+						</Button>
+					</Stack>
+				</Section>
 				<Section>
 					<DashboardTile.Base>Dashboard Tile</DashboardTile.Base>
 					<Stack spacing={2} direction="row">
@@ -42,32 +60,6 @@ const DashboardModule = ({}: DashboardModuleProps) => {
 						</Button>
 						<Button variant="contained" color="warning">
 							warning
-						</Button>
-					</Stack>
-					<Stack spacing={2} direction="row">
-						<Button color="primary" variant="outlined" loading>
-							Primary
-						</Button>
-						<Button color="primary" variant="contained" loading>
-							Primary
-						</Button>
-						<Button variant="outlined" color="secondary" loading>
-							Secondary
-						</Button>
-						<Button variant="contained" color="secondary" loading>
-							Secondary
-						</Button>
-						<Button color="success" variant="outlined" loading>
-							Success
-						</Button>
-						<Button color="success" variant="contained" loading>
-							Success
-						</Button>
-						<Button variant="outlined" color="error" loading>
-							Error
-						</Button>
-						<Button variant="contained" color="warning" loading>
-							Warning
 						</Button>
 					</Stack>
 				</Section>

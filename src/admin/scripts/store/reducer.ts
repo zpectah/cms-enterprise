@@ -2,13 +2,11 @@ import { storage, string } from '../../../../utils/utils';
 import CFG from '../config';
 import LangService from '../services/Language.service';
 import ThemeService from '../services/Theme.service';
-import HelpService from '../services/Help.service';
 import UiStoreState from './store';
 import {
 	LANGUAGE_TOGGLE,
 	SIDEBAR_TOGGLE,
 	THEME_TOGGLE,
-	HELP_TOGGLE,
 	ADD_TOAST,
 	REMOVE_TOAST,
 } from './types';
@@ -27,13 +25,6 @@ function Reducer(state = UiStoreState, action) {
 			ThemeService.set(action.payload);
 			return Object.assign({}, state, {
 				theme: action.payload,
-			});
-
-		case HELP_TOGGLE:
-			HelpService.set(action.payload);
-			console.log(typeof action.payload, action.payload);
-			return Object.assign({}, state, {
-				help: action.payload,
 			});
 
 		case SIDEBAR_TOGGLE:

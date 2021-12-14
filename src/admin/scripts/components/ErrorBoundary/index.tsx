@@ -30,9 +30,9 @@ class ErrorBoundary extends React.Component<
 		console.error(error);
 		console.info(errorInfo);
 		LogsService.create({
-			user: 'anonymous',
-			method: 'ReactError',
+			method: 'ErrorBoundary',
 			status: 'error',
+			content: String(error),
 		});
 	}
 
