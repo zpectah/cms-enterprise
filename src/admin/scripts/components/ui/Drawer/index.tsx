@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { default as MuiDrawer } from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import styled from 'styled-components';
@@ -8,7 +7,7 @@ import MediaQuery from 'react-responsive';
 
 import { RESPONSIVE_BREAKPOINTS, UI_VIEW_TOLERANCE } from '../../../constants';
 import media from '../../../styles/responsive';
-import { Scrollable, Typography } from '../../ui';
+import { Scrollable, Typography, IconButton } from '../../ui';
 import { getElTestAttr } from '../../../utils/tests';
 
 const DrawerElement = styled.div`
@@ -110,7 +109,7 @@ const Drawer: React.FC<DrawerBaseProps> = ({
 									height: '50px',
 									color: (theme) => theme.palette.grey[500],
 								}}
-								{...getElTestAttr(`${dataTestId}.button.close`)}
+								dataTestId={`${dataTestId}.button.close`}
 							>
 								<MediaQuery minWidth={RESPONSIVE_BREAKPOINTS[minWidth[size]]}>
 									{(matches) =>

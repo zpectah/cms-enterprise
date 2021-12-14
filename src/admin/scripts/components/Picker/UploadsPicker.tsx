@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -10,9 +9,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import config from '../../config';
-import { array } from '../../../../../utils/utils';
 import { useUploads } from '../../hooks/model';
-import { Button, Dialog, Typography } from '../ui';
+import { Button, Dialog, IconButton } from '../ui';
 import { getElTestAttr } from '../../utils/tests';
 import getPickerInitialValue from '../../utils/getPickerInitialValue';
 
@@ -239,6 +237,7 @@ const UploadsPicker = ({
 														onClick={() =>
 															clickHandler(item.id, item.file_name)
 														}
+														dataTestId={`${dataTestId}.ImageList.item.${item.name}`}
 													>
 														{is_selected ? <RemoveIcon /> : <AddIcon />}
 													</IconButton>

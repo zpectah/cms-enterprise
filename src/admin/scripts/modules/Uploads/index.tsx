@@ -101,6 +101,8 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		const master: UploadsItemProps = _.cloneDeep(data);
 		setProcessing(true);
 		if (master.id == 'new') {
+			// reformat data before save
+			master.name = master.name.split(' ').join('-');
 			createUploads(master).then((response) => {
 				reloadUploads();
 				createToasts({

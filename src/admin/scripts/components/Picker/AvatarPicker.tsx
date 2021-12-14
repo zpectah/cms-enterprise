@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { Button, Dialog, Typography } from '../ui';
+import { Button, Dialog, IconButton } from '../ui';
 import Stack from '@mui/material/Stack';
 import ImageCropper from '../Uploader/ImageCropper';
 import { file as fileUtils } from '../../../../../utils/utils';
+import { getElTestAttr } from '../../utils/tests';
 
 const OuterWrapper = styled.div<{ size: string; isValue: boolean }>`
 	width: ${(props) => props.size};
@@ -216,6 +215,7 @@ const AvatarPicker = ({
 					onClick={openDialogHandler}
 					color="inherit"
 					className="avatar-trigger"
+					dataTestId={`AvatarPicker.thumb.openDialog.trigger`}
 				>
 					{valueInit ? (
 						<EditIcon fontSize="medium" />
@@ -229,7 +229,11 @@ const AvatarPicker = ({
 				onClose={cancelHandler}
 				footerChildren={
 					<>
-						<Button onClick={cancelHandler} color="secondary">
+						<Button
+							onClick={cancelHandler}
+							color="secondary"
+							dataTestId={`AvatarPicker.dialog.cancel`}
+						>
 							{t('button.cancel')}
 						</Button>
 						<Button
@@ -244,6 +248,7 @@ const AvatarPicker = ({
 							}}
 							color="primary"
 							disabled={!tmpValue}
+							dataTestId={`AvatarPicker.dialog.confirm`}
 						>
 							{t('button.confirm')}
 						</Button>
@@ -266,7 +271,10 @@ const AvatarPicker = ({
 									<UploaderInputLabelText>
 										{t('form:form.UploadsDetail.label.select_file_to_upload')}
 									</UploaderInputLabelText>
-									<input {...inputFileProps} />
+									<input
+										{...inputFileProps}
+										{...getElTestAttr(`AvatarPicker.dialog.input.file`)}
+									/>
 								</UploaderInputLabel>
 							</UploaderInputInner>
 						</UploaderInputWrapper>

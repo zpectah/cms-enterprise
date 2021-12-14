@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
-import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Stack from '@mui/material/Stack';
@@ -10,7 +9,7 @@ import styled from 'styled-components';
 
 import { DEFAULT_UNITS } from '../../constants';
 import { useProducts } from '../../hooks/model';
-import { Form, Input, Button } from '../../components/ui';
+import { Form, Input, IconButton } from '../../components/ui';
 import Picker from '../../components/Picker';
 import { getElTestAttr } from '../../utils/tests';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -165,6 +164,7 @@ const OrderItemsManager = ({
 							inputProps: { min: 0 },
 							endAdornment: <InputAdornment position="end">⨯</InputAdornment>,
 						}}
+						dataTestId={`OrderItemsManager.row.${item.id}.input.amount`}
 					/>
 					<Input.Text
 						type="number"
@@ -196,11 +196,9 @@ const OrderItemsManager = ({
 						component="span"
 						onClick={callbackHandler}
 						disabled={item.product_id == 0 || updateDisabled}
-						{...getElTestAttr(
-							`OrderItemsManager.button.row.${
-								item.id == 'new' ? 'add' : 'remove'
-							}`,
-						)}
+						dataTestId={`OrderItemsManager.button.row.${
+							item.id == 'new' ? 'add' : 'remove'
+						}`}
 					>
 						{item.id == 'new' ? <AddCircleIcon /> : <CancelIcon />}
 					</IconButton>

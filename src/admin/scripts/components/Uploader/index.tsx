@@ -1,12 +1,4 @@
-import React, {
-	MouseEventHandler,
-	useEffect,
-	useState,
-	useRef,
-	useCallback,
-} from 'react';
-import _ from 'lodash';
-import { Controller, useForm } from 'react-hook-form';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Stack from '@mui/material/Stack';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -16,7 +8,7 @@ import config from '../../config';
 import { file as fileUtils } from '../../../../../utils/utils';
 import { UploadsItemProps, UploadsItemLangProps } from '../../types/model';
 import { getFileType } from '../../utils/getFileType';
-import { Button, Form, Input, Section } from '../ui';
+import { Button } from '../ui';
 import ImageCropper from './ImageCropper';
 import UploadsItemForm from './UploadsItemForm';
 import { getLanguagesFields } from '../../utils/detail';
@@ -80,8 +72,11 @@ const UploadItemFormWrapper = styled.div`
 const OtherFormatsBlock = styled.div`
 	padding: ${(props) => props.theme.spacer};
 	display: flex;
-	align: center;
-	justify-content: center;
+	align-items: center;
+	justify-content: space-evenly;
+	background-color: rgba(25, 25, 25, 0.125);
+	border: 5px solid rgba(25, 25, 25, 0.5);
+	border-radius: 0.5rem;
 `;
 
 interface UploaderProps {
@@ -342,12 +337,17 @@ const Uploader: React.FC<UploaderProps> = ({
 								/>
 							) : (
 								<OtherFormatsBlock>
-									<br />
-									other file thumb without crop options ... {file.type}
-									<br />
-									<Button onClick={() => removeFromQueue(index)}>
-										{t('button.removeFromQueue')}
-									</Button>
+									<Stack spacing={2} direction="row" alignItems="center">
+										<div style={{ paddingRight: '2rem' }}>
+											{file.file_extension}-{file.type}
+										</div>
+										<Button
+											onClick={() => removeFromQueue(index)}
+											dataTestId={`Uploader.queue.item.${file.file_name}.remove`}
+										>
+											{t('button.removeFromQueue')}
+										</Button>
+									</Stack>
 								</OtherFormatsBlock>
 							)}
 							{withForm && renderForm(file, index)}
@@ -367,6 +367,7 @@ const Uploader: React.FC<UploaderProps> = ({
 							color="success"
 							onClick={onSubmit}
 							disabled={fileList.length == 0 || !formsValid}
+							dataTestId={`Uploader.queue.heading.submit`}
 						>
 							{t('button.submitQueue')}
 						</Button>
@@ -375,6 +376,7 @@ const Uploader: React.FC<UploaderProps> = ({
 							color="error"
 							onClick={resetHandler}
 							disabled={fileList.length == 0}
+							dataTestId={`Uploader.queue.heading.clear`}
 						>
 							{t('button.clearQueue')}
 						</Button>

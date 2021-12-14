@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
@@ -7,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { EMAIL_REGEX } from '../../constants';
-import { Input } from '../ui';
+import { Input, IconButton } from '../ui';
 import getPickerInitialValue from '../../utils/getPickerInitialValue';
 import { getElTestAttr } from '../../utils/tests';
 
@@ -110,10 +109,9 @@ const ArrayPickerBase = ({
 					<IconButton
 						color="success"
 						aria-label={`add ${type}`}
-						component="span"
 						onClick={handleSubmit(submitHandler)}
 						disabled={!isValid}
-						{...getElTestAttr(`${dataTestId}.button.${type}_new.add`)}
+						dataTestId={`${dataTestId}.button.${type}_new.add`}
 					>
 						<AddCircleIcon />
 					</IconButton>

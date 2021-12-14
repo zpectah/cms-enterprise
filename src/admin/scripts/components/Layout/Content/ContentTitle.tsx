@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import styled from 'styled-components';
 
-import { Typography } from '../../ui';
-import { getElTestAttr } from '../../../utils/tests';
+import { Typography, IconButton } from '../../ui';
 
 const Wrapper = styled.div<{ textAlign: ContentTitleProps['textAlign'] }>`
 	min-height: 80px;
@@ -24,7 +22,7 @@ interface ContentTitleProps {
 	textAlign?: 'inherit' | 'center';
 	listPath?: string;
 	clickCallback?: () => void;
-	backButtondataTestId?: string;
+	backButtonDataTestId?: string;
 }
 
 const ContentTitle: React.FC<ContentTitleProps> = ({
@@ -34,7 +32,7 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 	textAlign = 'inherit',
 	listPath,
 	clickCallback,
-	backButtondataTestId = 'page.title.button.back',
+	backButtonDataTestId = 'page.title.button.back',
 }) => {
 	const history = useHistory();
 	const params: any = useParams();
@@ -59,7 +57,7 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
 					aria-label="delete"
 					onClick={backButtonHandler}
 					style={{ marginRight: '0.75rem' }}
-					{...getElTestAttr(backButtondataTestId)}
+					dataTestId={backButtonDataTestId}
 				>
 					<ArrowBackIcon />
 				</IconButton>

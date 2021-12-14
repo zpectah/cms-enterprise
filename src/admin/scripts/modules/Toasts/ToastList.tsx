@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import styled from 'styled-components';
 
 import { toastItemProps } from '../../types/store';
 import { getElTestAttr } from '../../utils/tests';
+import { IconButton } from '../../components/ui';
 
 interface ToastListProps {
 	items: toastItemProps[];
@@ -62,7 +62,7 @@ const ToastItem = ({ data, onRemove }: ToastItemProps) => {
 			className="toast-item"
 			context={data.context}
 			id={data.id}
-			{...getElTestAttr(`toast.item`)}
+			{...getElTestAttr(`toast.item.${data.id}`)}
 		>
 			{data.title}
 			<IconButton
@@ -74,7 +74,7 @@ const ToastItem = ({ data, onRemove }: ToastItemProps) => {
 					top: 2,
 					color: 'inherit',
 				}}
-				{...getElTestAttr(`toast.item.button.close`)}
+				dataTestId={`toast.item.${data.id}.button.close`}
 			>
 				<CloseIcon fontSize="small" />
 			</IconButton>

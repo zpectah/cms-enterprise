@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { IconButtonProps } from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 import { sidebarToggle } from '../../../store/actions';
 import { storeProps } from '../../../types/store';
-import { getElTestAttr } from '../../../utils/tests';
+import { IconButton } from '../../ui';
 
 interface SidebarToggleProps extends IconButtonProps {
 	dataTestId?: string;
@@ -30,7 +30,7 @@ const SidebarToggle = (props: SidebarToggleProps) => {
 			onClick={toggleSidebar}
 			aria-label="sidebar toggle"
 			{...rest}
-			{...getElTestAttr(dataTestId)}
+			dataTestId={dataTestId}
 		>
 			{sidebarOpen ? (
 				<MenuOpenIcon fontSize="inherit" />
