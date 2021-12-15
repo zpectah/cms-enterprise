@@ -10,6 +10,7 @@ import { ROUTES, EMAIL_REGEX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { Form, Button, Section, Input } from '../../components/ui';
 import { useProfile } from '../../hooks/common';
+import LogsService from '../../services/Logs.service';
 
 interface LoginFormProps {}
 
@@ -19,31 +20,41 @@ const LoginForm = ({}: LoginFormProps) => {
 	const { userLogin } = useProfile();
 	const [errorMessage, setErrorMessage] = useState<string>(null);
 	const [successMessage, setSuccessMessage] = useState<string>(null);
-
 	const formOptions: formLayoutObjectProps = {
 		model: 'Login',
 		id: 'LoginForm',
 	};
-	const { control, handleSubmit, reset, register, formState, setValue } =
-		useForm({
-			mode: 'all',
-			defaultValues: {
-				email: '',
-				password: '',
-			},
-		});
-	const { isDirty, isValid } = formState;
-
-	const submitHandler = (data: any, e: any) => {
+	const {
+		control,
+		handleSubmit,
+		formState: { isValid },
+		setValue,
+	} = useForm({
+		mode: 'all',
+		defaultValues: {
+			email: '',
+			password: '',
+		},
+	});
+	const submitHandler = (
+		data: {
+			email: string;
+			password: string;
+		},
+		e: any,
+	) => {
 		const master = _.cloneDeep(data);
-
 		setErrorMessage(null);
 		setSuccessMessage(null);
-
 		userLogin(master).then((response) => {
 			switch (response?.message) {
 				case 'user_not_found':
 					setErrorMessage(t('form:form.Login.msg.user_not_found'));
+					LogsService.create({
+						method: 'LoginForm',
+						status: 'error',
+						content: 'user_not_found',
+					});
 					break;
 
 				case 'user_password_not_match':
@@ -52,10 +63,20 @@ const LoginForm = ({}: LoginFormProps) => {
 
 				case 'user_not_active':
 					setErrorMessage(t('form:form.Login.msg.user_not_active'));
+					LogsService.create({
+						method: 'LoginForm',
+						status: 'error',
+						content: 'user_not_active',
+					});
 					break;
 
 				case 'user_is_deleted':
 					setErrorMessage(t('form:form.Login.msg.user_is_deleted'));
+					LogsService.create({
+						method: 'LoginForm',
+						status: 'error',
+						content: 'user_is_deleted',
+					});
 					break;
 
 				case 'user_login_success':
@@ -71,7 +92,6 @@ const LoginForm = ({}: LoginFormProps) => {
 		});
 	};
 	const errorSubmitHandler = (errors: any, e: any) => console.warn(errors, e);
-
 	const lostPasswordHandler = () => history.push(ROUTES.app.lostPassword.path);
 
 	return (

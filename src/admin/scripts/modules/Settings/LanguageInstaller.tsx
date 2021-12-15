@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import Chip from '@mui/material/Chip';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import config from '../../config';
-import { Input, Button, Preloader } from '../../components/ui';
+import { Input, Button, Preloader, Chip } from '../../components/ui';
 import { useSystem, useSettings } from '../../hooks/common';
 
 const NoItemsLabel = styled.span`

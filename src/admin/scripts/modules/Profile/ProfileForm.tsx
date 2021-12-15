@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
@@ -8,7 +7,14 @@ import styled from '@emotion/styled';
 import { USER_NUMS_LEVEL } from '../../constants';
 import { UsersItemProps } from '../../types/model';
 import { formLayoutObjectProps } from '../../types/app';
-import { Form, Button, Section, Input, Typography } from '../../components/ui';
+import {
+	Form,
+	Button,
+	Section,
+	Input,
+	Typography,
+	Chip,
+} from '../../components/ui';
 
 import Picker from '../../components/Picker';
 

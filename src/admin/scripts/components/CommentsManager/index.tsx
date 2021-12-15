@@ -2,7 +2,6 @@ import React, { Children, useCallback, useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';

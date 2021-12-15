@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Stack from '@mui/material/Stack';
-import Chip from '@mui/material/Chip';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { EMAIL_REGEX } from '../../constants';
-import { Input, IconButton } from '../ui';
+import { Input, IconButton, Chip } from '../ui';
 import getPickerInitialValue from '../../utils/getPickerInitialValue';
 import { getElTestAttr } from '../../utils/tests';
 
@@ -127,7 +126,7 @@ const ArrayPickerBase = ({
 								label={item}
 								onDelete={() => removeHandler(item)}
 								key={`${type}_${item}_${index}`}
-								{...getElTestAttr(`${dataTestId}.chip.${type}_${index}.delete`)}
+								dataTestId={`${dataTestId}.chip.${type}-${index}.delete`}
 							/>
 						))}
 					</Stack>

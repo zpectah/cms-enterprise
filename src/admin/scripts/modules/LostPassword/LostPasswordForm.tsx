@@ -31,14 +31,17 @@ const LostPasswordForm = ({
 		model: 'LostPassword',
 		id: 'LostPasswordForm',
 	};
-	const { control, handleSubmit, reset, register, formState, setValue } =
-		useForm({
-			mode: 'all',
-			defaultValues: {
-				email: '',
-			},
-		});
-	const { isDirty, isValid } = formState;
+	const {
+		control,
+		handleSubmit,
+		formState: { isValid },
+		setValue,
+	} = useForm({
+		mode: 'all',
+		defaultValues: {
+			email: '',
+		},
+	});
 
 	const submitHandler = (data: any, e: any) => {
 		setValue('email', '');
@@ -79,12 +82,7 @@ const LostPasswordForm = ({
 				{successMessage && (
 					<MuiAlert severity="success">{successMessage}</MuiAlert>
 				)}
-				<Stack
-					spacing={2}
-					direction="row"
-					justifyContent="center"
-					style={{ paddingTop: '1rem' }}
-				>
+				<Stack spacing={2} direction="row" justifyContent="center">
 					<Button
 						type="submit"
 						variant="contained"
@@ -93,6 +91,13 @@ const LostPasswordForm = ({
 					>
 						{t('button.submit')}
 					</Button>
+				</Stack>
+				<Stack
+					spacing={2}
+					direction="row"
+					justifyContent="center"
+					style={{ paddingTop: '2rem' }}
+				>
 					<Button
 						color="secondary"
 						onClick={backToLoginHandler}

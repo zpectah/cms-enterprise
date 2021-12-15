@@ -35,15 +35,19 @@ const NewPasswordForm = ({
 		model: 'NewPassword',
 		id: 'NewPasswordForm',
 	};
-	const { control, handleSubmit, reset, register, formState, setValue } =
-		useForm({
-			mode: 'all',
-			defaultValues: {
-				password: '',
-				token: token,
-			},
-		});
-	const { isDirty, isValid } = formState;
+	const {
+		control,
+		handleSubmit,
+		register,
+		formState: { isValid },
+		setValue,
+	} = useForm({
+		mode: 'all',
+		defaultValues: {
+			password: '',
+			token: token,
+		},
+	});
 
 	const submitHandler = (data: { password: string; token: string }, e: any) => {
 		setValue('password', '');

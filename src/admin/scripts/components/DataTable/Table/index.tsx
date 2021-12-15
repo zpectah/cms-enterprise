@@ -10,7 +10,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Stack from '@mui/material/Stack';
-import Chip from '@mui/material/Chip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import styled from 'styled-components';
@@ -29,7 +28,7 @@ import {
 } from '../../../types/table';
 import { appModelProps } from '../../../types/app';
 import { oneOfModelItemProps } from '../../../types/model';
-import { Typography, Input, IconButton } from '../../ui';
+import { Typography, Input, IconButton, Chip } from '../../ui';
 import TableHeader from './TableHeader';
 import { getElTestAttr } from '../../../utils/tests';
 import config from '../../../config';
@@ -86,7 +85,6 @@ const TableRowActionButtons = ({
 	const menuCloseHandler = () => {
 		setAnchorEl(null);
 	};
-
 	const deleteClickHandler = () => {
 		onDelete(row.id);
 		menuCloseHandler();
@@ -159,39 +157,32 @@ const Table = ({
 		useState<readonly (number | string)[]>(selectedRows);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(DATA_TABLE.rowsDefault);
-
 	const tableRowHeight = DATA_TABLE.rowHeightDefault;
 	const emptyRows =
 		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 	const tableRowIdPrefix = `${dataTestId}.row`;
-
 	const sortRequestHandler = (
 		event: React.MouseEvent<unknown>,
 		property: keyof oneOfModelItemProps,
 	) => {
 		const isAsc = orderBy === property && order === 'asc';
-
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
 	};
-
 	const selectAllHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.checked) {
 			const ns = tableData.map((n) => n.id);
 			setSelected(ns);
 			return;
 		}
-
 		setSelected([]);
 	};
-
 	const rowSelectHandler = (
 		event: React.MouseEvent<unknown>,
 		id: number | string,
 	) => {
 		const selectedIndex = selected.indexOf(id);
 		let newSelected: (number | string)[] = [];
-
 		if (selectedIndex === -1) {
 			newSelected = newSelected.concat(selected, id);
 		} else if (selectedIndex === 0) {
@@ -204,31 +195,23 @@ const Table = ({
 				selected.slice(selectedIndex + 1),
 			);
 		}
-
 		setSelected(newSelected);
 	};
-
 	const changePageHandler = (event: unknown, newPage: number) => {
 		setPage(newPage);
 	};
-
 	const changeRowsPerPageHandler = (
 		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
 		setPage(0);
 	};
-
 	const isRowSelected = (id: number | string) => selected.indexOf(id) !== -1;
-
 	const clickDetailHandler = (id: number | string) => {
 		history.push(`${rowPathPrefix}/${id}`);
 	};
-
 	const onRowToggleHandler = (id: number) => onToggle(id);
-
 	const onRowDeleteHandler = (id: number) => onDelete(id);
-
 	const getBodyCells = (row: any) => {
 		const cells = [] as tableBodyCellItemProps[];
 
@@ -368,7 +351,6 @@ const Table = ({
 
 		return cells;
 	};
-
 	const cellTypes: string[] = [
 		'name',
 		'email',
@@ -381,7 +363,6 @@ const Table = ({
 		// TODO: new cells
 		// ***
 	];
-
 	const getCellsInRow = useCallback(() => {
 		const cells = [] as string[];
 
@@ -400,7 +381,6 @@ const Table = ({
 	}, [tableCells]);
 
 	useEffect(() => onSelect(selected), [selected]);
-
 	useEffect(() => setSelected(selectedRows), [selectedRows]);
 
 	return (
