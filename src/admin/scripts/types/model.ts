@@ -95,6 +95,7 @@ export interface PostsItemProps extends commonItemProps {
 	author: number;
 	approved: boolean;
 	rating: number;
+	template: boolean;
 	lang: {
 		[k: string]: PostsItemLangProps;
 	};

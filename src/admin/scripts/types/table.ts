@@ -23,6 +23,7 @@ export interface tableBodyCellItemProps {
 	numeric?: boolean;
 }
 export interface customActionCellItemProps {
+	key: 'post_create_from_template' | 'order_confirm' | 'order_cancel';
 	label: string;
 	callback: (id: number | string) => void;
 	disabled: boolean;

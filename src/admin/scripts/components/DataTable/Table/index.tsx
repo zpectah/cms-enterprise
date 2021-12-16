@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import Box from '@mui/material/Box';
 import { default as MuiTable } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -90,6 +91,33 @@ const TableRowActionButtons = ({
 		menuCloseHandler();
 	};
 
+	const renderCustomTriggers = () => {
+		return customActionTriggers.map((trigger) => {
+			const newTrigger = _.cloneDeep(trigger);
+
+			switch (trigger.key) {
+				// Unique conditions for each trigger
+
+				case 'post_create_from_template':
+					newTrigger.disabled = !row.template;
+					break;
+			}
+
+			return (
+				<MenuItem
+					key={newTrigger.key}
+					onClick={() => {
+						newTrigger.callback(row.id);
+						menuCloseHandler();
+					}}
+					disabled={newTrigger.disabled}
+				>
+					{newTrigger.label}
+				</MenuItem>
+			);
+		});
+	};
+
 	return (
 		<Stack direction="row" spacing={2} justifyContent="flex-end">
 			<div>
@@ -115,19 +143,7 @@ const TableRowActionButtons = ({
 					<MenuItem onClick={deleteClickHandler} disabled={!shouldDelete}>
 						{t('button.delete')}
 					</MenuItem>
-					{customActionTriggers.length > 0 &&
-						customActionTriggers.map((trigger) => (
-							<MenuItem
-								key={trigger.label}
-								onClick={() => {
-									trigger.callback(row.id);
-									menuCloseHandler();
-								}}
-								disabled={trigger.disabled}
-							>
-								{trigger.label}
-							</MenuItem>
-						))}
+					{customActionTriggers.length > 0 && renderCustomTriggers()}
 				</Menu>
 			</div>
 		</Stack>

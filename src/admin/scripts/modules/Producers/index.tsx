@@ -19,6 +19,7 @@ import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import ProducersDetailForm from './ProducersDetailForm';
 import { useToasts } from '../../hooks/common';
+import { string } from '../../../../../utils/utils';
 
 interface ProducersModuleProps {}
 
@@ -36,8 +37,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const {
 		Producers,
@@ -49,8 +49,6 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 		producers_loading,
 		producers_error,
 	} = useProducers();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Producers',
 		route: ROUTES.market.producers,
@@ -64,38 +62,26 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 			tableSearchProps: ['name'],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
 		setDetailData(getDetailData(id, 'Producers', Producers));
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: ProducersItemProps) => {
 		const master: ProducersItemProps = _.cloneDeep(data);
 		setProcessing(true);
 		// reformat data before save
-		// master.name = master.name.split(' ').join('-');
+		master.name = master.name.split(' ').join('-');
 		if (master.id == 'new') {
 			createProducers(master).then((response) => {
 				reloadProducers();
@@ -120,15 +106,7 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -137,24 +115,17 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -169,8 +140,6 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -192,7 +161,6 @@ const ProducersModule = ({}: ProducersModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);

@@ -37,8 +37,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const {
 		Orders,
@@ -52,8 +51,6 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		orders_loading,
 		orders_error,
 	} = useOrders();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Orders',
 		route: ROUTES.market.orders,
@@ -75,33 +72,21 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
 		setDetailData(getDetailData(id, 'Orders', Orders));
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: OrdersItemProps) => {
 		const master: OrdersItemProps = _.cloneDeep(data);
 		setProcessing(true);
@@ -135,15 +120,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -152,24 +129,17 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -184,8 +154,6 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -207,7 +175,6 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);
@@ -216,7 +183,6 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			setDetailData(null);
 		}
 	};
-
 	const confirmOrderHandler = (id: number | string) => {
 		const master: selectedArrayProps = [id];
 		setProcessing(true);
@@ -231,7 +197,6 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
 	const cancelOrderHandler = (id: number | string) => {
 		const master: selectedArrayProps = [id];
 		setProcessing(true);
@@ -286,11 +251,13 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 							withoutLanguageToggle
 							customActionTriggers={[
 								{
+									key: 'order_confirm',
 									label: t('button.confirmOrder'),
 									callback: confirmOrderHandler,
 									disabled: false,
 								},
 								{
+									key: 'order_cancel',
 									label: t('button.cancelOrder'),
 									callback: cancelOrderHandler,
 									disabled: false,

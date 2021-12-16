@@ -35,6 +35,7 @@ class Posts {
                 $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
                 $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
                 $row['links'] = $row['links'] == '' ? [] : explode(",", $row['links']); // Set value as array
+                $row['template'] = $row['template'] == 1; // Set value as boolean
                 $row['approved'] = $row['approved'] == 1; // Set value as boolean
                 $row['active'] = $row['active'] == 1; // Set value as boolean
                 unset($row['deleted']); // Unset deleted attribute
@@ -71,11 +72,12 @@ class Posts {
                    links,
                    author, 
                    approved, 
-                   rating, 
+                   rating,
+                   template,
                    active, 
                    deleted
-                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'sssssssssssssssssiiiii';
+                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'sssssssssssssssssiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -97,6 +99,7 @@ class Posts {
             $data['author'],
             $data['approved'],
             $data['rating'],
+            $data['template'],
             $data['active'],
             0
         ];
@@ -134,8 +137,31 @@ class Posts {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE posts SET name = ?, type = ?, categories = ?, tags = ?, event_start = ?, event_end = ?, event_location = ?, event_address = ?, event_country = ?, event_city = ?, event_zip = ?, media = ?, attachments = ?, img_main = ?, img_thumbnail = ?, published = ?, links = ?, author = ?, approved = ?, rating = ?, active = ? WHERE id = ?');
-        $types = 'sssssssssssssssssiiiii';
+        $query = ('UPDATE posts SET 
+                     name = ?, 
+                     type = ?, 
+                     categories = ?, 
+                     tags = ?, 
+                     event_start = ?, 
+                     event_end = ?, 
+                     event_location = ?, 
+                     event_address = ?, 
+                     event_country = ?, 
+                     event_city = ?, 
+                     event_zip = ?, 
+                     media = ?, 
+                     attachments = ?, 
+                     img_main = ?, 
+                     img_thumbnail = ?, 
+                     published = ?, 
+                     links = ?, 
+                     author = ?, 
+                     approved = ?, 
+                     rating = ?, 
+                     template = ?, 
+                     active = ? 
+                WHERE id = ?');
+        $types = 'sssssssssssssssssiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -157,6 +183,7 @@ class Posts {
             $data['author'],
             $data['approved'],
             $data['rating'],
+            $data['template'],
             $data['active'],
             $data['id']
         ];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg'; // https://blog.logrocket.com/building-rich-text-editors-in-react-using-draft-js-and-react-draft-wysiwyg/
 import { convertToHTML } from 'draft-convert';
@@ -1110,7 +1110,7 @@ const Wysiwyg: React.FC<WysiwygProps> = ({
 	dataTestId = 'Wysiwyg.default',
 }) => {
 	const { t } = useTranslation(['common']);
-	const [editorState, setEditorState] = useState(() =>
+	const [editorState, setEditorState] = useState(
 		value
 			? EditorState.createWithContent(
 					ContentState.createFromBlockArray(convertFromHTML(value)),
@@ -1142,13 +1142,11 @@ const Wysiwyg: React.FC<WysiwygProps> = ({
 				) : (
 					<Editor
 						id={`${id}_editor`}
+						editorState={editorState}
 						defaultEditorState={editorState}
 						onEditorStateChange={handleEditorChange}
 						placeholder={placeholder}
 						toolbar={toolbar}
-						// wrapperStyle={<wrapperStyleObject>}
-						// editorStyle={<editorStyleObject>}
-						// toolbarStyle={<toolbarStyleObject>}
 						{...getElTestAttr(`${dataTestId}.input.editor`)}
 					/>
 				)}

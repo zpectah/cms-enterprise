@@ -8,6 +8,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import styled from 'styled-components';
 
+import config from '../../config';
 import { Section } from '../../components/ui';
 import { ROUTES } from '../../constants';
 
@@ -68,28 +69,105 @@ const HelpModule = ({}: HelpModuleProps) => {
 							value={panels.common.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>Item common</Section>
+							<Section title={'Controls'}>Item common</Section>
+							<Section title={'Tables'}>Item common</Section>
+							<Section title={'Detail'}>Item common</Section>
 						</TabPanel>
 						{/*  ===== content ============== */}
 						<TabPanel
 							value={panels.content.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>Item content</Section>
+							<Section title={'Categories'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Categories.type)}
+							</Section>
+							<Section title={'Deliveries'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Deliveries.type)}
+							</Section>
+							<Section title={'Distributors'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Distributors.type)}
+							</Section>
+							<Section title={'Members'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Members.type)}
+							</Section>
+							<Section title={'Menu'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Menu.type)}
+							</Section>
+							<Section title={'Orders'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Orders.type)}
+							</Section>
+							<Section title={'Pages'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Pages.type)}
+							</Section>
+							<Section title={'Payments'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Payments.type)}
+							</Section>
+							<Section title={'Posts'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Posts.type)}
+							</Section>
+							<Section title={'Producers'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Producers.type)}
+							</Section>
+							<Section title={'Products'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Products.type)}
+							</Section>
+							<Section title={'Stores'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Stores.type)}
+							</Section>
+							<Section title={'Tags'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Tags.type)}
+							</Section>
+							<Section title={'Translations'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Translations.type)}
+							</Section>
+							<Section title={'Uploads'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Uploads.type)}
+							</Section>
+							<Section title={'Users'}>
+								Item content ...{' '}
+								{JSON.stringify(config.options.model.Users.type)}
+							</Section>
 						</TabPanel>
 						{/*  ===== modules ============== */}
 						<TabPanel
 							value={panels.modules.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>Item modules</Section>
+							<Section title={'About modules'}>Item modules</Section>
+							<Section title={'CRM'}>Item modules</Section>
+							<Section title={'Market'}>Item modules</Section>
 						</TabPanel>
 						{/*  ===== about ============== */}
 						<TabPanel
 							value={panels.about.key}
 							style={{ paddingLeft: 0, paddingRight: 0 }}
 						>
-							<Section>Item about</Section>
+							<Section title={'Copyright'}>
+								<div>
+									Verze: <span>{config.project.admin.version}</span>
+								</div>
+								<div>
+									Author: <span>{config.project.admin.meta.author}</span>
+								</div>
+								<div>
+									GitHub: <span>https://github.com/zpectah/cms-enterprise</span>
+								</div>
+							</Section>
 						</TabPanel>
 						{/*  ============ \\ Main form panels ============ */}
 					</TabContext>

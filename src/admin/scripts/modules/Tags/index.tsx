@@ -19,6 +19,7 @@ import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import TagsDetailForm from './TagsDetailForm';
 import { useToasts } from '../../hooks/common';
+import { string } from '../../../../../utils/utils';
 
 interface TagsModuleProps {}
 
@@ -36,8 +37,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const { Profile } = useProfile();
 	const {
@@ -50,8 +50,6 @@ const TagsModule = ({}: TagsModuleProps) => {
 		tags_loading,
 		tags_error,
 	} = useTags();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Tags',
 		route: ROUTES.app.tags,
@@ -65,33 +63,21 @@ const TagsModule = ({}: TagsModuleProps) => {
 			tableSearchProps: ['name'],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		setDetail(id);
 		setDetailData(getDetailData(id, 'Tags', Tags));
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: TagsItemProps) => {
 		const master: TagsItemProps = _.cloneDeep(data);
 		setProcessing(true);
@@ -121,15 +107,7 @@ const TagsModule = ({}: TagsModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -138,24 +116,17 @@ const TagsModule = ({}: TagsModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -170,8 +141,6 @@ const TagsModule = ({}: TagsModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -193,7 +162,6 @@ const TagsModule = ({}: TagsModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);

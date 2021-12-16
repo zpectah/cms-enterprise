@@ -20,6 +20,7 @@ import DataTable from '../../components/DataTable';
 import MenuDetailForm from './MenuDetailForm';
 import { useToasts } from '../../hooks/common';
 import { getLanguagesFields } from '../../utils/detail';
+import { string } from '../../../../../utils/utils';
 
 interface MenuModuleProps {}
 
@@ -37,8 +38,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const {
 		Menu,
@@ -50,8 +50,6 @@ const MenuModule = ({}: MenuModuleProps) => {
 		menu_loading,
 		menu_error,
 	} = useMenu();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Menu',
 		route: ROUTES.app.menu,
@@ -65,39 +63,26 @@ const MenuModule = ({}: MenuModuleProps) => {
 			tableSearchProps: ['name'],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		const detail = getDetailData(id, 'Menu', Menu);
 		if (id == 'new')
 			detail['lang'] = getLanguagesFields(Settings?.language_active, {
 				label: '',
 			} as MenuItemLangProps);
-
 		setDetail(id);
 		setDetailData(detail);
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: MenuItemProps) => {
 		const master: MenuItemProps = _.cloneDeep(data);
 		setProcessing(true);
@@ -127,15 +112,7 @@ const MenuModule = ({}: MenuModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -144,24 +121,17 @@ const MenuModule = ({}: MenuModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -176,8 +146,6 @@ const MenuModule = ({}: MenuModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -199,7 +167,6 @@ const MenuModule = ({}: MenuModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);

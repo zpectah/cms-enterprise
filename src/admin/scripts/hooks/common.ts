@@ -5,6 +5,8 @@ import { UsersItemProps } from '../types/model';
 import { cmsSettingsObjectProps } from '../types/modules';
 import { addToast } from '../store/actions';
 import { get, post, postRaw } from '../utils/api';
+import { TOASTS_TIMEOUT_DEFAULT } from '../constants';
+import { string } from '../../../../utils/utils';
 
 export function useSystem() {
 	return {
@@ -73,5 +75,13 @@ export function useSettings() {
 export function useToasts(dispatch) {
 	return {
 		createToasts: (data: any) => dispatch(addToast(data)),
+		createErrorToast: (error: string) =>
+			dispatch(
+				addToast({
+					title: error,
+					context: 'error',
+					timeout: TOASTS_TIMEOUT_DEFAULT,
+				}),
+			),
 	};
 }

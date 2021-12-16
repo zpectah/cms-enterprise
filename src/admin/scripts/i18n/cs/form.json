@@ -65,7 +65,8 @@
     "status": "Stav",
     "producers": "Výrobce",
     "distributors": "Dodavatel",
-    "notes": "Poznámky"
+    "notes": "Poznámky",
+    "template": "Šablona"
   },
   "label": {
     "no_parent": "Bez rodiče",

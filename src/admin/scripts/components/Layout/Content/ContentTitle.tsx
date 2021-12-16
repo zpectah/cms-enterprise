@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Typography, IconButton } from '../../ui';
 
 const Wrapper = styled.div<{ textAlign: ContentTitleProps['textAlign'] }>`
-	min-height: 80px;
+	min-height: 85px;
 	padding-top: ${(props) => props.theme.spacer};
 	padding-bottom: ${(props) => props.theme.spacer};
 	display: flex;

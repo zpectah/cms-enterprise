@@ -26,7 +26,8 @@
     "install": "Instalovat",
     "viewSource": "Zobrazit zdroj",
     "viewEditor": "Zobrazit editor",
-    "reply": "Odpovědět"
+    "reply": "Odpovědět",
+    "duplicate": "Duplikovat"
   },
   "new": {
     "Categories": "Nová kategorie",

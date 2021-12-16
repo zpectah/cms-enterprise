@@ -23,6 +23,7 @@ import DataTable from '../../components/DataTable';
 import TranslationsDetailForm from './TranslationsDetailForm';
 import { useToasts } from '../../hooks/common';
 import { getLanguagesFields } from '../../utils/detail';
+import { string } from '../../../../../utils/utils';
 
 interface TranslationsModuleProps {}
 
@@ -40,8 +41,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const {
 		Translations,
@@ -53,8 +53,6 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 		translations_loading,
 		translations_error,
 	} = useTranslations();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Translations',
 		route: ROUTES.app.translations,
@@ -68,39 +66,26 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			tableSearchProps: ['name', 'lang.[lang].value'],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		const detail = getDetailData(id, 'Translations', Translations);
 		if (id == 'new')
 			detail['lang'] = getLanguagesFields(Settings?.language_active, {
 				value: '',
 			} as TranslationsItemLangProps);
-
 		setDetail(id);
 		setDetailData(detail);
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: TranslationsItemProps) => {
 		const master: TranslationsItemProps = _.cloneDeep(data);
 		setProcessing(true);
@@ -130,15 +115,7 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -147,24 +124,17 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -179,8 +149,6 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -202,7 +170,6 @@ const TranslationsModule = ({}: TranslationsModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);

@@ -23,6 +23,7 @@ import DataTable from '../../components/DataTable';
 import DeliveriesDetailForm from './DeliveriesDetailForm';
 import { useToasts } from '../../hooks/common';
 import { getLanguagesFields } from '../../utils/detail';
+import { string } from '../../../../../utils/utils';
 
 interface DeliveriesModuleProps {}
 
@@ -40,8 +41,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const {
 		Deliveries,
@@ -53,8 +53,6 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 		deliveries_loading,
 		deliveries_error,
 	} = useDeliveries();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Deliveries',
 		route: ROUTES.market.deliveries,
@@ -68,12 +66,8 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 			tableSearchProps: ['name'],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		const detail = getDetailData(id, 'Deliveries', Deliveries);
 		if (id == 'new')
@@ -81,27 +75,18 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 				title: '',
 				description: '',
 			} as DeliveriesItemLangProps);
-
 		setDetail(id);
 		setDetailData(detail);
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: DeliveriesItemProps) => {
 		const master: DeliveriesItemProps = _.cloneDeep(data);
 		setProcessing(true);
@@ -131,15 +116,7 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -148,24 +125,17 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -180,8 +150,6 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -203,7 +171,6 @@ const DeliveriesModule = ({}: DeliveriesModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);

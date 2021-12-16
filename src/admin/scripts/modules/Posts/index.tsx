@@ -26,6 +26,7 @@ import DataTable from '../../components/DataTable';
 import PostsDetailForm from './PostsDetailForm';
 import { useToasts } from '../../hooks/common';
 import { getLanguagesFields } from '../../utils/detail';
+import { string } from '../../../../../utils/utils';
 
 interface PostsModuleProps {}
 
@@ -43,8 +44,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const { Profile } = useProfile();
 	const {
@@ -57,8 +57,6 @@ const PostsModule = ({}: PostsModuleProps) => {
 		posts_loading,
 		posts_error,
 	} = usePosts();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Posts',
 		route: ROUTES.app.posts,
@@ -77,12 +75,8 @@ const PostsModule = ({}: PostsModuleProps) => {
 			],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		const detail = getDetailData(id, 'Posts', Posts);
 		if (id == 'new')
@@ -91,27 +85,18 @@ const PostsModule = ({}: PostsModuleProps) => {
 				description: '',
 				content: '',
 			} as PostsItemLangProps);
-
 		setDetail(id);
 		setDetailData(detail);
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: PostsItemProps) => {
 		const master: PostsItemProps = _.cloneDeep(data);
 		setProcessing(true);
@@ -145,15 +130,7 @@ const PostsModule = ({}: PostsModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -162,24 +139,17 @@ const PostsModule = ({}: PostsModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -194,8 +164,6 @@ const PostsModule = ({}: PostsModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -217,14 +185,12 @@ const PostsModule = ({}: PostsModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const shouldApproveHandler = () => {
 		return (
 			Settings?.content_redactor_approval &&
 			Profile?.user_level <= USER_LEVEL_NUMS.redactor
 		);
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);
@@ -232,6 +198,29 @@ const PostsModule = ({}: PostsModuleProps) => {
 		} else {
 			setDetailData(null);
 		}
+	};
+	const createFromTemplateHandler = (id: number | string) => {
+		const detail = getDetailData('new', 'Posts', Posts);
+		const templateDetail = getDetailData(id, 'Posts', Posts);
+		detail['lang'] = getLanguagesFields(Settings?.language_active, {
+			title: '',
+			description: '',
+			content: '',
+		} as PostsItemLangProps);
+		const newDetailData = {
+			...detail,
+			type: templateDetail.type,
+			name: `copy-${templateDetail.name}`,
+			categories: templateDetail.categories,
+			tags: templateDetail.tags,
+			lang: {
+				...templateDetail.lang,
+			},
+		};
+		setDetail('new');
+		setDetailData(newDetailData);
+		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
+		setTimeout(() => setDetailData(newDetailData), 125); // Fix data ...
 	};
 
 	useEffect(() => {
@@ -274,6 +263,14 @@ const PostsModule = ({}: PostsModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							customActionTriggers={[
+								{
+									key: 'post_create_from_template',
+									label: t('button.duplicate'),
+									callback: createFromTemplateHandler,
+									disabled: false,
+								},
+							]}
 						/>
 					)}
 				</>

@@ -23,6 +23,7 @@ import DataTable from '../../components/DataTable';
 import CategoriesDetailForm from './CategoriesDetailForm';
 import { useToasts } from '../../hooks/common';
 import { getLanguagesFields } from '../../utils/detail';
+import { string } from '../../../../../utils/utils';
 
 interface CategoriesModuleProps {}
 
@@ -40,8 +41,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
-
-	const { createToasts } = useToasts(dispatch);
+	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const { Profile } = useProfile();
 	const {
@@ -54,8 +54,6 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 		categories_loading,
 		categories_error,
 	} = useCategories();
-
-	// Module object data & options
 	const moduleObject: moduleObjectProps = {
 		model: 'Categories',
 		route: ROUTES.app.categories,
@@ -69,12 +67,8 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			tableSearchProps: ['name'],
 		},
 	};
-
-	// Trigger callback for detail
 	const createNewCallback = () =>
 		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
-
-	// Trigger open detail with current id and set data
 	const openDetailHandler = (id: string, redirect?: boolean) => {
 		const detail = getDetailData(id, 'Categories', Categories);
 		if (id == 'new')
@@ -82,27 +76,18 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 				title: '',
 				description: '',
 			} as CategoriesItemLangProps);
-
 		setDetail(id);
 		setDetailData(detail);
-
 		if (redirect)
 			history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
-
-	// Trigger closes detail and show table
 	const closeDetailHandler = () => {
 		setDetail(null);
 		setDetailData(null);
-
 		history.push(moduleObject.route.path);
 	};
-
-	// When item/row is selected in DataTable
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-
-	// When detail is submitted (create/update)
 	const detailSubmitHandler = (data: CategoriesItemProps) => {
 		const master: CategoriesItemProps = _.cloneDeep(data);
 		setProcessing(true);
@@ -132,15 +117,7 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			});
 		}
 	};
-
-	// When error returns from submit
-	const detailSubmitErrorHandler = (error: string) =>
-		createToasts({
-			title: error,
-			context: 'error',
-			timeout: TOASTS_TIMEOUT_DEFAULT,
-		});
-
+	const detailSubmitErrorHandler = (error: string) => createErrorToast(error);
 	const detailCancelHandler = (dirty: boolean) => {
 		if (dirty) {
 			setConfirmDialog(true);
@@ -149,24 +126,17 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			closeDetailHandler();
 		}
 	};
-
-	// When item/row opens confirm dialog
 	const itemDeleteHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
-
 		setConfirmDialog(true);
 		setConfirmDialogType('delete');
 		setConfirmDialogData(master);
 	};
-
-	// When confirm dialog closes
 	const closeConfirmHandler = () => {
 		setConfirmDialog(false);
 		setConfirmDialogType(null);
 		setConfirmDialogData([]);
 	};
-
-	// When item/row is active/disable toggled
 	const itemToggleHandler = (ids: selectedArrayProps) => {
 		const master: selectedArrayProps = [...ids];
 		setProcessing(true);
@@ -181,8 +151,6 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			setProcessing(false);
 		});
 	};
-
-	// When item/row is confirmed to submit confirm dialog
 	const dialogConfirmHandler = () => {
 		if (confirmDialogType == 'delete') {
 			const master: selectedArrayProps = [...confirmDialogData];
@@ -204,7 +172,6 @@ const CategoriesModule = ({}: CategoriesModuleProps) => {
 			history.push(moduleObject.route.path);
 		}
 	};
-
 	const toggleDetail = () => {
 		if (params.id) {
 			setDetail(params.id);

@@ -24,5 +24,6 @@ export default {
 	author: 0,
 	approved: false,
 	rating: 0,
+	template: false,
 	active: true,
 } as PostsItemProps;
