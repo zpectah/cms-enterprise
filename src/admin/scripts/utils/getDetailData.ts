@@ -17,6 +17,7 @@ import PaymentsNew from '../modules/Payments/Payments.new';
 import ProducersNew from '../modules/Producers/Producers.new';
 import ProductsNew from '../modules/Products/Products.new';
 import StoresNew from '../modules/Stores/Stores.new';
+import ProductsOptionsNew from '../modules/ProductsOptions/ProductsOptions.new';
 
 export const blankDataItem = {
 	Categories: CategoriesNew,
@@ -36,6 +37,7 @@ export const blankDataItem = {
 	Producers: ProducersNew,
 	Products: ProductsNew,
 	Stores: StoresNew,
+	ProductsOptions: ProductsOptionsNew,
 };
 
 export default (

@@ -104,7 +104,7 @@
       "type": ["default", "licence", "service"]
     },
     "ProductsOptions": {
-      "type": ["default"]
+      "type": ["default", "custom_value"]
     },
     "Stores": {
       "type": ["default", "virtual", "branch"]

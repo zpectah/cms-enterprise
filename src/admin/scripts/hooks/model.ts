@@ -272,7 +272,7 @@ export function useProducts() {
 
 export function useProductsOptions() {
 	const { data, error } = useSWR(
-		`${config.project.api.base}/get_productsOptions`,
+		`${config.project.api.base}/get_products_options`,
 		get,
 	);
 
@@ -281,15 +281,15 @@ export function useProductsOptions() {
 		productsOptions_loading: !data && !error,
 		productsOptions_error: error,
 		reloadProductsOptions: () =>
-			mutate(`${config.project.api.base}/get_productsOptions`),
+			mutate(`${config.project.api.base}/get_products_options`),
 		createProductsOptions: (data: ProductsOptionsItemProps) =>
-			post(`${config.project.api.base}/create_productsOptions`, data),
+			post(`${config.project.api.base}/create_products_options`, data),
 		updateProductsOptions: (data: ProductsOptionsItemProps) =>
-			post(`${config.project.api.base}/update_productsOptions`, data),
+			post(`${config.project.api.base}/update_products_options`, data),
 		toggleProductsOptions: (data: (number | string)[]) =>
-			post(`${config.project.api.base}/toggle_productsOptions`, data),
+			post(`${config.project.api.base}/toggle_products_options`, data),
 		deleteProductsOptions: (data: (number | string)[]) =>
-			post(`${config.project.api.base}/delete_productsOptions`, data),
+			post(`${config.project.api.base}/delete_products_options`, data),
 	};
 }
 

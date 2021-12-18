@@ -40,6 +40,7 @@ import PaymentsPage from './pages/PaymentsPage';
 import ProducersPage from './pages/ProducersPage';
 import ProductsPage from './pages/ProductsPage';
 import StoresPage from './pages/StoresPage';
+import ProductsOptionsPage from './pages/ProductsOptionsPage';
 
 const App = () => {
 	const { theme } = useSelector((store: storeProps) => store);
@@ -111,6 +112,15 @@ const App = () => {
 								]}
 								component={ProductsPage}
 								auth={ROUTES.market.products.auth}
+								exact
+							/>
+							<AuthRoute
+								path={[
+									ROUTES.market.productsOptions.path,
+									ROUTES.market.productsOptions.path + ROUTE_PATH_PARAMS.detail,
+								]}
+								component={ProductsOptionsPage}
+								auth={ROUTES.market.productsOptions.auth}
 								exact
 							/>
 							<AuthRoute

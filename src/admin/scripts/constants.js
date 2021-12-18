@@ -231,6 +231,11 @@ export const ROUTES = {
 			name: 'Products',
 			auth: USER_LEVEL_NUMS.chief_redactor,
 		},
+		productsOptions: {
+			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/product-options',
+			name: 'ProductsOptions',
+			auth: USER_LEVEL_NUMS.chief_redactor,
+		},
 		stores: {
 			path: ROUTE_PATH_ROOT + ROUTE_PATH_MARKET + '/stores',
 			name: 'Stores',
@@ -349,6 +354,12 @@ export const NAV_ITEMS = {
 		{
 			name: ROUTES.market.products.name,
 			path: ROUTES.market.products.path,
+			active: true,
+			auth: USER_LEVEL_NUMS.chief_redactor,
+		},
+		{
+			name: ROUTES.market.productsOptions.name,
+			path: ROUTES.market.productsOptions.path,
 			active: true,
 			auth: USER_LEVEL_NUMS.chief_redactor,
 		},

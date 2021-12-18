@@ -2,8 +2,10 @@
   "success": {
     "itemCreated": "Položka byla vytvořena",
     "itemUpdated_one": "Položka byla aktualizována",
+    "itemUpdated_few": "{{count}} Položky byly aktualizovány",
     "itemUpdated_other": "{{count}} Položek bylo aktualizováno",
     "itemDeleted_one": "Položka byla smazána",
+    "itemDeleted_few": "{{count}} Položky byly smazány",
     "itemDeleted_other": "{{count}} Položek bylo smazáno",
     "newSettingsUpdated": "Nové nastavení bylo uloženo",
     "profileUpdated": "Profil byl aktualizován"

@@ -257,16 +257,9 @@ export interface ProductsItemProps extends commonItemProps {
 	};
 }
 
-export interface ProductsOptionsItemLangProps {
-	id?: number | string;
-	label: string;
-}
 export interface ProductsOptionsItemProps extends commonItemProps {
 	name: string;
 	value: string;
-	lang: {
-		[k: string]: ProductsOptionsItemLangProps;
-	};
 }
 
 export interface StoresItemLangProps {

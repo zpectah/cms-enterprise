@@ -564,6 +564,43 @@ class ApiRequest {
                     }
                     break;
 
+                /********** Products Options (*) **********/
+                case 'get_products_options':
+                    $response = $dc -> get('ProductsOptions', $request_data, $params);
+                    break;
+
+                case 'create_products_options':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_products_options':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_products_options':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_products_options':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('ProductsOptions', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
                 /********** Products (*) **********/
                 case 'get_products':
                     $response = $dc -> get('Products', $request_data, $params);
@@ -596,43 +633,6 @@ class ApiRequest {
                 case 'delete_products':
                     if ($request_is_authorized) {
                         $response = $dc -> delete('Products', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                /********** Products Options (*) **********/
-                case 'get_productsOptions':
-                    $response = $dc -> get('ProductsOptions', $request_data, $params);
-                    break;
-
-                case 'create_productsOptions':
-                    if ($request_is_authorized) {
-                        $response = $dc -> create('ProductsOptions', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                case 'update_productsOptions':
-                    if ($request_is_authorized) {
-                        $response = $dc -> update('ProductsOptions', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                case 'toggle_productsOptions':
-                    if ($request_is_authorized) {
-                        $response = $dc -> toggle('ProductsOptions', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                case 'delete_productsOptions':
-                    if ($request_is_authorized) {
-                        $response = $dc -> delete('ProductsOptions', $request_data);
                     } else {
                         $response['status'] = 'unauthorized';
                     }

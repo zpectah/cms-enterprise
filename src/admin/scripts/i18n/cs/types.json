@@ -40,5 +40,6 @@
   "branch": "Pobočka",
   "licence": "Licence",
   "service": "Služba",
-  "hidden": "Skrytý"
+  "hidden": "Skrytý",
+  "custom_value": "Vlastní hodnota"
 }

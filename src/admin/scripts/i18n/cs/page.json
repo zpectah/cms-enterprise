@@ -216,6 +216,15 @@
     },
     "label": "Produkty"
   },
+  "ProductsOptions": {
+    "meta": {
+      "title": "Možnosti produktu"
+    },
+    "page": {
+      "title": "Výpis možností produktů"
+    },
+    "label": "Možnosti produktu"
+  },
   "Stores": {
     "meta": {
       "title": "Obchody"

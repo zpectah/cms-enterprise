@@ -36,11 +36,12 @@ class ProductsOptions {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO products_options (name, type, active, deleted) VALUES (?,?,?,?)');
-        $types = 'ssii';
+        $query = ('INSERT INTO products_options (name, type, value, active, deleted) VALUES (?,?,?,?,?)');
+        $types = 'sssii';
         $args = [
             $data['name'],
             $data['type'],
+            $data['value'],
             $data['active'],
             0
         ];
@@ -64,11 +65,12 @@ class ProductsOptions {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE products_options SET name = ?, type = ?, active = ? WHERE id = ?');
-        $types = 'ssii';
+        $query = ('UPDATE products_options SET name = ?, type = ?, value = ?, active = ? WHERE id = ?');
+        $types = 'sssii';
         $args = [
             $data['name'],
             $data['type'],
+            $data['value'],
             $data['active'],
             $data['id']
         ];
