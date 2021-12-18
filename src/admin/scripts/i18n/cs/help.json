@@ -1,0 +1,189 @@
+{
+  "common": {
+    "title": {
+      "controls": "Ovládání",
+      "tables": "Tabulky",
+      "detail": "Detaily",
+      "dashboard": "Dashboard",
+      "settings": "Nastavení"
+    },
+    "controls": "Ovládání je jednoduché, podobné tomu, co určitě znáte z jiných systémů. Jedná se především o zobrazení nějakých dat a jejich následná manipulace. Takže existují zde tabulky, které nabízejí možnost vyhledávání, filtrování a především zobrazení{' '} detail položky.",
+    "tables": "Tabulka je řazena od nejnovější záznamů, ale je možnost si záznamy seřadit dle zobrazených sloupců (možnosti se liší) a nebo zobrazit záznamy podle určitého typu, stejně tak vyhledat podle určitého slova. Každý řádek tabulky nabízí možnost odkazu na detail a možnost aktivovat nebo deaktivovat, případně smazat. To ale závisí na nastavení práv uživatele, který si záznam zobrazuje nebo edituje.",
+    "detail": "Každý záznam v databázi má většinou svůj detail, který slouží k editaci údajů. Formulář se skládá z různých polí, které se liší podle obsahu. Více v panelu 'Moduly'.",
+    "dashboard": "Dashboard je úvodní stránka každého modulu. Pokud máte nainstalovaný některý z modulů, tak máte k dispozici další dashboard.",
+    "settings": "Nastavení slouží v první řadě k nastavení systému, ale i nastavení určitých vlastnostní webu nebo aplikace. Práva k zobrazení a editaci se liší podle práv uživatele."
+  },
+  "content": {
+    "title": {
+      "categories": "Kategorie",
+      "deliveries": "Způsob dopravy",
+      "distributors": "Dodavatelé",
+      "members": "Members",
+      "menu": "Menu",
+      "orders": "Objednávky",
+      "pages": "Stránky",
+      "payments": "Způsoby platby",
+      "posts": "Posty",
+      "producers": "Výrobci",
+      "products": "Produkty",
+      "productsOptions": "Možnosti produktu",
+      "stores": "Obchody",
+      "tags": "Tagy",
+      "translations": "Překlady",
+      "uploads": "Soubory",
+      "users": "Uživatelé"
+    },
+    "categories": {
+      "main": "Kategorie slouží jako taxonomie pro Posty a Produkty*. Kategorie lze uspořádat do dalších kategorií, nastavit obrázek a mají vícezazyčný obsah. Kategorie podporují komentáře.",
+      "type": {
+        "default": "Výchozí typ pro kategorii"
+      }
+    },
+    "deliveries": {
+      "main": "Způsob dopravy slouží jako výběr pro zákazníka při objednávce. Obsahuje cenu, váhový limit nebo max. počet jednotek. Doprava má vícejazyčný obsah.",
+      "type": {
+        "default": "Výchozí typ pro způsob dopravy"
+      }
+    },
+    "distributors": {
+      "main": "Dodavatelé slouží ke správě pro nastavení Produktů.",
+      "type": {
+        "default": "Výchozí typ pro dodavatele"
+      }
+    },
+    "members": {
+      "main": "Member je jako jiný uživatel, který nemá přístup do systému. Vytváří podobu návštěvníka webu nebo aplikace a podle typu má různé možnosti a konfiguraci.",
+      "type": {
+        "default": "Výchozí typ pro members",
+        "customer": "Zákazník, povinné údaje jako je adresa apod.",
+        "subscriber": "Odběratel, pouze k odběru novinek, nebo jiného feedu",
+        "hidden": "Uživatel který slouží pouze k archivaci a není nikde exponován"
+      }
+    },
+    "menu": {
+      "main": "Menu je konfigurovatelná část nabídky pro navigaci mezi stránkami.",
+      "type": {
+        "primary": "Hlavní navigace webu",
+        "secondary": "Sekundární navigace",
+        "tertiary": "Terciální navigace",
+        "custom": "Výchozí typ pro menu, slouží pro všeobecné použití nijak definované systémem"
+      }
+    },
+    "orders": {
+      "main": "Správa objednávek vytvořená zákazníky. Možnost vyzvořit 'umělou' objednávku stejně jako v e-shopu.",
+      "type": {
+        "default": "Výchozí typ pro objednávku"
+      }
+    },
+    "pages": {
+      "main": "Hlavní kontejner pro zobrazení obsahu na webu nebo aplikaci, podle typu jim lze přiřadit konkrétní význam.",
+      "type": {
+        "default": "Výchozí typ pro stránku",
+        "system": "Systémová stránka, její zobrazení je řízeno systémem",
+        "category": "Stránka se zobrazením obsahu určité kategorie",
+        "tag": "Stránka se zobrazením obsahu podle nastaveného tagu"
+      }
+    },
+    "payments": {
+      "main": "Způsob platby slouží jako výběr pro zákazníka při objednávce. Obsahuje cenu, váhový limit nebo max. počet jednotek. Platba má vícejazyčný obsah.",
+      "type": {
+        "default": "Výchozí typ pro způsob platby"
+      }
+    },
+    "posts": {
+      "main": "Post je základním prvkem systému, který lze použít několika způsoby. Post lze třídit v kategoriích a přiřazovat jim tagy.",
+      "type": {
+        "article": "Výchozí typ pro post",
+        "blog": "Obsah pro blog",
+        "media": "Obsah tvořený pro jedno média s vlastním popiskem a multijazyčným obsahem",
+        "gallery": "Kontejner pro galerii médií",
+        "event": "Obsah pro událost s vlastním nastavením",
+        "reference": "Obsah pro referenci",
+        "testimonial": "Obsah pro doporučení"
+      }
+    },
+    "producers": {
+      "main": "Výrobci slouží ke správě pro nastavení Produktů.",
+      "type": {
+        "default": "Výchozí typ pro výrobce"
+      }
+    },
+    "products": {
+      "main": "Produkt tvoří hlavní složku modulu Market. Slouží k tomu, kčemu název napovídá. Lze jej třídit do kategorií a přiřazovat jim tagy.",
+      "type": {
+        "default": "Výchozí typ pro produkt",
+        "licence": "Licence, není fyzický produkt",
+        "service": "Služba, není fyzický produkt"
+      }
+    },
+    "productsOptions": {
+      "main": "K nastavení specifických atributů Produktu lze použít Možnosti produktů. Může mít nastavenou hodnotu, nebo ji nastavit pro konkrétní produkt.",
+      "type": {
+        "default": "Výchozí typ s přiřazenou hodnotou",
+        "custom_value": "Typ s vlastní hodnotou"
+      }
+    },
+    "stores": {
+      "main": "Nastavení pro výdejní místa modulu Market.",
+      "type": {
+        "default": "Výchozí typ pro obchod",
+        "virtual": "Virtuální prodejna",
+        "branch": "Pobočka na fyzické adrese"
+      }
+    },
+    "tags": {
+      "main": "Tagy slouží jako další taxonomie pro Posty a Produkty*.",
+      "type": {
+        "default": "Výchozí typ pro tag"
+      }
+    },
+    "translations": {
+      "main": "Překlady jsou jednotlivé části překladu pro všestrané použití.",
+      "type": {
+        "default": "Výchozí typ pro překlad"
+      }
+    },
+    "uploads": {
+      "main": "Správa souborů, které slouží jako náhledy nebo přílohy pro u různého obsahu.",
+      "type": {
+        "unknown": "Neznámý typ souboru",
+        "image": "Obrázek",
+        "audio": "Audio soubor",
+        "video": "Video soubor",
+        "document": "Dokument",
+        "archive": "Archiv"
+      }
+    },
+    "users": {
+      "main": "Uživatelé systému s možností nastavení úrovně přístupu.",
+      "type": {
+        "demo": "Uživatel s možností ukázky",
+        "default": "Výchozí typ pro uživatele"
+      }
+    },
+    "*_label": "Záleží na nastavení modulů"
+  },
+  "modules": {
+    "title": {
+      "about": "O modulech",
+      "crm": "CRM",
+      "market": "Market"
+    },
+    "about": "Moduly slouží ke správě dalších typů obsahu, který není součástí základní instalace.",
+    "crm": "Modul slouží ke správě dalších uživatelů, kteří nemají přístup do systému, ale jsou naopak na straně návštěvníka webu nebo aplikace. Jsou povinné pro instalaci balíčku Market.",
+    "market": "Modul slouží ke správě základního elektronického obchodu, který obsahuje s tím související nový typ obsahu jako jsou 'Dopravci, Dodavatelé, Objednávky, Způsoby plateb, Výrobci, Produkty, Obchody'."    
+  },
+  "about": {
+    "title": {
+      "copyright": "Copyright"
+    },
+    "label": {
+      "system": "Systém",
+      "version": "Verze",
+      "author": "Autor",
+      "environment": "Prostředí",
+      "timestamp": "Časová známka",
+      "github": "Zdroj na GitHub"
+    }
+  }
+}

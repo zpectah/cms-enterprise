@@ -19,6 +19,9 @@ const StyledSmall = styled.small`
 const StyledStrong = styled.strong`
 	${typoBaseStyle}
 `;
+const StyledLink = styled.a`
+	${typoBaseStyle}
+`;
 
 interface ParagraphProps {
 	p?: true;
@@ -27,9 +30,12 @@ interface ParagraphProps {
 	small?: true;
 	bold?: true;
 	strong?: true;
+	a?: true;
 	className?: string;
 	onClick?: (e: any) => void;
 	dataTestId?: string;
+	href?: string;
+	target?: '_blank' | '_self' | null;
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({
@@ -40,14 +46,19 @@ const Paragraph: React.FC<ParagraphProps> = ({
 	small,
 	bold,
 	strong,
+	a,
 	className,
 	onClick,
 	dataTestId = 'typography.paragraph.default',
+	href,
+	target,
 }) => {
 	const componentProps = {
 		children: children,
 		className: className,
 		onClick: onClick,
+		href: href,
+		target: target,
 	};
 
 	const getComponent = () => {
@@ -59,6 +70,8 @@ const Paragraph: React.FC<ParagraphProps> = ({
 			c = StyledLabel;
 		} else if (small) {
 			c = StyledSmall;
+		} else if (a) {
+			c = StyledLink;
 		} else if (bold || strong) {
 			c = StyledStrong;
 		}
