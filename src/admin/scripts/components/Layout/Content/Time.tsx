@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { date } from '../../../../../../utils/utils';
 import { utilsDateObjectProps } from '../../../types/app';
 import { Typography } from '../../ui';
-import config from '../../../config';
 
 const StyledText = styled(Typography.Paragraph)`
 	color: ${(props) => props.theme.content.breadcrumbs.color};

@@ -38,6 +38,7 @@ class Products {
                 $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
                 $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
                 $row['options'] = $row['options'] == '' ? [] : explode(",", $row['options']); // Set value as array
+                $row['template'] = $row['template'] == 1; // Set value as boolean
                 $row['is_new'] = $row['is_new'] == 1; // Set value as boolean
                 $row['is_used'] = $row['is_used'] == 1; // Set value as boolean
                 $row['is_unboxed'] = $row['is_unboxed'] == 1; // Set value as boolean
@@ -77,13 +78,14 @@ class Products {
                     options,
                     rating,
                     manager,
+                    template,
                     is_new,
                     is_used,
                     is_unboxed,
                     active, 
                     deleted
-                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'ssssiiiiiissssssssiiiiiii';
+                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'ssssiiiiiissssssssiiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -105,6 +107,7 @@ class Products {
             $data['options'] ? implode(",", $data['options']) : '',
             $data['rating'],
             $data['manager'],
+            $data['template'],
             $data['is_new'],
             $data['is_used'],
             $data['is_unboxed'],
@@ -165,12 +168,13 @@ class Products {
                     options = ?,
                     rating = ?, 
                     manager = ?, 
+                    template = ?,                    
                     is_new = ?, 
                     is_used = ?, 
                     is_unboxed = ?,                 
                     active = ? 
                 WHERE id = ?');
-        $types = 'ssssiiiiiissssssssiiiiiii';
+        $types = 'ssssiiiiiissssssssiiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -192,6 +196,7 @@ class Products {
             $data['options'] ? implode(",", $data['options']) : '',
             $data['rating'],
             $data['manager'],
+            $data['template'],
             $data['is_new'],
             $data['is_used'],
             $data['is_unboxed'],

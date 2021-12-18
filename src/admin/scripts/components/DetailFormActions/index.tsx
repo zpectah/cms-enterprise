@@ -1,5 +1,4 @@
 import React from 'react';
-import SendIcon from '@mui/icons-material/Send';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '../ui';

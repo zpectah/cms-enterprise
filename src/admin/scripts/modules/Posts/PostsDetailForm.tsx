@@ -276,7 +276,6 @@ const PostsDetailForm = ({
 											id={`${formOptions.id}__template`}
 											dataTestId={`${formOptions.id}.switch.template`}
 											label={t('form:input.template')}
-											disabled={shouldApprove}
 										/>
 									</Form.Row>
 								)}

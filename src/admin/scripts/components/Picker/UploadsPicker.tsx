@@ -23,14 +23,17 @@ const SelectedListWrapper = styled.div`
 	flex-wrap: wrap;
 `;
 const SelectedListItem = styled.div<{ isImage: boolean }>`
-	width: ${(props) => (props.isImage ? '75px' : '150px')};
-	height: 75px;
+	width: ${(props) =>
+		props.isImage
+			? props.theme.picker.selected.size
+			: `calc(${props.theme.picker.selected.size} * 2)`};
+	height: ${(props) => props.theme.picker.selected.size};
 	margin: 0 calc(${(props) => props.theme.spacer} / 2)
 		calc(${(props) => props.theme.spacer} / 2) 0;
 	position: relative;
 	overflow: hidden;
-	background-color: rgba(25, 25, 25, 0.35);
-	border-radius: 0.35rem;
+	background-color: ${(props) => props.theme.picker.selected.bg};
+	border-radius: ${(props) => props.theme.picker.selected.radius};
 `;
 const SelectedItemImage = styled.img`
 	max-width: 100%;
@@ -39,7 +42,7 @@ const SelectedItemImage = styled.img`
 	display: block;
 `;
 const SelectedItemFile = styled.article`
-	width: 150px;
+	width: ${(props) => `calc(${props.theme.picker.selected.size} * 2)`};
 	height: 100%;
 	display: flex;
 	align-items: center;

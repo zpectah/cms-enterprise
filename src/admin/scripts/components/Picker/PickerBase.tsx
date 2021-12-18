@@ -12,8 +12,8 @@ const NoListPlaceholder = styled.div<{ width: string }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px dashed rgba(25, 25, 25, 0.125);
-	border-radius: 0.25rem;
+	border: ${(props) => props.theme.picker.noItems.border};
+	border-radius: ${(props) => props.theme.picker.noItems.radius};
 `;
 
 export interface PickerBaseInitialProps {
@@ -28,7 +28,7 @@ export interface PickerBaseInitialProps {
 	required?: boolean;
 	disabled?: boolean;
 	loading?: boolean;
-	style?: any; // TODO
+	style?: React.CSSProperties;
 }
 interface PickerBaseProps extends PickerBaseInitialProps {
 	items: { label: string; value: any; disabled?: boolean }[];

@@ -22,16 +22,16 @@ const HiddenDropWrapper = styled.label`
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 1250;
-	background-color: rgba(25, 25, 25, 0.75);
-	color: rgb(250, 250, 250);
+	z-index: ${(props) => props.theme.uploader.hiddenDropWrapper.zIndex};
+	background-color: ${(props) => props.theme.uploader.hiddenDropWrapper.bg};
+	color: ${(props) => props.theme.uploader.hiddenDropWrapper.color};
 `;
 const UploaderInputWrapper = styled.div`
 	width: 100%;
-	height: 200px;
+	height: ${(props) => props.theme.uploader.uploader.height};
 	display: block;
-	border: 5px dashed rgba(25, 25, 25, 0.5);
-	border-radius: 0.5rem;
+	border: ${(props) => props.theme.uploader.uploader.border};
+	border-radius: ${(props) => props.theme.uploader.uploader.radius};
 `;
 const UploaderInputInner = styled.div`
 	width: 100%;
@@ -74,9 +74,10 @@ const OtherFormatsBlock = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
-	background-color: rgba(25, 25, 25, 0.125);
-	border: 5px solid rgba(25, 25, 25, 0.5);
-	border-radius: 0.5rem;
+	background-color: ${(props) => props.theme.uploader.othersBlock.bg};
+	color: ${(props) => props.theme.uploader.othersBlock.color};
+	border: ${(props) => props.theme.uploader.othersBlock.border};
+	border-radius: ${(props) => props.theme.uploader.othersBlock.radius};
 `;
 
 interface UploaderProps {
@@ -358,7 +359,7 @@ const Uploader: React.FC<UploaderProps> = ({
 			{widthHeading && (
 				<UploaderHeading>
 					<Stack direction="row" alignItems="center">
-						{t('form:form.UploadsDetail.label.files_in_queue')}:{' '}
+						{t('form:form.UploadsDetail.label.files_in_queue')}:&nbsp;
 						<b>{fileList.length}</b>
 					</Stack>
 					<Stack spacing={2} direction="row">

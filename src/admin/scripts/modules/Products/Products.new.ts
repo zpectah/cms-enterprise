@@ -22,6 +22,7 @@ export default {
 	options: [],
 	rating: 0,
 	manager: 0,
+	template: false,
 	is_new: true,
 	is_used: false,
 	is_unboxed: false,

@@ -5,11 +5,11 @@ import palette from './palette';
 export default createTheme({
 	palette: {
 		primary: {
-			main: palette.deepPurple,
+			main: palette.veryPeri,
 			contrastText: palette.white,
 		},
 		secondary: {
-			main: palette.blueGrey,
+			main: palette.deepTaupe,
 			contrastText: palette.white,
 		},
 		info: {

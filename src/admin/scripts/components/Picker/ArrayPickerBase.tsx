@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { EMAIL_REGEX } from '../../constants';
 import { Input, IconButton, Chip } from '../ui';
 import getPickerInitialValue from '../../utils/getPickerInitialValue';
-import { getElTestAttr } from '../../utils/tests';
 
 export interface ArrayPickerInitialProps {
 	value: any;
@@ -111,13 +110,14 @@ const ArrayPickerBase = ({
 						onClick={handleSubmit(submitHandler)}
 						disabled={!isValid}
 						dataTestId={`${dataTestId}.button.${type}_new.add`}
+						style={{ height: '37px' }}
 					>
 						<AddCircleIcon />
 					</IconButton>
 				</Stack>
 			)}
 			{selectedItems.length > 0 && (
-				<div style={{ marginTop: should_show_input ? '.5rem' : '0' }}>
+				<div style={{ marginTop: should_show_input ? '1rem' : '0' }}>
 					<Stack spacing={1} direction="row">
 						{selectedItems.map((item, index) => (
 							<Chip

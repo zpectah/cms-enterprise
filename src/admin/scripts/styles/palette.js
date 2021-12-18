@@ -20,13 +20,19 @@ export default {
 	blueGrey: 'rgb(69,90,100)',
 	white: 'rgb(253,253,253)',
 	black: 'rgb(2,2,2)',
-	//
 	light: 'rgb(250,250,250)',
 	dark: 'rgb(25,25,25)',
 	lightDark: 'rgb(230,230,230)',
 	darkLight: 'rgb(75,75,75)',
-	_light: 'rgba(250,250,250, .85)',
-	_dark: 'rgba(25,25,25, .85)',
-	_lightDark: 'rgba(230,230,230, .35)',
-	_darkLight: 'rgba(75,75,75, .35)',
+
+	// Pantone
+	// https://www.pantone.com/color-of-the-year-2022-palette-exploration
+	veryPeri: 'rgb(104,104,172)',
+	anthracite: 'rgb(41,40,45)',
+	volcanicGlass: 'rgb(98,93,96)',
+	deepTaupe: 'rgb(125,100,97)',
+	plazaTaupe: 'rgb(173,163,146)',
+	whiteSand: 'rgb(219,211,208)',
+	petrifiedOak: 'rgb(143,121,96)',
+	cloudDancer: 'rgb(241,237,234)',
 };

@@ -12,7 +12,7 @@ const PagePreloader = ({}: PagePreloaderProps) => {
 			<Backdrop
 				sx={{
 					color: palette.dark,
-					backgroundColor: palette._light,
+					backgroundColor: 'rgba(250,250,250, .85)',
 					zIndex: (theme) => theme.zIndex.drawer + 1,
 				}}
 				open

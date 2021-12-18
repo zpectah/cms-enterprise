@@ -213,6 +213,15 @@ const PostsModule = ({}: PostsModuleProps) => {
 			name: `copy-${templateDetail.name}`,
 			categories: templateDetail.categories,
 			tags: templateDetail.tags,
+			event_location:
+				templateDetail.type == 'event' ? templateDetail.event_location : '',
+			event_address:
+				templateDetail.type == 'event' ? templateDetail.event_address : '',
+			event_country:
+				templateDetail.type == 'event' ? templateDetail.event_country : '',
+			event_city:
+				templateDetail.type == 'event' ? templateDetail.event_city : '',
+			event_zip: templateDetail.type == 'event' ? templateDetail.event_zip : '',
 			lang: {
 				...templateDetail.lang,
 			},

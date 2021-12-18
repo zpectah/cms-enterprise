@@ -227,6 +227,7 @@ class System {
           `options` text NOT NULL,
           `rating` int(11) NOT NULL,
           `manager` int(11) NOT NULL,
+          `template` int(11) NOT NULL,          
           `is_new` int(11) NOT NULL,
           `is_used` int(11) NOT NULL,
           `is_unboxed` int(11) NOT NULL,

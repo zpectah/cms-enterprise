@@ -6,7 +6,11 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES, ROUTE_SUFFIX, TOASTS_TIMEOUT_DEFAULT } from '../../constants';
 import { moduleObjectProps } from '../../types/app';
-import { ProductsItemProps, ProductsItemLangProps } from '../../types/model';
+import {
+	ProductsItemProps,
+	ProductsItemLangProps,
+	PostsItemLangProps,
+} from '../../types/model';
 import {
 	selectedArrayProps,
 	selectedItemsProps,
@@ -176,6 +180,39 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 			setDetailData(null);
 		}
 	};
+	const createFromTemplateHandler = (id: number | string) => {
+		const detail = getDetailData('new', 'Products', Products);
+		const templateDetail = getDetailData(id, 'Products', Products);
+		detail['lang'] = getLanguagesFields(Settings?.language_active, {
+			title: '',
+			description: '',
+		} as PostsItemLangProps);
+		const newDetailData = {
+			...detail,
+			type: templateDetail.type,
+			name: `copy-${templateDetail.name}`,
+			categories: templateDetail.categories,
+			tags: templateDetail.tags,
+			item_price: templateDetail.item_price,
+			item_discount: templateDetail.item_discount,
+			item_weight: templateDetail.item_weight,
+			item_depth: templateDetail.item_depth,
+			item_height: templateDetail.item_height,
+			item_width: templateDetail.item_width,
+			producers: templateDetail.producers,
+			distributors: templateDetail.distributors,
+			options: templateDetail.options,
+			manager: templateDetail.manager,
+			attachments: templateDetail.attachments,
+			lang: {
+				...templateDetail.lang,
+			},
+		};
+		setDetail('new');
+		setDetailData(newDetailData);
+		history.push(`${moduleObject.route.path}${ROUTE_SUFFIX.detail}/new`);
+		setTimeout(() => setDetailData(newDetailData), 125); // Fix data ...
+	};
 
 	useEffect(() => {
 		if (Products) toggleDetail();
@@ -214,6 +251,14 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 							languageList={Settings?.language_active}
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
+							customActionTriggers={[
+								{
+									key: 'post_create_from_template',
+									label: t('button.duplicate'),
+									callback: createFromTemplateHandler,
+									disabled: false,
+								},
+							]}
 						/>
 					)}
 				</>

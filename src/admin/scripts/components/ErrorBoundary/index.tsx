@@ -52,7 +52,10 @@ class ErrorBoundary extends React.Component<
 						>
 							<WarningIcon fontSize="large" />
 						</div>
-						<div>Something went wrong, see details in console</div>
+						<div>
+							<p>Something went wrong, see details in console</p>
+							{this.state.error && <pre>{String(this.state.error)}</pre>}
+						</div>
 					</div>
 				</Backdrop>
 			);

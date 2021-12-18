@@ -21,15 +21,15 @@ const OuterWrapper = styled.div<{ size: string; isValue: boolean }>`
 	flex: none;
 	overflow: hidden;
 	border-radius: 100%;
-	background-color: rgba(25, 25, 25, 0.25);
-	color: white;
+	background-color: ${(props) => props.theme.uploader.outerWrapper.bg};
+	color: ${(props) => props.theme.uploader.outerWrapper.color};
 
 	& .avatar-trigger {
-		width: 40px;
+		width: ${(props) => props.theme.uploader.avatar.size};
 		height: 40px;
 		position: absolute;
-		top: calc(50% - 20px);
-		left: calc(50% - 20px);
+		top: calc(50% - (${(props) => props.theme.uploader.avatar.size} / 2));
+		left: calc(50% - (${(props) => props.theme.uploader.avatar.size} / 2));
 		opacity: ${(props) => (props.isValue ? '0' : '1')};
 	}
 	&:hover .avatar-trigger {
@@ -49,17 +49,17 @@ const HiddenDropWrapper = styled.label`
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 1250;
-	background-color: rgba(25, 25, 25, 0.75);
-	color: rgb(250, 250, 250);
+	z-index: ${(props) => props.theme.uploader.hiddenDropWrapper.zIndex};
+	background-color: ${(props) => props.theme.uploader.hiddenDropWrapper.bg};
+	color: ${(props) => props.theme.uploader.hiddenDropWrapper.color};
 `;
 const UploaderInputWrapper = styled.div`
 	width: 100%;
-	height: 200px;
+	height: ${(props) => props.theme.uploader.uploader.height};
 	margin-top: 1rem;
 	display: block;
-	border: 5px dashed rgba(25, 25, 25, 0.5);
-	border-radius: 0.5rem;
+	border: ${(props) => props.theme.uploader.uploader.border};
+	border-radius: ${(props) => props.theme.uploader.uploader.radius};
 `;
 const UploaderInputInner = styled.div`
 	width: 100%;

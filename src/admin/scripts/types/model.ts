@@ -248,6 +248,7 @@ export interface ProductsItemProps extends commonItemProps {
 	options?: selectedArrayProps;
 	rating: number;
 	manager: number;
+	template: boolean;
 	is_new: boolean;
 	is_used: boolean;
 	is_unboxed: boolean;

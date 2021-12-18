@@ -28,7 +28,7 @@ const InnerBar = styled.div<{ isProcessing: boolean }>`
 	left: 0;
 	background-color: ${(props) => props.theme.preloader.bar.color};
 	animation: ${loadingAnimation} infinite ease-out 2s;
-	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 2px 1rem ${(props) => props.theme.preloader.bar.color};
 `;
 
 interface BarPreloaderProps {

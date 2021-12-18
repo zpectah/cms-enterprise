@@ -21,7 +21,7 @@ const LabelColumn = styled.div`
 	justify-content: flex-start;
 
 	${media.min.md} {
-		width: 300px;
+		width: ${(props) => props.theme.form.row.label.width};
 		padding-bottom: 0;
 		padding-top: 0.5rem;
 		padding-right: ${(props) => props.theme.spacer};
@@ -33,7 +33,10 @@ const InputColumn = styled.div<{ withLabel: boolean }>`
 	width: 100%;
 
 	${media.min.md} {
-		width: ${(props) => (props.withLabel ? 'calc(100% - 300px)' : '100%')};
+		width: ${(props) =>
+			props.withLabel
+				? `calc(100% - ${props.theme.form.row.label.width})`
+				: '100%'};
 	}
 `;
 const StyledLabel = styled.label`

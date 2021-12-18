@@ -266,6 +266,26 @@ const ProductsDetailForm = ({
 								)}
 							/>
 						</Section>
+						<Section>
+							<Controller
+								name="template"
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.SwitchControl
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__template`}
+											dataTestId={`${formOptions.id}.switch.template`}
+											label={t('form:input.template')}
+										/>
+									</Form.Row>
+								)}
+							/>
+						</Section>
 						{/*  ============ \\ Form sidebar ============ */}
 					</>
 				}

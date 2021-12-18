@@ -11,7 +11,7 @@ import { Button, Input, Preloader } from '../ui';
 
 const Wrapper = styled.div`
 	width: 100%;
-	height: 750px;
+	height: ${(props) => props.theme.uploader.cropper.height};
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -27,14 +27,14 @@ const CropperSource = styled.div`
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: rgba(25, 25, 25, 0.9);
+	background-color: ${(props) => props.theme.uploader.cropper.source.bg};
 
 	${media.min.md} {
 	}
 `;
 const CropperOutput = styled.div`
-	width: 35vw;
-	height: 35vw;
+	width: ${(props) => props.theme.uploader.cropper.output.mobile.size};
+	height: ${(props) => props.theme.uploader.cropper.output.mobile.size};
 	padding: ${(props) => props.theme.spacer};
 	position: absolute;
 	bottom: 0;
@@ -42,7 +42,7 @@ const CropperOutput = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(25, 25, 25, 0.5);
+	background-color: ${(props) => props.theme.uploader.cropper.output.bg};
 
 	& img {
 		max-width: 100%;
@@ -52,8 +52,8 @@ const CropperOutput = styled.div`
 	}
 
 	${media.min.md} {
-		width: 15vw;
-		height: 15vw;
+		width: ${(props) => props.theme.uploader.cropper.output.desktop.size};
+		height: ${(props) => props.theme.uploader.cropper.output.desktop.size};
 	}
 `;
 const CropperOptions = styled.div`
@@ -66,13 +66,12 @@ const CropperOptions = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-evenly;
-	background-color: rgba(225, 225, 225, 0.75);
+	background-color: ${(props) => props.theme.uploader.cropper.options.bg};
 `;
 const CropperOptionsBlock = styled.div`
 	padding: calc(${(props) => props.theme.spacer} / 2)
 		${(props) => props.theme.spacer};
 	display: flex;
-	/* flex: auto; */
 	align-items: center;
 	justify-content: center;
 `;

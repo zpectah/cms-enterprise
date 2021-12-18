@@ -12,14 +12,14 @@ const Wrapper = styled.div`
 	overflow: hidden;
 `;
 const WrapperScrollable = styled.div`
-	width: calc(100% + 30px);
+	width: calc(100% + ${(props) => props.theme.scrollable.barWidth});
 	height: 100%;
 	position: relative;
 	overflow-x: hidden;
 	overflow-y: auto;
 `;
 const WrapperContent = styled.div`
-	width: calc(100% - 30px);
+	width: calc(100% - ${(props) => props.theme.scrollable.barWidth});
 	height: 100%;
 	position: absolute;
 	top: 0;
