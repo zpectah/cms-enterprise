@@ -9,6 +9,7 @@ import CheckboxInput from './CheckboxInput';
 import CheckboxControlInput from './CheckboxControlInput';
 import RatingInput from './RatingInput';
 import DateTimeInput from './DateTimeInput';
+import PasswordInput from './PasswordInput';
 
 export default {
 	Select: SelectInput,
@@ -22,4 +23,5 @@ export default {
 	CheckboxControl: CheckboxControlInput,
 	Rating: RatingInput,
 	DateTime: DateTimeInput,
+	Password: PasswordInput,
 };

@@ -71,7 +71,8 @@
   "label": {
     "no_parent": "Bez rodiče",
     "no_selected": "Nevybráno",
-    "no_category": "Bez kategorie"
+    "no_category": "Bez kategorie",
+    "setKeywords": "Zadejte klíčová slova"
   },
   "section": {
     "title": {

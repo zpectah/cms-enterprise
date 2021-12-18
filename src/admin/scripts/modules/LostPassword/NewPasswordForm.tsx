@@ -73,8 +73,7 @@ const NewPasswordForm = ({
 					rules={{ required: true, minLength: 5 }}
 					render={({ field: { onChange, onBlur, value, ref, name } }) => (
 						<Form.Row errors={[]}>
-							<Input.Text
-								type="password"
+							<Input.Password
 								onChange={onChange}
 								onBlur={onBlur}
 								value={value}

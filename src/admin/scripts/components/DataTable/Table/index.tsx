@@ -13,6 +13,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Stack from '@mui/material/Stack';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import PushPinIcon from '@mui/icons-material/PushPin';
 import styled from 'styled-components';
 
 import {
@@ -246,6 +247,9 @@ const Table = ({
 						dataTestId={`${tableRowIdPrefix}.cell.name.link.${row.id}`}
 					>
 						{row.name}
+						{row.template && (
+							<PushPinIcon fontSize="small" style={{ marginLeft: '.5rem' }} />
+						)}
 					</StyledRowLink>
 				),
 			});

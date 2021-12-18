@@ -285,8 +285,7 @@ const UsersDetailForm = ({
 						rules={{ required: detailData.id == 'new' }}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
-								<Input.Text
-									type="password"
+								<Input.Password
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value || ''}

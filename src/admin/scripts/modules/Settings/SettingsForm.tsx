@@ -563,6 +563,7 @@ const SettingsForm = ({
 											<Picker.String
 												value={value}
 												onChange={onChange}
+												inputLabel={t('form:label.setKeywords')}
 												multiple
 											/>
 										</Form.Row>

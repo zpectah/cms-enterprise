@@ -161,8 +161,7 @@ const ProfileForm = ({
 								label={t('form:input.password_new')}
 								errors={[]}
 							>
-								<Input.Text
-									type="password"
+								<Input.Password
 									onChange={onChange}
 									onBlur={onBlur}
 									value={value || ''}

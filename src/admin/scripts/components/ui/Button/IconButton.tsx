@@ -10,6 +10,9 @@ import { getElTestAttr } from '../../../utils/tests';
 
 const ButtonLabel = styled.span<{ isLoading: boolean }>`
 	opacity: ${(props) => (props.isLoading ? '.125' : '1')};
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 const StyledLoading = styled(CircularProgress)`
 	position: absolute;

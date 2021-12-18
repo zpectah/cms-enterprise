@@ -17,6 +17,10 @@ export default {
 		fontFamilyBase: `'Roboto', Verdana, Arial, Helvetica, sans-serif`,
 		borderBase: alpha(palette.anthracite, 0.25),
 		borderSecondary: alpha(palette.anthracite, 0.05),
+		input: {
+			bg: palette.white,
+			color: palette.anthracite,
+		},
 	},
 	view: {
 		color: palette.anthracite,
@@ -67,7 +71,7 @@ export default {
 	},
 	preloader: {
 		bar: {
-			height: '3px',
+			height: '5px',
 			color: palette.veryPeri,
 			animation: {
 				color_a: palette.veryPeri,

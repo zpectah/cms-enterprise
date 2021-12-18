@@ -7,14 +7,14 @@ import { getElTestAttr } from '../../../utils/tests';
 
 const StyledInput = styled(TextField)<{ responsive: string }>`
 	width: 100%;
-	background-color: white;
+	background-color: ${(props) => props.theme.ui.input.bg};
 
 	${media.min.md} {
 		width: ${(props) => (props.responsive ? props.responsive : '100%')};
 	}
 `;
 
-interface TextInputProps {
+export interface TextInputProps {
 	dataTestId?: string;
 	responsiveWidth?: string;
 	readOnly?: boolean;
