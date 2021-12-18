@@ -81,7 +81,7 @@ export default {
 		page: {},
 	},
 	wysiwyg: {
-		border: `1px solid ${alpha(palette.anthracite, 0.5)}`,
+		border: `1px solid ${alpha(palette.anthracite, 0.25)}`,
 		raw: {
 			fontSize: '1rem',
 			color: palette.light,
@@ -146,6 +146,10 @@ export default {
 			size: '75px',
 			bg: alpha(palette.anthracite, 0.35),
 			radius: '0.35rem',
+			titleGradient: `linear-gradient(to top, ${palette.anthracite} 0%, ${alpha(
+				palette.anthracite,
+				0.5,
+			)} 70%, ${alpha(palette.anthracite, 0)} 100%)`,
 		},
 	},
 	form: {

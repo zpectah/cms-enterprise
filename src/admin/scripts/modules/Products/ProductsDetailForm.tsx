@@ -24,6 +24,7 @@ import ProductsOptionsManager from './ProductsOptionsManager';
 import DetailFormActions from '../../components/DetailFormActions';
 import inputErrorHandler from '../../utils/inputErrorHandler';
 import checkInputDuplicates from '../../utils/checkInputDuplicates';
+import CommentsManager from '../../components/CommentsManager';
 
 interface ProductsDetailFormProps {
 	allItems: ProductsItemProps[];
@@ -288,6 +289,9 @@ const ProductsDetailForm = ({
 						</Section>
 						{/*  ============ \\ Form sidebar ============ */}
 					</>
+				}
+				outerChildren={
+					<CommentsManager assigned="product" assignedId={detailData.id} />
 				}
 			>
 				{/*  ============ Main form body ============ */}

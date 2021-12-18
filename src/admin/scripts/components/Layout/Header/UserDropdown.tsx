@@ -62,6 +62,7 @@ const UserDropdown = ({ dataTestId = 'user.dropdown' }: UserDropdownProps) => {
 					onClick={dropdownOpenHandler}
 					dataTestId={`${dataTestId}.avatar`}
 					size={'28px'}
+					buttonStyle={{ marginLeft: '.5rem' }}
 				/>
 			</div>
 			<Menu

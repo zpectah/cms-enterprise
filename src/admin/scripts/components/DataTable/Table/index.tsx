@@ -29,7 +29,7 @@ import {
 } from '../../../types/table';
 import { appModelProps } from '../../../types/app';
 import { oneOfModelItemProps } from '../../../types/model';
-import { Typography, Input, IconButton, Chip } from '../../ui';
+import { Typography, Input, IconButton, Chip, Avatar } from '../../ui';
 import TableHeader from './TableHeader';
 import { getElTestAttr } from '../../../utils/tests';
 import config from '../../../config';
@@ -259,13 +259,23 @@ const Table = ({
 				align: tableCells.email[0],
 				width: tableCells.email[1],
 				children: (
-					<StyledRowLink
-						h6
-						onClick={() => clickDetailHandler(row.id)}
-						dataTestId={`${tableRowIdPrefix}.cell.email.link.${row.id}`}
-					>
-						(avatar) {row.email}
-					</StyledRowLink>
+					<>
+						{row.img_avatar && (
+							<Avatar
+								nickName={row.nick_name ? row.nick_name : row.email}
+								image={row.img_avatar}
+								onClick={() => clickDetailHandler(row.id)}
+								buttonStyle={{ marginRight: '.5rem' }}
+							/>
+						)}
+						<StyledRowLink
+							h6
+							onClick={() => clickDetailHandler(row.id)}
+							dataTestId={`${tableRowIdPrefix}.cell.email.link.${row.id}`}
+						>
+							{row.email}
+						</StyledRowLink>
+					</>
 				),
 			});
 

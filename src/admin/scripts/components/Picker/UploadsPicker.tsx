@@ -4,8 +4,9 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useTranslation } from 'react-i18next';
+import { isDesktop } from 'react-device-detect';
 import styled from 'styled-components';
 
 import config from '../../config';
@@ -50,6 +51,25 @@ const SelectedItemFile = styled.article`
 	flex-direction: column;
 	position: relative;
 	overflow: hidden;
+`;
+const StyledImageListItemBar = styled(ImageListItemBar)`
+	background: transparent;
+`;
+const StyledImageListItemBarBottom = styled(ImageListItemBar)`
+	background: ${(props) => props.theme.picker.selected.titleGradient};
+`;
+const StyledImage = styled.img`
+	max-width: 100%;
+	height: auto;
+	max-height: 100%;
+`;
+const StyledFile = styled.span`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: ${(props) => props.theme.picker.selected.bg};
 `;
 
 interface UploadsPickerProps {
@@ -169,11 +189,6 @@ const UploadsPicker = ({
 										src={`/${config.project.path.uploads}image/thumbnail/${item.file_name}`}
 										alt={item.name}
 										loading="lazy"
-										style={{
-											maxWidth: '100%',
-											height: 'auto',
-											maxHeight: '100%',
-										}}
 									/>
 								) : (
 									<SelectedItemFile>
@@ -194,7 +209,10 @@ const UploadsPicker = ({
 			>
 				<div style={{}}>
 					{Uploads && (
-						<ImageList cols={4} rowHeight={175}>
+						<ImageList
+							cols={isDesktop ? 5 : 3}
+							rowHeight={isDesktop ? 100 : 75}
+						>
 							{Uploads.map((item) => {
 								const is_selected = isSelected(item.id, item.file_name);
 								const should_put = onlyImages ? item.type == 'image' : true;
@@ -203,35 +221,15 @@ const UploadsPicker = ({
 									return (
 										<ImageListItem key={item.id} aria-selected={is_selected}>
 											{item.type == 'image' ? (
-												<img
+												<StyledImage
 													src={`/${config.project.path.uploads}image/medium/${item.file_name}`}
 													alt={item.name}
 													loading="lazy"
-													style={{
-														maxWidth: '100%',
-														height: 'auto',
-														maxHeight: '100%',
-													}}
 												/>
 											) : (
-												<div
-													style={{
-														width: '100%',
-														height: '100%',
-														display: 'flex',
-														alignItems: 'center',
-														justifyContent: 'center',
-													}}
-												>
-													{item.type}: {item.file_name}
-												</div>
+												<StyledFile>{item.type}</StyledFile>
 											)}
-											<ImageListItemBar
-												sx={{
-													background:
-														'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-														'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-												}}
+											<StyledImageListItemBar
 												position="top"
 												actionIcon={
 													<IconButton
@@ -242,10 +240,18 @@ const UploadsPicker = ({
 														}
 														dataTestId={`${dataTestId}.ImageList.item.${item.name}`}
 													>
-														{is_selected ? <RemoveIcon /> : <AddIcon />}
+														{is_selected ? (
+															<CancelIcon color="error" />
+														) : (
+															<AddIcon color="success" />
+														)}
 													</IconButton>
 												}
 												actionPosition="left"
+											/>
+											<StyledImageListItemBarBottom
+												title={item.file_name}
+												position="bottom"
 											/>
 										</ImageListItem>
 									);

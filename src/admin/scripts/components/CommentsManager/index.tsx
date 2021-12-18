@@ -30,7 +30,7 @@ const ItemChildrenWrapper = styled.div`
 `;
 
 interface CommentsManagerProps {
-	assigned: 'post' | 'category';
+	assigned: 'post' | 'category' | 'product';
 	assignedId: string | number;
 	editAllComments?: boolean;
 }
@@ -53,7 +53,7 @@ const CommentsManager = ({
 		comments_error,
 	} = useComments();
 	const { Profile } = useProfile();
-	const { t } = useTranslation(['common', 'form', 'messages']);
+	const { t } = useTranslation(['common', 'form', 'messages', 'components']);
 	const [currentCommentsList, setCurrentCommentsList] = useState<
 		CommentsItemProps[]
 	>([]);
@@ -65,6 +65,7 @@ const CommentsManager = ({
 		useState<confirmDialogTypeProps>(null);
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
+	const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
 
 	const setCurrentList = useCallback(() => {
 		let tmp = [];
@@ -243,11 +244,25 @@ const CommentsManager = ({
 
 	return (
 		<>
-			<ListWrapper>{renderList(currentCommentsList)}</ListWrapper>
+			<Button
+				color="secondary"
+				variant="outlined"
+				size="small"
+				onClick={() => setCommentsOpen(!commentsOpen)}
+				style={{ marginBottom: '1rem' }}
+				disabled={currentCommentsList.length == 0}
+			>
+				{commentsOpen
+					? t('components:CommentsManager.button.closeComments')
+					: t('components:CommentsManager.button.openComments')}
+			</Button>
+			{commentsOpen && (
+				<ListWrapper>{renderList(currentCommentsList)}</ListWrapper>
+			)}
 			<Drawer
 				isOpen={drawerOpen}
 				onClose={() => setDrawerOpen(false)}
-				title={replyData?.title || 'Comment reply'}
+				title={replyData?.title || t('components:CommentsManager.button.reply')}
 			>
 				{replyData ? (
 					<ReplyForm formData={replyData} onSubmit={submitFormHandler} />

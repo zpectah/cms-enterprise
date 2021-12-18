@@ -35,5 +35,12 @@
     "new_email": "Zadejte nový e-mail",
     "new_phone": "Zadejte nový telefon",
     "new_text": "Zadejte nový řetězec"
+  },
+  "CommentsManager": {
+    "button": {
+      "reply": "Odpovědět",
+      "openComments": "Otevřít komentáře",
+      "closeComments": "Zavřít komentáře"
+    }
   }
 }

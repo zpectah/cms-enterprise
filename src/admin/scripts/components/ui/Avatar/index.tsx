@@ -1,8 +1,9 @@
 import React from 'react';
 import { default as MuiAvatar } from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { IconButtonProps } from '@mui/material/IconButton';
 import styled from 'styled-components';
 
+import IconButton from '../Button/IconButton';
 import { getElTestAttr } from '../../../utils/tests';
 
 const StyledText = styled.span`
@@ -19,6 +20,7 @@ interface AvatarProps {
 	onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 	dataTestId?: string;
 	iconButtonProps?: IconButtonProps;
+	buttonStyle?: React.CSSProperties;
 }
 
 const Avatar = ({
@@ -30,6 +32,7 @@ const Avatar = ({
 	onClick,
 	dataTestId = 'avatar.default',
 	iconButtonProps,
+	buttonStyle,
 }: AvatarProps) => {
 	const clickHandler = (e) => {
 		if (onClick) onClick(e);
@@ -40,10 +43,10 @@ const Avatar = ({
 			<IconButton
 				onClick={clickHandler}
 				size="small"
-				sx={{ ml: 2 }}
 				aria-label="user dropdown"
+				dataTestId={dataTestId}
+				style={buttonStyle}
 				{...iconButtonProps}
-				{...getElTestAttr(dataTestId)}
 			>
 				<MuiAvatar
 					src={image}
