@@ -13,6 +13,7 @@ import DeliveriesPicker from './DeliveriesPicker';
 import PaymentsPicker from './PaymentsPicker';
 import DistributorsPicker from './DistributorsPicker';
 import ProducersPicker from './ProducersPicker';
+import ProductsOptionsPicker from './ProductsOptionsPicker';
 
 export default {
 	Uploads: UploadsPicker,
@@ -30,4 +31,5 @@ export default {
 	Payments: PaymentsPicker,
 	Distributors: DistributorsPicker,
 	Producers: ProducersPicker,
+	ProductsOptions: ProductsOptionsPicker,
 };

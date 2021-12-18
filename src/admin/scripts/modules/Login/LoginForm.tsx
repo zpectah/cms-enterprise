@@ -52,8 +52,8 @@ const LoginForm = ({}: LoginFormProps) => {
 					setErrorMessage(t('form:form.Login.msg.user_not_found'));
 					LogsService.create({
 						method: 'LoginForm',
-						status: 'error',
-						content: 'user_not_found',
+						status: 'user_not_found',
+						content: master.email,
 					});
 					break;
 
@@ -65,8 +65,8 @@ const LoginForm = ({}: LoginFormProps) => {
 					setErrorMessage(t('form:form.Login.msg.user_not_active'));
 					LogsService.create({
 						method: 'LoginForm',
-						status: 'error',
-						content: 'user_not_active',
+						status: 'user_not_active',
+						content: master.email,
 					});
 					break;
 
@@ -74,8 +74,8 @@ const LoginForm = ({}: LoginFormProps) => {
 					setErrorMessage(t('form:form.Login.msg.user_is_deleted'));
 					LogsService.create({
 						method: 'LoginForm',
-						status: 'error',
-						content: 'user_is_deleted',
+						status: 'user_is_deleted',
+						content: master.email,
 					});
 					break;
 
@@ -127,8 +127,7 @@ const LoginForm = ({}: LoginFormProps) => {
 					rules={{ required: true }}
 					render={({ field: { onChange, onBlur, value, ref, name } }) => (
 						<Form.Row errors={[]}>
-							<Input.Text
-								type="password"
+							<Input.Password
 								onChange={onChange}
 								onBlur={onBlur}
 								value={value}

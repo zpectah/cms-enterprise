@@ -61,7 +61,7 @@ const OrderItemsManager = ({
 }: OrderItemsManagerProps) => {
 	const { t } = useTranslation(['common', 'form', 'components']);
 	const { Products } = useProducts();
-	const [tmpSelected, setTmpSelected] = useState<any[]>([]);
+	const [tmpSelected, setTmpSelected] = useState<typeof newProductModel[]>([]);
 	const [newProduct, setNewProduct] = useState(newProductModel);
 	const [totalItems, setTotalItems] = useState(0);
 	const [totalPrice, setTotalPrice] = useState(0);
@@ -111,16 +111,7 @@ const OrderItemsManager = ({
 		ni.id = String(tmpSelected.length + 1);
 		tmp.push(ni);
 		setTmpSelected(tmp);
-		setNewProduct(
-			_.cloneDeep({
-				id: 'new',
-				product_id: 0,
-				name: '',
-				price: 0,
-				price_total: 0,
-				amount: 1,
-			}),
-		);
+		setNewProduct(_.cloneDeep(newProductModel));
 		sendResponse(tmp);
 	};
 	const rowRemoveHandler = (index: number) => {
@@ -152,6 +143,7 @@ const OrderItemsManager = ({
 						value={item.product_id}
 						disabled={item.id !== 'new' || updateDisabled}
 						style={{ width: '100%' }}
+						disabledPlaceholder
 					/>
 					<Input.Text
 						type="number"
@@ -271,7 +263,7 @@ const OrderItemsManager = ({
 					),
 				)
 			) : (
-				<div style={{ padding: '1rem', textAlign: 'center' }}>
+				<div style={{ padding: '1rem 1rem 2rem 1rem', textAlign: 'center' }}>
 					<small>
 						{t('components:OrderItemsManager.title.no_items_created')}
 					</small>

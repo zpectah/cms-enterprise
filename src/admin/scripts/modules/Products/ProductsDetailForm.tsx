@@ -682,20 +682,21 @@ const ProductsDetailForm = ({
 						)}
 					/>
 				</Section>
-				{/*
-				<Section title={'Products options'}>
+				<Section title={t('form:section.title.productsOptions')}>
 					<Controller
 						name="options"
 						control={control}
 						rules={{}}
 						render={({ field: { onChange, onBlur, value, ref, name } }) => (
 							<Form.Row errors={[]}>
-								<ProductsOptionsManager value={value} onChange={onChange} />
+								<ProductsOptionsManager
+									value={value as string[]}
+									onChange={onChange}
+								/>
 							</Form.Row>
 						)}
 					/>
 				</Section>
-				*/}
 				<Section title={t('form:section.title.mediaAndAttachments')}>
 					<Controller
 						name="gallery"

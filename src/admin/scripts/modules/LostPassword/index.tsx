@@ -10,6 +10,7 @@ import { useProfile } from '../../hooks/common';
 import LostPasswordForm from './LostPasswordForm';
 import NewPasswordForm from './NewPasswordForm';
 import { Button } from '../../components/ui';
+import LogsService from '../../services/Logs.service';
 
 interface LostPasswordModuleProps {}
 
@@ -26,21 +27,36 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 	const [successMessage, setSuccessMessage] = useState<string>(null);
 	const [formProcessing, setFormProcessing] = useState<boolean>(false);
 
-	const setMessageHandler = (type) => {
+	const setMessageHandler = (type: string, token?: string) => {
 		setErrorMessage(null);
 		setSuccessMessage(null);
 
 		switch (type) {
 			case 'user_not_found':
 				setErrorMessage(t('form:form.Login.msg.user_not_found'));
+				LogsService.create({
+					method: 'LostPassword',
+					status: 'user_not_found',
+					content: token,
+				});
 				break;
 
 			case 'user_not_active':
 				setErrorMessage(t('form:form.Login.msg.user_not_active'));
+				LogsService.create({
+					method: 'LostPassword',
+					status: 'user_not_active',
+					content: token,
+				});
 				break;
 
 			case 'user_is_deleted':
 				setErrorMessage(t('form:form.Login.msg.user_is_deleted'));
+				LogsService.create({
+					method: 'LostPassword',
+					status: 'user_is_deleted',
+					content: token,
+				});
 				break;
 
 			case 'request_was_send':
@@ -52,6 +68,11 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 				setErrorMessage(
 					t('form:form.LostPassword.msg.user_password_reset_error'),
 				);
+				LogsService.create({
+					method: 'LostPassword',
+					status: 'user_password_reset_error',
+					content: token,
+				});
 				break;
 
 			case 'user_password_already_reset':
@@ -62,10 +83,20 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 
 			case 'request_not_found':
 				setErrorMessage(t('form:form.LostPassword.msg.request_not_found'));
+				LogsService.create({
+					method: 'LostPassword',
+					status: 'request_not_found',
+					content: token,
+				});
 				break;
 
 			case 'token_not_found':
 				setErrorMessage(t('form:form.LostPassword.msg.token_not_found'));
+				LogsService.create({
+					method: 'LostPassword',
+					status: 'token_not_found',
+					content: token,
+				});
 				break;
 
 			case 'user_password_reset_success':
@@ -83,7 +114,7 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 
 		setFormProcessing(true);
 		userLostPassword(master).then((response) => {
-			setMessageHandler(response?.message);
+			setMessageHandler(response?.message, master.email);
 			setFormProcessing(false);
 		});
 	};
@@ -98,7 +129,7 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 
 		setFormProcessing(true);
 		userCreateNewPassword(master).then((response) => {
-			setMessageHandler(response?.message);
+			setMessageHandler(response?.message, master.token);
 			setFormProcessing(false);
 		});
 	};
@@ -110,7 +141,7 @@ const LostPasswordModule = ({}: LostPasswordModuleProps) => {
 
 		setFormProcessing(true);
 		userLostPasswordReset(master).then((response) => {
-			setMessageHandler(response?.message);
+			setMessageHandler(response?.message, master.token);
 			setFormProcessing(false);
 		});
 	};

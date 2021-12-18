@@ -3,7 +3,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Stack from '@mui/material/Stack';
-import AddIcon from '@mui/icons-material/Add';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useTranslation } from 'react-i18next';
 import { isDesktop } from 'react-device-detect';
@@ -243,7 +243,7 @@ const UploadsPicker = ({
 														{is_selected ? (
 															<CancelIcon color="error" />
 														) : (
-															<AddIcon color="success" />
+															<AddCircleIcon color="success" />
 														)}
 													</IconButton>
 												}

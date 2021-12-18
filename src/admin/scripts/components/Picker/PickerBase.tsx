@@ -25,10 +25,12 @@ export interface PickerBaseInitialProps {
 	name?: string;
 	id?: string;
 	label?: string;
+	placeholder?: string;
 	required?: boolean;
 	disabled?: boolean;
 	loading?: boolean;
 	style?: React.CSSProperties;
+	disabledPlaceholder?: boolean;
 }
 interface PickerBaseProps extends PickerBaseInitialProps {
 	items: { label: string; value: any; disabled?: boolean }[];
@@ -44,17 +46,19 @@ const PickerBase = ({
 	name,
 	id,
 	label,
+	placeholder,
 	required,
 	disabled,
 	loading,
 	style,
+	disabledPlaceholder,
 }: PickerBaseProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const getOptionsList = () => {
 		const placeholder = {
 			label: t('form:label.no_selected'),
 			value: '0',
-			disabled: false,
+			disabled: disabledPlaceholder,
 		};
 
 		return !multiple ? [placeholder, ...items] : items;
@@ -76,6 +80,7 @@ const PickerBase = ({
 					name={name}
 					id={id}
 					label={label}
+					placeholder={placeholder}
 					required={required}
 					disabled={disabled || items.length == 0}
 					style={style}
