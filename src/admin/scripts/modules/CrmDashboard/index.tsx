@@ -27,7 +27,7 @@ const CrmDashboardModule = ({}: CrmDashboardModuleProps) => {
 	return (
 		<>
 			<div>
-				<DashboardTile.Base>Dashboard Tile</DashboardTile.Base>
+				<DashboardTile.Base title="Tile one">Dashboard Tile</DashboardTile.Base>
 				<Section title={'Demo actions'}>
 					<Stack spacing={2} direction="row">
 						<Button

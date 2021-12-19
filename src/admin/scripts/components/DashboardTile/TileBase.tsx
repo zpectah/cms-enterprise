@@ -1,15 +1,40 @@
 import React from 'react';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import styled from 'styled-components';
 
-const Wrapper = styled.div``;
+import { IconButton } from '../ui';
 
-interface TileBaseProps {}
+const Wrapper = styled(Card)``;
 
-const TileBase: React.FC<TileBaseProps> = ({ children }) => {
+interface TileBaseProps {
+	width?: string;
+	title: string;
+	subheader?: string;
+}
+
+const TileBase: React.FC<TileBaseProps> = ({
+	children,
+	width,
+	title,
+	subheader,
+}) => {
 	return (
-		<Wrapper>
-			<div>...TileBase...</div>
-			<div>{children}</div>
+		<Wrapper style={{ width: width }}>
+			<CardHeader
+				action={
+					<IconButton aria-label="settings">
+						<MoreVertIcon />
+					</IconButton>
+				}
+				title={title}
+				subheader={subheader}
+			/>
+			<CardContent>{children}</CardContent>
+			<CardActions>actions on bottom</CardActions>
 		</Wrapper>
 	);
 };
