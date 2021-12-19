@@ -14,7 +14,7 @@ import {
 } from '../../types/table';
 import { useUsers } from '../../hooks/model';
 import getDetailData from '../../utils/getDetailData';
-import { useSettings } from '../../hooks/common';
+import { useSettings, useProfile } from '../../hooks/common';
 import { ConfirmDialog, Preloader } from '../../components/ui';
 import DataTable from '../../components/DataTable';
 import UsersDetailForm from './UsersDetailForm';
@@ -39,6 +39,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 	const [isProcessing, setProcessing] = useState<boolean>(false);
 	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
+	const { Profile } = useProfile();
 	const {
 		Users,
 		createUsers,
@@ -196,6 +197,7 @@ const UsersModule = ({}: UsersModuleProps) => {
 							onCreateCallback={createNewCallback}
 							isProcessing={isProcessing}
 							allItems={Users}
+							userLevel={Profile?.user_level}
 						/>
 					) : (
 						<DataTable

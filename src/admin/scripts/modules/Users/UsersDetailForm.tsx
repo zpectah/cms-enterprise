@@ -34,6 +34,7 @@ interface UsersDetailFormProps {
 	languageDefault: string;
 	onCreateCallback: () => void;
 	isProcessing?: boolean;
+	userLevel: number;
 }
 
 const UsersDetailForm = ({
@@ -48,6 +49,7 @@ const UsersDetailForm = ({
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
 	isProcessing,
+	userLevel,
 }: UsersDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -108,6 +110,7 @@ const UsersDetailForm = ({
 			options.push({
 				label: t(`types:${type}`),
 				value: USER_LEVEL_NUMS[type],
+				disabled: userLevel < USER_LEVEL_NUMS[type],
 			});
 		});
 
