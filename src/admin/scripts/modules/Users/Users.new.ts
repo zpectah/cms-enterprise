@@ -10,7 +10,7 @@ export default {
 	middle_name: '',
 	last_name: '',
 	user_level: 2,
-	user_group: 'default',
+	user_group: 'company',
 	img_avatar: '',
 	active: true,
 } as UsersItemProps;

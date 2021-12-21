@@ -10,6 +10,7 @@ export default {
 	first_name: '',
 	middle_name: '',
 	last_name: '',
+	position: '',
 	country: '',
 	city: '',
 	address: '',
@@ -17,5 +18,6 @@ export default {
 	phone_alt: [],
 	email_alt: [],
 	description: '',
+	subscription: false,
 	active: true,
 } as MembersItemProps;

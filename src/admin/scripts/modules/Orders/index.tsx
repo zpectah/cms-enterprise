@@ -249,6 +249,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 							languageDefault={Settings?.language_default}
 							onCreateCallback={createNewCallback}
 							withoutLanguageToggle
+							widthRowToggle={false}
 							customActionTriggers={[
 								{
 									key: 'order_confirm',

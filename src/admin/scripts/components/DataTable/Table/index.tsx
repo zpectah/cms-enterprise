@@ -61,6 +61,8 @@ export interface TableProps {
 	customActionTriggers?: customActionCellItemProps[];
 	searchLength?: number;
 	shouldDelete: boolean;
+	widthRowToggle?: boolean;
+	widthRowDelete?: boolean;
 }
 
 interface TableRowActionsButtonsProps {
@@ -69,6 +71,8 @@ interface TableRowActionsButtonsProps {
 	rowIdPrefix: string;
 	customActionTriggers?: customActionCellItemProps[];
 	shouldDelete: boolean;
+	widthRowToggle?: boolean;
+	widthRowDelete?: boolean;
 }
 
 const TableRowActionButtons = ({
@@ -77,6 +81,8 @@ const TableRowActionButtons = ({
 	rowIdPrefix,
 	customActionTriggers = [],
 	shouldDelete,
+	widthRowToggle,
+	widthRowDelete,
 }: TableRowActionsButtonsProps) => {
 	const { t } = useTranslation(['common']);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -141,9 +147,11 @@ const TableRowActionButtons = ({
 						'aria-labelledby': `${rowIdPrefix}_button`,
 					}}
 				>
-					<MenuItem onClick={deleteClickHandler} disabled={!shouldDelete}>
-						{t('button.delete')}
-					</MenuItem>
+					{widthRowDelete && (
+						<MenuItem onClick={deleteClickHandler} disabled={!shouldDelete}>
+							{t('button.delete')}
+						</MenuItem>
+					)}
 					{customActionTriggers.length > 0 && renderCustomTriggers()}
 				</Menu>
 			</div>
@@ -165,6 +173,8 @@ const Table = ({
 	customActionTriggers,
 	searchLength = 0,
 	shouldDelete,
+	widthRowToggle,
+	widthRowDelete,
 }: TableProps) => {
 	const history = useHistory();
 	const { t } = useTranslation(['common', 'components', 'types']);
@@ -479,6 +489,8 @@ const Table = ({
 												onDelete={onRowDeleteHandler}
 												customActionTriggers={customActionTriggers}
 												shouldDelete={shouldDelete}
+												widthRowToggle={widthRowToggle}
+												widthRowDelete={widthRowDelete}
 											/>
 										</TableCell>
 									</TableRow>

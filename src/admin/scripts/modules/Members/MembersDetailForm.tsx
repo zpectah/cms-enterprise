@@ -163,6 +163,26 @@ const MembersDetailForm = ({
 						</Section>
 						<Section>
 							<Controller
+								name="subscription"
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.SwitchControl
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__subscription`}
+											dataTestId={`${formOptions.id}.switch.subscription`}
+											label={t('form:input.subscription')}
+										/>
+									</Form.Row>
+								)}
+							/>
+						</Section>
+						<Section>
+							<Controller
 								name="active"
 								control={control}
 								rules={{}}
@@ -344,6 +364,27 @@ const MembersDetailForm = ({
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.last_name`}
 									required={watchType == 'customer'}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section>
+					<Controller
+						name="position"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__position`}
+									label={t('form:input.position')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.position`}
 								/>
 							</Form.Row>
 						)}

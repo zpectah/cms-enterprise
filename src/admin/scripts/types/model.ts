@@ -155,6 +155,7 @@ export interface MembersItemProps extends commonItemProps {
 	first_name?: string;
 	middle_name?: string;
 	last_name: string;
+	position?: string;
 	country?: string;
 	city?: string;
 	address?: string;
@@ -162,6 +163,7 @@ export interface MembersItemProps extends commonItemProps {
 	phone_alt?: selectedArrayProps;
 	email_alt?: selectedArrayProps;
 	description?: string;
+	subscription?: boolean;
 }
 
 export interface DeliveriesItemLangProps {

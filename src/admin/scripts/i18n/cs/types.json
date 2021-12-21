@@ -41,5 +41,7 @@
   "licence": "Licence",
   "service": "Služba",
   "hidden": "Skrytý",
-  "custom_value": "Vlastní hodnota"
+  "custom_value": "Vlastní hodnota",
+  "company": "Společnost",
+  "redaction": "Redakce"
 }

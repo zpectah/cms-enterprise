@@ -44,6 +44,8 @@ interface DataTableProps {
 	withoutLanguageToggle?: boolean;
 	onCreateCallback: () => void;
 	customActionTriggers?: customActionCellItemProps[];
+	widthRowToggle?: boolean;
+	widthRowDelete?: boolean;
 }
 
 const DataTable = ({
@@ -62,6 +64,8 @@ const DataTable = ({
 	withoutLanguageToggle = false,
 	onCreateCallback,
 	customActionTriggers,
+	widthRowToggle = true,
+	widthRowDelete = true,
 }: DataTableProps) => {
 	const { t } = useTranslation(['common', 'components', 'types']);
 	const { Profile } = useProfile();
@@ -236,24 +240,28 @@ const DataTable = ({
 										'aria-labelledby': 'dataTable_options_selected_trigger',
 									}}
 								>
-									<MenuItem
-										onClick={onSelectedToggleCallback}
-										{...getElTestAttr(
-											`${dataTestId}.options.selected.dropdown.toggleSelected`,
-										)}
-										disabled={!should_delete}
-									>
-										{t(`button.toggle`)}
-									</MenuItem>
-									<MenuItem
-										onClick={onSelectedDeleteCallback}
-										{...getElTestAttr(
-											`${dataTestId}.options.selected.dropdown.deleteSelected`,
-										)}
-										disabled={!should_delete}
-									>
-										{t(`button.delete`)}
-									</MenuItem>
+									{widthRowToggle && (
+										<MenuItem
+											onClick={onSelectedToggleCallback}
+											{...getElTestAttr(
+												`${dataTestId}.options.selected.dropdown.toggleSelected`,
+											)}
+											disabled={!should_delete}
+										>
+											{t(`button.toggle`)}
+										</MenuItem>
+									)}
+									{widthRowDelete && (
+										<MenuItem
+											onClick={onSelectedDeleteCallback}
+											{...getElTestAttr(
+												`${dataTestId}.options.selected.dropdown.deleteSelected`,
+											)}
+											disabled={!should_delete}
+										>
+											{t(`button.delete`)}
+										</MenuItem>
+									)}
 								</Menu>
 							</div>
 						</Stack>
@@ -285,6 +293,8 @@ const DataTable = ({
 					customActionTriggers={customActionTriggers}
 					searchLength={searchInput.length}
 					shouldDelete={should_delete}
+					widthRowToggle={widthRowToggle}
+					widthRowDelete={widthRowDelete}
 				/>
 			</Section>
 		</>

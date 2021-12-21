@@ -8,6 +8,7 @@ class Members {
         if (!$rp_withPassword) unset($row['password']); // Unset password attribute
         unset($row['deleted']); // Unset deleted attribute
         $row['active'] = $row['active'] == 1; // Set value as boolean
+        $row['subscription'] = $row['subscription'] == 1; // Set value as boolean
         $row['phone_alt'] = $row['phone_alt'] == '' ? [] : explode(",", $row['phone_alt']); // Set value as array
         $row['email_alt'] = $row['email_alt'] == '' ? [] : explode(",", $row['email_alt']); // Set value as array
 
@@ -68,6 +69,7 @@ class Members {
                 first_name, 
                 middle_name, 
                 last_name, 
+                position,
                 country,
                 city,
                 address,
@@ -75,10 +77,11 @@ class Members {
                 phone_alt,
                 email_alt,
                 description,
+                subscription,
                 active, 
                 deleted
-                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'sssssssssssssssii';
+                   ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'ssssssssssssssssiii';
         $args = [
             $data['email'],
             $data['type'],
@@ -88,6 +91,7 @@ class Members {
             $data['first_name'],
             $data['middle_name'],
             $data['last_name'],
+            $data['position'],
             $data['country'],
             $data['city'],
             $data['address'],
@@ -95,6 +99,7 @@ class Members {
             $data['phone_alt'] ? implode(",", $data['phone_alt']) : '',
             $data['email_alt'] ? implode(",", $data['email_alt']) : '',
             $data['description'],
+            $data['subscription'],
             $data['active'],
             0
         ];
@@ -128,6 +133,7 @@ class Members {
                 first_name = ?, 
                 middle_name = ?, 
                 last_name = ?, 
+                position = ?,
                 country = ?, 
                 city = ?, 
                 address = ?, 
@@ -135,6 +141,7 @@ class Members {
                 phone_alt = ?, 
                 email_alt = ?,                   
                 description = ?, 
+                subscription = ?,
                 active = ? 
             WHERE id = ?')
             : ('UPDATE members SET 
@@ -145,6 +152,7 @@ class Members {
                 first_name = ?, 
                 middle_name = ?, 
                 last_name = ?, 
+                position = ?, 
                 country = ?, 
                 city = ?, 
                 address = ?, 
@@ -152,9 +160,10 @@ class Members {
                 phone_alt = ?, 
                 email_alt = ?,  
                 description = ?, 
+                subscription = ?,
                 active = ? 
             WHERE id = ?');
-        $types = $password ? 'sssssssssssssssii' : 'ssssssssssssssii';
+        $types = $password ? 'ssssssssssssssssiii' : 'sssssssssssssssiii';
         $args = $password ? [
             $data['email'],
             $data['type'],
@@ -164,6 +173,7 @@ class Members {
             $data['first_name'],
             $data['middle_name'],
             $data['last_name'],
+            $data['position'],
             $data['country'],
             $data['city'],
             $data['address'],
@@ -171,6 +181,7 @@ class Members {
             $data['phone_alt'] ? implode(",", $data['phone_alt']) : '',
             $data['email_alt'] ? implode(",", $data['email_alt']) : '',
             $data['description'],
+            $data['subscription'],
             $data['active'],
             $data['id']
         ] : [
@@ -181,6 +192,7 @@ class Members {
             $data['first_name'],
             $data['middle_name'],
             $data['last_name'],
+            $data['position'],
             $data['country'],
             $data['city'],
             $data['address'],
@@ -188,6 +200,7 @@ class Members {
             $data['phone_alt'] ? implode(",", $data['phone_alt']) : '',
             $data['email_alt'] ? implode(",", $data['email_alt']) : '',
             $data['description'],
+            $data['subscription'],
             $data['active'],
             $data['id']
         ];

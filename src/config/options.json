@@ -79,7 +79,7 @@
     "Users": {
       "type": ["demo", "default"],
       "level": ["demo", "redactor", "chief_redactor", "admin", "super_admin"],
-      "group": ["default", "redactor", "admin"]
+      "group": ["company", "redaction"]
     },
     "Members": {
       "type": ["default", "customer", "subscriber", "hidden"]
