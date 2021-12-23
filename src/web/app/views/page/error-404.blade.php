@@ -1,1 +1,1 @@
-display 'error 404' content {{$consumer}}
+display 'error 404' content

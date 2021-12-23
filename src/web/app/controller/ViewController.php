@@ -91,24 +91,19 @@ class ViewController {
         $layout_name = 'full';
         $page_name = 'page.error-404';
         if ($pageData['page_object']['page'] || $pageData['page_name'] == 'home') {
-            $layout_name = 'default';
             if ($pageData['page_name'] == 'home') {
                 $page_name = 'page.home';
+                $layout_name = 'default';
             } else {
                 $page_name = 'page.' . $pageData['page_layout'];
+                $layout_name = 'default';
             }
         }
 
         echo $this -> $blade -> run($layout_name, [
-            'consumer' => 'rastafarai',
-
             'page_data' => $pageData,
-
-            'view_id' => $pageData['page_layout'],
+            'page_id' => $pageData['page_name'] ? $pageData['page_name'] : 'error',
             'page_view' => $page_name,
-            'show_sidebar' => true,
-            'show_header' => true,
-            'show_footer' => true,
         ]);
     }
 

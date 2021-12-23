@@ -40,7 +40,7 @@ class RouteController {
 
         // get detail data if there is any
         //
-        $route_object['detail'] = $route_detail_id_attr;
+        $route_object['detail'] = $route_detail_attr ? $route_detail_id_attr : null;
 
         return $route_object;
     }

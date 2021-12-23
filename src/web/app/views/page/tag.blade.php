@@ -1,1 +1,3 @@
-tag view content {{$consumer}}
+<section>
+    tag view content
+</section>

@@ -1,1 +1,3 @@
-system view content {{$consumer}}
+<section>
+    system view content
+</section>

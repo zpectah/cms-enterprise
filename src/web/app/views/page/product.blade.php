@@ -1,1 +1,3 @@
-product view content {{$consumer}}
+<section>
+    product view content
+</section>

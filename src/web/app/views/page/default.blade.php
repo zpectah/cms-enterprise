@@ -1,1 +1,3 @@
-default view content {{$consumer}}
+<section>
+    default view content
+</section>

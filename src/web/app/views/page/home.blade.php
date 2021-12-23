@@ -1,3 +1,3 @@
-display 'home' content {{$consumer}}
+display 'home' content
 <br />
 <div id="DemoComponent"></div>
