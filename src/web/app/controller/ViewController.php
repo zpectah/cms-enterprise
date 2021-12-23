@@ -13,6 +13,7 @@ class ViewController {
             [
                 PATH_ROOT . 'web/app/views',
                 PATH_ROOT . 'web/app/views/shared',
+                PATH_ROOT . 'web/app/views/content',
             ],
             PATH_ROOT . 'web/app/compiles'
         );
@@ -60,11 +61,15 @@ class ViewController {
         $urlParams = self::get_url_params();
         $pageData = self::get_page_data();
 
-        $view_name = 'home';
+        $layout_name = 'default';
+        $content_name = 'content.home';
 
-        echo $this -> $blade -> run($view_name, [
+        echo $this -> $blade -> run($layout_name, [
             'consumer' => 'rastafarai',
 
+            'view_id' => 'Default',
+            'content_view' => $content_name,
+            'show_sidebar' => true,
             'show_header' => true,
             'show_footer' => true,
         ]);

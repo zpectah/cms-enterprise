@@ -1,0 +1,1 @@
+tag view content {{$consumer}}

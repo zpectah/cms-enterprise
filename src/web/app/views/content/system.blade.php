@@ -1,0 +1,1 @@
+system view content {{$consumer}}

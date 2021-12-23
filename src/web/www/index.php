@@ -16,6 +16,10 @@ $view = new \app\controller\ViewController;
     <meta name="robots" content="<?=($view -> get_view_meta_data()['robots']) ?>">
     <meta name="og:url" content="<?=($view -> get_view_meta_data()['url']) ?>">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
     <link href="<?=(WEB_VIEW['styles'] . '?v=' . TIMESTAMP) ?>" rel="stylesheet">
     <script>
         window.APPENV = window.APPENV || '<?=(ENV)?>';
@@ -23,12 +27,10 @@ $view = new \app\controller\ViewController;
         window.TMP_TOKEN = window.TMP_TOKEN || '<?=(TMP_TOKEN)?>';
     </script>
 </head>
-<body class="page">
-<div id="App">
-    <?php $view -> render_page() ?>
-</div>
+<body id="page">
+<?php $view -> render_page() ?>
 
-<script src="<?=(WEB_VIEW['scripts'] . '?v=' . TIMESTAMP) ?>"></script>
+    <script src="<?=(WEB_VIEW['scripts'] . '?v=' . TIMESTAMP) ?>"></script>
 </body>
 </html>
 
