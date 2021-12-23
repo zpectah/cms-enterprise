@@ -4,6 +4,17 @@ use Gumlet\ImageResize;
 
 class Utils {
 
+    public function getCurrentUrl (): string {
+        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $url = "https://";
+        else
+            $url = "http://";
+        $url.= $_SERVER['HTTP_HOST'];
+        $url.= $_SERVER['REQUEST_URI'];
+
+        return $url;
+    }
+
     public function createFolder ($directory, $permissions = 0777): void {
         if (!file_exists($directory)) {
             $mask = umask(0);
