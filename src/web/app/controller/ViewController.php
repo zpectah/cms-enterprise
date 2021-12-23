@@ -10,7 +10,10 @@ class ViewController {
 
     function __construct () {
         $this -> $blade = new BladeOne(
-            PATH_ROOT . 'web/app/views',
+            [
+                PATH_ROOT . 'web/app/views',
+                PATH_ROOT . 'web/app/views/shared',
+            ],
             PATH_ROOT . 'web/app/compiles'
         );
     }
@@ -57,7 +60,7 @@ class ViewController {
         $urlParams = self::get_url_params();
         $pageData = self::get_page_data();
 
-        $view_name = 'default';
+        $view_name = 'home';
 
         echo $this -> $blade -> run($view_name, [
             'consumer' => 'rastafarai',

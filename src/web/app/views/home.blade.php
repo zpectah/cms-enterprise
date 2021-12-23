@@ -1,9 +1,7 @@
-<div id="view-default">
+<div id="view-home">
     @if ($show_header) @include('shared.Header') @endif
     <main>
-        display 'default' content {{$consumer}}
-        <br />
-        <div id="DemoComponent"></div>
+        display 'home' content {{$consumer}}
     </main>
     @if ($show_header) @include('shared.Footer') @endif
 </div>
