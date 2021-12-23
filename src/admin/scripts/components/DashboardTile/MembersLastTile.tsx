@@ -8,34 +8,34 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import TileBase from './TileBase';
-import { usePosts } from '../../hooks/model';
-import { PostsItemProps } from '../../types/model';
+import { useMembers } from '../../hooks/model';
+import { MembersItemProps } from '../../types/model';
 import { Preloader } from '../ui';
 
-interface PostsLastTileProps {
+interface MembersLastTileProps {
 	itemsShow?: number;
 }
 
-const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
-	const { Posts, posts_loading } = usePosts();
+const MembersLastTile = ({ itemsShow = 4 }: MembersLastTileProps) => {
+	const { Members, members_loading } = useMembers();
 	const { t } = useTranslation(['common', 'types']);
 	const history = useHistory();
-	const [listItems, setListItems] = useState<PostsItemProps[]>([]);
+	const [listItems, setListItems] = useState<MembersItemProps[]>([]);
 
 	const setItemsListData = () => {
-		let tmp = Posts ? Posts.slice(itemsShow * -1) : [];
+		let tmp = Members ? Members.slice(itemsShow * -1) : [];
 		setListItems(tmp.reverse());
 	};
 
 	const clickHandler = (id: number | string) => {
-		history.push(`${ROUTES.app.posts.path}${ROUTE_SUFFIX.detail}/${id}`);
+		history.push(`${ROUTES.crm.members.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
 
-	useEffect(() => setItemsListData(), [Posts]);
+	useEffect(() => setItemsListData(), [Members]);
 
 	return (
-		<TileBase width={'33%'} title={t('dashboard.title.LastPosts')}>
-			{!posts_loading ? (
+		<TileBase width={'33%'} title={t('dashboard.title.LastMembers')}>
+			{!members_loading ? (
 				<nav aria-label="items list">
 					<List>
 						{listItems.map((item) => (
@@ -46,7 +46,7 @@ const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
 							>
 								<ListItemButton>
 									<ListItemText
-										primary={item.name}
+										primary={item.email}
 										secondary={t(`types:${item.type}`)}
 									/>
 								</ListItemButton>
@@ -61,4 +61,4 @@ const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
 	);
 };
 
-export default PostsLastTile;
+export default MembersLastTile;

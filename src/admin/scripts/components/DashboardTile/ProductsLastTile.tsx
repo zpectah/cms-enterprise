@@ -8,34 +8,34 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import TileBase from './TileBase';
-import { usePosts } from '../../hooks/model';
-import { PostsItemProps } from '../../types/model';
+import { useProducts } from '../../hooks/model';
+import { ProductsItemProps } from '../../types/model';
 import { Preloader } from '../ui';
 
-interface PostsLastTileProps {
+interface ProductsLastTileProps {
 	itemsShow?: number;
 }
 
-const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
-	const { Posts, posts_loading } = usePosts();
+const ProductsLastTile = ({ itemsShow = 4 }: ProductsLastTileProps) => {
+	const { Products, products_loading } = useProducts();
 	const { t } = useTranslation(['common', 'types']);
 	const history = useHistory();
-	const [listItems, setListItems] = useState<PostsItemProps[]>([]);
+	const [listItems, setListItems] = useState<ProductsItemProps[]>([]);
 
 	const setItemsListData = () => {
-		let tmp = Posts ? Posts.slice(itemsShow * -1) : [];
+		let tmp = Products ? Products.slice(itemsShow * -1) : [];
 		setListItems(tmp.reverse());
 	};
 
 	const clickHandler = (id: number | string) => {
-		history.push(`${ROUTES.app.posts.path}${ROUTE_SUFFIX.detail}/${id}`);
+		history.push(`${ROUTES.market.products.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
 
-	useEffect(() => setItemsListData(), [Posts]);
+	useEffect(() => setItemsListData(), [Products]);
 
 	return (
-		<TileBase width={'33%'} title={t('dashboard.title.LastPosts')}>
-			{!posts_loading ? (
+		<TileBase width={'33%'} title={t('dashboard.title.LastProducts')}>
+			{!products_loading ? (
 				<nav aria-label="items list">
 					<List>
 						{listItems.map((item) => (
@@ -61,4 +61,4 @@ const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
 	);
 };
 
-export default PostsLastTile;
+export default ProductsLastTile;

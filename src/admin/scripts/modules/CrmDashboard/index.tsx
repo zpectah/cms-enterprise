@@ -15,9 +15,7 @@ const CrmDashboardModule = ({}: CrmDashboardModuleProps) => {
 	return (
 		<>
 			<StyledStack spacing={2} direction={isDesktop ? 'row' : 'column'}>
-				<Tile.Base title="Tile one" width={'100%'}>
-					Dashboard Tile
-				</Tile.Base>
+				<Tile.MembersLast />
 			</StyledStack>
 		</>
 	);

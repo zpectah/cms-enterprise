@@ -91,7 +91,10 @@
       "PostsToApprove": "Posty ke schálení",
       "LastPosts": "Poslední posty",
       "LastUploads": "Poslední soubory",
-      "PostsCalendar": "Kalendář publikovaných postů"
+      "PostsCalendar": "Kalendář publikovaných postů",
+      "LastMembers": "Poslední members",
+      "LastOrders": "Poslední objednávky",
+      "LastProducts": "Poslední produkty"
     },
     "label": {
       "noPostsToApprove": "Žádné posty ke schválení"

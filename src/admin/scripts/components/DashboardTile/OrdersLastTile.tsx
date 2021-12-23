@@ -6,36 +6,41 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-import { ROUTES, ROUTE_SUFFIX } from '../../constants';
+import {
+	ROUTES,
+	ROUTE_SUFFIX,
+	DEFAULT_UNITS,
+	ORDER_STATUS_NUMS,
+} from '../../constants';
 import TileBase from './TileBase';
-import { usePosts } from '../../hooks/model';
-import { PostsItemProps } from '../../types/model';
+import { useOrders } from '../../hooks/model';
+import { OrdersItemProps } from '../../types/model';
 import { Preloader } from '../ui';
 
-interface PostsLastTileProps {
+interface OrdersLastTileProps {
 	itemsShow?: number;
 }
 
-const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
-	const { Posts, posts_loading } = usePosts();
-	const { t } = useTranslation(['common', 'types']);
+const OrdersLastTile = ({ itemsShow = 4 }: OrdersLastTileProps) => {
+	const { Orders, orders_loading } = useOrders();
+	const { t } = useTranslation(['common', 'types', 'units']);
 	const history = useHistory();
-	const [listItems, setListItems] = useState<PostsItemProps[]>([]);
+	const [listItems, setListItems] = useState<OrdersItemProps[]>([]);
 
 	const setItemsListData = () => {
-		let tmp = Posts ? Posts.slice(itemsShow * -1) : [];
+		let tmp = Orders ? Orders.slice(itemsShow * -1) : [];
 		setListItems(tmp.reverse());
 	};
 
 	const clickHandler = (id: number | string) => {
-		history.push(`${ROUTES.app.posts.path}${ROUTE_SUFFIX.detail}/${id}`);
+		history.push(`${ROUTES.market.orders.path}${ROUTE_SUFFIX.detail}/${id}`);
 	};
 
-	useEffect(() => setItemsListData(), [Posts]);
+	useEffect(() => setItemsListData(), [Orders]);
 
 	return (
-		<TileBase width={'33%'} title={t('dashboard.title.LastPosts')}>
-			{!posts_loading ? (
+		<TileBase width={'33%'} title={t('dashboard.title.LastOrders')}>
+			{!orders_loading ? (
 				<nav aria-label="items list">
 					<List>
 						{listItems.map((item) => (
@@ -47,7 +52,9 @@ const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
 								<ListItemButton>
 									<ListItemText
 										primary={item.name}
-										secondary={t(`types:${item.type}`)}
+										secondary={`${item.price_total} ${t(
+											`units.${DEFAULT_UNITS.price}`,
+										)} | ${t(`status.${ORDER_STATUS_NUMS[item.status]}`)}`}
 									/>
 								</ListItemButton>
 							</ListItem>
@@ -61,4 +68,4 @@ const PostsLastTile = ({ itemsShow = 4 }: PostsLastTileProps) => {
 	);
 };
 
-export default PostsLastTile;
+export default OrdersLastTile;
