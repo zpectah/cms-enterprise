@@ -77,8 +77,8 @@
       }
     },
     "Users": {
-      "type": ["demo", "default"],
-      "level": ["demo", "redactor", "chief_redactor", "admin", "super_admin"],
+      "type": ["test", "default"],
+      "level": ["redactor", "chief_redactor", "admin", "super_admin"],
       "group": ["company", "redaction"]
     },
     "Members": {

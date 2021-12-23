@@ -7,7 +7,7 @@
       "dashboard": "Dashboard",
       "settings": "Nastavení"
     },
-    "controls": "Ovládání je jednoduché, podobné tomu, co určitě znáte z jiných systémů. Jedná se především o zobrazení nějakých dat a jejich následná manipulace. Takže existují zde tabulky, které nabízejí možnost vyhledávání, filtrování a především zobrazení{' '} detail položky.",
+    "controls": "Ovládání je jednoduché, podobné tomu, co určitě znáte z jiných systémů. Jedná se především o zobrazení nějakých dat a jejich následná manipulace. Takže existují zde tabulky, které nabízejí možnost vyhledávání, filtrování a především zobrazení detail položky.",
     "tables": "Tabulka je řazena od nejnovější záznamů, ale je možnost si záznamy seřadit dle zobrazených sloupců (možnosti se liší) a nebo zobrazit záznamy podle určitého typu, stejně tak vyhledat podle určitého slova. Každý řádek tabulky nabízí možnost odkazu na detail a možnost aktivovat nebo deaktivovat, případně smazat. To ale závisí na nastavení práv uživatele, který si záznam zobrazuje nebo edituje.",
     "detail": "Každý záznam v databázi má většinou svůj detail, který slouží k editaci údajů. Formulář se skládá z různých polí, které se liší podle obsahu. Více v panelu 'Moduly'.",
     "dashboard": "Dashboard je úvodní stránka každého modulu. Pokud máte nainstalovaný některý z modulů, tak máte k dispozici další dashboard.",
@@ -155,10 +155,22 @@
       }
     },
     "users": {
-      "main": "Uživatelé systému s možností nastavení úrovně přístupu.",
+      "main": "Uživatelé systému s možností nastavením typu přístupu.",
+      "main_level": "Uživatelé systému s možností nastavení úrovně přístupu.",
+      "main_group": "Skupiny uživatelů systému",
       "type": {
-        "demo": "Uživatel s možností ukázky",
+        "test": "Profil pro testování aplikace",
         "default": "Výchozí typ pro uživatele"
+      },
+      "level": {
+        "redactor": "Redaktor jen pro správu postů",
+        "chief_redactor": "Šéfredaktor pro správu postů a schvalování postů redaktorům",
+        "admin": "Základní administrátorské oprávnění",
+        "super_admin": "Oprávnění pro kompletní správu systému / Vývojář"
+      },
+      "group": {
+        "company": "Skupina společnosti",
+        "redaction": "Skupina pro redakci, bez zásahu do společnosti"
       }
     },
     "*_label": "Záleží na nastavení modulů"

@@ -43,5 +43,6 @@
   "hidden": "Skrytý",
   "custom_value": "Vlastní hodnota",
   "company": "Společnost",
-  "redaction": "Redakce"
+  "redaction": "Redakce",
+  "test": "Test"
 }

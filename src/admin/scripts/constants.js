@@ -23,7 +23,6 @@ export const FORM_INPUT_MAX_LENGTH = 500;
 export const ELEMENT_DATA_TEST_ATTR = 'data-test-id';
 export const USER_LEVEL_NUMS = {
 	none: 0,
-	demo: 1,
 	redactor: 2,
 	chief_redactor: 3,
 	admin: 5,
@@ -31,7 +30,6 @@ export const USER_LEVEL_NUMS = {
 };
 export const USER_NUMS_LEVEL = {
 	0: 'none',
-	1: 'demo',
 	2: 'redactor',
 	3: 'chief_redactor',
 	5: 'admin',

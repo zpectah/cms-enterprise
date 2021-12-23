@@ -514,7 +514,12 @@ const HelpModule = ({}: HelpModuleProps) => {
 														{type}
 													</Typography.Paragraph>
 												</td>
-												<td>{t(`help:content.uploads.type.${type}`)}</td>
+												<td>
+													{t(`help:content.uploads.type.${type}`)}{' '}
+													{JSON.stringify(
+														config.options.model.Uploads[type]?.extension,
+													)}
+												</td>
 											</tr>
 										))}
 									</tbody>
@@ -540,6 +545,52 @@ const HelpModule = ({}: HelpModuleProps) => {
 													</Typography.Paragraph>
 												</td>
 												<td>{t(`help:content.users.type.${type}`)}</td>
+											</tr>
+										))}
+									</tbody>
+								</StyledTable>
+								<Typography.Paragraph>
+									{t('help:content.users.main_level')}
+								</Typography.Paragraph>
+								<StyledTable>
+									<colgroup>
+										<col style={{ width: '200px' }} />
+										<col style={{ width: '150px' }} />
+										<col style={{ width: 'auto' }} />
+									</colgroup>
+									<tbody>
+										{config.options.model.Users.level.map((type) => (
+											<tr key={type}>
+												<th>{t(`types:${type}`)}</th>
+												<td>
+													<Typography.Paragraph small>
+														{type}
+													</Typography.Paragraph>
+												</td>
+												<td>{t(`help:content.users.level.${type}`)}</td>
+											</tr>
+										))}
+									</tbody>
+								</StyledTable>
+								<Typography.Paragraph>
+									{t('help:content.users.main_group')}
+								</Typography.Paragraph>
+								<StyledTable>
+									<colgroup>
+										<col style={{ width: '200px' }} />
+										<col style={{ width: '150px' }} />
+										<col style={{ width: 'auto' }} />
+									</colgroup>
+									<tbody>
+										{config.options.model.Users.group.map((type) => (
+											<tr key={type}>
+												<th>{t(`types:${type}`)}</th>
+												<td>
+													<Typography.Paragraph small>
+														{type}
+													</Typography.Paragraph>
+												</td>
+												<td>{t(`help:content.users.group.${type}`)}</td>
 											</tr>
 										))}
 									</tbody>
