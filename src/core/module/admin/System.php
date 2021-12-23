@@ -133,6 +133,7 @@ class System {
           `first_name` text NOT NULL,
           `middle_name` text NOT NULL,
           `last_name` text NOT NULL,
+          `position` text NOT NULL, 
           `country` text NOT NULL,
           `city` text NOT NULL,
           `address` text NOT NULL,
@@ -140,6 +141,7 @@ class System {
           `phone_alt` text NOT NULL,
           `email_alt` text NOT NULL,
           `description` text NOT NULL,
+          `subscription` int(11) NOT NULL,
           `active` int(11) NOT NULL,
           `deleted` int(11) NOT NULL,
           PRIMARY KEY (`id`)

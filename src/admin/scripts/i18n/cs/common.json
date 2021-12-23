@@ -85,5 +85,16 @@
     "created": "Vytvořeno",
     "confirmed": "Potvrzeno",
     "deleted": "Smazáno"
+  },
+  "dashboard": {
+    "title": {
+      "PostsToApprove": "Posty ke schálení",
+      "LastPosts": "Poslední posty",
+      "LastUploads": "Poslední soubory",
+      "PostsCalendar": "Kalendář publikovaných postů"
+    },
+    "label": {
+      "noPostsToApprove": "Žádné posty ke schválení"
+    }
   }
 }

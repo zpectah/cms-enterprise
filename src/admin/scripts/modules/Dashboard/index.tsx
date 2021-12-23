@@ -1,25 +1,27 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import { useTranslation } from 'react-i18next';
+import { isDesktop } from 'react-device-detect';
+import styled from 'styled-components';
 
 import Tile from '../../components/DashboardTile';
+
+const StyledStack = styled(Stack)`
+	margin-bottom: 1rem;
+`;
 
 interface DashboardModuleProps {}
 
 const DashboardModule = ({}: DashboardModuleProps) => {
-	const { t } = useTranslation(['common']);
-
 	return (
 		<>
-			<Stack spacing={2} direction="row">
-				<Tile.Welcome />
+			<StyledStack spacing={2} direction={isDesktop ? 'row' : 'column'}>
 				<Tile.PostsToApprove />
-			</Stack>
-			<Stack spacing={2} direction="row">
 				<Tile.PostsLast />
-				<Tile.PostsCalendar />
 				<Tile.UploadsLast />
-			</Stack>
+			</StyledStack>
+			<StyledStack spacing={2} direction={isDesktop ? 'row' : 'column'}>
+				<Tile.PostsCalendar />
+			</StyledStack>
 		</>
 	);
 };
