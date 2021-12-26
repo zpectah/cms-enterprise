@@ -16,11 +16,13 @@ class RouteController {
     }
 
     public function get_url_params (): array {
-        return $_GET;
+        return [
+            'lang' => $_GET['lang']
+        ];
     }
 
     public function get_route_object (): array {
-        $ds = new DataController;
+        $dc = new DataController;
         $urlAttrs = self::get_url_attrs();
         $route_attr = $urlAttrs[0];
         $route_detail_attr = $urlAttrs[1] == 'detail';
@@ -30,7 +32,7 @@ class RouteController {
             'detail' => null,
         ];
         if ($route_attr) {
-            $pages = $ds -> get('Pages', [], [])['data'];
+            $pages = $dc -> get('Pages', [], [])['data'];
             foreach ($pages as $page) {
                 if ($page['name'] == $route_attr) $route_object['page'] = $page;
             }
@@ -45,6 +47,7 @@ class RouteController {
         return $route_object;
     }
 
+    // TODO
     public function get_detail_route_object ($model): array {
         $ds = new DataController;
         $urlAttrs = self::get_url_attrs();

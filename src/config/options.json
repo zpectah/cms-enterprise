@@ -1,13 +1,13 @@
 {
   "model": {
     "Categories": {
-      "type": ["default"]
+      "type": ["posts", "products"]
     },
     "Menu": {
       "type": ["primary", "secondary", "tertiary", "custom"]
     },
     "MenuItems": {
-      "type": ["page", "external"]
+      "type": ["page", "local", "external"]
     },
     "Pages": {
       "type": ["default", "system", "category", "tag"]

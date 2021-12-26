@@ -1,1 +1,1 @@
-<aside id="Sidebar">display sidebar {{$consumer}}</aside>
+<aside id="Sidebar">display sidebar</aside>

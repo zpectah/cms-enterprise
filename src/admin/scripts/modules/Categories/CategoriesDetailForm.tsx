@@ -247,6 +247,7 @@ const CategoriesDetailForm = ({
 									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.parent`}
 									ignored={[detailData.id]}
+									showLabelWithType
 								/>
 							</Form.Row>
 						)}

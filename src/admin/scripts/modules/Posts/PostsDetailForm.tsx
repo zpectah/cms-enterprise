@@ -424,6 +424,7 @@ const PostsDetailForm = ({
 									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.categories`}
 									multiple
+									forModel={'posts'}
 								/>
 							</Form.Row>
 						)}

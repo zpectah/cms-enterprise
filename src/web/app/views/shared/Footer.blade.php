@@ -1,2 +1,2 @@
-<footer id="Footer">display footer {{$consumer}}</footer>
+<footer id="Footer">display footer {{$project_name}}</footer>
 

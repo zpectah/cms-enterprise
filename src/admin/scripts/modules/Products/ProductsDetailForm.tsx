@@ -405,6 +405,7 @@ const ProductsDetailForm = ({
 									responsiveWidth={'50%'}
 									dataTestId={`${formOptions.id}.input.categories`}
 									multiple
+									forModel={'products'}
 								/>
 							</Form.Row>
 						)}

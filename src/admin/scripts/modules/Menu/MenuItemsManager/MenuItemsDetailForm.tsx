@@ -36,21 +36,25 @@ const MenuItemsDetailForm = ({
 	language,
 }: MenuItemsDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form', 'messages']);
-
 	const formOptions: formLayoutObjectProps = {
 		model: 'MenuItems',
 		id: 'MenuItemsDetailForm',
 		route: ROUTES.app.menu,
 	};
-	const { control, handleSubmit, reset, register, formState, watch } = useForm({
+	const {
+		control,
+		handleSubmit,
+		reset,
+		register,
+		formState: { isDirty, isValid },
+		watch,
+	} = useForm({
 		mode: 'all',
 		defaultValues: {
 			...detailData,
 			menu: menuId,
 		},
 	});
-	const { isDirty, isValid } = formState;
-
 	const submitHandler = (data: MenuItemItemProps) => onSubmit(data);
 	const errorSubmitHandler = (errors: any, e: any) => {
 		if (onSubmitError) onSubmitError(errors, e);
@@ -65,6 +69,7 @@ const MenuItemsDetailForm = ({
 	);
 
 	const watchType = watch('type');
+	const watchPage = watch('page');
 
 	return (
 		<Form.Base
@@ -117,7 +122,7 @@ const MenuItemsDetailForm = ({
 						</Form.Row>
 					)}
 				/>
-				{watchType == 'page' ? (
+				{watchType == 'page' && (
 					<>
 						<Controller
 							name="page"
@@ -132,19 +137,22 @@ const MenuItemsDetailForm = ({
 										id={`${formOptions.id}__page`}
 										label={`${t('form:input.page')}`}
 										dataTestId={`${formOptions.id}.input.page`}
-										required
+										required={watchType == 'page'}
 									/>
 								</Form.Row>
 							)}
 						/>
-						<input type="hidden" {...register('path_url', {})} />
+						{/*<input type="hidden" {...register('path_url', {})} />*/}
 					</>
-				) : (
+				)}
+				{(watchType == 'local' || watchType == 'external') && (
 					<>
 						<Controller
 							name="path_url"
 							control={control}
-							rules={{ required: watchType == 'external' }}
+							rules={{
+								required: watchType == 'local' || watchType == 'external',
+							}}
 							render={({ field: { onChange, onBlur, value, ref, name } }) => (
 								<Form.Row errors={[]}>
 									<Input.Text
@@ -155,12 +163,12 @@ const MenuItemsDetailForm = ({
 										id={`${formOptions.id}__path_url`}
 										label={t('form:input.path_url')}
 										dataTestId={`${formOptions.id}.input.path_url`}
-										required
+										required={watchType == 'local' || watchType == 'external'}
 									/>
 								</Form.Row>
 							)}
 						/>
-						<input type="hidden" {...register('page', {})} />
+						{/*<input type="hidden" {...register('page', {})} />*/}
 					</>
 				)}
 			</Section>
@@ -260,7 +268,11 @@ const MenuItemsDetailForm = ({
 				justifyContent="center"
 				style={{ paddingTop: '1rem' }}
 			>
-				<Button type="submit" variant="contained" disabled={!isValid}>
+				<Button
+					type="submit"
+					variant="contained"
+					disabled={!isValid || (watchType == 'page' && watchPage == '0')}
+				>
 					{detailData.id == 'new' ? t('button.create') : t('button.update')}
 				</Button>
 				{detailData.id !== 'new' && (

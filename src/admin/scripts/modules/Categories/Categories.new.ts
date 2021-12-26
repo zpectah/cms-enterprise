@@ -2,7 +2,7 @@ import { CategoriesItemProps } from '../../types/model';
 
 export default {
 	id: 'new',
-	type: 'default',
+	type: 'posts',
 	name: '',
 	parent: '',
 	img_main: '',

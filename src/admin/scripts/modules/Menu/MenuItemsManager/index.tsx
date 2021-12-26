@@ -186,7 +186,7 @@ const MenuItemsManager = ({
 							language={lang}
 							languageList={languageList}
 							onChange={(lng) => setLang(lng)}
-							style={{ marginRight: '.75rem' }}
+							style={{ marginRight: '1.5rem' }}
 						/>
 					}
 				>

@@ -44,5 +44,8 @@
   "custom_value": "Vlastní hodnota",
   "company": "Společnost",
   "redaction": "Redakce",
-  "test": "Test"
+  "test": "Test",
+  "posts": "Posty",
+  "products": "Produkty",
+  "local": "Lokální"
 }

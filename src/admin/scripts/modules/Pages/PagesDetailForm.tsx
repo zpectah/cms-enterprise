@@ -273,6 +273,7 @@ const PagesDetailForm = ({
 														responsiveWidth={'50%'}
 														dataTestId={`${formOptions.id}.input.type_id`}
 														required
+														showLabelWithType
 													/>
 												),
 												tag: (

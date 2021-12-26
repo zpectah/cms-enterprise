@@ -4,7 +4,7 @@ export default {
 	id: 'new',
 	type: 'page',
 	name: '',
-	page: '',
+	page: '0',
 	path_url: '',
 	menu: 0,
 	parent: '',
