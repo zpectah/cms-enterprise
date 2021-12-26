@@ -252,7 +252,7 @@ const PagesDetailForm = ({
 						)}
 					/>
 				</Section>
-				{watchType == 'category' || watchType == 'tag' ? (
+				{watchType == 'category' && (
 					<>
 						<Section>
 							<Controller
@@ -261,43 +261,21 @@ const PagesDetailForm = ({
 								rules={{ required: true }}
 								render={({ field: { onChange, onBlur, value, ref, name } }) => (
 									<Form.Row errors={[]}>
-										{
-											{
-												category: (
-													<Picker.Categories
-														onChange={onChange}
-														value={value}
-														name={name}
-														id={`${formOptions.id}__type_id`}
-														label={`${t('form:input.categories')}`}
-														responsiveWidth={'50%'}
-														dataTestId={`${formOptions.id}.input.type_id`}
-														required
-														showLabelWithType
-													/>
-												),
-												tag: (
-													<Picker.Tags
-														onChange={onChange}
-														value={value}
-														name={name}
-														id={`${formOptions.id}__type_id`}
-														label={`${t('form:input.tags')}`}
-														responsiveWidth={'50%'}
-														dataTestId={`${formOptions.id}.input.type_id`}
-														required
-													/>
-												),
-											}[watchType]
-										}
+										<Picker.Categories
+											onChange={onChange}
+											value={value}
+											name={name}
+											id={`${formOptions.id}__type_id`}
+											label={`${t('form:input.categories')}`}
+											responsiveWidth={'50%'}
+											dataTestId={`${formOptions.id}.input.type_id`}
+											required
+											showLabelWithType
+										/>
 									</Form.Row>
 								)}
 							/>
 						</Section>
-					</>
-				) : (
-					<>
-						<input type="hidden" {...register('type_id', {})} />
 					</>
 				)}
 				<Section noSpacing>

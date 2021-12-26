@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <a
                     class="navbar-brand"
-                    href="/{{$language['link_url_param']}}"
+                    href="/{{$lang['link_url_param']}}"
             >
                 {{$project_name}}
             </a>
@@ -23,7 +23,7 @@
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                 >
-                                    {{$mi['lang'][$language['current']]['label']}}
+                                    {{$mi['lang'][$lang['current']]['label']}}
                                 </a>
                                 <ul
                                         class="dropdown-menu"
@@ -37,21 +37,21 @@
                                                         target="_blank"
                                                         href="{{$ch['path_url']}}"
                                                 >
-                                                    {{$ch['lang'][$language['current']]['label']}}
+                                                    {{$ch['lang'][$lang['current']]['label']}}
                                                 </a>
                                             @elseif($ch['type'] == 'local')
                                                 <a
                                                         class="nav-link {{$ch['is_selected'] ? 'active' : ''}}"
-                                                        href="{{$ch['path_url']}}{{$language['link_url_param']}}"
+                                                        href="{{$ch['path_url']}}{{$lang['link_url_param']}}"
                                                 >
-                                                    {{$ch['lang'][$language['current']]['label']}}
+                                                    {{$ch['lang'][$lang['current']]['label']}}
                                                 </a>
                                             @else
                                                 <a
                                                         class="nav-link {{$ch['is_selected'] ? 'active' : ''}}"
-                                                        href="{{$ch['__path']}}{{$language['link_url_param']}}"
+                                                        href="{{$ch['__path']}}{{$lang['link_url_param']}}"
                                                 >
-                                                    {{$ch['lang'][$language['current']]['label']}}
+                                                    {{$ch['lang'][$lang['current']]['label']}}
                                                 </a>
                                             @endif
                                         </li>
@@ -64,33 +64,27 @@
                                             target="_blank"
                                             href="{{$mi['path_url']}}"
                                     >
-                                        {{$mi['lang'][$language['current']]['label']}}
+                                        {{$mi['lang'][$lang['current']]['label']}}
                                     </a>
                                 @elseif($mi['type'] == 'local')
                                     <a
                                             class="nav-link {{$mi['is_selected'] ? 'active' : ''}}"
-                                            href="{{$mi['path_url']}}{{$language['link_url_param']}}"
+                                            href="{{$mi['path_url']}}{{$lang['link_url_param']}}"
                                     >
-                                        {{$mi['lang'][$language['current']]['label']}}
+                                        {{$mi['lang'][$lang['current']]['label']}}
                                     </a>
                                 @else
                                     <a
                                             class="nav-link {{$mi['is_selected'] ? 'active' : ''}}"
-                                            href="{{$mi['__path']}}{{$language['link_url_param']}}"
+                                            href="{{$mi['__path']}}{{$lang['link_url_param']}}"
                                     >
-                                        {{$mi['lang'][$language['current']]['label']}}
+                                        {{$mi['lang'][$lang['current']]['label']}}
                                     </a>
                                 @endif
                             @endif
                         </li>
                     @endforeach
                 </ul>
-                <!--
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                -->
             </div>
         </div>
     </nav>

@@ -29,12 +29,13 @@ class RouteController {
         if ($model == 'posts') {
             $posts = $dc -> get('Posts', [], [])['data'];
             foreach ($posts as $post) {
-                if (in_array($category['id'], $post['categories'])) $items[] = $post;
+                // TODO: check published date
+                if (in_array($category['id'], $post['categories']) && $post['active']) $items[] = $post;
             }
         } else if ($model == 'products') {
             $products = $dc -> get('Products', [], [])['data'];
             foreach ($products as $product) {
-                if (in_array($category['id'], $product['categories'])) $items[] = $product;
+                if (in_array($category['id'], $product['categories']) && $product['active']) $items[] = $product;
             }
         }
 
@@ -48,28 +49,30 @@ class RouteController {
         $dc = new DataController;
         $urlAttrs = self::get_url_attrs();
         $route_attr = $urlAttrs[0];
-        // $route_detail_attr = $urlAttrs[1] == 'detail';
-        // $route_detail_id_attr = $urlAttrs[2];
+        $route_detail_attr = $urlAttrs[1] == 'detail';
+        $route_detail_id_attr = $urlAttrs[2];
         $route_object = [
             'page' => null,
             'detail' => null,
+            'should_be_detail' => null,
         ];
         if ($route_attr) {
             $pages = $dc -> get('Pages', [], [])['data'];
             foreach ($pages as $page) {
-                if ($page['type'] == 'category') {
-                    $page['__items'] = self::get_category_items($page['type_id']);
+                if ($page['active'] && $page['name'] == $route_attr) {
+                    if ($page['type'] == 'category') {
+                        $page['__items'] = self::get_category_items($page['type_id']);
+                    }
+                    if ($route_detail_attr && $route_detail_id_attr) {
+                        $route_object['should_be_detail'] = true;
+                        foreach ($page['__items']['items'] as $item) {
+                            if (($route_detail_id_attr == $item['id'] || $route_detail_id_attr == $item['name']) && $item['active']) $route_object['detail'] = $item;
+                        }
+                    }
+                    $route_object['page'] = $page;
                 }
-
-                if ($page['active'] && $page['name'] == $route_attr) $route_object['page'] = $page;
             }
         }
-
-        // handle if page is category or tag
-
-        // get detail data if there is any
-        //
-        // $route_object['detail'] = $route_detail_attr ? $route_detail_id_attr : null;
 
         return $route_object;
     }

@@ -173,6 +173,10 @@ class ViewController {
             : $pageData['settings']['web_meta_robots'];
         $page_url = $utils -> getCurrentUrl();
 
+        if ($pageData['page_object']['detail']) {
+            $page_title = $pageData['page_object']['detail']['lang'][$lng]['title'] . ' | ' . $page_title;
+        }
+
         return [
             'title' => $page_title,
             'description' => $page_description,
@@ -188,9 +192,13 @@ class ViewController {
         $layout_name = 'full';
         $page_name = 'page.error-404';
         $lng = self::get_current_language();
+        $items = $pageData['page_object']['page']['__items'];
         if ($pageData['page_object']['page'] || $pageData['page_name'] == 'home') {
             if ($pageData['page_name'] == 'home') {
                 $page_name = 'page.home';
+                $layout_name = 'default';
+            } else if ($items && $pageData['page_object']['detail']) {
+                $page_name = 'page.detail-' . $items['model'];
                 $layout_name = 'default';
             } else {
                 $page_name = 'page.' . $pageData['page_layout'];
@@ -199,26 +207,25 @@ class ViewController {
         }
 
         echo $this -> $blade -> run($layout_name, [
-            // 'page_data' => $pageData,
-            //
-            'project_name' => $pageData['settings']['project_name'],
-            'current_url' => $utils -> getCurrentUrl(),
-            //
             't' => self::get_translations(),
-            'language' => self::get_language_options(),
+            'lang' => self::get_language_options(),
             'menu' => self::get_menu_data(),
             //
             'title' => $pageData['page_object']['page']['lang'][$lng]['title'],
             'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
             'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
             //
-            'list_model' => $pageData['page_object']['page']['__items']['model'], // TODO
-            'list_items' => $pageData['page_object']['page']['__items']['items'], // TODO
-            'detail_data' => [], // TODO
+            'list_model' => $items['model'],
+            'list_items' => $items['items'],
+            'list_detail' => $pageData['page_object']['detail'],
+            'should_be_detail' => $pageData['page_object']['should_be_detail'],
             //
             //
+            'project_name' => $pageData['settings']['project_name'],
             'page_id' => str_replace('page.', '', $page_name),
+            'page_key' => $pageData['page_name'],
             'page_name' => $page_name,
+            'page_url' => $utils -> getCurrentUrl(),
         ]);
     }
 
