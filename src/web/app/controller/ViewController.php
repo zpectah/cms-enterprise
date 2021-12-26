@@ -35,11 +35,13 @@ class ViewController {
         $dc = new DataController;
         $cms_settings = $dc -> get_cms_settings([]);
         $language = self::get_current_language();
+        $url_param = $language !== $cms_settings['language_default'] ? '?lang=' . $language : '';
 
         return [
             'current' => $language,
             'default' => $cms_settings['language_default'],
             'list' => $cms_settings['language_active'],
+            'link_url_param' => $url_param,
         ];
     }
 
@@ -92,10 +94,13 @@ class ViewController {
     }
     private function get_menu_items_children ($parentId, $items): array {
         $response = [];
+        $lang_params = self::get_language_options()['link_url_param'];
+        $current_url = $_SERVER['REQUEST_URI'];
         foreach ($items as $item) {
             if ($item['active'] && $item['parent'] == $parentId) {
                 $item['children'] = self::get_menu_items_children($item['id'], $items);
                 if ($item['type'] == 'page') $item['__path'] = self::get_item_link($item['page']);
+                if ($current_url == $item['__path'] . $lang_params || $current_url == $item['path_url'] . $lang_params) $item['is_selected'] = true;
                 $response[] = $item;
             }
         }
@@ -104,13 +109,16 @@ class ViewController {
         return $response;
     }
     private function get_menu_items ($menuId): array {
+        $response = [];
+        $lang_params = self::get_language_options()['link_url_param'];
         $dc = new DataController;
         $menuItems = $dc -> get('MenuItems', [ 'menuId' => $menuId ], [])['data'];
-        $response = [];
+        $current_url = $_SERVER['REQUEST_URI'];
         foreach ($menuItems as $item) {
             if ($item['active'] && $item['parent'] == '') {
                 $item['children'] = self::get_menu_items_children($item['id'], $menuItems);
                 if ($item['type'] == 'page') $item['__path'] = self::get_item_link($item['page']);
+                if ($current_url == $item['__path'] . $lang_params || $current_url == $item['path_url'] . $lang_params) $item['is_selected'] = true;
                 $response[] = $item;
             }
         }
@@ -175,6 +183,7 @@ class ViewController {
     }
 
     public function render_page () {
+        $utils = new \Utils;
         $pageData = self::get_page_data();
         $layout_name = 'full';
         $page_name = 'page.error-404';
@@ -193,6 +202,7 @@ class ViewController {
             // 'page_data' => $pageData,
             //
             'project_name' => $pageData['settings']['project_name'],
+            'current_url' => $utils -> getCurrentUrl(),
             //
             't' => self::get_translations(),
             'language' => self::get_language_options(),
