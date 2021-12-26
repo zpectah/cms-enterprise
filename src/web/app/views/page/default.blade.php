@@ -2,5 +2,5 @@
     default view content
     {{$title}}
     <br />
-    {{$content}}
+    {!!$content!!}
 </section>

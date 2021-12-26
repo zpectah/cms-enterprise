@@ -212,7 +212,8 @@ class ViewController {
             'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
             'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
             //
-            'list_items' => [], // TODO
+            'list_model' => $pageData['page_object']['page']['__items']['model'], // TODO
+            'list_items' => $pageData['page_object']['page']['__items']['items'], // TODO
             'detail_data' => [], // TODO
             //
             //

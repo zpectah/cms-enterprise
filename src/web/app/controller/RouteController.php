@@ -21,12 +21,35 @@ class RouteController {
         ];
     }
 
+    private function get_category_items ($typeId): array {
+        $dc = new DataController;
+        $category = $dc -> get('Categories', [ 'id' => $typeId ], [])['data'];
+        $model = $category['type'];
+        $items = [];
+        if ($model == 'posts') {
+            $posts = $dc -> get('Posts', [], [])['data'];
+            foreach ($posts as $post) {
+                if (in_array($category['id'], $post['categories'])) $items[] = $post;
+            }
+        } else if ($model == 'products') {
+            $products = $dc -> get('Products', [], [])['data'];
+            foreach ($products as $product) {
+                if (in_array($category['id'], $product['categories'])) $items[] = $product;
+            }
+        }
+
+        return [
+            'model' => $model,
+            'items' => $items,
+        ];
+    }
+
     public function get_route_object (): array {
         $dc = new DataController;
         $urlAttrs = self::get_url_attrs();
         $route_attr = $urlAttrs[0];
-        $route_detail_attr = $urlAttrs[1] == 'detail';
-        $route_detail_id_attr = $urlAttrs[2];
+        // $route_detail_attr = $urlAttrs[1] == 'detail';
+        // $route_detail_id_attr = $urlAttrs[2];
         $route_object = [
             'page' => null,
             'detail' => null,
@@ -34,7 +57,11 @@ class RouteController {
         if ($route_attr) {
             $pages = $dc -> get('Pages', [], [])['data'];
             foreach ($pages as $page) {
-                if ($page['name'] == $route_attr) $route_object['page'] = $page;
+                if ($page['type'] == 'category') {
+                    $page['__items'] = self::get_category_items($page['type_id']);
+                }
+
+                if ($page['active'] && $page['name'] == $route_attr) $route_object['page'] = $page;
             }
         }
 
@@ -42,7 +69,7 @@ class RouteController {
 
         // get detail data if there is any
         //
-        $route_object['detail'] = $route_detail_attr ? $route_detail_id_attr : null;
+        // $route_object['detail'] = $route_detail_attr ? $route_detail_id_attr : null;
 
         return $route_object;
     }

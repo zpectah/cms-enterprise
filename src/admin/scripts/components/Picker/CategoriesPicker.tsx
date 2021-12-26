@@ -29,8 +29,8 @@ const CategoriesPicker = (
 		Categories?.map((item) => {
 			if (forModel == 'all' || forModel == item.type) {
 				options.push({
-					label: `${item.name} ${
-						showLabelWithType && '[' + t('types:' + item.type) + ']'
+					label: `${item.name}${
+						showLabelWithType ? ' [' + t('types:' + item.type) + ']' : ''
 					}`,
 					value: item.id as string,
 					disabled: ignored.includes(item.id),

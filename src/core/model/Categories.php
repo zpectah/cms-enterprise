@@ -4,6 +4,23 @@ namespace model;
 
 class Categories {
 
+    private function getUpdatedRow ($conn, $row, $languages) {
+        $utils = new \Utils;
+        foreach ($languages as $lang) {
+            $row['lang'][$lang] = $utils -> get_language_row(
+                $conn,
+                $row['id'],
+                'SELECT * FROM categories__' . $lang . ' WHERE id = ?'
+            );
+        } // Set language object
+        //
+        $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']); // Set value as array
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        unset($row['deleted']); // Unset deleted attribute
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params, $languages) {
         $response = [];
         $utils = new \Utils;
@@ -20,21 +37,16 @@ class Categories {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // request params
+        $rp_id = $data['id'] or $params['id'];
+
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                foreach ($languages as $lang) {
-                    $row['lang'][$lang] = $utils -> get_language_row(
-                        $conn,
-                        $row['id'],
-                        'SELECT * FROM categories__' . $lang . ' WHERE id = ?'
-                    );
-                } // Set language object
-
-                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']); // Set value as array
-                $row['active'] = $row['active'] == 1; // Set value as boolean
-                unset($row['deleted']); // Unset deleted attribute
-
-                $response[] = $row;
+                if ($rp_id) {
+                    if ($rp_id == $row['id']) $response = self::getUpdatedRow($conn, $row, $languages);
+                } else {
+                    $response[] = self::getUpdatedRow($conn, $row, $languages);
+                }
             }
         }
 
