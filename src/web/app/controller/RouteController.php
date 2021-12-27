@@ -54,47 +54,32 @@ class RouteController {
         $route_object = [
             'page' => null,
             'detail' => null,
+            'detail_index' => null,
+            'detail_prev' => null,
+            'detail_next' => null,
             'should_be_detail' => null,
         ];
         if ($route_attr) {
             $pages = $dc -> get('Pages', [], [])['data'];
             foreach ($pages as $page) {
                 if ($page['active'] && $page['name'] == $route_attr) {
-                    if ($page['type'] == 'category') {
-                        $page['__items'] = self::get_category_items($page['type_id']);
-                    }
+                    if ($page['type'] == 'category') $page['__items'] = self::get_category_items($page['type_id']);
                     if ($route_detail_attr && $route_detail_id_attr) {
                         $route_object['should_be_detail'] = true;
                         foreach ($page['__items']['items'] as $item) {
-                            if (($route_detail_id_attr == $item['id'] || $route_detail_id_attr == $item['name']) && $item['active']) $route_object['detail'] = $item;
+                            if (($route_detail_id_attr == $item['id'] || $route_detail_id_attr == $item['name']) && $item['active']) {
+                                $route_object['detail'] = $item;
+                                $index = array_search($item, $page['__items']['items']);
+                                $route_object['detail_index'] = $index;
+                                if($index > 0 ) $route_object['detail_prev'] = $page['__items']['items'][ $index -1 ];
+                                if($index < count($page['__items']['items']) -1 ) $route_object['detail_next'] = $page['__items']['items'][ $index +1 ];
+                            }
                         }
                     }
                     $route_object['page'] = $page;
                 }
             }
         }
-
-        return $route_object;
-    }
-
-    // TODO
-    public function get_detail_route_object ($model): array {
-        $ds = new DataController;
-        $urlAttrs = self::get_url_attrs();
-        $route_attr = $urlAttrs[0];
-        $id_attr = $urlAttrs[1];
-        $route_object = null;
-
-        if ($route_attr && $id_attr) {
-            $items = $model ? $ds -> get($model, [], [])['data'] : [];
-
-            foreach ($items as $page) {
-                if ($page['id'] == $id_attr || $page['name'] == $id_attr) $route_object = $page;
-            }
-        }
-
-
-
 
         return $route_object;
     }

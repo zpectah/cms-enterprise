@@ -100,7 +100,10 @@ class ViewController {
             if ($item['active'] && $item['parent'] == $parentId) {
                 $item['children'] = self::get_menu_items_children($item['id'], $items);
                 if ($item['type'] == 'page') $item['__path'] = self::get_item_link($item['page']);
-                if ($current_url == $item['__path'] . $lang_params || $current_url == $item['path_url'] . $lang_params) $item['is_selected'] = true;
+                if ($current_url == $item['__path'] . $lang_params
+                    || $current_url == $item['path_url'] . $lang_params
+                    || strpos($current_url, $item['__path']) !== false
+                ) $item['is_selected'] = true;
                 $response[] = $item;
             }
         }
@@ -118,7 +121,10 @@ class ViewController {
             if ($item['active'] && $item['parent'] == '') {
                 $item['children'] = self::get_menu_items_children($item['id'], $menuItems);
                 if ($item['type'] == 'page') $item['__path'] = self::get_item_link($item['page']);
-                if ($current_url == $item['__path'] . $lang_params || $current_url == $item['path_url'] . $lang_params) $item['is_selected'] = true;
+                if ($current_url == $item['__path'] . $lang_params
+                    || $current_url == $item['path_url'] . $lang_params
+                    || strpos($current_url, $item['__path']) !== false
+                ) $item['is_selected'] = true;
                 $response[] = $item;
             }
         }
@@ -219,6 +225,9 @@ class ViewController {
             'list_items' => $items['items'],
             'list_detail' => $pageData['page_object']['detail'],
             'should_be_detail' => $pageData['page_object']['should_be_detail'],
+            'detail_index' => $pageData['page_object']['detail_index'],
+            'detail_prev' => $pageData['page_object']['detail_prev'],
+            'detail_next' => $pageData['page_object']['detail_next'],
             //
             //
             'project_name' => $pageData['settings']['project_name'],
