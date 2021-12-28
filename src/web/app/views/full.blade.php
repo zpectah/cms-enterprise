@@ -3,7 +3,6 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    {{$page_name}}
                     @include($page_name)
                 </div>
             </div>

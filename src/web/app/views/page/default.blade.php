@@ -1,7 +1,8 @@
 <section>
-    default view content ... {{$page_context}}
-    <br />
-    {{$title}}
+    <h1>{{$title}}</h1>
+    <p>
+        {{$description}}
+    </p>
     <br />
     {!!$content!!}
 </section>

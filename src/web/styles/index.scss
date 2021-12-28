@@ -17,8 +17,10 @@ body {
   font-family: 'Roboto', Verdana, Arial, Helvetica, sans-serif;
 }
 
+@import 'views/common';
 @import 'views/shared/Header';
 @import 'views/shared/Footer';
+@import 'views/shared/Main';
 @import 'views/shared/Sidebar';
 @import 'views/views';
 @import 'views/page';
