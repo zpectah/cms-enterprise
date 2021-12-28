@@ -10,7 +10,7 @@
       "type": ["page", "local", "external"]
     },
     "Pages": {
-      "type": ["default", "system", "category"]
+      "type": ["default", "category"]
     },
     "Posts": {
       "type": ["article", "blog", "media", "gallery", "event", "reference", "testimonial"]
