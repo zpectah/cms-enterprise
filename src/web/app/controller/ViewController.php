@@ -74,8 +74,39 @@ class ViewController {
             'page_name' => $page_name,
             'page_layout' => $page_layout,
             'settings' => $cms_settings,
-            'model_name' => $model_name,
+            'model' => $model_name,
             'url_params' => $urlParams,
+        ];
+    }
+    private function get_single_detail_data (): array {
+        $rc = new RouteController;
+        $dc = new DataController;
+        $urlAttrs = $rc -> get_url_attrs();
+        $model_attr = $urlAttrs[1];
+        $id_attr = $urlAttrs[2];
+        $model = null;
+        $detail = null;
+        if ($model_attr == 'posts') {
+            $items = $dc -> get('Posts', [], [])['data'];
+            foreach ($items as $item) {
+                if ($id_attr == $item['id'] || $id_attr == $item['name']) {
+                    $model = $model_attr;
+                    $detail = $item;
+                }
+            }
+        } else if ($model_attr == 'products') {
+            $items = $dc -> get('Products', [], [])['data'];
+            foreach ($items as $item) {
+                if ($id_attr == $item['id'] || $id_attr == $item['name']) {
+                    $model = $model_attr;
+                    $detail = $item;
+                }
+            }
+        }
+
+        return [
+            'model' => $model,
+            'data' => $detail,
         ];
     }
 
@@ -204,6 +235,7 @@ class ViewController {
     public function get_view_meta_data (): array {
         $utils = new \Utils;
         $pageData = self::get_page_data();
+        $singleDetailData = self::get_single_detail_data();
         $lng = self::get_current_language();
         $page_title = $pageData['page_object']['page']['lang'][$lng]['title']
             ? $pageData['page_object']['page']['lang'][$lng]['title'] . ' | ' . $pageData['settings']['web_meta_title']
@@ -221,6 +253,10 @@ class ViewController {
             $page_title = $pageData['page_object']['detail']['lang'][$lng]['title'] . ' | ' . $page_title;
             if ($pageData['page_object']['detail']['lang'][$lng]['description']) $page_description = substr($pageData['page_object']['detail']['lang'][$lng]['description'],0,150);
             if ($pageData['page_object']['detail']['tags']) $page_keywords .= ',' . implode(",", self::get_tags_from_id($pageData['page_object']['detail']['tags']));
+        } else if ($singleDetailData['data']) {
+            $page_title = $singleDetailData['data']['lang'][$lng]['title'] . ' | ' . $pageData['settings']['web_meta_title'];
+            if ($singleDetailData['data']['lang'][$lng]['description']) $page_description = substr($singleDetailData['data']['lang'][$lng]['description'],0,150);
+            if ($singleDetailData['data']['tags']) $page_keywords .= ',' . implode(",", self::get_tags_from_id($singleDetailData['data']['tags']));
         }
 
         return [
@@ -240,6 +276,9 @@ class ViewController {
         $lng = self::get_current_language();
         $items = $pageData['page_object']['page']['__items'];
         $context = 'page-default';
+        $singleDetailData = self::get_single_detail_data();
+        $detail_model = $items['model'] ? $items['model'] : $singleDetailData['model'];
+        $detail_data = $pageData['page_object']['detail'] ? $pageData['page_object']['detail'] : $singleDetailData['data'];
         if ($pageData['page_object']['page']
             || $pageData['page_name'] == 'home'                                                  // Static page: Home
             || $pageData['page_name'] == 'basket'                                                // Static page: Market basket
@@ -247,6 +286,7 @@ class ViewController {
             || $pageData['page_name'] == 'registration'                                          // Static page: Members profile
             || $pageData['page_name'] == 'profile'                                               // Static page: Members registration
             || $pageData['page_name'] == 'lost-password'                                         // Static page: Members lost password
+            || ($pageData['page_name'] == 'detail' && $singleDetailData['data'])                 // Single detail (Posts, Products) without context
         ) {
             if ($pageData['page_name'] == 'home') {                                              // Static page: Home
                 $page_name = 'page.home';
@@ -272,26 +312,33 @@ class ViewController {
                 $page_name = 'page.members-lostpassword';
                 $layout_name = 'default';
                 $context = 'page-lost-password';
-            } else if ($items && $pageData['page_object']['detail']) {                           // Detail page
+            } else if ($pageData['page_name'] == 'detail' && $singleDetailData['data']) {        // Single detail (Posts, Products) without context
+                $page_name = 'page.detail-' . $singleDetailData['model'];
+                $layout_name = 'default';
+                $context = 'page-single-detail';
+            } else if ($items && $pageData['page_object']['detail']) {                           // Detail page (from category context)
                 $page_name = 'page.detail-' . $items['model'];
                 $layout_name = 'default';
-                $context = 'page-detail';
+                $context = 'page-category-detail';
             } else {                                                                             // Default page / page with list
                 $page_name = 'page.' . $pageData['page_layout'];
                 $layout_name = 'default';
-                $context = $items ? 'page-list' : 'page-layout';
+                $context = $items ? 'page-category' : 'page-default';
             }
         }
 
         echo $this -> $blade -> run($layout_name, [
             't' => self::get_translations(),                                                      // Object of translations keys defined in system
+            'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
 
-            // List from page defined category & Detail from these list
+            // List from page defined category & Detail data from list or single
             'list_model' => $items['model'],
             'list_items' => $items['items'],
-            'list_detail' => $pageData['page_object']['detail'],
+            'detail_model' => $detail_model,
+            'detail_data' => $detail_data,
+            // ... available only when category is in context
             'detail_not_found' => $pageData['page_object']['should_be_detail'],
             'detail_index' => $pageData['page_object']['detail_index'],
             'detail_prev' => $pageData['page_object']['detail_prev'],
@@ -313,7 +360,7 @@ class ViewController {
             'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
             'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
 
-            // Dynamic
+            // Dynamic variables
             'url_params' => $pageData['url_params'],
 
         ]);
