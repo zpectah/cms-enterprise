@@ -1,6 +1,6 @@
-<div id="view-{{$page_id}}" class="page-view view--default">
+<div class="page-view view--default view--{{$page_context}}">
     @include('shared.Header')
-    <main id="Main.{{$page_id}}" class="main main--default">
+    <main id="Main" class="main main--default main--{{$page_context}}">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -12,11 +12,5 @@
             </div>
         </div>
     </main>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                @include('shared.Footer')
-            </div>
-        </div>
-    </div>
+    @include('shared.Footer')
 </div>

@@ -17,7 +17,9 @@ class RouteController {
 
     public function get_url_params (): array {
         return [
-            'lang' => $_GET['lang']
+            'lang' => $_GET['lang'],
+            'page' => $_GET['page'],
+            'limit' => $_GET['limit'],
         ];
     }
 
@@ -29,13 +31,19 @@ class RouteController {
         if ($model == 'posts') {
             $posts = $dc -> get('Posts', [], [])['data'];
             foreach ($posts as $post) {
-                // TODO: check published date
-                if (in_array($category['id'], $post['categories']) && $post['active']) $items[] = $post;
+                $today = strtotime(date('Y-m-d H:i:s'));
+                $published = strtotime($post['published']);
+                if (in_array($category['id'], $post['categories'])
+                    && $post['active']
+                    && ($today >= $published)
+                ) $items[] = $post;
             }
         } else if ($model == 'products') {
             $products = $dc -> get('Products', [], [])['data'];
             foreach ($products as $product) {
-                if (in_array($category['id'], $product['categories']) && $product['active']) $items[] = $product;
+                if (in_array($category['id'], $product['categories'])
+                    && $product['active']
+                ) $items[] = $product;
             }
         }
 
@@ -45,13 +53,33 @@ class RouteController {
         ];
     }
 
+    public function get_route_detail ($items, $attrId): array {
+        $response = [
+            'detail' => null,
+            'detail_index' => null,
+            'detail_prev' => null,
+            'detail_next' => null,
+        ];
+        foreach ($items as $item) {
+            if (($attrId == $item['id'] || $attrId == $item['name']) && $item['active']) {
+                $response['detail'] = $item;
+                $index = array_search($item, $items);
+                $response['detail_index'] = $index;
+                if($index > 0 ) $response['detail_prev'] = $items[ $index -1 ];
+                if($index < count($items) -1 ) $response['detail_next'] = $items[ $index +1 ];
+            }
+        }
+
+        return $response;
+    }
+
     public function get_route_object (): array {
         $dc = new DataController;
         $urlAttrs = self::get_url_attrs();
         $route_attr = $urlAttrs[0];
         $route_detail_attr = $urlAttrs[1] == 'detail';
         $route_detail_id_attr = $urlAttrs[2];
-        $route_object = [
+        $response = [
             'page' => null,
             'detail' => null,
             'detail_index' => null,
@@ -63,25 +91,19 @@ class RouteController {
             $pages = $dc -> get('Pages', [], [])['data'];
             foreach ($pages as $page) {
                 if ($page['active'] && $page['name'] == $route_attr) {
-                    if ($page['type'] == 'category') $page['__items'] = self::get_category_items($page['type_id']);
-                    if ($route_detail_attr && $route_detail_id_attr) {
-                        $route_object['should_be_detail'] = true;
-                        foreach ($page['__items']['items'] as $item) {
-                            if (($route_detail_id_attr == $item['id'] || $route_detail_id_attr == $item['name']) && $item['active']) {
-                                $route_object['detail'] = $item;
-                                $index = array_search($item, $page['__items']['items']);
-                                $route_object['detail_index'] = $index;
-                                if($index > 0 ) $route_object['detail_prev'] = $page['__items']['items'][ $index -1 ];
-                                if($index < count($page['__items']['items']) -1 ) $route_object['detail_next'] = $page['__items']['items'][ $index +1 ];
-                            }
+                    if ($page['type'] == 'category') {
+                        $page['__items'] = self::get_category_items($page['type_id']);
+                        if ($route_detail_attr && $route_detail_id_attr) {
+                            $response['should_be_detail'] = true;
+                            $response = array_merge($response, self::get_route_detail($page['__items']['items'], $route_detail_id_attr));
                         }
                     }
-                    $route_object['page'] = $page;
+                    $response['page'] = $page;
                 }
             }
         }
 
-        return $route_object;
+        return $response;
     }
 
 }

@@ -1,2 +1,2 @@
 <!-- Static content -->
-display 'error 404' content
+display 'error 404' content ... {{$page_context}}

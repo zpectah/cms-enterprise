@@ -61,7 +61,8 @@ class ViewController {
                 $page_object = $route_object;
                 $page_name = $route_object['page']['name'];
                 $page_layout = $route_object['page']['type'];
-                $model_name = $route_object['page']['type'] == 'post' ? 'Posts' : $route_object['page']['type'] == 'product' ? 'Products' : null;
+                if ($route_object['page']['type'] == 'post') $model_name = 'Posts';
+                if ($route_object['page']['type'] == 'product') $model_name = 'Products';
             }
         } else {
             $page_name = 'home';
@@ -92,20 +93,22 @@ class ViewController {
             return strnatcmp($a[$key], $b[$key]);
         };
     }
+    private function get_menu_item_object ($item, $items, $url, $langParams) {
+        $item['children'] = self::get_menu_items_children($item['id'], $items);
+        if ($item['type'] == 'page') $item['__path'] = self::get_item_link($item['page']);
+        if ($url == $item['__path'] . $langParams
+            || $url == $item['path_url'] . $langParams
+            || strpos($url, $item['__path']) !== false
+        ) $item['is_selected'] = true;
+
+        return $item;
+    }
     private function get_menu_items_children ($parentId, $items): array {
         $response = [];
         $lang_params = self::get_language_options()['link_url_param'];
         $current_url = $_SERVER['REQUEST_URI'];
         foreach ($items as $item) {
-            if ($item['active'] && $item['parent'] == $parentId) {
-                $item['children'] = self::get_menu_items_children($item['id'], $items);
-                if ($item['type'] == 'page') $item['__path'] = self::get_item_link($item['page']);
-                if ($current_url == $item['__path'] . $lang_params
-                    || $current_url == $item['path_url'] . $lang_params
-                    || strpos($current_url, $item['__path']) !== false
-                ) $item['is_selected'] = true;
-                $response[] = $item;
-            }
+            if ($item['active'] && $item['parent'] == $parentId) $response[] = self::get_menu_item_object($item, $items, $current_url, $lang_params);
         }
         usort($response, self::build_sorter('item_order'));
 
@@ -118,15 +121,7 @@ class ViewController {
         $menuItems = $dc -> get('MenuItems', [ 'menuId' => $menuId ], [])['data'];
         $current_url = $_SERVER['REQUEST_URI'];
         foreach ($menuItems as $item) {
-            if ($item['active'] && $item['parent'] == '') {
-                $item['children'] = self::get_menu_items_children($item['id'], $menuItems);
-                if ($item['type'] == 'page') $item['__path'] = self::get_item_link($item['page']);
-                if ($current_url == $item['__path'] . $lang_params
-                    || $current_url == $item['path_url'] . $lang_params
-                    || strpos($current_url, $item['__path']) !== false
-                ) $item['is_selected'] = true;
-                $response[] = $item;
-            }
+            if ($item['active'] && $item['parent'] == '') $response[] = self::get_menu_item_object($item, $menuItems, $current_url, $lang_params);
         }
         usort($response, self::build_sorter('item_order'));
 
@@ -199,42 +194,53 @@ class ViewController {
         $page_name = 'page.error-404';
         $lng = self::get_current_language();
         $items = $pageData['page_object']['page']['__items'];
+        $context = 'page-default';
         if ($pageData['page_object']['page'] || $pageData['page_name'] == 'home') {
             if ($pageData['page_name'] == 'home') {
                 $page_name = 'page.home';
                 $layout_name = 'default';
+                $context = 'page-static';
             } else if ($items && $pageData['page_object']['detail']) {
                 $page_name = 'page.detail-' . $items['model'];
                 $layout_name = 'default';
+                $context = 'page-detail';
             } else {
                 $page_name = 'page.' . $pageData['page_layout'];
                 $layout_name = 'default';
+                $context = $items ? 'page-list' : 'page-layout';
             }
         }
 
         echo $this -> $blade -> run($layout_name, [
-            't' => self::get_translations(),
-            'lang' => self::get_language_options(),
-            'menu' => self::get_menu_data(),
-            //
-            'title' => $pageData['page_object']['page']['lang'][$lng]['title'],
-            'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
-            'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
-            //
+            't' => self::get_translations(),                                                      // Object of translations keys defined in system
+            'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
+            'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
+
+            // List from page defined category & Detail from these list
             'list_model' => $items['model'],
             'list_items' => $items['items'],
             'list_detail' => $pageData['page_object']['detail'],
-            'should_be_detail' => $pageData['page_object']['should_be_detail'],
+            'detail_not_found' => $pageData['page_object']['should_be_detail'],
             'detail_index' => $pageData['page_object']['detail_index'],
             'detail_prev' => $pageData['page_object']['detail_prev'],
             'detail_next' => $pageData['page_object']['detail_next'],
-            //
-            //
+            'detail_url_suffix' => '/detail',
+
+            // Project
             'project_name' => $pageData['settings']['project_name'],
+
+            // Page meta data
             'page_id' => str_replace('page.', '', $page_name),
             'page_key' => $pageData['page_name'],
             'page_name' => $page_name,
             'page_url' => $utils -> getCurrentUrl(),
+            'page_context' => $context,
+
+            // Current page view
+            'title' => $pageData['page_object']['page']['lang'][$lng]['title'],
+            'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
+            'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
+
         ]);
     }
 

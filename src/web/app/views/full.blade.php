@@ -1,5 +1,5 @@
-<div id="view-{{$page_id}}" class="page-view view--full">
-    <main id="Main.{{$page_id}}" class="main main--full">
+<div class="page-view view--full view--{{$page_context}}">
+    <main id="Main" class="main main--full main--{{$page_context}}">
         <div class="container">
             <div class="row">
                 <div class="col">

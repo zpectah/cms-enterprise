@@ -1,5 +1,6 @@
 <section>
-    default view content
+    default view content ... {{$page_context}}
+    <br />
     {{$title}}
     <br />
     {!!$content!!}

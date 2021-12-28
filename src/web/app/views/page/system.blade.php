@@ -1,5 +1,6 @@
 <section>
-    system view content
+    system view content ... {{$page_context}}
+    <br />
     {{$title}}
     <br />
     {!!$content!!}
