@@ -1,4 +1,4 @@
-<section>
+<section class="" data-component="BasketWidget">
     basket items
     <br />
     <a
@@ -6,4 +6,9 @@
     >
         {{$t('btn.show-basket')}}
     </a>
+    <div data-component="BasketWidgetList">
+        <div data-component="BasketWidgetItem">
+            demo item
+        </div>
+    </div>
 </section>
