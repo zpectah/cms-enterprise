@@ -1,32 +1,32 @@
 <section>
-    <br />
-    search results
-    <br />
-    Searching for: {{$url_params['search']}}
-    <br />
-    results list ...
-    <br />
+    <h1>Results for: {{$url_params['search']}}</h1>
     @foreach($search_results as $result)
         @if($result['model'] == 'pages')
-            <article id="Page_{{$result['id']}}">
-                {{$result['name']}}:{{$result['id']}}
-                <br />
-                <a href="/{{$result['name']}}">Link to page</a>
-            </article>
+            @include('component.list-item-page', [
+                'id' => $result['id'],
+                'title' => $result['lang'][$lng]['title'],
+                'description' => $result['lang'][$lng]['description'],
+                'detail_url' => '/' . $result['name'],
+                'name' => $item['name'],
+            ])
             <br />
         @elseif($result['model'] == 'products')
-            <article id="Product_{{$result['id']}}">
-                {{$result['name']}}:{{$result['id']}}
-                <br />
-                <a href="/detail/products/{{$result['name']}}">Link to product</a>
-            </article>
+            @include('component.list-item-product', [
+                'id' => $result['id'],
+                'title' => $result['lang'][$lng]['title'],
+                'description' => $result['lang'][$lng]['description'],
+                'detail_url' => '/detail/products/' . $result['name'],
+                'name' => $item['name'],
+            ])
             <br />
         @elseif($result['model'] == 'posts')
-            <article id="Post_{{$result['id']}}">
-                {{$result['name']}}:{{$result['id']}}
-                <br />
-                <a href="/detail/posts/{{$result['name']}}">Link to post</a>
-            </article>
+            @include('component.list-item-post', [
+                'id' => $result['id'],
+                'title' => $result['lang'][$lng]['title'],
+                'description' => $result['lang'][$lng]['description'],
+                'detail_url' => '/detail/posts/' . $result['name'],
+                'name' => $item['name'],
+            ])
             <br />
         @endif
     @endforeach
