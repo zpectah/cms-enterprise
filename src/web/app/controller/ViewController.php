@@ -218,7 +218,7 @@ class ViewController {
             $response['robots'] = 'none';
         } else if ($urlAttrs[0] == 'search') {
             $response['title'] = self::get_t('title.page.search') . ' | ' . $pageData['settings']['web_meta_title'];
-            if ($pageData['url_params']['search']) $response['title'] = self::get_t('title.page.basket-results') . ' ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
+            if ($pageData['url_params']['search']) $response['title'] = self::get_t('title.page.search-results') . ': ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
         } else if ($urlAttrs[0] == 'registration') {
             $response['title'] = self::get_t('title.page.registration') . ' | ' . $pageData['settings']['web_meta_title'];
@@ -233,7 +233,19 @@ class ViewController {
 
         return $response;
     }
+    private function get_search_result ():array {
+        $dc = new DataController;
+        $rc = new RouteController;
+        $urlParams = $rc -> get_url_params();
+        $lng = self::get_current_language();
+        $results = [];
+        if ($urlParams['search']) $results = $dc -> search([
+            'search' => $urlParams['search'],
+            'lang' => $lng,
+        ]);
 
+        return $results;
+    }
 
 
     public function get_view_meta_data (): array {
@@ -349,6 +361,9 @@ class ViewController {
             'detail_prev' => $pageData['page_object']['detail_prev'],
             'detail_next' => $pageData['page_object']['detail_next'],
             'detail_url_suffix' => '/detail',
+
+            // Search results
+            'search_results' => self::get_search_result(),
 
             // Project
             'project_name' => $pageData['settings']['project_name'],

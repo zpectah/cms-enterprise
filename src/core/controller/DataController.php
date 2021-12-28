@@ -800,4 +800,55 @@ class DataController {
         return $response;
     }
 
+    /********** Search **********/
+    public function search ($data): array {
+        $results = [];
+        $string = strtolower($data['search']);
+        if ($data['lang']) {
+            $lng = $data['lang'];
+        } else {
+            $settings = self::get_cms_settings([]);
+            $lng = $settings['language_default'];
+        }
+        $pages = self::get('Pages', [], [])['data'];
+        $posts = self::get('Posts', [], [])['data'];
+        $products = self::get('Products', [], [])['data'];
+
+        foreach ($pages as $item) {
+            if (
+                preg_match( "/{$string}/i", strtolower($item['name']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
+            ) {
+                $item['model'] = 'pages';
+                $results[] = $item;
+            }
+        }
+        foreach ($posts as $item) {
+            if (
+                preg_match( "/{$string}/i", strtolower($item['name']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
+            ) {
+                $item['model'] = 'posts';
+                $results[] = $item;
+            }
+        }
+        foreach ($products as $item) {
+            if (
+                preg_match( "/{$string}/i", strtolower($item['name']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
+                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
+            ) {
+                $item['model'] = 'products';
+                $results[] = $item;
+            }
+        }
+
+        return $results;
+    }
+
 }

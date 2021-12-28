@@ -27,7 +27,7 @@ Simple content managing system with common content features with Crm and Market 
     - moment.js
     - swr (https://swr.vercel.app/)      
     - ...more
-* PHP 7+:
+* PHP 7.4:
     - bladeone (https://github.com/EFTEC/BladeOne)
     - php-image-resize (https://github.com/gumlet/php-image-resize)
     - mysqldump-php (https://github.com/ifsnop/mysqldump-php)
