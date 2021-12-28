@@ -8,14 +8,14 @@
                 type="search"
                 name="search"
                 class="form-control me-2"
-                placeholder="Search"
-                aria-label="Search"
+                placeholder="{{$t('label.search')}}"
+                aria-label="{{$t('label.search')}}"
         >
         <button
                 type="submit"
                 class="btn btn-outline-success"
         >
-            Search
+            {{$t('btn.search')}}
         </button>
     </form>
 </section>

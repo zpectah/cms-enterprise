@@ -44,7 +44,6 @@ class ViewController {
             'link_url_param' => $url_param,
         ];
     }
-
     private function get_page_data (): array {
         $rc = new RouteController;
         $dc = new DataController;
@@ -109,7 +108,6 @@ class ViewController {
             'data' => $detail,
         ];
     }
-
     private function get_item_link ($pageId): string {
         $dc = new DataController;
         $pages = $dc -> get('Pages', [], [])['data'];
@@ -178,7 +176,6 @@ class ViewController {
 
         return $response;
     }
-
     private function get_translations (): array {
         $response = [];
         $dc = new DataController;
@@ -189,7 +186,13 @@ class ViewController {
 
         return $response;
     }
+    private function get_t ($key) {
+        $translations = self::get_translations();
+        $value = $key;
+        if ($translations[$key]) $value = $translations[$key];
 
+        return $value;
+    }
     private function get_tags_from_id ($ids): array {
         $dc = new DataController;
         $response = [];
@@ -202,7 +205,6 @@ class ViewController {
 
         return $response;
     }
-
     private function get_static_meta (): array {
         $rc = new RouteController;
         $urlAttrs = $rc -> get_url_attrs();
@@ -212,25 +214,27 @@ class ViewController {
             'robots' => $pageData['settings']['web_meta_robots'],
         ];
         if ($urlAttrs[0] == 'basket') {
-            $response['title'] = 'basket' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('title.page.basket') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         } else if ($urlAttrs[0] == 'search') {
-            $response['title'] = 'search' . ' | ' . $pageData['settings']['web_meta_title'];
-            if ($pageData['url_params']['search']) $response['title'] = 'results for ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('title.page.search') . ' | ' . $pageData['settings']['web_meta_title'];
+            if ($pageData['url_params']['search']) $response['title'] = self::get_t('title.page.basket-results') . ' ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
         } else if ($urlAttrs[0] == 'registration') {
-            $response['title'] = 'registration' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('title.page.registration') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
         } else if ($urlAttrs[0] == 'profile') {
-            $response['title'] = 'profile' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('title.page.profile') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         } else if ($urlAttrs[0] == 'lost-password') {
-            $response['title'] = 'lost password' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('title.page.lost-password') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         }
 
         return $response;
     }
+
+
 
     public function get_view_meta_data (): array {
         $utils = new \Utils;
@@ -328,7 +332,8 @@ class ViewController {
         }
 
         echo $this -> $blade -> run($layout_name, [
-            't' => self::get_translations(),                                                      // Object of translations keys defined in system
+            't' => function ($key) { return self::get_t($key); },                                 // Function with return key if no value exist
+            '_t' => self::get_translations(),                                                     // Object of translations keys defined in system
             'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
