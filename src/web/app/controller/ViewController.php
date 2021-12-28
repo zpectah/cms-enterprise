@@ -49,15 +49,16 @@ class ViewController {
         $rc = new RouteController;
         $dc = new DataController;
         $urlAttrs = $rc -> get_url_attrs();
+        $urlParams = $rc -> get_url_params();
         $route_object = $rc -> get_route_object();
         $cms_settings = $dc -> get_cms_settings([]);
         $page_attr = $urlAttrs[0];
         $page_object = null;
-        $page_name = 'error-404';
+        $page_name = $page_attr ? $page_attr : 'error-404';
         $page_layout = 'default';
         $model_name = null;
         if ($page_attr) {
-            if ($route_object) {
+            if ($route_object['page']) {
                 $page_object = $route_object;
                 $page_name = $route_object['page']['name'];
                 $page_layout = $route_object['page']['type'];
@@ -74,6 +75,7 @@ class ViewController {
             'page_layout' => $page_layout,
             'settings' => $cms_settings,
             'model_name' => $model_name,
+            'url_params' => $urlParams,
         ];
     }
 
@@ -157,6 +159,47 @@ class ViewController {
         return $response;
     }
 
+    private function get_tags_from_id ($ids): array {
+        $dc = new DataController;
+        $response = [];
+        $tags = $dc -> get('Tags', [], [])['data'];
+        foreach ($tags as $tag) {
+            foreach ($ids as $id) {
+                if ($id == $tag['id']) $response[] = $tag['name'];
+            }
+        }
+
+        return $response;
+    }
+
+    private function get_static_meta (): array {
+        $rc = new RouteController;
+        $urlAttrs = $rc -> get_url_attrs();
+        $pageData = self::get_page_data();
+        $response = [
+            'title' => $pageData['settings']['web_meta_title'],
+            'robots' => $pageData['settings']['web_meta_robots'],
+        ];
+        if ($urlAttrs[0] == 'basket') {
+            $response['title'] = 'basket' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['robots'] = 'none';
+        } else if ($urlAttrs[0] == 'search') {
+            $response['title'] = 'search' . ' | ' . $pageData['settings']['web_meta_title'];
+            if ($pageData['url_params']['search']) $response['title'] = 'results for ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['robots'] = 'all';
+        } else if ($urlAttrs[0] == 'registration') {
+            $response['title'] = 'registration' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['robots'] = 'all';
+        } else if ($urlAttrs[0] == 'profile') {
+            $response['title'] = 'profile' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['robots'] = 'none';
+        } else if ($urlAttrs[0] == 'lost-password') {
+            $response['title'] = 'lost password' . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['robots'] = 'none';
+        }
+
+        return $response;
+    }
 
     public function get_view_meta_data (): array {
         $utils = new \Utils;
@@ -164,18 +207,20 @@ class ViewController {
         $lng = self::get_current_language();
         $page_title = $pageData['page_object']['page']['lang'][$lng]['title']
             ? $pageData['page_object']['page']['lang'][$lng]['title'] . ' | ' . $pageData['settings']['web_meta_title']
-            : $pageData['settings']['web_meta_title'];
+            : self::get_static_meta()['title'];
         $page_description = $pageData['page_object']['page']['lang'][$lng]['description']
             ? $pageData['page_object']['page']['lang'][$lng]['description']
             : $pageData['settings']['web_meta_description'];
         $page_keywords = $pageData['settings']['web_meta_keywords'] ? implode(",", $pageData['settings']['web_meta_keywords']) : '';
         $page_robots = $pageData['page_object']['page']['meta_robots']
             ? $pageData['page_object']['page']['meta_robots']
-            : $pageData['settings']['web_meta_robots'];
+            : self::get_static_meta()['robots'];
         $page_url = $utils -> getCurrentUrl();
 
         if ($pageData['page_object']['detail']) {
             $page_title = $pageData['page_object']['detail']['lang'][$lng]['title'] . ' | ' . $page_title;
+            if ($pageData['page_object']['detail']['lang'][$lng]['description']) $page_description = substr($pageData['page_object']['detail']['lang'][$lng]['description'],0,150);
+            if ($pageData['page_object']['detail']['tags']) $page_keywords .= ',' . implode(",", self::get_tags_from_id($pageData['page_object']['detail']['tags']));
         }
 
         return [
@@ -195,16 +240,43 @@ class ViewController {
         $lng = self::get_current_language();
         $items = $pageData['page_object']['page']['__items'];
         $context = 'page-default';
-        if ($pageData['page_object']['page'] || $pageData['page_name'] == 'home') {
-            if ($pageData['page_name'] == 'home') {
+        if ($pageData['page_object']['page']
+            || $pageData['page_name'] == 'home'                                                  // Static page: Home
+            || $pageData['page_name'] == 'basket'                                                // Static page: Market basket
+            || $pageData['page_name'] == 'search'                                                // Static page: Search results
+            || $pageData['page_name'] == 'registration'                                          // Static page: Members profile
+            || $pageData['page_name'] == 'profile'                                               // Static page: Members registration
+            || $pageData['page_name'] == 'lost-password'                                         // Static page: Members lost password
+        ) {
+            if ($pageData['page_name'] == 'home') {                                              // Static page: Home
                 $page_name = 'page.home';
                 $layout_name = 'default';
                 $context = 'page-static';
-            } else if ($items && $pageData['page_object']['detail']) {
+            } else if ($pageData['page_name'] == 'basket') {                                     // Static page: Market basket
+                $page_name = 'page.basket';
+                $layout_name = 'default';
+                $context = 'page-basket';
+            } else if ($pageData['page_name'] == 'search') {                                     // Static page: Search results
+                $page_name = 'page.search-results';
+                $layout_name = 'default';
+                $context = 'page-search';
+            } else if ($pageData['page_name'] == 'profile') {                                    // Static page: Members profile
+                $page_name = 'page.members-profile';
+                $layout_name = 'default';
+                $context = 'page-profile';
+            } else if ($pageData['page_name'] == 'registration') {                               // Static page: Members registration
+                $page_name = 'page.members-registration';
+                $layout_name = 'default';
+                $context = 'page-registration';
+            } else if ($pageData['page_name'] == 'lost-password') {                              // Static page: Members lost password
+                $page_name = 'page.members-lostpassword';
+                $layout_name = 'default';
+                $context = 'page-lost-password';
+            } else if ($items && $pageData['page_object']['detail']) {                           // Detail page
                 $page_name = 'page.detail-' . $items['model'];
                 $layout_name = 'default';
                 $context = 'page-detail';
-            } else {
+            } else {                                                                             // Default page / page with list
                 $page_name = 'page.' . $pageData['page_layout'];
                 $layout_name = 'default';
                 $context = $items ? 'page-list' : 'page-layout';
@@ -240,6 +312,9 @@ class ViewController {
             'title' => $pageData['page_object']['page']['lang'][$lng]['title'],
             'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
             'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
+
+            // Dynamic
+            'url_params' => $pageData['url_params'],
 
         ]);
     }

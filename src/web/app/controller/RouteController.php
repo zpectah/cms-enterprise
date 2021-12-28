@@ -20,6 +20,7 @@ class RouteController {
             'lang' => $_GET['lang'],
             'page' => $_GET['page'],
             'limit' => $_GET['limit'],
+            'search' => $_GET['search'],
         ];
     }
 
