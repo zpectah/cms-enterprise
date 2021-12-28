@@ -87,6 +87,11 @@ class ApiRequest {
                     }
                     break;
 
+                /********** Search **********/
+                case 'search':
+                    $response = $dc -> search($params);
+                    break;
+
                 /********** Profile (*) **********/
                 case 'get_user_profile':
                     $response = $dc -> get_user_profile($params);

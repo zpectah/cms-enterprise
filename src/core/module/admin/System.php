@@ -279,7 +279,8 @@ class System {
             $queries_market[] = "CREATE TABLE `products__$lang` (
               `id` int(11) NOT NULL,
               `title` text NOT NULL,
-              `description` text NOT NULL
+              `description` text NOT NULL,
+              `content` text NOT NULL 
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
             $queries_market[] = "CREATE TABLE `stores__$lang` (
               `id` int(11) NOT NULL,

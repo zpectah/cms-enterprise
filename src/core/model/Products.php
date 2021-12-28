@@ -127,12 +127,13 @@ class Products {
                 $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
-                    'INSERT INTO products__' . $lang . ' (id, title, description) VALUES (?,?,?)',
-                    'iss',
+                    'INSERT INTO products__' . $lang . ' (id, title, description, content) VALUES (?,?,?,?)',
+                    'isss',
                     [
                         $response['id'],
                         $data['lang'][$lang]['title'],
-                        $data['lang'][$lang]['description']
+                        $data['lang'][$lang]['description'],
+                        $data['lang'][$lang]['content']
                     ]
                 );
             }
@@ -216,11 +217,12 @@ class Products {
                 $response['lang'][] = $utils -> update_language_row(
                     $conn,
                     $lang,
-                    'UPDATE products__' . $lang . ' SET title = ?, description = ? WHERE id = ?',
-                    'si',
+                    'UPDATE products__' . $lang . ' SET title = ?, description = ?, content = ? WHERE id = ?',
+                    'sssi',
                     [
                         $data['lang'][$lang]['title'],
                         $data['lang'][$lang]['description'],
+                        $data['lang'][$lang]['content'],
                         $data['lang'][$lang]['id']
                     ]
                 );

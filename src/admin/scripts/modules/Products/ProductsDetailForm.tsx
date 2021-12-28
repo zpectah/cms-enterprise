@@ -13,6 +13,7 @@ import {
 	ButtonCreate,
 	Section,
 	Input,
+	Wysiwyg,
 } from '../../components/ui';
 import ModuleViewHeading from '../../components/ModuleViewHeading';
 import ContentTitle from '../../components/Layout/Content/ContentTitle';
@@ -380,6 +381,26 @@ const ProductsDetailForm = ({
 												required
 												multiline
 												rows={5}
+											/>
+										</Form.Row>
+									)}
+								/>
+								<Controller
+									name={`lang.${lng}.content`}
+									control={control}
+									rules={{}}
+									render={({
+										field: { onChange, onBlur, value, ref, name },
+									}) => (
+										<Form.Row errors={[]}>
+											<Wysiwyg
+												id={`${formOptions.id}__${lng}__content`}
+												placeholder={`${lng.toUpperCase()} ${t(
+													'form:input.content',
+												)}`}
+												onChange={onChange}
+												value={value}
+												height={'500px'}
 											/>
 										</Form.Row>
 									)}

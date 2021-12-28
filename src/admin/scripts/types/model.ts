@@ -229,6 +229,7 @@ export interface ProductsItemLangProps {
 	id?: number | string;
 	title: string;
 	description?: string;
+	content?: string;
 }
 export interface ProductsItemProps extends commonItemProps {
 	name: string;

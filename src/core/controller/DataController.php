@@ -813,6 +813,7 @@ class DataController {
         $pages = self::get('Pages', [], [])['data'];
         $posts = self::get('Posts', [], [])['data'];
         $products = self::get('Products', [], [])['data'];
+        $today = strtotime(date('Y-m-d H:i:s'));
 
         foreach ($pages as $item) {
             if (
@@ -820,6 +821,7 @@ class DataController {
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
+                && $item['active']
             ) {
                 $item['model'] = 'pages';
                 $results[] = $item;
@@ -831,9 +833,13 @@ class DataController {
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
+                && $item['active']
             ) {
-                $item['model'] = 'posts';
-                $results[] = $item;
+                $published = strtotime($item['published']);
+                if ($today >= $published) {
+                    $item['model'] = 'posts';
+                    $results[] = $item;
+                }
             }
         }
         foreach ($products as $item) {
@@ -842,6 +848,7 @@ class DataController {
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
                 || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
+                && $item['active']
             ) {
                 $item['model'] = 'products';
                 $results[] = $item;

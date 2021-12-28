@@ -75,6 +75,7 @@ const ProductsModule = ({}: ProductsModuleProps) => {
 			detail['lang'] = getLanguagesFields(Settings?.language_active, {
 				title: '',
 				description: '',
+				content: '',
 			} as ProductsItemLangProps);
 		setDetail(id);
 		setDetailData(detail);
