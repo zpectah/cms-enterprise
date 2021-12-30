@@ -1,4 +1,4 @@
-<article id="Post_{{$id}}" class="search-item search-item--post">
+<article id="Post_{{$id}}" class="list-item list-item--post">
     @if($thumbnail)
         <img src="{{'/uploads/image/thumbnail/' . $thumbnail}}" alt="{{$name}}" />
     @endif

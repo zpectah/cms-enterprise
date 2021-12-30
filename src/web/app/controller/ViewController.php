@@ -345,7 +345,6 @@ class ViewController {
 
         echo $this -> $blade -> run($layout_name, [
             't' => function ($key) { return self::get_t($key); },                                 // Function with return key if no value exist
-            '_t' => self::get_translations(),                                                     // Object of translations keys defined in system
             'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }

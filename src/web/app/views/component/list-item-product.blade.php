@@ -1,4 +1,9 @@
-<article id="Product_{{$id}}" class="search-item search-item--product">
+<article
+        id="Product_{{$id}}"
+        class="list-item list-item--product"
+        data-component="ProductItem"
+        data-component-id="{{$id}}"
+>
     @if($thumbnail)
         <img src="{{'/uploads/image/thumbnail/' . $thumbnail}}" alt="{{$name}}" />
     @endif

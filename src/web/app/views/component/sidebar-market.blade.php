@@ -6,9 +6,5 @@
     >
         {{$t('btn.show-basket')}}
     </a>
-    <div data-component="BasketWidgetList">
-        <div data-component="BasketWidgetItem">
-            demo item
-        </div>
-    </div>
+    <div data-component="BasketWidgetList"><!-- Dynamic list --></div>
 </section>

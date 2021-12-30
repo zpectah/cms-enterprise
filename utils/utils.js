@@ -16,7 +16,7 @@ export const storage = {
 export const array = {
 	add: function (array, item) {
 		if (Array.isArray(array)) {
-			if (array.indexOf(item) === -1) array.push();
+			if (array.indexOf(item) < 0) array.push();
 		} else {
 			console.warn('notValidArray');
 		}
