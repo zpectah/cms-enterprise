@@ -1,4 +1,7 @@
-<section>
+<section
+        data-component="ProductItem"
+        data-component-id="{{$detail_data['id']}}"
+>
     @if($page_context == 'page-category-detail')
         @include('component.detail-back')
     @endif
@@ -15,4 +18,13 @@
     @if($page_context == 'page-category-detail')
         @include('component.detail-nav')
     @endif
+    <div>
+            <button
+                    class="btn btn-outline-success"
+                    data-component="BasketAddTrigger"
+                    data-id="{{$detail_data['id']}}"
+            >
+                    {{$t('btn.add-to-basket')}}
+            </button>
+    </div>
 </section>

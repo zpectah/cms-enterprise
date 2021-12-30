@@ -35,15 +35,24 @@ class BasketModule {
 		this.widgetList = this.widget.find(
 			`[data-component="${sel.basketWidgetList}"]`,
 		);
+		this.data_context =
+			this.widget.length > 0
+				? 'widget'
+				: this.pageBasketList.length > 0
+				? 'list'
+				: 'summary';
+		this.root.attr('data-basket-context', this.data_context);
+		//
 		this.basket_items.map((item) => {
 			const id = item.split(':')[0];
 			const value = item.split(':')[1];
 			this.addHandler(id, value);
 		});
-		this.initEvents();
+		if (this.data_context === 'widget') this.initWidgetEvents();
+		if (this.data_context === 'list') this.initPageListEvents();
 	}
 
-	initEvents() {
+	initWidgetEvents() {
 		this.addTrigger = this.root.find(
 			`[data-component="${this.sel.basketWidgetItemAdd}"]`,
 		);
@@ -68,25 +77,60 @@ class BasketModule {
 		});
 	}
 
-	updateStorageData() {
-		const itemsList = this.widgetList;
+	initPageListEvents() {
+		this.pageBasketListItemRemove = this.root.find(
+			`[data-component="${this.sel.pageBasketListItemRemove}"]`,
+		);
+		this.pageBasketListItemInput = this.root.find(
+			`[data-component="${this.sel.pageBasketListItemInput}"]`,
+		);
 
-		if (this.widgetList.length > 0) {
-			let arr = [];
-			let sel = this.sel;
-			this.root
-				.find(`[data-component="${this.sel.basketWidgetItem}"]`)
-				.each(function (index, item) {
-					let id = $(item).data('id');
-					let input = $(item).find(
-						`[data-component="${sel.basketWidgetItemInput}"]`,
-					);
-					let count = input.val();
-					arr.push(`${id}:${count}`);
-				});
-			storage.set(this.opt.storageKey, arr.toString());
-		} else if (this.pageBasketList.length > 0) {
-			// TODO: update if widget not exist
+		this.pageBasketListItemRemove.off().on('click', (e) => {
+			e.preventDefault();
+			this.removeHandler(e.target.dataset.id);
+		});
+		this.pageBasketListItemInput.on('change blur', (e) => {
+			e.preventDefault();
+			this.updateHandler(e.target.dataset.id, e.target.value);
+		});
+	}
+
+	updateStorageData() {
+		const arr = [];
+		const sel = this.sel;
+		switch (this.data_context) {
+			case 'list':
+			case 'summary':
+				this.root
+					.find(`[data-component="${this.sel.pageBasketListItem}"]`)
+					.each(function (index, item) {
+						let id = $(item).data('id');
+						let input = $(item).find(
+							`[data-component="${sel.pageBasketListItemInput}"]`,
+						);
+						let count = input.val();
+						arr.push(`${id}:${count}`);
+					});
+				storage.set(this.opt.storageKey, arr.toString());
+				break;
+
+			case 'widget':
+				this.root
+					.find(`[data-component="${this.sel.basketWidgetItem}"]`)
+					.each(function (index, item) {
+						let id = $(item).data('id');
+						let input = $(item).find(
+							`[data-component="${sel.basketWidgetItemInput}"]`,
+						);
+						let count = input.val();
+						arr.push(`${id}:${count}`);
+					});
+				storage.set(this.opt.storageKey, arr.toString());
+				break;
+
+			default:
+				storage.set(this.opt.storageKey, this.storage_items);
+				break;
 		}
 	}
 
@@ -101,11 +145,9 @@ class BasketModule {
 		}
 	}
 
-	addHandler(id, value = 1) {
-		const item = this.widgetList.find(`#${this.sel.basketItemId}${id}`);
-		if (item.length === 0) {
-			this.widgetList.append(
-				`<div 
+	renderWidgetListItem(id, value) {
+		this.widgetList.append(
+			`<div 
 					id="${this.sel.basketItemId}${id}" 
 					data-component="${this.sel.basketWidgetItem}"
 					data-id="${id}"
@@ -126,15 +168,62 @@ class BasketModule {
 						Remove
 					</button>
 				</div>`,
-			);
+		);
+	}
+
+	renderPageListItem(id, value) {
+		this.pageBasketList.append(
+			`<div 
+					id="${this.sel.pageListItemId}${id}" 
+					data-component="${this.sel.pageBasketListItem}"
+					data-id="${id}"
+				>
+					<input 
+						type="number" 
+						id="${this.sel.pageListItemId}value_${id}" 
+						data-component="${this.sel.pageBasketListItemInput}"
+						value="${value}" 
+						data-id="${id}" 
+					/>
+					product #${id}
+					<button 
+						type="button" 
+						data-component="${this.sel.pageBasketListItemRemove}" 
+						data-id="${id}"
+					>
+						Remove
+					</button>
+				</div>`,
+		);
+	}
+
+	addHandler(id, value = 1) {
+		let item;
+		if (this.data_context === 'widget')
+			item = this.widgetList.find(`#${this.sel.basketItemId}${id}`);
+		if (this.data_context === 'list')
+			item = this.pageBasketList.find(`#${this.sel.pageListItemId}${id}`);
+		if (item.length === 0) {
+			if (this.data_context === 'widget') this.renderWidgetListItem(id, value);
+			if (this.data_context === 'list') this.renderPageListItem(id, value);
 		} else {
-			let e_value = item.find(`#${this.sel.basketItemId}value_${id}`).val();
+			let e_value =
+				item.find(`#${this.sel.basketItemId}value_${id}`).val() ||
+				item.find(`#${this.sel.pageListItemId}value_${id}`).val();
 			e_value = Number(e_value) + Number(value);
-			this.widgetList.find(`#${this.sel.basketItemId}value_${id}`).val(e_value);
+			if (this.data_context === 'widget')
+				this.widgetList
+					.find(`#${this.sel.basketItemId}value_${id}`)
+					.val(e_value);
+			if (this.data_context === 'list')
+				this.pageBasketList
+					.find(`#${this.sel.pageListItemId}value_${id}`)
+					.val(e_value);
 		}
 		this.updateProductItem(id);
 		this.updateStorageData();
-		this.initEvents();
+		if (this.data_context === 'widget') this.initWidgetEvents();
+		if (this.data_context === 'list') this.initPageListEvents();
 	}
 
 	updateHandler(id, count) {
@@ -143,12 +232,16 @@ class BasketModule {
 	}
 
 	removeHandler(id) {
-		const item = this.widgetList.find(`#widgetProductItem_${id}`);
-		if (item.length !== 0)
-			this.widgetList.find(`#widgetProductItem_${id}`).remove();
+		let item;
+		if (this.data_context === 'widget')
+			item = this.widgetList.find(`#${this.sel.basketItemId}${id}`);
+		if (this.data_context === 'list')
+			item = this.pageBasketList.find(`#${this.sel.pageListItemId}${id}`);
+		if (item.length !== 0) item.remove();
 		this.updateProductItem(id, 'remove');
 		this.updateStorageData();
-		this.initEvents();
+		if (this.data_context === 'widget') this.initWidgetEvents();
+		if (this.data_context === 'list') this.initPageListEvents();
 	}
 }
 
