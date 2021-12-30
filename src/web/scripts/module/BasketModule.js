@@ -2,6 +2,21 @@ import $ from 'jquery';
 
 import { storage } from '../../../../utils/utils';
 
+const getContext = (widgetEl, listEl, summaryEl, confirmationEl, finishEl) => {
+	let ctx = 'widget';
+	if (listEl) {
+		ctx = 'list';
+	} else if (summaryEl) {
+		ctx = 'summary';
+	} else if (confirmationEl) {
+		ctx = 'confirmation';
+	} else if (finishEl) {
+		ctx = 'finish';
+	}
+
+	return ctx;
+};
+
 class BasketModule {
 	constructor(
 		opt = {
@@ -17,30 +32,39 @@ class BasketModule {
 			basketWidgetItemInput: 'BasketWidgetItemInput',
 			listItemProduct: 'ProductItem',
 			basketItemId: 'widgetProductItem_',
-			//
 			pageBasketList: 'PageBasketList',
 			pageBasketListItem: 'PageBasketListItem',
 			pageBasketListItemRemove: 'PageBasketListItemRemoveTrigger',
 			pageBasketListItemInput: 'PageBasketListItemInput',
 			pageListItemId: 'pageListProductItem_',
+			pageBasketSummary: 'PageBasketSummary',
+			pageBasketConfirmation: 'PageBasketConfirmation',
+			pageBasketConfirmationSubmit: 'BasketConfirmButton',
+			pageBasketFinish: 'PageBasketFinish',
 		},
 	) {
-		this.root = $(`[data-module="${sel.root}"]`);
-		this.pageBasketList = $(`[data-module="${sel.pageBasketList}"]`);
 		this.opt = opt;
 		this.sel = sel;
+		this.root = $(`[data-module="${sel.root}"]`);
+		this.pageBasketList = $(`[data-module="${sel.pageBasketList}"]`);
+		this.pageBasketSummary = $(`[data-module="${sel.pageBasketSummary}"]`);
+		this.pageBasketConfirmation = $(
+			`[data-module="${sel.pageBasketConfirmation}"]`,
+		);
+		this.pageBasketFinish = $(`[data-module="${sel.pageBasketFinish}"]`);
 		this.storage_items = storage.get(opt.storageKey);
 		this.basket_items = this.storage_items ? this.storage_items.split(',') : [];
 		this.widget = this.root.find(`[data-component="${sel.basketWidget}"]`);
 		this.widgetList = this.widget.find(
 			`[data-component="${sel.basketWidgetList}"]`,
 		);
-		this.data_context =
-			this.widget.length > 0
-				? 'widget'
-				: this.pageBasketList.length > 0
-				? 'list'
-				: 'summary';
+		this.data_context = getContext(
+			this.widget.length > 0,
+			this.pageBasketList.length > 0,
+			this.pageBasketSummary.length > 0,
+			this.pageBasketConfirmation.length > 0,
+			this.pageBasketFinish.length > 0,
+		);
 		this.root.attr('data-basket-context', this.data_context);
 		//
 		this.basket_items.map((item) => {
@@ -50,6 +74,9 @@ class BasketModule {
 		});
 		if (this.data_context === 'widget') this.initWidgetEvents();
 		if (this.data_context === 'list') this.initPageListEvents();
+		if (this.data_context === 'summary') this.initSummaryEvents();
+		if (this.data_context === 'confirmation') this.initConfirmationEvents();
+		if (this.data_context === 'finish') this.initFinishEvents();
 	}
 
 	initWidgetEvents() {
@@ -95,12 +122,34 @@ class BasketModule {
 		});
 	}
 
+	initSummaryEvents() {
+		console.log('initSummaryEvents');
+	}
+
+	initConfirmationEvents() {
+		this.pageBasketConfirmationSubmit = this.pageBasketConfirmation.find(
+			`[data-component="${this.sel.pageBasketConfirmationSubmit}"]`,
+		);
+
+		this.pageBasketConfirmationSubmit.off().on('click', (e) => {
+			e.preventDefault();
+			// TODO
+			window.location.href = e.target.dataset.callbackurl;
+		});
+	}
+
+	initFinishEvents() {
+		console.log('initFinishEvents');
+
+		// TODO
+		storage.remove(this.opt.storageKey);
+	}
+
 	updateStorageData() {
 		const arr = [];
 		const sel = this.sel;
 		switch (this.data_context) {
 			case 'list':
-			case 'summary':
 				this.root
 					.find(`[data-component="${this.sel.pageBasketListItem}"]`)
 					.each(function (index, item) {
@@ -203,6 +252,7 @@ class BasketModule {
 			item = this.widgetList.find(`#${this.sel.basketItemId}${id}`);
 		if (this.data_context === 'list')
 			item = this.pageBasketList.find(`#${this.sel.pageListItemId}${id}`);
+		if (!item) return;
 		if (item.length === 0) {
 			if (this.data_context === 'widget') this.renderWidgetListItem(id, value);
 			if (this.data_context === 'list') this.renderPageListItem(id, value);

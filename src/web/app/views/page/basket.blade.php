@@ -5,27 +5,90 @@
     <br />
     @switch($basket_data['step'])
         @case('list')
-            <section data-module="PageBasketList">
-                section list
-
+            <div class="progress">
+                <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 25%"
+                        aria-valuenow="25"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                ></div>
+            </div>
+        <br />
+            <section>
+                <div data-module="PageBasketList"><!-- Dynamic list --></div>
+                <a href="/{{$page_key}}/summary{{$lang['link_url_param']}}">
+                    Next step
+                </a>
             </section>
         @break
         @case('summary')
-            <section data-module="PageBasketSummary">
+<!--
+Kontakt
+Dodací údaje
+Doprava
+Platba
+-->
+            <div class="progress">
+                <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 50%"
+                        aria-valuenow="50"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                ></div>
+            </div>
+        <br />
+            <section>
                 section summary
-
+                <div data-module="PageBasketSummary"><!-- Dynamic list --></div>
+                <a href="/{{$page_key}}/list{{$lang['link_url_param']}}">
+                    Prev step
+                </a>
+                <a href="/{{$page_key}}/confirmation{{$lang['link_url_param']}}">
+                    Next step
+                </a>
             </section>
         @break
         @case('confirmation')
+            <div class="progress">
+                <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 75%"
+                        aria-valuenow="75"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                ></div>
+            </div>
+        <br />
             <section data-module="PageBasketConfirmation">
                 section confirmation
-
+                <!-- -->
+                <a href="/{{$page_key}}/summary{{$lang['link_url_param']}}">
+                    Prev step
+                </a>
+                <button type="button" data-component="BasketConfirmButton" data-callbackurl="/{{$page_key}}/finish{{$lang['link_url_param']}}">
+                    Finish order
+                </button>
             </section>
         @break
         @case('finish')
+            <div class="progress">
+                <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 100%"
+                        aria-valuenow="100"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                ></div>
+            </div>
+        <br />
             <section data-module="PageBasketFinish">
                 section finish
-
             </section>
         @break
     @endswitch
