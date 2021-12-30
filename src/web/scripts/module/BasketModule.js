@@ -17,9 +17,16 @@ class BasketModule {
 			basketWidgetItemInput: 'BasketWidgetItemInput',
 			listItemProduct: 'ProductItem',
 			basketItemId: 'widgetProductItem_',
+			//
+			pageBasketList: 'PageBasketList',
+			pageBasketListItem: 'PageBasketListItem',
+			pageBasketListItemRemove: 'PageBasketListItemRemoveTrigger',
+			pageBasketListItemInput: 'PageBasketListItemInput',
+			pageListItemId: 'pageListProductItem_',
 		},
 	) {
 		this.root = $(`[data-module="${sel.root}"]`);
+		this.pageBasketList = $(`[data-module="${sel.pageBasketList}"]`);
 		this.opt = opt;
 		this.sel = sel;
 		this.storage_items = storage.get(opt.storageKey);
@@ -46,6 +53,7 @@ class BasketModule {
 		this.widgetItemInput = this.root.find(
 			`[data-component="${this.sel.basketWidgetItemInput}"]`,
 		);
+
 		this.addTrigger.off().on('click', (e) => {
 			e.preventDefault();
 			this.addHandler(e.target.dataset.id);
@@ -61,19 +69,25 @@ class BasketModule {
 	}
 
 	updateStorageData() {
-		let arr = [];
-		let sel = this.sel;
-		this.root
-			.find(`[data-component="${this.sel.basketWidgetItem}"]`)
-			.each(function (index, item) {
-				let id = $(item).data('id');
-				let input = $(item).find(
-					`[data-component="${sel.basketWidgetItemInput}"]`,
-				);
-				let count = input.val();
-				arr.push(`${id}:${count}`);
-			});
-		storage.set(this.opt.storageKey, arr.toString());
+		const itemsList = this.widgetList;
+
+		if (this.widgetList.length > 0) {
+			let arr = [];
+			let sel = this.sel;
+			this.root
+				.find(`[data-component="${this.sel.basketWidgetItem}"]`)
+				.each(function (index, item) {
+					let id = $(item).data('id');
+					let input = $(item).find(
+						`[data-component="${sel.basketWidgetItemInput}"]`,
+					);
+					let count = input.val();
+					arr.push(`${id}:${count}`);
+				});
+			storage.set(this.opt.storageKey, arr.toString());
+		} else if (this.pageBasketList.length > 0) {
+			// TODO: update if widget not exist
+		}
 	}
 
 	updateProductItem(id, method = 'update') {

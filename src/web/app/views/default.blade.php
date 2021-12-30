@@ -6,9 +6,11 @@
                 <div class="col">
                     @include($page_name)
                 </div>
+                @if($view_with_sidebar)
                 <div class="col col-md-3">
                     @include('shared.Sidebar')
                 </div>
+                @endif
             </div>
         </div>
     </main>

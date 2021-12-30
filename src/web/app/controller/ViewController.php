@@ -246,6 +246,16 @@ class ViewController {
 
         return $results;
     }
+    private function get_basket_data (): array {
+        $rc = new RouteController;
+        $urlAttrs = $rc -> get_url_attrs();
+        $step_attr = $urlAttrs[1];
+        $bc = new BasketController($step_attr);
+        return [
+            'step' => $step_attr, // list | summary | confirmation | finish = success/error
+            'show_basket_widget' => false,
+        ];
+    }
 
 
     public function get_view_meta_data (): array {
@@ -295,6 +305,8 @@ class ViewController {
         $singleDetailData = self::get_single_detail_data();
         $detail_model = $items['model'] ? $items['model'] : $singleDetailData['model'];
         $detail_data = $pageData['page_object']['detail'] ? $pageData['page_object']['detail'] : $singleDetailData['data'];
+        $basket_data = $pageData['page_name'] == 'basket' ? self::get_basket_data() : null;
+        $with_sidebar = true;
         if ($pageData['page_object']['page']
             || $pageData['page_name'] == 'home'                                                  // Static page: Home
             || $pageData['page_name'] == 'basket'                                                // Static page: Market basket
@@ -349,6 +361,8 @@ class ViewController {
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
 
+            'view_with_sidebar' => $with_sidebar,
+
             // List from page defined category & Detail data from list or single
             'list_model' => $items['model'],
             'list_items' => $items['items'],
@@ -364,6 +378,9 @@ class ViewController {
             // Search results
             'search_results' => self::get_search_result(),
 
+            // Basket data
+            'basket_data' => $basket_data,
+
             // Project
             'project_name' => $pageData['settings']['project_name'],
 
@@ -373,6 +390,11 @@ class ViewController {
             'page_name' => $page_name,
             'page_url' => $utils -> getCurrentUrl(),
             'page_context' => $context,
+            'sidebar_widget' => [
+                'search' => true,
+                'user' => true,
+                'basket' => $pageData['page_name'] !== 'basket',
+            ],
 
             // Current page view
             'title' => $pageData['page_object']['page']['lang'][$lng]['title'],
