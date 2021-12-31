@@ -16,11 +16,12 @@
                 ></div>
             </div>
         <br />
-            <section>
-                <div data-module="PageBasketList"><!-- Dynamic list --></div>
-                <a href="/{{$page_key}}/summary{{$lang['link_url_param']}}">
+            <section data-module="PageBasketList" data-nextPath="/{{$page_key}}/summary{{$lang['link_url_param']}}">
+                <div data-component="PageBasketListItems"><!-- Dynamic list --></div>
+                <br />
+                <button type="button" data-component="PageBasketListBtnNext">
                     Next step
-                </a>
+                </button>
             </section>
         @break
         @case('summary')
@@ -35,7 +36,7 @@
                 ></div>
             </div>
         <br />
-            <section data-module="PageBasketSummary">
+            <section data-module="PageBasketSummary" data-nextPath="/{{$page_key}}/confirmation{{$lang['link_url_param']}}">
                 <div>
                     <form>
                         form
@@ -46,12 +47,13 @@
                         Platba <br />
                     </form>
                 </div>
+                <br />
                 <a href="/{{$page_key}}/list{{$lang['link_url_param']}}">
                     Prev step
                 </a>
-                <a href="/{{$page_key}}/confirmation{{$lang['link_url_param']}}">
+                <button type="button" data-component="PageBasketSummaryBtnNext">
                     Next step
-                </a>
+                </button>
             </section>
         @break
         @case('confirmation')
@@ -70,6 +72,7 @@
                 section confirmation <br />
                 shrnutí
                 <!-- -->
+                <br />
                 <a href="/{{$page_key}}/summary{{$lang['link_url_param']}}">
                     Prev step
                 </a>

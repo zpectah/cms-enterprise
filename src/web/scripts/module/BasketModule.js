@@ -47,11 +47,14 @@ export default class BasketModule {
 			listItemProduct: 'ProductItem',
 			basketItemId: 'widgetProductItem_',
 			pageBasketList: 'PageBasketList',
+			pageBasketListItems: 'PageBasketListItems',
+			pageBasketListBtnNext: 'PageBasketListBtnNext',
 			pageBasketListItem: 'PageBasketListItem',
 			pageBasketListItemRemove: 'PageBasketListItemRemoveTrigger',
 			pageBasketListItemInput: 'PageBasketListItemInput',
 			pageListItemId: 'pageListProductItem_',
 			pageBasketSummary: 'PageBasketSummary',
+			pageBasketSummaryBtnNext: 'PageBasketSummaryBtnNext',
 			pageBasketConfirmation: 'PageBasketConfirmation',
 			pageBasketConfirmationSubmit: 'BasketConfirmButton',
 			pageBasketFinish: 'PageBasketFinish',
@@ -69,6 +72,9 @@ export default class BasketModule {
 		this.pageBasketFinish = $(`[data-module="${this.sel.pageBasketFinish}"]`);
 		this.storage_items = storage.get(this.opt.storageKey);
 		this.basket_items = this.storage_items ? this.storage_items.split(',') : [];
+		this.pageBasketListItems = this.root.find(
+			`[data-component="${this.sel.pageBasketListItems}"]`,
+		);
 		this.widget = this.root.find(`[data-component="${this.sel.basketWidget}"]`);
 		this.widgetList = this.widget.find(
 			`[data-component="${this.sel.basketWidgetList}"]`,
@@ -104,7 +110,7 @@ export default class BasketModule {
 	}
 
 	// Get basket items and parse data
-	getBasketItemsData() {
+	setBasketItemsData() {
 		const arr = [];
 		const sel = this.sel;
 		switch (this.data_context) {
@@ -176,6 +182,9 @@ export default class BasketModule {
 		this.pageBasketListItemInput = this.root.find(
 			`[data-component="${this.sel.pageBasketListItemInput}"]`,
 		);
+		this.pageBasketListBtnNext = this.root.find(
+			`[data-component="${this.sel.pageBasketListBtnNext}"]`,
+		);
 
 		this.pageBasketListItemRemove.off().on('click', (e) => {
 			e.preventDefault();
@@ -185,11 +194,36 @@ export default class BasketModule {
 			e.preventDefault();
 			this.updateHandler(e.target.dataset.id, e.target.value);
 		});
+
+		this.pageBasketListBtnNext.off().on('click', (e) => {
+			e.preventDefault();
+			const items = storage.get(this.opt.storageKey);
+			const nextPath = this.pageBasketList.data('nextpath');
+			if (items) {
+				window.location.href = nextPath;
+			} else {
+				console.warn('No items in basket!');
+			}
+		});
 	}
 
 	// Events for basket summary step
 	initSummaryEvents() {
-		console.log('initSummaryEvents');
+		this.pageBasketSummaryBtnNext = this.root.find(
+			`[data-component="${this.sel.pageBasketSummaryBtnNext}"]`,
+		);
+
+		this.pageBasketSummaryBtnNext.off().on('click', (e) => {
+			e.preventDefault();
+			const items = storage.get(this.opt.storageKey);
+			const nextPath = this.pageBasketSummary.data('nextpath');
+			if (items) {
+				// TODO: handle valid form
+				window.location.href = nextPath;
+			} else {
+				console.warn('No items in basket!');
+			}
+		});
 	}
 
 	// Events for basket confirmation step
@@ -207,7 +241,6 @@ export default class BasketModule {
 
 	// Events after finished order with payment response
 	initFinishEvents() {
-		console.log('initFinishEvents');
 		if (this.afterPaymentCallback) {
 			const urlParams = new URLSearchParams(window.location.href);
 			const status = urlParams.get('status');
@@ -257,7 +290,7 @@ export default class BasketModule {
 
 	// Render basket list item
 	renderPageListItem(id, value) {
-		this.pageBasketList.append(
+		this.pageBasketListItems.append(
 			`<div 
 					id="${this.sel.pageListItemId}${id}" 
 					data-component="${this.sel.pageBasketListItem}"
@@ -288,7 +321,7 @@ export default class BasketModule {
 		if (this.data_context === 'widget')
 			item = this.widgetList.find(`#${this.sel.basketItemId}${id}`);
 		if (this.data_context === 'list')
-			item = this.pageBasketList.find(`#${this.sel.pageListItemId}${id}`);
+			item = this.pageBasketListItems.find(`#${this.sel.pageListItemId}${id}`);
 		if (!item) return;
 		if (item.length === 0) {
 			if (this.data_context === 'widget') this.renderWidgetListItem(id, value);
@@ -303,12 +336,12 @@ export default class BasketModule {
 					.find(`#${this.sel.basketItemId}value_${id}`)
 					.val(e_value);
 			if (this.data_context === 'list')
-				this.pageBasketList
+				this.pageBasketListItems
 					.find(`#${this.sel.pageListItemId}value_${id}`)
 					.val(e_value);
 		}
 		this.updateProductItem(id);
-		this.getBasketItemsData();
+		this.setBasketItemsData();
 		if (this.data_context === 'widget') this.initWidgetEvents();
 		if (this.data_context === 'list') this.initPageListEvents();
 	}
@@ -316,7 +349,7 @@ export default class BasketModule {
 	// When update basket item count value (widget or basket list)
 	updateHandler(id, count) {
 		this.updateProductItem(id);
-		this.getBasketItemsData();
+		this.setBasketItemsData();
 	}
 
 	// When clicked on remove in basket item (widget or basket list)
@@ -325,10 +358,10 @@ export default class BasketModule {
 		if (this.data_context === 'widget')
 			item = this.widgetList.find(`#${this.sel.basketItemId}${id}`);
 		if (this.data_context === 'list')
-			item = this.pageBasketList.find(`#${this.sel.pageListItemId}${id}`);
+			item = this.pageBasketListItems.find(`#${this.sel.pageListItemId}${id}`);
 		if (item.length !== 0) item.remove();
 		this.updateProductItem(id, 'remove');
-		this.getBasketItemsData();
+		this.setBasketItemsData();
 		if (this.data_context === 'widget') this.initWidgetEvents();
 		if (this.data_context === 'list') this.initPageListEvents();
 	}
