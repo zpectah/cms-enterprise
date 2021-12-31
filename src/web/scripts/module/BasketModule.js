@@ -213,6 +213,9 @@ export default class BasketModule {
 			`[data-component="${this.sel.pageBasketSummaryBtnNext}"]`,
 		);
 
+		// TODO: init all input fields
+		// TODO: Handle errors & messages
+
 		this.pageBasketSummaryBtnNext.off().on('click', (e) => {
 			e.preventDefault();
 			const items = storage.get(this.opt.storageKey);
