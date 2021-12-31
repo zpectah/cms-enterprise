@@ -24,12 +24,6 @@
             </section>
         @break
         @case('summary')
-<!--
-Kontakt
-Dodací údaje
-Doprava
-Platba
--->
             <div class="progress">
                 <div
                         class="progress-bar"
@@ -41,9 +35,17 @@ Platba
                 ></div>
             </div>
         <br />
-            <section>
-                section summary
-                <div data-module="PageBasketSummary"><!-- Dynamic list --></div>
+            <section data-module="PageBasketSummary">
+                <div>
+                    <form>
+                        form
+                        <br />
+                        Kontakt <br />
+                        Dodací údaje <br />
+                        Doprava <br />
+                        Platba <br />
+                    </form>
+                </div>
                 <a href="/{{$page_key}}/list{{$lang['link_url_param']}}">
                     Prev step
                 </a>
@@ -65,7 +67,8 @@ Platba
             </div>
         <br />
             <section data-module="PageBasketConfirmation">
-                section confirmation
+                section confirmation <br />
+                shrnutí
                 <!-- -->
                 <a href="/{{$page_key}}/summary{{$lang['link_url_param']}}">
                     Prev step

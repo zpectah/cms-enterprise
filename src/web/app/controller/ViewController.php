@@ -307,6 +307,12 @@ class ViewController {
         $detail_data = $pageData['page_object']['detail'] ? $pageData['page_object']['detail'] : $singleDetailData['data'];
         $basket_data = $pageData['page_name'] == 'basket' ? self::get_basket_data() : null;
         $with_sidebar = true;
+        $sidebar_widget = [
+            'search' => true,
+            'user' => true,
+            'last-posts' => true,
+            'basket' => $pageData['page_name'] !== 'basket',
+        ];
         if ($pageData['page_object']['page']
             || $pageData['page_name'] == 'home'                                                  // Static page: Home
             || $pageData['page_name'] == 'basket'                                                // Static page: Market basket
@@ -390,11 +396,7 @@ class ViewController {
             'page_name' => $page_name,
             'page_url' => $utils -> getCurrentUrl(),
             'page_context' => $context,
-            'sidebar_widget' => [
-                'search' => true,
-                'user' => true,
-                'basket' => $pageData['page_name'] !== 'basket',
-            ],
+            'sidebar_widget' => $sidebar_widget,
 
             // Current page view
             'title' => $pageData['page_object']['page']['lang'][$lng]['title'],

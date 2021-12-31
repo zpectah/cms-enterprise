@@ -5,6 +5,7 @@
     <a
             href="/basket/list{{$lang['link_url_param']}}"
             class="btn btn-outline-secondary"
+            data-component="BasketWidgetLink"
     >
         {{$t('btn.show-basket')}}
     </a>

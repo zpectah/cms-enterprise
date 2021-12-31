@@ -8,8 +8,9 @@
     @if($sidebar_widget['basket'])
         @include('component.sidebar-market')
     @else
-        <section>
-            Temporary data information about basket step or whatever ...
-        </section>
+        @include('component.sidebar-market-basket')
+    @endif
+    @if($sidebar_widget['last-posts'])
+        @include('component.sidebar-last-posts')
     @endif
 </aside>

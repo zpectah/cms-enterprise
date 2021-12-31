@@ -2,7 +2,13 @@ import $ from 'jquery';
 
 import { storage } from '../../../../utils/utils';
 
-const getContext = (widgetEl, listEl, summaryEl, confirmationEl, finishEl) => {
+const getModuleContext = (
+	widgetEl,
+	listEl,
+	summaryEl,
+	confirmationEl,
+	finishEl,
+) => {
 	let ctx = 'widget';
 	if (listEl) {
 		ctx = 'list';
@@ -17,14 +23,22 @@ const getContext = (widgetEl, listEl, summaryEl, confirmationEl, finishEl) => {
 	return ctx;
 };
 
-class BasketModule {
+export default class BasketModule {
 	constructor(
-		opt = {
-			storageKey: 'basket-items',
-		},
-		sel = {
+		opt,
+		sel,
+		onChangeCallback,
+		paymentCallback,
+		afterPaymentCallback,
+	) {
+		this.opt = {
+			storageKey: 'web_basket_items',
+			...opt,
+		};
+		this.sel = {
 			root: 'BasketModule',
 			basketWidget: 'BasketWidget',
+			basketWidgetLink: 'BasketWidgetLink',
 			basketWidgetList: 'BasketWidgetList',
 			basketWidgetItem: 'BasketWidgetItem',
 			basketWidgetItemAdd: 'BasketAddTrigger',
@@ -41,24 +55,28 @@ class BasketModule {
 			pageBasketConfirmation: 'PageBasketConfirmation',
 			pageBasketConfirmationSubmit: 'BasketConfirmButton',
 			pageBasketFinish: 'PageBasketFinish',
-		},
-	) {
-		this.opt = opt;
-		this.sel = sel;
-		this.root = $(`[data-module="${sel.root}"]`);
-		this.pageBasketList = $(`[data-module="${sel.pageBasketList}"]`);
-		this.pageBasketSummary = $(`[data-module="${sel.pageBasketSummary}"]`);
+			...sel,
+		};
+		this.onChangeCallback = onChangeCallback;
+		this.paymentCallback = paymentCallback;
+		this.afterPaymentCallback = afterPaymentCallback;
+		this.root = $(`[data-module="${this.sel.root}"]`);
+		this.pageBasketList = $(`[data-module="${this.sel.pageBasketList}"]`);
+		this.pageBasketSummary = $(`[data-module="${this.sel.pageBasketSummary}"]`);
 		this.pageBasketConfirmation = $(
-			`[data-module="${sel.pageBasketConfirmation}"]`,
+			`[data-module="${this.sel.pageBasketConfirmation}"]`,
 		);
-		this.pageBasketFinish = $(`[data-module="${sel.pageBasketFinish}"]`);
-		this.storage_items = storage.get(opt.storageKey);
+		this.pageBasketFinish = $(`[data-module="${this.sel.pageBasketFinish}"]`);
+		this.storage_items = storage.get(this.opt.storageKey);
 		this.basket_items = this.storage_items ? this.storage_items.split(',') : [];
-		this.widget = this.root.find(`[data-component="${sel.basketWidget}"]`);
+		this.widget = this.root.find(`[data-component="${this.sel.basketWidget}"]`);
 		this.widgetList = this.widget.find(
-			`[data-component="${sel.basketWidgetList}"]`,
+			`[data-component="${this.sel.basketWidgetList}"]`,
 		);
-		this.data_context = getContext(
+		this.widgetLink = this.widget.find(
+			`[data-component="${this.sel.basketWidgetLink}"]`,
+		);
+		this.data_context = getModuleContext(
 			this.widget.length > 0,
 			this.pageBasketList.length > 0,
 			this.pageBasketSummary.length > 0,
@@ -79,6 +97,52 @@ class BasketModule {
 		if (this.data_context === 'finish') this.initFinishEvents();
 	}
 
+	// Change event handler and update storage
+	onChange(items) {
+		storage.set(this.opt.storageKey, items);
+		if (this.onChangeCallback) this.onChangeCallback({ items: items });
+	}
+
+	// Get basket items and parse data
+	getBasketItemsData() {
+		const arr = [];
+		const sel = this.sel;
+		switch (this.data_context) {
+			case 'list':
+				this.root
+					.find(`[data-component="${this.sel.pageBasketListItem}"]`)
+					.each(function (index, item) {
+						let id = $(item).data('id');
+						let input = $(item).find(
+							`[data-component="${sel.pageBasketListItemInput}"]`,
+						);
+						let count = input.val();
+						arr.push(`${id}:${count}`);
+					});
+				this.onChange(arr.toString());
+				break;
+
+			case 'widget':
+				this.root
+					.find(`[data-component="${this.sel.basketWidgetItem}"]`)
+					.each(function (index, item) {
+						let id = $(item).data('id');
+						let input = $(item).find(
+							`[data-component="${sel.basketWidgetItemInput}"]`,
+						);
+						let count = input.val();
+						arr.push(`${id}:${count}`);
+					});
+				this.onChange(arr.toString());
+				break;
+
+			default:
+				this.onChange(this.storage_items);
+				break;
+		}
+	}
+
+	// Events for basket widget
 	initWidgetEvents() {
 		this.addTrigger = this.root.find(
 			`[data-component="${this.sel.basketWidgetItemAdd}"]`,
@@ -104,6 +168,7 @@ class BasketModule {
 		});
 	}
 
+	// Events for basket list step
 	initPageListEvents() {
 		this.pageBasketListItemRemove = this.root.find(
 			`[data-component="${this.sel.pageBasketListItemRemove}"]`,
@@ -122,67 +187,36 @@ class BasketModule {
 		});
 	}
 
+	// Events for basket summary step
 	initSummaryEvents() {
 		console.log('initSummaryEvents');
 	}
 
+	// Events for basket confirmation step
 	initConfirmationEvents() {
 		this.pageBasketConfirmationSubmit = this.pageBasketConfirmation.find(
 			`[data-component="${this.sel.pageBasketConfirmationSubmit}"]`,
 		);
-
 		this.pageBasketConfirmationSubmit.off().on('click', (e) => {
 			e.preventDefault();
-			// TODO
-			window.location.href = e.target.dataset.callbackurl;
+			if (this.paymentCallback) {
+				this.paymentCallback({ callbackUrl: e.target.dataset.callbackurl });
+			}
 		});
 	}
 
+	// Events after finished order with payment response
 	initFinishEvents() {
 		console.log('initFinishEvents');
-
-		// TODO
-		storage.remove(this.opt.storageKey);
-	}
-
-	updateStorageData() {
-		const arr = [];
-		const sel = this.sel;
-		switch (this.data_context) {
-			case 'list':
-				this.root
-					.find(`[data-component="${this.sel.pageBasketListItem}"]`)
-					.each(function (index, item) {
-						let id = $(item).data('id');
-						let input = $(item).find(
-							`[data-component="${sel.pageBasketListItemInput}"]`,
-						);
-						let count = input.val();
-						arr.push(`${id}:${count}`);
-					});
-				storage.set(this.opt.storageKey, arr.toString());
-				break;
-
-			case 'widget':
-				this.root
-					.find(`[data-component="${this.sel.basketWidgetItem}"]`)
-					.each(function (index, item) {
-						let id = $(item).data('id');
-						let input = $(item).find(
-							`[data-component="${sel.basketWidgetItemInput}"]`,
-						);
-						let count = input.val();
-						arr.push(`${id}:${count}`);
-					});
-				storage.set(this.opt.storageKey, arr.toString());
-				break;
-
-			default:
-				storage.set(this.opt.storageKey, this.storage_items);
-				break;
+		if (this.afterPaymentCallback) {
+			const urlParams = new URLSearchParams(window.location.href);
+			const status = urlParams.get('status');
+			storage.remove(this.opt.storageKey);
+			this.afterPaymentCallback({ status: status });
 		}
 	}
 
+	// Update product list item or product detail class even when is in basket
 	updateProductItem(id, method = 'update') {
 		const el = this.root.find(
 			`[data-component="${this.sel.listItemProduct}"][data-component-id="${id}"]`,
@@ -194,6 +228,7 @@ class BasketModule {
 		}
 	}
 
+	// Render basket widget item
 	renderWidgetListItem(id, value) {
 		this.widgetList.append(
 			`<div 
@@ -220,6 +255,7 @@ class BasketModule {
 		);
 	}
 
+	// Render basket list item
 	renderPageListItem(id, value) {
 		this.pageBasketList.append(
 			`<div 
@@ -246,6 +282,7 @@ class BasketModule {
 		);
 	}
 
+	// When product list item or product detail item clicked to add to basket
 	addHandler(id, value = 1) {
 		let item;
 		if (this.data_context === 'widget')
@@ -271,16 +308,18 @@ class BasketModule {
 					.val(e_value);
 		}
 		this.updateProductItem(id);
-		this.updateStorageData();
+		this.getBasketItemsData();
 		if (this.data_context === 'widget') this.initWidgetEvents();
 		if (this.data_context === 'list') this.initPageListEvents();
 	}
 
+	// When update basket item count value (widget or basket list)
 	updateHandler(id, count) {
 		this.updateProductItem(id);
-		this.updateStorageData();
+		this.getBasketItemsData();
 	}
 
+	// When clicked on remove in basket item (widget or basket list)
 	removeHandler(id) {
 		let item;
 		if (this.data_context === 'widget')
@@ -289,10 +328,8 @@ class BasketModule {
 			item = this.pageBasketList.find(`#${this.sel.pageListItemId}${id}`);
 		if (item.length !== 0) item.remove();
 		this.updateProductItem(id, 'remove');
-		this.updateStorageData();
+		this.getBasketItemsData();
 		if (this.data_context === 'widget') this.initWidgetEvents();
 		if (this.data_context === 'list') this.initPageListEvents();
 	}
 }
-
-new BasketModule();

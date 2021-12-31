@@ -1,0 +1,3 @@
+<section>
+    Temporary data information about basket step or whatever ...
+</section>
