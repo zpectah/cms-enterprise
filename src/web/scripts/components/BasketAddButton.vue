@@ -19,9 +19,7 @@ module.exports = {
   methods: {
     add: function (e, id) {
       e.preventDefault();
-      this.$parent.basket_add_item(id);
-      this.$root.$forceUpdate();
-      // this.$parent.$mount();
+      this.$parent.add_to_basket(id);
     }
   }
 }

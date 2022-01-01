@@ -1,6 +1,5 @@
 <section
-        data-component="ProductItem"
-        data-component-id="{{$detail_data['id']}}"
+        data-product-id="{{$detail_data['id']}}"
 >
     @if($page_context == 'page-category-detail')
         @include('component.detail-back')

@@ -1,8 +1,7 @@
 <article
         id="Product_{{$id}}"
         class="list-item list-item--product"
-        data-component="ProductItem"
-        data-component-id="{{$id}}"
+        data-product-id="{{$id}}"
 >
     @if($thumbnail)
         <img src="{{'/uploads/image/thumbnail/' . $thumbnail}}" alt="{{$name}}" />
