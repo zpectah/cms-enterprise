@@ -250,9 +250,8 @@ class ViewController {
         $rc = new RouteController;
         $urlAttrs = $rc -> get_url_attrs();
         $step_attr = $urlAttrs[1];
-        $bc = new BasketController($step_attr);
         return [
-            'step' => $step_attr, // list | summary | confirmation | finish = success/error
+            'step' => $step_attr,    // list | summary | confirmation | finish = success/error
         ];
     }
 

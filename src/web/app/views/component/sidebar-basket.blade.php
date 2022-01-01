@@ -1,5 +1,5 @@
-<section class="sidebar-widget">
-    <h4 class="widget-title">Basket items</h4>
+<section class="sidebar-widget sidebar-widget--market">
+    <h4 class="widget-title">{{$t('title.widget-basket')}}</h4>
     <basket-widget
             price-unit="CZK"
             btn-basket-label="{{$t('btn.show-basket')}}"

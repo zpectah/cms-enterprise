@@ -1,8 +1,5 @@
-<section>
-    <h1>{{$t('title.page.basket')}}</h1>
-    <br />
-    basket steps here ... {{$basket_data['step']}}
-    <br />
+<section class="section section-page section-page--basket section-page--basket--{{$basket_data['step']}}">
+    <h1 class="title title-page">{{$t('title.page.basket')}}: {{$basket_data['step']}}</h1>
     @switch($basket_data['step'])
         @case('list')
             <div class="progress">

@@ -6,9 +6,9 @@
         @include('component.sidebar-members')
     @endif
     @if($sidebar_widget['basket'])
-        @include('component.sidebar-market')
+        @include('component.sidebar-basket')
     @else
-        @include('component.sidebar-market-basket')
+        @include('component.sidebar-basket-tmp')
     @endif
     @if($sidebar_widget['last-posts'])
         @include('component.sidebar-last-posts')
