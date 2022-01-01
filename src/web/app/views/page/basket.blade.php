@@ -16,17 +16,13 @@
                 ></div>
             </div>
             <br />
-            <section data-module="PageBasketList" data-nextPath="/{{$page_key}}/summary{{$lang['link_url_param']}}">
-                <div data-component="PageBasketListItems"><!-- Dynamic list --></div>
-                <br />
-                <div>
-                    Total price: XXXX CZK (?)
-                </div>
-                <br />
-                <button type="button" data-component="PageBasketListBtnNext">
-                    Next step
-                </button>
-            </section>
+            <page-basket-list
+                    price-unit="CZK"
+                    btn-next-link-target="/{{$page_key}}/summary{{$lang['link_url_param']}}"
+                    btn-next-link-label="{{$t('btn.next-step')}}"
+                    btn-remove-label="{{$t('btn.remove')}}"
+                    label-price="{{$t('label.price-total')}}"
+            ></page-basket-list>
         @break
         @case('summary')
             <div class="progress">

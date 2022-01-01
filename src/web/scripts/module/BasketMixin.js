@@ -1,12 +1,14 @@
 import { storage } from '../../../../utils/utils';
-
+import { STORAGE_KEY_BASKET_ITEMS } from '../constants';
 import BasketWidget from '../components/BasketWidget';
 import BasketAddButton from '../components/BasketAddButton';
+import PageBasketList from '../components/PageBasketList';
 
 const BasketMixin = {
 	components: {
 		'basket-widget': BasketWidget,
 		'basket-add-button': BasketAddButton,
+		'page-basket-list': PageBasketList,
 	},
 	data: function () {
 		return {
@@ -25,15 +27,23 @@ const BasketMixin = {
 		this.basket_price = this.get_basket_price();
 	},
 	methods: {
+		get_product_detail: function (id) {
+			return {
+				title: 'Product title',
+				price: 100,
+			};
+		},
 		get_basket_items: function () {
-			const items = storage.get('web_basket_items');
+			const items = storage.get(STORAGE_KEY_BASKET_ITEMS);
 			const items_array = items ? items.split(',') : [];
 			let tmp = [];
+
 			items_array.map((item) => {
 				let pi = item.split(':');
 				tmp.push({
 					id: Number(pi[0]),
 					count: Number(pi[1]),
+					...this.get_product_detail(Number(pi[0])),
 				});
 			});
 
@@ -55,7 +65,7 @@ const BasketMixin = {
 			array.map((item) => {
 				tmp.push(`${item.id}:${item.count}`);
 			});
-			storage.set('web_basket_items', tmp.toString());
+			storage.set(STORAGE_KEY_BASKET_ITEMS, tmp.toString());
 		},
 		add_to_basket: function (id, count = 1) {
 			const items = this.get_basket_items();
@@ -74,13 +84,25 @@ const BasketMixin = {
 		remove_from_basket: function (id) {
 			const items = this.get_basket_items();
 			const index = items.findIndex((item) => Number(item.id) === Number(id));
-			if (index > -1) items.splice(index, 1);
+			if (index > -1) {
+				items.splice(index, 1);
+			} else {
+				console.warn('Item no exist!');
+			}
 			this.basket_items = items;
 			this.update_storage(items);
 		},
 		update_basket_item: function (id, count) {
 			console.log('Update handler', id, count, this);
-			// TODO
+			const items = this.get_basket_items();
+			const index = items.findIndex((item) => Number(item.id) === Number(id));
+			if (index > -1) {
+				items[index].count = count;
+			} else {
+				console.warn('Item no exist!');
+			}
+			this.basket_items = items;
+			this.update_storage(items);
 		},
 	},
 };

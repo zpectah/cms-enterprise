@@ -5,18 +5,18 @@
           v-for="item in storage_items"
           v-bind:key="item.id"
       >
-        #{{ item.id }} x{{ item.count }} _ price...
+        #{{ item.id }} {{ item.title }} | x{{ item.count }} _ price... {{ item.price }} {{ priceUnit }}
         <button
             type="button"
             @click="(e) => remove(e, item.id)"
         >
-          Remove
+          {{ btnRemoveLabel }}
         </button>
       </div>
     </div>
     <br />
     <div>
-      Total price: {{ basket_price.total }} {{ priceUnit }}
+      {{ basket_price.total }} {{ priceUnit }}
     </div>
     <br />
     <button
@@ -42,11 +42,15 @@ module.exports = {
     priceUnit: String,
     btnBasketLabel: String,
     btnBasketTarget: String,
+    btnRemoveLabel: String,
   },
   watch: {
     '$parent.basket_items': function (nv, ov) {
       this.storage_items = this.$parent.basket_items;
       this.no_items = this.$parent.basket_items.length === 0;
+    },
+    '$parent.basket_price': function (nv, ov) {
+      this.basket_price = this.$parent.basket_price;
     },
   },
   methods: {
