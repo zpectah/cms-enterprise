@@ -253,7 +253,6 @@ class ViewController {
         $bc = new BasketController($step_attr);
         return [
             'step' => $step_attr, // list | summary | confirmation | finish = success/error
-            'show_basket_widget' => false,
         ];
     }
 

@@ -1,15 +1,18 @@
 <template>
-  <div class="demo-wrapper">kdfjhgksdjhfgksdjhf ... {{ var1 }} ... {{ dvLabel }}</div>
+  <div class="demo-wrapper">kdfjhgksdjhfgksdjhf ... {{ var1 }} ... {{ dvLabel }} </div>
 </template>
 
 <script>
 module.exports = {
   data: function () {
+
     return {
-      var1: 'Value1'
+      var1: 'Value1',
     }
   },
-  props: ['dvLabel'],
+  props: {
+    dvLabel: String,
+  },
 }
 </script>
 

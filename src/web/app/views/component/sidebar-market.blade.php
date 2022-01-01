@@ -1,18 +1,10 @@
-<section class="" data-component="BasketWidget">
-    <h4>Basket items</h4>
-    <div>{!!$basket_data['show_basket_widget']!!}</div>
-    <div data-component="BasketWidgetList"><!-- Dynamic list --></div>
-    <br />
-    <div>
-        Total price: XXXX CZK (?)
-    </div>
-    <br />
-    <a
-            href="/basket/list{{$lang['link_url_param']}}"
-            class="btn btn-outline-secondary"
-            data-component="BasketWidgetLink"
-    >
-        {{$t('btn.show-basket')}}
-    </a>
+<section class="sidebar-widget">
+    <h4 class="widget-title">Basket items</h4>
+    <basket-widget
+            price-unit="CZK"
+            btn-basket-label="{{$t('btn.show-basket')}}"
+            btn-basket-target="/basket/list{{$lang['link_url_param']}}"
+    ></basket-widget>
 </section>
+
 

@@ -10,11 +10,9 @@
     <h3>{{$title}}</h3>
     <p>{{$description}}</p>
     <a href="{{$detail_url}}{{$lang['link_url_param']}}">{{$t('btn.detail-product')}}</a>
-    <button
-            class="btn btn-sm btn-outline-success"
-            data-component="BasketAddTrigger"
-            data-id="{{$id}}"
-    >
-        {{$t('btn.add-to-basket')}}
-    </button>
+    <basket-add-button
+            id="{{$id}}"
+            label="{{$t('btn.add-to-basket')}}"
+            class="btn-sm btn-outline-success"
+    ></basket-add-button>
 </article>
