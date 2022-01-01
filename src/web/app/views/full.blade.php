@@ -1,4 +1,4 @@
-<div class="page-view view--full view--{{$page_context}}">
+<div id="vue-app" class="page-view view--full view--{{$page_context}}">
     <main id="Main" class="main main--full main--{{$page_context}}">
         <div class="container">
             <div class="row">

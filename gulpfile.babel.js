@@ -3,6 +3,7 @@ import colors from 'colors';
 import del from 'del';
 import browserify from 'browserify';
 import tsify from 'tsify';
+import vueify from 'vueify';
 import vinylSource from 'vinyl-source-stream';
 import vinylBuffer from 'vinyl-buffer';
 import gulpReplace from 'gulp-replace';
@@ -58,11 +59,20 @@ const Options = {
 	gulpJsonMinify: {},
 	gulpImageMin: {},
 	Scripts: {
-		babelify: {
-			presets: ['@babel/preset-env', '@babel/preset-react'],
-			plugins: ['@babel/plugin-transform-runtime'],
+		react: {
+			babelify: {
+				presets: ['@babel/preset-env', '@babel/preset-react'],
+				plugins: ['@babel/plugin-transform-runtime'],
+			},
+			extensions: ['.js', '.jsx', '.ts', '.tsx'],
 		},
-		extensions: ['.js', '.jsx', '.ts', '.tsx'],
+		vue: {
+			babelify: {
+				presets: ['@babel/preset-env'],
+				plugins: ['@babel/plugin-transform-runtime'],
+			},
+			extensions: ['.js', '.jsx', '.vue'],
+		},
 		sourcemaps: {
 			largeFile: true,
 		},
@@ -124,8 +134,7 @@ const Sources = {
 		web: [
 			ROOT + CONF.PATH.SRC + CONF.FOLDER.WEB + '**/*.js',
 			ROOT + CONF.PATH.SRC + CONF.FOLDER.WEB + '**/*.jsx',
-			ROOT + CONF.PATH.SRC + CONF.FOLDER.WEB + '**/*.ts',
-			ROOT + CONF.PATH.SRC + CONF.FOLDER.WEB + '**/*.tsx',
+			ROOT + CONF.PATH.SRC + CONF.FOLDER.WEB + '**/*.vue',
 			`${ROOT + CONF.PATH.SRC + CONF.FOLDER.WEB}**/${
 				CONF.FOLDER.SCRIPTS
 			}**/*.json`,
@@ -192,13 +201,43 @@ const TaskDef = {
 			.pipe(dest(path));
 		cb(printMessage(env, 'JSON', true));
 	},
-	Scripts: (path, env, app = 'admin', cb) => {
+	ScriptsReact: (path, env, app = 'admin', cb) => {
 		browserify({
 			entries: Sources.Scripts[app],
-			extensions: Options.Scripts.extensions,
+			extensions: Options.Scripts.react.extensions,
 		})
 			.plugin(tsify)
-			.transform(babelify.configure(Options.Scripts.babelify))
+			.transform(babelify.configure(Options.Scripts.react.babelify))
+			.bundle()
+			.pipe(vinylSource(CONF.SCRIPTS.OUTPUT))
+			.pipe(
+				gulpIf(env !== CONF.ENVIRONMENT.DEV, dest(path + CONF.FOLDER.SCRIPTS)),
+			)
+			.pipe(gulpIf(env !== CONF.ENVIRONMENT.DEV, vinylBuffer()))
+			.pipe(
+				gulpIf(
+					env !== CONF.ENVIRONMENT.DEV,
+					gulpSourceMaps.init(Options.Scripts.sourcemaps),
+				),
+			)
+			.pipe(
+				gulpIf(
+					env !== CONF.ENVIRONMENT.DEV,
+					gulpRename({ extname: '.min.js' }),
+				),
+			)
+			.pipe(gulpIf(env !== CONF.ENVIRONMENT.DEV, gulpUglify()))
+			.pipe(gulpIf(env !== CONF.ENVIRONMENT.DEV, gulpSourceMaps.write()))
+			.pipe(dest(path + CONF.FOLDER.SCRIPTS));
+		cb(printMessage(env, 'Scripts', true, app));
+	},
+	ScriptsVue: (path, env, app = 'admin', cb) => {
+		browserify({
+			entries: Sources.Scripts[app],
+			extensions: Options.Scripts.vue.extensions,
+		})
+			.transform(vueify)
+			.transform(babelify.configure(Options.Scripts.vue.babelify))
 			.bundle()
 			.pipe(vinylSource(CONF.SCRIPTS.OUTPUT))
 			.pipe(
@@ -298,21 +337,21 @@ const Tasks = {
 	Scripts: {
 		admin: {
 			DEV: (cb) =>
-				TaskDef.Scripts(
+				TaskDef.ScriptsReact(
 					ROOT + CONF.PATH.DEV + CONF.FOLDER.ADMIN,
 					CONF.ENVIRONMENT.DEV,
 					'admin',
 					cb,
 				),
 			TEST: (cb) =>
-				TaskDef.Scripts(
+				TaskDef.ScriptsReact(
 					ROOT + CONF.PATH.TEST + CONF.FOLDER.ADMIN,
 					CONF.ENVIRONMENT.TEST,
 					'admin',
 					cb,
 				),
 			PROD: (cb) =>
-				TaskDef.Scripts(
+				TaskDef.ScriptsReact(
 					ROOT + CONF.PATH.PROD + CONF.FOLDER.ADMIN,
 					CONF.ENVIRONMENT.PROD,
 					'admin',
@@ -321,21 +360,21 @@ const Tasks = {
 		},
 		web: {
 			DEV: (cb) =>
-				TaskDef.Scripts(
+				TaskDef.ScriptsVue(
 					ROOT + CONF.PATH.DEV + CONF.FOLDER.WEB,
 					CONF.ENVIRONMENT.DEV,
 					'web',
 					cb,
 				),
 			TEST: (cb) =>
-				TaskDef.Scripts(
+				TaskDef.ScriptsVue(
 					ROOT + CONF.PATH.TEST + CONF.FOLDER.WEB,
 					CONF.ENVIRONMENT.TEST,
 					'web',
 					cb,
 				),
 			PROD: (cb) =>
-				TaskDef.Scripts(
+				TaskDef.ScriptsVue(
 					ROOT + CONF.PATH.PROD + CONF.FOLDER.WEB,
 					CONF.ENVIRONMENT.PROD,
 					'web',

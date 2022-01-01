@@ -1,26 +1,17 @@
 process.env.NODE_ENV = window.APPENV;
 
+import Vue from 'vue';
 import '../../../node_modules/bootstrap/dist/js/bootstrap';
 
-// Modules
-import BasketModule from './module/BasketModule';
+import demoComponent from './components/demoComponent';
 
-new BasketModule(
-	{},
-	{},
-	(items) => {
-		console.log(
-			'onChangeCallback',
-			'event trigger when basket has changed',
-			items,
-		);
-	},
-	(attr) => {
-		window.location.href = attr.callbackUrl + '?status=success';
-	},
-	(attr) => {
-		console.log('afterPaymentCallback', attr);
-	},
-);
+import basketWidget from './components/basketWidget';
 
-// Components
+new Vue({
+	el: '#vue-app',
+	components: {
+		'demo-component': demoComponent,
+		//
+		'basket-widget': basketWidget,
+	},
+});

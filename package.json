@@ -55,7 +55,8 @@
         "redux-thunk": "2.4.0",
         "styled-components": "5.3.3",
         "styled-jss": "2.2.3",
-        "swr": "1.0.1"
+        "swr": "1.0.1",
+        "vue": "^2.6.14"
     },
     "devDependencies": {
         "@babel/cli": "7.16.0",
@@ -110,6 +111,10 @@
         "typescript": "4.4.4",
         "vinyl-buffer": "1.0.1",
         "vinyl-source-stream": "2.0.0",
+        "vueify": "^9.4.1",
         "wdio-chromedriver-service": "7.2.2"
+    },
+    "browser": {
+        "vue": "vue/dist/vue.common.js"
     }
 }
