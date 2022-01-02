@@ -1,21 +1,25 @@
 <template>
   <section>
-    <form name="BasketSummaryForm">
-      ...
-      form ui components
-      <br />
+    <form
+        name="BasketSummaryForm"
+    >
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_user_name"
         >
-          {{ inputLabelName }}
+          {{ inputLabelName }} *
         </label>
         <input
-          type="text"
-          class="form-control"
-          id="BasketSummaryForm_user_name"
-          name="BasketSummaryForm_user_name"
-          v-model="formModel.user_name"
+            type="text"
+            class="form-control"
+            id="BasketSummaryForm_user_name"
+            name="BasketSummaryForm_user_name"
+            v-model="formModel.user_name"
+            required
+            @keydown="(e) => onChange('user_name', e.target.value)"
+            @keyup="(e) => onChange('user_name', e.target.value)"
+            @change="(e) => onChange('user_name', e.target.value)"
+            @paste="(e) => onChange('user_name', e.target.value)"
         >
       </div>
 
@@ -23,7 +27,7 @@
         <label
             for="BasketSummaryForm_email"
         >
-          E-mail
+          E-mail *
         </label>
         <input
             type="email"
@@ -31,6 +35,11 @@
             id="BasketSummaryForm_email"
             name="BasketSummaryForm_email"
             v-model="formModel.email"
+            required
+            @keydown="(e) => onChange('email', e.target.value)"
+            @keyup="(e) => onChange('email', e.target.value)"
+            @change="(e) => onChange('email', e.target.value)"
+            @paste="(e) => onChange('email', e.target.value)"
         >
       </div>
 
@@ -38,7 +47,7 @@
         <label
             for="BasketSummaryForm_phone"
         >
-          Phone
+          Phone *
         </label>
         <input
             type="tel"
@@ -46,6 +55,11 @@
             id="BasketSummaryForm_phone"
             name="BasketSummaryForm_phone"
             v-model="formModel.phone"
+            required
+            @keydown="(e) => onChange('phone', e.target.value)"
+            @keyup="(e) => onChange('phone', e.target.value)"
+            @change="(e) => onChange('phone', e.target.value)"
+            @paste="(e) => onChange('phone', e.target.value)"
         >
       </div>
 
@@ -53,7 +67,7 @@
         <label
             for="BasketSummaryForm_country"
         >
-          Country
+          Country *
         </label>
         <input
             type="text"
@@ -61,6 +75,11 @@
             id="BasketSummaryForm_country"
             name="BasketSummaryForm_country"
             v-model="formModel.country"
+            required
+            @keydown="(e) => onChange('country', e.target.value)"
+            @keyup="(e) => onChange('country', e.target.value)"
+            @change="(e) => onChange('country', e.target.value)"
+            @paste="(e) => onChange('country', e.target.value)"
         >
       </div>
 
@@ -68,7 +87,7 @@
         <label
             for="BasketSummaryForm_city"
         >
-          City
+          City *
         </label>
         <input
             type="text"
@@ -76,6 +95,11 @@
             id="BasketSummaryForm_city"
             name="BasketSummaryForm_city"
             v-model="formModel.city"
+            required
+            @keydown="(e) => onChange('city', e.target.value)"
+            @keyup="(e) => onChange('city', e.target.value)"
+            @change="(e) => onChange('city', e.target.value)"
+            @paste="(e) => onChange('city', e.target.value)"
         >
       </div>
 
@@ -83,7 +107,7 @@
         <label
             for="BasketSummaryForm_address"
         >
-          Address
+          Address *
         </label>
         <input
             type="text"
@@ -91,6 +115,11 @@
             id="BasketSummaryForm_address"
             name="BasketSummaryForm_address"
             v-model="formModel.address"
+            required
+            @keydown="(e) => onChange('address', e.target.value)"
+            @keyup="(e) => onChange('address', e.target.value)"
+            @change="(e) => onChange('address', e.target.value)"
+            @paste="(e) => onChange('address', e.target.value)"
         >
       </div>
 
@@ -98,7 +127,7 @@
         <label
             for="BasketSummaryForm_zip"
         >
-          ZIP
+          ZIP *
         </label>
         <input
             type="text"
@@ -106,6 +135,11 @@
             id="BasketSummaryForm_zip"
             name="BasketSummaryForm_zip"
             v-model="formModel.zip"
+            required
+            @keydown="(e) => onChange('zip', e.target.value)"
+            @keyup="(e) => onChange('zip', e.target.value)"
+            @change="(e) => onChange('zip', e.target.value)"
+            @paste="(e) => onChange('zip', e.target.value)"
         >
       </div>
 
@@ -121,6 +155,10 @@
             v-model="formModel.description"
             placeholder="Enter something..."
             rows="5"
+            @keydown="(e) => onChange('description', e.target.value)"
+            @keyup="(e) => onChange('description', e.target.value)"
+            @change="(e) => onChange('description', e.target.value)"
+            @paste="(e) => onChange('description', e.target.value)"
         ></textarea>
       </div>
 
@@ -130,15 +168,17 @@
         <label
             for="BasketSummaryForm_payment"
         >
-          Payment select
+          Payment *
         </label>
         <select
             class="form-select"
             aria-label="Select payment"
             id="BasketSummaryForm_payment"
             v-model="formModel.payment"
+            required
+            @change="(e) => onChange('payment', e.target.value)"
         >
-          <option selected disabled>Open this select menu</option>
+          <option selected disabled value="''">Select payment</option>
           <option
               v-for="item in options.payments"
               v-bind:key="item.value"
@@ -150,15 +190,17 @@
         <label
             for="BasketSummaryForm_delivery"
         >
-          Delivery select
+          Delivery *
         </label>
         <select
             class="form-select"
             aria-label="Select delivery"
             id="BasketSummaryForm_delivery"
             v-model="formModel.delivery"
+            required
+            @change="(e) => onChange('delivery', e.target.value)"
         >
-          <option selected disabled>Open this select menu</option>
+          <option selected disabled value="''">Select delivery</option>
           <option
               v-for="item in options.deliveries"
               v-bind:key="item.value"
@@ -192,7 +234,7 @@
       <button
           class="btn btn-outline-secondary"
           @click="nextLinkHandler"
-          v-bind:disabled="no_items"
+          v-bind:disabled="no_items || !formValid"
       >
         {{ btnNextLinkLabel }}
       </button>
@@ -201,6 +243,9 @@
 </template>
 
 <script>
+const { storage } = require('../../../../../utils/utils');
+const { STORAGE_KEY_BASKET_SUMMARY } = require('../../constants');
+
 module.exports = {
   data: function () {
     return {
@@ -234,6 +279,8 @@ module.exports = {
           }
         ],
       },
+      formValid: false,
+      formError: {},
       formModel: {
         payment: '',
         delivery: '',
@@ -251,7 +298,14 @@ module.exports = {
       no_items: this.$parent.basket_items.length === 0,
     };
   },
-  mounted: function () {},
+  mounted: function () {
+    const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
+    if (storage_model) {
+      console.log('storage_model', JSON.parse(storage_model));
+      this.formModel = JSON.parse(storage_model);
+    }
+    if (this.formModel) this.formController(this.formModel);
+  },
   props: {
     priceUnit: String,
     btnPrevLinkTarget: String,
@@ -263,6 +317,30 @@ module.exports = {
     inputLabelName: String,
   },
   methods: {
+    formController: function (model) {
+      if (
+          model.user_name === ''
+          && model.payment === ''
+          && model.delivery === ''
+          && model.email === ''
+          && model.phone === ''
+          && model.country === ''
+          && model.city === ''
+          && model.address === ''
+          && model.zip === ''
+      ) {
+        this.formValid = false;
+      } else {
+        // TODO: ... valid email adress
+        this.formValid = true;
+        // TODO: ... set errors
+        // this.formError[key] = '';
+      }
+    },
+    onChange: function (name, value) {
+      const model_string = JSON.stringify(this.formModel);
+      storage.set(STORAGE_KEY_BASKET_SUMMARY, model_string);
+    },
     prevLinkHandler: function (e) {
       e.preventDefault();
       window.location.href = this.btnPrevLinkTarget;
@@ -287,7 +365,7 @@ module.exports = {
     },
     'formModel': {
       handler: function (nv, ov) {
-        console.log('formModel', this.formModel);
+        this.formController(nv);
       },
       deep: true,
     },
