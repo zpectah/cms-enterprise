@@ -1,9 +1,14 @@
 import Vue from 'vue';
 
+// Standalone components
+
+// Mixins
+import BasketMixin from './mixins/BasketMixin';
+
+// Components
 import demoComponent from './components/demoComponent';
 
-import BasketMixin from './module/BasketMixin';
-
+// Vue init
 new Vue({
 	el: '#vue-app',
 	mixins: [BasketMixin],

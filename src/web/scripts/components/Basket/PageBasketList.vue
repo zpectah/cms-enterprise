@@ -12,7 +12,7 @@
             v-bind:value="item.count"
             v-on:change="e => updateCount(e, item.id)"
             v-on:blur="e => updateCount(e, item.id)"
-            v-on:focus="e => updateCount(e, item.id)"
+            v-on:paste="e => updateCount(e, item.id)"
         />
 
         <button

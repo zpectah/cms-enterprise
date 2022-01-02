@@ -32,16 +32,18 @@ const BasketMixin = {
 	},
 	methods: {
 		get_product_detail: function (id) {
+			// TODO
+
 			return {
 				title: 'Product title',
 				price: 100,
+				// TODO ... maybe .. in stock ... etc
 			};
 		},
 		get_basket_items: function () {
 			const items = storage.get(STORAGE_KEY_BASKET_ITEMS);
 			const items_array = items ? items.split(',') : [];
 			let tmp = [];
-
 			items_array.map((item) => {
 				let pi = item.split(':');
 				tmp.push({
@@ -97,10 +99,10 @@ const BasketMixin = {
 			this.update_storage(items);
 		},
 		update_basket_item: function (id, count) {
-			console.log('Update handler', id, count, this);
 			const items = this.get_basket_items();
 			const index = items.findIndex((item) => Number(item.id) === Number(id));
 			if (index > -1) {
+				if (count < 0) return this.remove_from_basket(id);
 				items[index].count = count;
 			} else {
 				console.warn('Item no exist!');
