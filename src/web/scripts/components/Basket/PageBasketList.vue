@@ -1,5 +1,6 @@
 <template>
   <section class="section-page">
+    <h3>Products</h3>
     <div>
       <div
           v-for="item in storage_items"

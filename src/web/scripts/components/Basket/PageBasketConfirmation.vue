@@ -1,8 +1,89 @@
 <template>
   <section>
-    ...basket confirmation...
+    <h3>Products</h3>
+    <table>
+      <tbody>
+      <tr
+          v-for="item in storage_items"
+          v-bind:key="item.id"
+      >
+        <td>
+          #{{ item.id }}
+        </td>
+        <th>
+          {{ item.title }}
+        </th>
+        <td>
+          {{ item.price }} {{ priceUnit }}
+        </td>
+        <td>
+          {{ item.count }} x
+        </td>
+        <td>
+          {{ item.count * item.price }} {{ priceUnit }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
     <br />
+    <hr />
+    <h3>Payment and delivery</h3>
+    <table>
+      <tbody>
+      <tr>
+        <th>Payment</th>
+        <td>{{ basket_summary.payment }}</td>
+        <td>price ... {{ priceUnit }}</td>
+      </tr>
+      <tr>
+        <th>Delivery</th>
+        <td>{{ basket_summary.delivery }}</td>
+        <td>price ... {{ priceUnit }}</td>
+      </tr>
+      </tbody>
+    </table>
     <br />
+    <hr />
+    <h3>Contact information</h3>
+    <table>
+      <tbody>
+      <tr>
+        <th>User name</th>
+        <td>{{ basket_summary.user_name }}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{ basket_summary.email }}</td>
+      </tr>
+      <tr>
+        <th>Phone</th>
+        <td>{{ basket_summary.phone }}</td>
+      </tr>
+      <tr>
+        <th>Country</th>
+        <td>{{ basket_summary.country }}</td>
+      </tr>
+      <tr>
+        <th>City</th>
+        <td>{{ basket_summary.city }}</td>
+      </tr>
+      <tr>
+        <th>Address</th>
+        <td>{{ basket_summary.address }}</td>
+      </tr>
+      <tr>
+        <th>Zip</th>
+        <td>{{ basket_summary.zip }}</td>
+      </tr>
+      <tr>
+        <th>Description</th>
+        <td>{{ basket_summary.description }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <br />
+    <hr />
+    <h3>Price</h3>
     <div>
       {{ labelPrice }}: {{ basket_price.total }} {{ priceUnit }}
     </div>
@@ -26,12 +107,17 @@
 </template>
 
 <script>
+const { storage } = require('../../../../../utils/utils');
+const { STORAGE_KEY_BASKET_SUMMARY } = require('../../constants');
+
 module.exports = {
   data: function () {
     return {
       storage_items: this.$parent.basket_items,
       basket_price: this.$parent.basket_price,
       no_items: this.$parent.basket_items.length === 0,
+      //
+      basket_summary: {},
     };
   },
   props: {
@@ -41,6 +127,10 @@ module.exports = {
     btnNextLinkTarget: String,
     btnNextLinkLabel: String,
     labelPrice: String,
+  },
+  mounted: function () {
+    const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
+    if (storage_model) this.basket_summary = JSON.parse(storage_model);
   },
   methods: {
     prevLinkHandler: function (e) {

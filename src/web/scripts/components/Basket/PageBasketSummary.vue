@@ -3,6 +3,7 @@
     <form
         name="BasketSummaryForm"
     >
+      <h3>Contact information</h3>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_user_name"
@@ -163,7 +164,8 @@
       </div>
 
       <br />
-
+      <hr />
+      <h3>Payment and delivery</h3>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_payment"
@@ -215,14 +217,6 @@
       {{ labelPrice }}: {{ basket_price.total }} {{ priceUnit }}
     </div>
     <br />
-    <br />
-    model data:
-    <br />
-    <pre>
-      <code>
-        {{ formModel }}
-      </code>
-    </pre>
     <br />
     <div>
       <button
@@ -300,10 +294,7 @@ module.exports = {
   },
   mounted: function () {
     const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
-    if (storage_model) {
-      console.log('storage_model', JSON.parse(storage_model));
-      this.formModel = JSON.parse(storage_model);
-    }
+    if (storage_model) this.formModel = JSON.parse(storage_model);
     if (this.formModel) this.formController(this.formModel);
   },
   props: {
