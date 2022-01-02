@@ -1,5 +1,6 @@
 import { storage } from '../../../../utils/utils';
 import { STORAGE_KEY_BASKET_ITEMS } from '../constants';
+import { get, post } from '../utils/http';
 import BasketWidget from '../components/Basket/BasketWidget';
 import BasketAddButton from '../components/Basket/BasketAddButton';
 import PageBasketList from '../components/Basket/PageBasketList';
@@ -24,9 +25,19 @@ const BasketMixin = {
 				tax: 0,
 				total: 0,
 			},
+			_products: [],
+			// _deliveries: [],
+			// _payments: [],
 		};
 	},
 	mounted: async function () {
+		await get('/api/get_products').then((response) => {
+			if (response.data) {
+				console.log('get_products', response);
+				this._products = response.data;
+			}
+		});
+
 		this.basket_items = this.get_basket_items();
 		this.basket_price = this.get_basket_price();
 	},

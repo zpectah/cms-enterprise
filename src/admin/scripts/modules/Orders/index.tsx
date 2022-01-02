@@ -91,8 +91,7 @@ const OrdersModule = ({}: OrdersModuleProps) => {
 		const master: OrdersItemProps = _.cloneDeep(data);
 		setProcessing(true);
 		if (master.id == 'new') {
-			master.name =
-				new Date().valueOf() + `-${string.getRandom(5, 'uppercase')}`;
+			// master.name = new Date().valueOf() + `-${string.getRandom(5, 'uppercase')}`;
 			createOrders(master).then((response) => {
 				reloadOrders();
 				closeDetailHandler();

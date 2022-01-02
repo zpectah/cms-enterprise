@@ -238,6 +238,7 @@
 
 <script>
 const { storage } = require('../../../../../utils/utils');
+const { get } = require('../../utils/http');
 const { STORAGE_KEY_BASKET_SUMMARY } = require('../../constants');
 
 module.exports = {
@@ -290,9 +291,25 @@ module.exports = {
       storage_items: this.$parent.basket_items,
       basket_price: this.$parent.basket_price,
       no_items: this.$parent.basket_items.length === 0,
+      //
+      _deliveries: [],
+      _payments: [],
     };
   },
-  mounted: function () {
+  mounted: async function () {
+    await get('/api/get_deliveries').then((response) => {
+      if (response.data) {
+        console.log('get_deliveries', response);
+        this._deliveries = response.data;
+      }
+    });
+    await get('/api/get_payments').then((response) => {
+      if (response.data) {
+        console.log('get_payments', response);
+        this._payments = response.data;
+      }
+    });
+
     const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
     if (storage_model) this.formModel = JSON.parse(storage_model);
     if (this.formModel) this.formController(this.formModel);

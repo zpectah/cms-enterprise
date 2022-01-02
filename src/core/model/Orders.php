@@ -32,6 +32,10 @@ class Orders {
 
     public function create ($conn, $data) {
         $response = [];
+        $utils = new \Utils;
+
+        $date = date_create();
+        $name = $data['name'] ? $data['name'] : date_timestamp_get($date) . '-' . $utils -> getRandomString(5, 'upper');
 
         // prepare
         $query = ('INSERT INTO orders (
@@ -54,7 +58,7 @@ class Orders {
         $types = 'sssssssssssssii';
         $args = [
             $data['type'],
-            $data['name'],
+            $name,
             $data['email'],
             $data['phone'],
             $data['customer_name'],

@@ -6,7 +6,7 @@
           v-for="item in storage_items"
           v-bind:key="item.id"
       >
-        #{{ item.id }} {{ item.title }} | x{{ item.count }} _ price... {{ item.price }} {{ priceUnit }} | {{ item.count * item.price }} {{ priceUnit }}
+        #{{ item.id }} {{ item.title }} | x{{ item.count }} _ {{ $root.t('label.price') }}... {{ item.price }} {{ priceUnit }} | {{ item.count * item.price }} {{ priceUnit }}
 
         <input
             type="number"
