@@ -39,6 +39,9 @@ class ApiRequest {
             'email' => $_GET['email'],
             'withPassword' => $_GET['withPassword'],
             'token' => $_GET['token'],
+            'parsed' => $_GET['parsed'],
+            'lang' => $_GET['lang'],
+            'sub' => $_GET['sub'],
         ];
 
         // Switching and executing

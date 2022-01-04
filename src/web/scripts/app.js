@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+import { DEFAULT_LANGUAGE } from './constants';
+
 // Standalone components
 
 // Mixins
@@ -16,23 +18,31 @@ new Vue({
 	components: {
 		'demo-component': demoComponent,
 	},
-	data: {
-		to: {},
+	data: function () {
+		return {
+			lang: DEFAULT_LANGUAGE,
+			to: {},
+		};
 	},
 	mounted: async function () {
-		await get('/api/get_translations?parsed=true').then((response) => {
-			if (response.data) {
-				console.log('get_translations', response);
-				this.to = response.data;
-			}
+		this.lang = this.$el.dataset.lang;
+		await get(
+			`/api/get_translations?parsed=true&lang=${this.$el.dataset.lang}`,
+		).then((response) => {
+			if (response.data) this.to = response.data;
 		});
 	},
 	computed: {},
 	methods: {
 		t: function (key) {
-			console.log('translation', key);
+			let label = key;
+			if (this.to[key]) {
+				label = this.to[key];
+			} else {
+				console.warn(`Missing translation key: "${key}"`);
+			}
 
-			return key;
+			return label;
 		},
 	},
 });

@@ -33,22 +33,19 @@ const BasketMixin = {
 	mounted: async function () {
 		await get('/api/get_products').then((response) => {
 			if (response.data) {
-				console.log('get_products', response);
 				this._products = response.data;
+				this.basket_items = this.get_basket_items();
+				this.basket_price = this.get_basket_price();
 			}
 		});
-
-		this.basket_items = this.get_basket_items();
-		this.basket_price = this.get_basket_price();
 	},
 	methods: {
 		get_product_detail: function (id) {
-			// TODO
+			const item = this._products.find((fi) => Number(fi.id) === Number(id));
 
 			return {
-				title: 'Product title',
-				price: 100,
-				// TODO ... maybe .. in stock ... etc
+				title: item.lang[this.$root.lang].title,
+				price: item.item_price,
 			};
 		},
 		get_basket_items: function () {
@@ -103,8 +100,6 @@ const BasketMixin = {
 			const index = items.findIndex((item) => Number(item.id) === Number(id));
 			if (index > -1) {
 				items.splice(index, 1);
-			} else {
-				console.warn('Item no exist!');
 			}
 			this.basket_items = items;
 			this.update_storage(items);
@@ -115,8 +110,6 @@ const BasketMixin = {
 			if (index > -1) {
 				if (count < 0) return this.remove_from_basket(id);
 				items[index].count = count;
-			} else {
-				console.warn('Item no exist!');
 			}
 			this.basket_items = items;
 			this.update_storage(items);

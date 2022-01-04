@@ -1,4 +1,8 @@
-<div id="vue-app" class="page-view view--default view--{{$page_context}}">
+<div
+        id="vue-app"
+        data-lang="{{$lng}}"
+        class="page-view view--default view--{{$page_context}}"
+>
     @include('shared.Header')
     <main id="Main" class="main main--default main--{{$page_context}}">
         <div class="container">

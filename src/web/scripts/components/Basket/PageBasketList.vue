@@ -2,27 +2,39 @@
   <section class="section-page">
     <h3>Products</h3>
     <div>
-      <div
-          v-for="item in storage_items"
-          v-bind:key="item.id"
-      >
-        #{{ item.id }} {{ item.title }} | x{{ item.count }} _ {{ $root.t('label.price') }}... {{ item.price }} {{ priceUnit }} | {{ item.count * item.price }} {{ priceUnit }}
 
-        <input
-            type="number"
-            v-bind:value="item.count"
-            v-on:change="e => updateCount(e, item.id)"
-            v-on:blur="e => updateCount(e, item.id)"
-            v-on:paste="e => updateCount(e, item.id)"
-        />
-
-        <button
-            type="button"
-            @click="(e) => remove(e, item.id)"
+      <table class="w-100">
+        <tbody>
+        <tr
+            v-for="item in storage_items"
+            v-bind:key="item.id"
         >
-          {{ btnRemoveLabel }}
-        </button>
-      </div>
+          <th>{{ item.title }}</th>
+          <td>{{ item.price }} {{ priceUnit }}</td>
+          <td>
+            <input
+                type="number"
+                v-bind:value="item.count"
+                v-on:change="e => updateCount(e, item.id)"
+                v-on:blur="e => updateCount(e, item.id)"
+                v-on:paste="e => updateCount(e, item.id)"
+            />
+          </td>
+          <td>
+            {{ item.count * item.price }} {{ priceUnit }}
+          </td>
+          <td>
+            <button
+                type="button"
+                @click="(e) => remove(e, item.id)"
+            >
+              {{ $root.t('btn.remove') }}
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
     </div>
     <br />
     <div>

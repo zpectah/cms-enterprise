@@ -185,7 +185,7 @@
               v-for="item in options.payments"
               v-bind:key="item.value"
               :value="item.value"
-          >{{ item.label }} ... price ...</option>
+          >{{ item.label }}</option>
         </select>
       </div>
       <div class="form-group mb-2">
@@ -207,7 +207,7 @@
               v-for="item in options.deliveries"
               v-bind:key="item.value"
               :value="item.value"
-          >{{ item.label }} ... price ...</option>
+          >{{ item.label }}</option>
         </select>
       </div>
 
@@ -245,34 +245,8 @@ module.exports = {
   data: function () {
     return {
       options: {
-        payments: [
-          {
-            label: 'Payment 1',
-            value: '1'
-          },
-          {
-            label: 'Payment 2',
-            value: '2'
-          },
-          {
-            label: 'Payment 3',
-            value: '3'
-          }
-        ],
-        deliveries: [
-          {
-            label: 'Delivery 1',
-            value: '1'
-          },
-          {
-            label: 'Delivery 2',
-            value: '2'
-          },
-          {
-            label: 'Delivery 3',
-            value: '3'
-          }
-        ],
+        payments: [],
+        deliveries: [],
       },
       formValid: false,
       formError: {},
@@ -299,14 +273,28 @@ module.exports = {
   mounted: async function () {
     await get('/api/get_deliveries').then((response) => {
       if (response.data) {
-        console.log('get_deliveries', response);
+        let tmp = [];
         this._deliveries = response.data;
+        this._deliveries.map((item) => {
+          tmp.push({
+            label: `${item.lang[this.$root.lang].title} - ${item.item_price}${this.priceUnit}`,
+            value: item.id
+          });
+        });
+        this.options.deliveries = tmp;
       }
     });
     await get('/api/get_payments').then((response) => {
       if (response.data) {
-        console.log('get_payments', response);
+        let tmp = [];
         this._payments = response.data;
+        this._payments.map((item) => {
+          tmp.push({
+            label: `${item.lang[this.$root.lang].title} - ${item.item_price}${this.priceUnit}`,
+            value: item.id
+          });
+        });
+        this.options.payments = tmp;
       }
     });
 

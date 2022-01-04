@@ -4,6 +4,22 @@ namespace model;
 
 class Translations {
 
+    private function getUpdatedRow ($conn, $row, $languages): array {
+        $utils = new \Utils;
+        foreach ($languages as $lang) {
+            $row['lang'][$lang] = $utils -> get_language_row(
+                $conn,
+                $row['id'],
+                'SELECT * FROM translations__' . $lang . ' WHERE id = ?'
+            );
+        } // Set language object
+
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        unset($row['deleted']); // Unset deleted attribute
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params, $languages): array {
         $response = [];
         $utils = new \Utils;
@@ -20,20 +36,18 @@ class Translations {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // request params
+        $rp_parsed = $params['parsed'] or $data['parsed'];
+        $rp_lang = $params['lang'] or $data['lang'];
+
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                foreach ($languages as $lang) {
-                    $row['lang'][$lang] = $utils -> get_language_row(
-                        $conn,
-                        $row['id'],
-                        'SELECT * FROM translations__' . $lang . ' WHERE id = ?'
-                    );
-                } // Set language object
-
-                $row['active'] = $row['active'] == 1; // Set value as boolean
-                unset($row['deleted']); // Unset deleted attribute
-
-                $response[] = $row;
+                if ($rp_parsed == 'true' and $rp_lang) {
+                    $r = self::getUpdatedRow($conn, $row, $languages);
+                    $response[$row['name']] = $r['lang'][$rp_lang]['value'];
+                } else {
+                    $response[] = self::getUpdatedRow($conn, $row, $languages);
+                }
             }
         }
 

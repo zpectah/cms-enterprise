@@ -5,12 +5,12 @@
           v-for="item in storage_items"
           v-bind:key="item.id"
       >
-        #{{ item.id }} {{ item.title }} | x{{ item.count }} _ price... {{ item.price }} {{ priceUnit }}
+        {{ item.count }}x {{ item.title }} || {{ item.price * item.count }} {{ priceUnit }}
         <button
             type="button"
             @click="(e) => remove(e, item.id)"
         >
-          {{ btnRemoveLabel }}
+          {{ $root.t('btn.remove') }}
         </button>
       </div>
     </div>
