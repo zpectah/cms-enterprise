@@ -8,16 +8,13 @@
           v-bind:key="item.id"
       >
         <td>
-          #{{ item.id }}
+          {{ item.count }}x
         </td>
         <th>
           {{ item.title }}
         </th>
         <td>
           {{ item.price }} {{ priceUnit }}
-        </td>
-        <td>
-          {{ item.count }} x
         </td>
         <td>
           {{ item.count * item.price }} {{ priceUnit }}
@@ -32,13 +29,13 @@
       <tbody>
       <tr>
         <th>Payment</th>
-        <td>{{ basket_summary.payment }}</td>
-        <td>price ... {{ priceUnit }}</td>
+        <td>{{ selected_delivery.name }}</td>
+        <td>{{ selected_delivery.item_price }} {{ priceUnit }}</td>
       </tr>
       <tr>
         <th>Delivery</th>
-        <td>{{ basket_summary.delivery }}</td>
-        <td>price ... {{ priceUnit }}</td>
+        <td>{{ selected_payment.name }}</td>
+        <td>{{ selected_payment.item_price }} {{ priceUnit }}</td>
       </tr>
       </tbody>
     </table>
@@ -122,6 +119,9 @@ module.exports = {
       //
       _deliveries: [],
       _payments: [],
+      //
+      selected_delivery: {},
+      selected_payment: {},
     };
   },
   props: {
@@ -133,21 +133,20 @@ module.exports = {
     labelPrice: String,
   },
   mounted: async function () {
+    const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
+    if (storage_model) this.basket_summary = JSON.parse(storage_model);
     await get('/api/get_deliveries').then((response) => {
       if (response.data) {
-        console.log('get_deliveries', response);
         this._deliveries = response.data;
+        this.selected_delivery = this._deliveries.find((item) => Number(item.id) === Number(this.basket_summary.delivery));
       }
     });
     await get('/api/get_payments').then((response) => {
       if (response.data) {
-        console.log('get_payments', response);
         this._payments = response.data;
+        this.selected_payment = this._payments.find((item) => Number(item.id) === Number(this.basket_summary.payment));
       }
     });
-
-    const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
-    if (storage_model) this.basket_summary = JSON.parse(storage_model);
   },
   methods: {
     prevLinkHandler: function (e) {

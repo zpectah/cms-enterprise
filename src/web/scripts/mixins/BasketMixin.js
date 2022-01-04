@@ -87,9 +87,12 @@ const BasketMixin = {
 			if (index > -1) {
 				items[index].count = items[index].count + count;
 			} else {
+				const item = this._products.find((fi) => Number(fi.id) === Number(id));
 				items.push({
 					id: Number(id),
 					count: Number(count),
+					title: item.lang[this.$root.lang].title,
+					price: item.item_price,
 				});
 			}
 			this.basket_items = items;

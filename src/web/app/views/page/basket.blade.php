@@ -19,7 +19,7 @@
                     btn-next-link-label="{{$t('btn.next-step')}}"
                     btn-remove-label="{{$t('btn.remove')}}"
                     label-price="{{$t('label.price-total')}}"
-            >Loading...</page-basket-list>
+            >Loading page-basket-list ...</page-basket-list>
         @break
         @case('summary')
             <div class="progress">
@@ -41,7 +41,7 @@
                     btn-next-link-label="{{$t('btn.next-step')}}"
                     label-price="{{$t('label.price-total')}}"
                     input-label-name="{{$t('label.user_name')}}"
-            >Loading...</page-basket-summary>
+            >Loading page-basket-summary ...</page-basket-summary>
         @break
         @case('confirmation')
             <div class="progress">
@@ -62,7 +62,7 @@
                     btn-next-link-target="/{{$page_key}}/finish{{$lang['link_url_param']}}"
                     btn-next-link-label="{{$t('btn.finish-order')}}"
                     label-price="{{$t('label.price-total')}}"
-            >Loading...</page-basket-confirmation>
+            >Loading page-basket-confirmation ...</page-basket-confirmation>
         @break
         @case('finish')
             <div class="progress">
