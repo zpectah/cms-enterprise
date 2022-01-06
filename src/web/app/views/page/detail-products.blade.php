@@ -18,12 +18,10 @@
         @include('component.detail-nav')
     @endif
     <div>
-            <button
-                    class="btn btn-outline-success"
-                    data-component="BasketAddTrigger"
-                    data-id="{{$detail_data['id']}}"
-            >
-                    {{$t('btn.add-to-basket')}}
-            </button>
+            <basket-add-button
+                    id="{{$detail_data['id']}}"
+                    label="{{$t('btn.add-to-basket')}}"
+                    class="btn-sm btn-outline-success"
+            ></basket-add-button>
     </div>
 </section>

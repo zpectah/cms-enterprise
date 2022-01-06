@@ -3,12 +3,12 @@
     <form
         name="BasketSummaryForm"
     >
-      <h3>Contact information</h3>
+      <h3>{{ t('title.basket.contact_information') }}</h3>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_user_name"
         >
-          {{ inputLabelName }} *
+          {{ t('label.input.user_name') }} *
         </label>
         <input
             type="text"
@@ -21,6 +21,7 @@
             @keyup="(e) => onChange('user_name', e.target.value)"
             @change="(e) => onChange('user_name', e.target.value)"
             @paste="(e) => onChange('user_name', e.target.value)"
+            :placeholder="t('placeholder.input.user_name')"
         >
       </div>
 
@@ -28,7 +29,7 @@
         <label
             for="BasketSummaryForm_email"
         >
-          E-mail *
+          {{ t('label.input.email') }} *
         </label>
         <input
             type="email"
@@ -41,6 +42,7 @@
             @keyup="(e) => onChange('email', e.target.value)"
             @change="(e) => onChange('email', e.target.value)"
             @paste="(e) => onChange('email', e.target.value)"
+            :placeholder="t('placeholder.input.email')"
         >
       </div>
 
@@ -48,7 +50,7 @@
         <label
             for="BasketSummaryForm_phone"
         >
-          Phone *
+          {{ t('label.input.phone') }} *
         </label>
         <input
             type="tel"
@@ -61,6 +63,7 @@
             @keyup="(e) => onChange('phone', e.target.value)"
             @change="(e) => onChange('phone', e.target.value)"
             @paste="(e) => onChange('phone', e.target.value)"
+            :placeholder="t('placeholder.input.phone')"
         >
       </div>
 
@@ -68,7 +71,7 @@
         <label
             for="BasketSummaryForm_country"
         >
-          Country *
+          {{ t('label.input.country') }} *
         </label>
         <input
             type="text"
@@ -81,6 +84,7 @@
             @keyup="(e) => onChange('country', e.target.value)"
             @change="(e) => onChange('country', e.target.value)"
             @paste="(e) => onChange('country', e.target.value)"
+            :placeholder="t('placeholder.input.country')"
         >
       </div>
 
@@ -88,7 +92,7 @@
         <label
             for="BasketSummaryForm_city"
         >
-          City *
+          {{ t('label.input.city') }} *
         </label>
         <input
             type="text"
@@ -101,6 +105,7 @@
             @keyup="(e) => onChange('city', e.target.value)"
             @change="(e) => onChange('city', e.target.value)"
             @paste="(e) => onChange('city', e.target.value)"
+            :placeholder="t('placeholder.input.city')"
         >
       </div>
 
@@ -108,7 +113,7 @@
         <label
             for="BasketSummaryForm_address"
         >
-          Address *
+          {{ t('label.input.address') }} *
         </label>
         <input
             type="text"
@@ -121,6 +126,7 @@
             @keyup="(e) => onChange('address', e.target.value)"
             @change="(e) => onChange('address', e.target.value)"
             @paste="(e) => onChange('address', e.target.value)"
+            :placeholder="t('placeholder.input.address')"
         >
       </div>
 
@@ -128,7 +134,7 @@
         <label
             for="BasketSummaryForm_zip"
         >
-          ZIP *
+          {{ t('label.input.zip') }} *
         </label>
         <input
             type="text"
@@ -141,6 +147,7 @@
             @keyup="(e) => onChange('zip', e.target.value)"
             @change="(e) => onChange('zip', e.target.value)"
             @paste="(e) => onChange('zip', e.target.value)"
+            :placeholder="t('placeholder.input.zip')"
         >
       </div>
 
@@ -148,29 +155,29 @@
         <label
             for="BasketSummaryForm_description"
         >
-          Description
+          {{ t('label.input.description') }}
         </label>
         <textarea
             class="form-control"
             id="BasketSummaryForm_description"
             v-model="formModel.description"
-            placeholder="Enter something..."
             rows="5"
             @keydown="(e) => onChange('description', e.target.value)"
             @keyup="(e) => onChange('description', e.target.value)"
             @change="(e) => onChange('description', e.target.value)"
             @paste="(e) => onChange('description', e.target.value)"
+            :placeholder="t('placeholder.input.description')"
         ></textarea>
       </div>
 
       <br />
       <hr />
-      <h3>Payment and delivery</h3>
+      <h3>{{ t('title.basket.payment_delivery') }}</h3>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_payment"
         >
-          Payment *
+          {{ t('label.input.payment') }} *
         </label>
         <select
             class="form-select"
@@ -180,7 +187,7 @@
             required
             @change="(e) => onChange('payment', e.target.value)"
         >
-          <option selected disabled value="''">Select payment</option>
+          <option selected disabled value="''">{{ t('placeholder.input.payment') }}</option>
           <option
               v-for="item in options.payments"
               v-bind:key="item.value"
@@ -192,7 +199,7 @@
         <label
             for="BasketSummaryForm_delivery"
         >
-          Delivery *
+          {{ t('label.input.delivery') }} *
         </label>
         <select
             class="form-select"
@@ -202,7 +209,7 @@
             required
             @change="(e) => onChange('delivery', e.target.value)"
         >
-          <option selected disabled value="''">Select delivery</option>
+          <option selected disabled value="''">{{ t('placeholder.input.delivery') }}</option>
           <option
               v-for="item in options.deliveries"
               v-bind:key="item.value"

@@ -54,6 +54,7 @@ module.exports = {
   },
   props: {
     priceUnit: String,
+    btnBasketTarget: String,
   },
   watch: {
     '$parent.basket_items': function (nv, ov) {

@@ -19,8 +19,6 @@ const BasketMixin = {
 		return {
 			basket_items: [],
 			_products: [],
-			// _deliveries: [],
-			// _payments: [],
 		};
 	},
 	mounted: async function () {

@@ -1,6 +1,6 @@
 <template>
   <section class="section-page">
-    <h3>Products</h3>
+    <h3>{{ t('title.basket.products') }}</h3>
     <div>
 
       <table class="w-100">
