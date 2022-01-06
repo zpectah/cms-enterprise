@@ -16,9 +16,6 @@
             <page-basket-list
                     price-unit="CZK"
                     btn-next-link-target="/{{$page_key}}/summary{{$lang['link_url_param']}}"
-                    btn-next-link-label="{{$t('btn.next-step')}}"
-                    btn-remove-label="{{$t('btn.remove')}}"
-                    label-price="{{$t('label.price-total')}}"
             >Loading page-basket-list ...</page-basket-list>
         @break
         @case('summary')
@@ -36,11 +33,7 @@
             <page-basket-summary
                     price-unit="CZK"
                     btn-prev-link-target="/{{$page_key}}/list{{$lang['link_url_param']}}"
-                    btn-prev-link-label="{{$t('btn.prev-step')}}"
                     btn-next-link-target="/{{$page_key}}/confirmation{{$lang['link_url_param']}}"
-                    btn-next-link-label="{{$t('btn.next-step')}}"
-                    label-price="{{$t('label.price-total')}}"
-                    input-label-name="{{$t('label.user_name')}}"
             >Loading page-basket-summary ...</page-basket-summary>
         @break
         @case('confirmation')
@@ -58,10 +51,7 @@
             <page-basket-confirmation
                     price-unit="CZK"
                     btn-prev-link-target="/{{$page_key}}/summary{{$lang['link_url_param']}}"
-                    btn-prev-link-label="{{$t('btn.prev-step')}}"
                     btn-next-link-target="/{{$page_key}}/finish{{$lang['link_url_param']}}"
-                    btn-next-link-label="{{$t('btn.finish-order')}}"
-                    label-price="{{$t('label.price-total')}}"
             >Loading page-basket-confirmation ...</page-basket-confirmation>
         @break
         @case('finish')

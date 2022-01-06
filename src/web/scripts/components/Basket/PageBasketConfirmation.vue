@@ -82,11 +82,11 @@
     <hr />
     <h3>Price</h3>
     <div>
-      Price of items: {{ getItemsPrice() }} {{ priceUnit }}
+      {{ t('label.price_items') }}: {{ getItemsPrice() }} {{ priceUnit }}
       <br />
-      Price of delivery and payment: {{ getPaymentDeliveryPrice() }} {{ priceUnit }}
+      {{ t('label.price_delivery_payment') }}: {{ getPaymentDeliveryPrice() }} {{ priceUnit }}
       <br />
-      Total price: {{ getItemsPrice() + getPaymentDeliveryPrice() }} {{ priceUnit }}
+      {{ t('label.price_total') }}: {{ getItemsPrice() + getPaymentDeliveryPrice() }} {{ priceUnit }}
     </div>
     <br />
     <div>
@@ -94,14 +94,14 @@
           class="btn btn-outline-secondary"
           @click="prevLinkHandler"
       >
-        {{ btnPrevLinkLabel }}
+        {{ t('btn.prev_step') }}
       </button>
       <button
           class="btn btn-outline-secondary"
           @click="nextLinkHandler"
           v-bind:disabled="no_items"
       >
-        {{ btnNextLinkLabel }}
+        {{ t('btn.order_finish') }}
       </button>
     </div>
   </section>
@@ -126,11 +126,8 @@ module.exports = {
   },
   props: {
     priceUnit: String,
-    btnPrevLinkTarget: String,
-    btnPrevLinkLabel: String,
     btnNextLinkTarget: String,
-    btnNextLinkLabel: String,
-    labelPrice: String, // TODO: smazat
+    btnPrevLinkTarget: String,
   },
   mounted: async function () {
     const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
@@ -149,6 +146,9 @@ module.exports = {
     });
   },
   methods: {
+    t: function (key) {
+      return this.$root.t(key);
+    },
     getItemsPrice: function () {
       let price = 0;
       this.storage_items.map((item) => {

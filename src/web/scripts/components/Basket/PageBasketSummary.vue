@@ -214,11 +214,11 @@
     </form>
     <br />
     <div>
-      Price of items: {{ getItemsPrice() }} {{ priceUnit }}
+      {{ t('label.price_items') }}: {{ getItemsPrice() }} {{ priceUnit }}
       <br />
-      Price of delivery and payment: {{ getPaymentDeliveryPrice() }} {{ priceUnit }}
+      {{ t('label.price_delivery_payment') }}: {{ getPaymentDeliveryPrice() }} {{ priceUnit }}
       <br />
-      Total price: {{ getItemsPrice() + getPaymentDeliveryPrice() }} {{ priceUnit }}
+      {{ t('label.price_total') }}: {{ getItemsPrice() + getPaymentDeliveryPrice() }} {{ priceUnit }}
     </div>
     <br />
     <br />
@@ -227,14 +227,14 @@
           class="btn btn-outline-secondary"
           @click="prevLinkHandler"
       >
-        {{ btnPrevLinkLabel }}
+        {{ t('btn.prev_step') }}
       </button>
       <button
           class="btn btn-outline-secondary"
           @click="nextLinkHandler"
           v-bind:disabled="no_items || !formValid"
       >
-        {{ btnNextLinkLabel }}
+        {{ t('btn.next_step') }}
       </button>
     </div>
   </section>
@@ -268,12 +268,12 @@ module.exports = {
       },
       storage_items: this.$parent.basket_items,
       no_items: this.$parent.basket_items.length === 0,
-      //
       _deliveries: [],
       _payments: [],
     };
   },
   mounted: async function () {
+    const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
     await get('/api/get_deliveries').then((response) => {
       if (response.data) {
         let tmp = [];
@@ -300,22 +300,18 @@ module.exports = {
         this.options.payments = tmp;
       }
     });
-
-    const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
     if (storage_model) this.formModel = JSON.parse(storage_model);
     if (this.formModel) this.formController(this.formModel);
   },
   props: {
     priceUnit: String,
-    btnPrevLinkTarget: String,
-    btnPrevLinkLabel: String,
     btnNextLinkTarget: String,
-    btnNextLinkLabel: String,
-    labelPrice: String,
-    //
-    inputLabelName: String,
+    btnPrevLinkTarget: String,
   },
   methods: {
+    t: function (key) {
+      return this.$root.t(key);
+    },
     formController: function (model) {
       if (
           model.user_name === ''

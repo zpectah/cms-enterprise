@@ -28,7 +28,7 @@
                 type="button"
                 @click="(e) => remove(e, item.id)"
             >
-              {{ $root.t('btn.remove') }}
+              {{ t('btn.remove') }}
             </button>
           </td>
         </tr>
@@ -38,7 +38,10 @@
     </div>
     <br />
     <div>
-      {{ labelPrice }}: {{ getItemsPrice() }} {{ priceUnit }}
+      {{ t('label.count_total') }}: {{ getItemsCount() }}
+    </div>
+    <div>
+      {{ t('label.price_total') }}: {{ getItemsPrice() }} {{ priceUnit }}
     </div>
     <br />
     <button
@@ -46,7 +49,7 @@
         @click="nextLinkHandler"
         v-bind:disabled="no_items"
     >
-      {{ btnNextLinkLabel }}
+      {{ t('btn.next_step') }}
     </button>
   </section>
 </template>
@@ -63,11 +66,11 @@ module.exports = {
   props: {
     priceUnit: String,
     btnNextLinkTarget: String,
-    btnNextLinkLabel: String,
-    btnRemoveLabel: String,
-    labelPrice: String,
   },
   methods: {
+    t: function (key) {
+      return this.$root.t(key);
+    },
     getItemsPrice: function () {
       let price = 0;
       this.storage_items.map((item) => {
@@ -75,6 +78,14 @@ module.exports = {
       });
 
       return price;
+    },
+    getItemsCount: function () {
+      let count = 0;
+      this.storage_items.map((item) => {
+        count = count + Number(item.count);
+      });
+
+      return count;
     },
     remove: function (e, id) {
       e.preventDefault();

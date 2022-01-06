@@ -1,30 +1,44 @@
 <template>
   <div class="widget-content">
     <div>
-      <div
-          v-for="item in storage_items"
-          v-bind:key="item.id"
-      >
-        {{ item.count }}x {{ item.title }} || {{ item.price * item.count }} {{ priceUnit }}
-        <button
-            type="button"
-            @click="(e) => remove(e, item.id)"
+      <table>
+        <tbody>
+        <tr
+            v-for="item in storage_items"
+            v-bind:key="item.id"
         >
-          {{ $root.t('btn.remove') }}
-        </button>
-      </div>
+          <th>{{ item.count }}x {{ item.title }}</th>
+          <td>{{ item.price * item.count }} {{ priceUnit }}</td>
+          <td>
+            <button
+                type="button"
+                @click="(e) => remove(e, item.id)"
+            >
+              {{ t('btn.remove') }}
+            </button>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td>
+            {{ t('label.count_total') }}: {{ getItemsCount() }}
+          </td>
+          <td colspan="2">
+            {{ t('label.price_total') }}: {{ getItemsPrice() }} {{ priceUnit }}
+          </td>
+        </tr>
+        </tfoot>
+      </table>
     </div>
     <br />
-    <div>
-      {{ getItemsPrice() }} {{ priceUnit }}
-    </div>
     <br />
     <button
         class="btn btn-outline-secondary"
         @click="basketLinkHandler"
         v-bind:disabled="no_items"
     >
-      {{ btnBasketLabel }}
+      {{ t('btn.show_basket') }}
     </button>
   </div>
 </template>
@@ -40,9 +54,6 @@ module.exports = {
   },
   props: {
     priceUnit: String,
-    btnBasketLabel: String,
-    btnBasketTarget: String,
-    btnRemoveLabel: String,
   },
   watch: {
     '$parent.basket_items': function (nv, ov) {
@@ -51,6 +62,9 @@ module.exports = {
     },
   },
   methods: {
+    t: function (key) {
+      return this.$root.t(key);
+    },
     getItemsPrice: function () {
       let price = 0;
       this.storage_items.map((item) => {
@@ -58,6 +72,14 @@ module.exports = {
       });
 
       return price;
+    },
+    getItemsCount: function () {
+      let count = 0;
+      this.storage_items.map((item) => {
+        count = count + Number(item.count);
+      });
+
+      return count;
     },
     remove: function (e, id) {
       e.preventDefault();

@@ -32,31 +32,24 @@ const BasketMixin = {
 		});
 	},
 	methods: {
-		get_product_detail: function (id) {
-			const item = this._products.find((fi) => Number(fi.id) === Number(id));
-
-			return {
-				title: item.lang[this.$root.lang].title,
-				price: Number(item.item_price),
-			};
-		},
 		get_basket_items: function () {
 			const items = storage.get(STORAGE_KEY_BASKET_ITEMS);
 			const items_array = items ? items.split(',') : [];
 			let tmp = [];
-			let price = 0;
 			items_array.map((item) => {
 				let pi = item.split(':');
+				const fit = this._products.find(
+					(fi) => Number(fi.id) === Number(pi[0]),
+				);
 				let no = {
 					id: Number(pi[0]),
 					count: Number(pi[1]),
-					...this.get_product_detail(Number(pi[0])),
+					title: fit.lang[this.$root.lang].title,
+					price: Number(fit.item_price),
 				};
-				price = price + no.count * no.price;
 				tmp.push(no);
 			});
 
-			this.basket_price_items = price;
 			return tmp;
 		},
 		update_storage: function (array = []) {
