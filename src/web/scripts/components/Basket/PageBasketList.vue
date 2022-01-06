@@ -38,7 +38,7 @@
     </div>
     <br />
     <div>
-      {{ labelPrice }}: {{ basket_price.total }} {{ priceUnit }}
+      {{ labelPrice }}: {{ getItemsPrice() }} {{ priceUnit }}
     </div>
     <br />
     <button
@@ -68,6 +68,14 @@ module.exports = {
     labelPrice: String,
   },
   methods: {
+    getItemsPrice: function () {
+      let price = 0;
+      this.storage_items.map((item) => {
+        price = price + Number(item.price) * Number(item.count);
+      });
+
+      return price;
+    },
     remove: function (e, id) {
       e.preventDefault();
       this.$parent.remove_from_basket(id)
@@ -89,9 +97,6 @@ module.exports = {
     '$parent.basket_items': function (nv, ov) {
       this.storage_items = this.$parent.basket_items;
       this.no_items = this.$parent.basket_items.length === 0;
-    },
-    '$parent.basket_price': function (nv, ov) {
-      this.basket_price = this.$parent.basket_price;
     },
   },
 }

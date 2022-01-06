@@ -18,13 +18,6 @@ const BasketMixin = {
 	data: function () {
 		return {
 			basket_items: [],
-			basket_price: {
-				items: 0,
-				payment: 0,
-				delivery: 0,
-				tax: 0,
-				total: 0,
-			},
 			_products: [],
 			// _deliveries: [],
 			// _payments: [],
@@ -35,7 +28,6 @@ const BasketMixin = {
 			if (response.data) {
 				this._products = response.data;
 				this.basket_items = this.get_basket_items();
-				this.basket_price = this.get_basket_price();
 			}
 		});
 	},
@@ -45,34 +37,27 @@ const BasketMixin = {
 
 			return {
 				title: item.lang[this.$root.lang].title,
-				price: item.item_price,
+				price: Number(item.item_price),
 			};
 		},
 		get_basket_items: function () {
 			const items = storage.get(STORAGE_KEY_BASKET_ITEMS);
 			const items_array = items ? items.split(',') : [];
 			let tmp = [];
+			let price = 0;
 			items_array.map((item) => {
 				let pi = item.split(':');
-				tmp.push({
+				let no = {
 					id: Number(pi[0]),
 					count: Number(pi[1]),
 					...this.get_product_detail(Number(pi[0])),
-				});
+				};
+				price = price + no.count * no.price;
+				tmp.push(no);
 			});
 
+			this.basket_price_items = price;
 			return tmp;
-		},
-		get_basket_price: function () {
-			// TODO
-
-			return {
-				items: 0,
-				payment: 0,
-				delivery: 0,
-				tax: 0,
-				total: 0,
-			};
 		},
 		update_storage: function (array = []) {
 			let tmp = [];

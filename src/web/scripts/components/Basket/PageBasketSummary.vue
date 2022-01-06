@@ -214,7 +214,11 @@
     </form>
     <br />
     <div>
-      {{ labelPrice }}: {{ basket_price.total }} {{ priceUnit }}
+      Price of items: {{ getItemsPrice() }} {{ priceUnit }}
+      <br />
+      Price of delivery and payment: {{ getPaymentDeliveryPrice() }} {{ priceUnit }}
+      <br />
+      Total price: {{ getItemsPrice() + getPaymentDeliveryPrice() }} {{ priceUnit }}
     </div>
     <br />
     <br />
@@ -263,7 +267,6 @@ module.exports = {
         description: '',
       },
       storage_items: this.$parent.basket_items,
-      basket_price: this.$parent.basket_price,
       no_items: this.$parent.basket_items.length === 0,
       //
       _deliveries: [],
@@ -337,6 +340,23 @@ module.exports = {
       const model_string = JSON.stringify(this.formModel);
       storage.set(STORAGE_KEY_BASKET_SUMMARY, model_string);
     },
+    getItemsPrice: function () {
+      let price = 0;
+      this.storage_items.map((item) => {
+        price = price + Number(item.price) * Number(item.count);
+      });
+
+      return price;
+    },
+    getPaymentDeliveryPrice: function () {
+      const fd = this._deliveries && this._deliveries.find((item) => Number(item.id) === Number(this.formModel.delivery));
+      const fp = this._payments && this._payments.find((item) => Number(item.id) === Number(this.formModel.payment));
+      let price = 0;
+      if (fd) price = price + Number(fd.item_price);
+      if (fp) price = price + Number(fp.item_price);
+
+      return price;
+    },
     prevLinkHandler: function (e) {
       e.preventDefault();
       window.location.href = this.btnPrevLinkTarget;
@@ -344,9 +364,7 @@ module.exports = {
     nextLinkHandler: function (e) {
       e.preventDefault();
 
-      if (this.no_items) {
-        console.warn('No items!');
-      } else {
+      if (!this.no_items) {
         window.location.href = this.btnNextLinkTarget;
       }
     },
@@ -355,9 +373,6 @@ module.exports = {
     '$parent.basket_items': function (nv, ov) {
       this.storage_items = this.$parent.basket_items;
       this.no_items = this.$parent.basket_items.length === 0;
-    },
-    '$parent.basket_price': function (nv, ov) {
-      this.basket_price = this.$parent.basket_price;
     },
     'formModel': {
       handler: function (nv, ov) {

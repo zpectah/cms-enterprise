@@ -82,7 +82,11 @@
     <hr />
     <h3>Price</h3>
     <div>
-      {{ labelPrice }}: {{ basket_price.total }} {{ priceUnit }}
+      Price of items: {{ getItemsPrice() }} {{ priceUnit }}
+      <br />
+      Price of delivery and payment: {{ getPaymentDeliveryPrice() }} {{ priceUnit }}
+      <br />
+      Total price: {{ getItemsPrice() + getPaymentDeliveryPrice() }} {{ priceUnit }}
     </div>
     <br />
     <div>
@@ -112,16 +116,12 @@ module.exports = {
   data: function () {
     return {
       storage_items: this.$parent.basket_items,
-      basket_price: this.$parent.basket_price,
       no_items: this.$parent.basket_items.length === 0,
-      //
       basket_summary: {},
-      //
-      _deliveries: [],
-      _payments: [],
-      //
       selected_delivery: {},
       selected_payment: {},
+      _deliveries: [],
+      _payments: [],
     };
   },
   props: {
@@ -130,7 +130,7 @@ module.exports = {
     btnPrevLinkLabel: String,
     btnNextLinkTarget: String,
     btnNextLinkLabel: String,
-    labelPrice: String,
+    labelPrice: String, // TODO: smazat
   },
   mounted: async function () {
     const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
@@ -149,6 +149,23 @@ module.exports = {
     });
   },
   methods: {
+    getItemsPrice: function () {
+      let price = 0;
+      this.storage_items.map((item) => {
+        price = price + Number(item.price) * Number(item.count);
+      });
+
+      return price;
+    },
+    getPaymentDeliveryPrice: function () {
+      const fd = this._deliveries && this._deliveries.find((item) => Number(item.id) === Number(this.selected_delivery.id));
+      const fp = this._payments && this._payments.find((item) => Number(item.id) === Number(this.selected_payment.id));
+      let price = 0;
+      if (fd) price = price + Number(fd.item_price);
+      if (fp) price = price + Number(fp.item_price);
+
+      return price;
+    },
     prevLinkHandler: function (e) {
       e.preventDefault();
       window.location.href = this.btnPrevLinkTarget;
@@ -167,9 +184,6 @@ module.exports = {
     '$parent.basket_items': function (nv, ov) {
       this.storage_items = this.$parent.basket_items;
       this.no_items = this.$parent.basket_items.length === 0;
-    },
-    '$parent.basket_price': function (nv, ov) {
-      this.basket_price = this.$parent.basket_price;
     },
   },
 }
