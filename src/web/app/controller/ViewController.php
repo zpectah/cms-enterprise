@@ -75,6 +75,7 @@ class ViewController {
             'settings' => $cms_settings,
             'model' => $model_name,
             'url_params' => $urlParams,
+            'url_attrs' => $urlAttrs,
         ];
     }
     private function get_single_detail_data (): array {
@@ -403,6 +404,7 @@ class ViewController {
 
             // Dynamic variables
             'url_params' => $pageData['url_params'],
+            'url_attrs' => $pageData['url_attrs'],
 
         ]);
     }

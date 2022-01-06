@@ -377,11 +377,12 @@ class ApiRequest {
                     break;
 
                 case 'create_orders':
-                    if ($request_is_authorized) {
-                        $response = $dc -> create('Orders', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
+//                    if ($request_is_authorized) {
+//                        $response = $dc -> create('Orders', $request_data);
+//                    } else {
+//                        $response['status'] = 'unauthorized';
+//                    }
+                    $response = $dc -> create('Orders', $request_data);
                     break;
 
                 case 'update_orders':

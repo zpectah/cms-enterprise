@@ -108,8 +108,8 @@
 </template>
 
 <script>
-const { storage } = require('../../../../../utils/utils');
-const { get } = require('../../utils/http');
+const { storage, string } = require('../../../../../utils/utils');
+const { get, post } = require('../../utils/http');
 const { STORAGE_KEY_BASKET_SUMMARY } = require('../../constants');
 
 module.exports = {
@@ -170,13 +170,42 @@ module.exports = {
       e.preventDefault();
       window.location.href = this.btnPrevLinkTarget;
     },
-    nextLinkHandler: function (e) {
+    nextLinkHandler: async function (e) {
       e.preventDefault();
-
-      if (this.no_items) {
-        console.warn('No items!');
-      } else {
-        window.location.href = this.btnNextLinkTarget;
+      if (!this.no_items) {
+        const price_total = this.getItemsPrice() + this.getPaymentDeliveryPrice();
+        const id = `${Date.now()}-${string.getRandom(5, 'uppercase')}`;
+        const items = [];
+        this.storage_items.map((item) => {
+          items.push(`${item.id}:${item.count}`);
+        });
+        const master = {
+          name: id,
+          type: 'basket',
+          payment: this.basket_summary.payment,
+          delivery: this.basket_summary.delivery,
+          customer_name: this.basket_summary.user_name,
+          email: this.basket_summary.email,
+          phone: this.basket_summary.phone,
+          country: this.basket_summary.country,
+          city: this.basket_summary.city,
+          address: this.basket_summary.address,
+          zip: this.basket_summary.zip,
+          description: this.basket_summary.description,
+          items: items,
+          price_total: price_total,
+          status: 1,
+        };
+        await post('/api/create_orders', master).then((response) => {
+          if (response.data && response.data.id) {
+            this.$root.onFinishOrder(
+                id,
+                price_total,
+                this.priceUnit,
+                `${this.btnNextLinkTarget}?rid=${response.data.id}`,
+            );
+          }
+        });
       }
     },
   },

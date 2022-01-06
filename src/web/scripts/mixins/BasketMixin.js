@@ -1,11 +1,15 @@
 import { storage } from '../../../../utils/utils';
-import { STORAGE_KEY_BASKET_ITEMS } from '../constants';
+import {
+	STORAGE_KEY_BASKET_ITEMS,
+	STORAGE_KEY_BASKET_SUMMARY,
+} from '../constants';
 import { get, post } from '../utils/http';
 import BasketWidget from '../components/Basket/BasketWidget';
 import BasketAddButton from '../components/Basket/BasketAddButton';
 import PageBasketList from '../components/Basket/PageBasketList';
 import PageBasketSummary from '../components/Basket/PageBasketSummary';
 import PageBasketConfirmation from '../components/Basket/PageBasketConfirmation';
+import PageBasketFinish from '../components/Basket/PageBasketFinish';
 
 const BasketMixin = {
 	components: {
@@ -14,6 +18,7 @@ const BasketMixin = {
 		'page-basket-list': PageBasketList,
 		'page-basket-summary': PageBasketSummary,
 		'page-basket-confirmation': PageBasketConfirmation,
+		'page-basket-finish': PageBasketFinish,
 	},
 	data: function () {
 		return {
@@ -92,6 +97,10 @@ const BasketMixin = {
 			}
 			this.basket_items = items;
 			this.update_storage(items);
+		},
+		clear_storage: function () {
+			storage.remove(STORAGE_KEY_BASKET_ITEMS);
+			storage.remove(STORAGE_KEY_BASKET_SUMMARY);
 		},
 	},
 };

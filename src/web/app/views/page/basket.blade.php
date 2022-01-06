@@ -29,10 +29,16 @@
         @break
         @case('finish')
             @include('component.basket-progress', [ 'val' => '100' ])
-            <br />
-            <section data-module="PageBasketFinish">
-                section finish
-            </section>
+                <br />
+                rid:{{$url_params['rid']}}
+                <br />
+                status:{{$url_params['status']}}
+                <br />
+                <page-basket-finish
+                >Loading page-basket-finish ...</page-basket-finish>
+    <a href="/">
+        Return to home
+    </a>
         @break
     @endswitch
 </section>
