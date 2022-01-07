@@ -299,7 +299,7 @@ const DeliveriesDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_price`}
 									required
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
 												{t(`units.${DEFAULT_UNITS.price}`)}
@@ -328,7 +328,7 @@ const DeliveriesDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_limit_weight`}
 									required
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
 												{t(`units.${DEFAULT_UNITS.weight}`)}

@@ -23,9 +23,10 @@ export default {
 	rating: 0,
 	manager: 0,
 	template: false,
-	is_new: true,
+	is_new: false,
 	is_used: false,
 	is_unboxed: false,
+	in_stock: true,
 	active: true,
 	lang: {},
 } as ProductsItemProps;

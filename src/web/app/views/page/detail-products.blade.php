@@ -14,6 +14,11 @@
         <div>
             {!!$detail_data['lang'][$lng]['content']!!}
         </div>
+        <div>
+            {{$t('label.price')}} {{ $detail_data['item_price'] }} CZK
+            |
+            {{ $detail_data['in_stock'] ? $t('label.in_stock') : $t('label.not_in_stock') }}
+        </div>
     @if($page_context == 'page-category-detail')
         @include('component.detail-nav')
     @endif

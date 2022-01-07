@@ -51,7 +51,7 @@ class Orders {
                     price_total,
                     status
                     ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'sssssssssssssii';
+        $types = 'sssssssssssssdi';
         $args = [
             $data['type'],
             $data['name'],
@@ -105,7 +105,7 @@ class Orders {
                     price_total = ?, 
                     status = ?
                 WHERE id = ?');
-        $types = 'sssssssssssssiii';
+        $types = 'sssssssssssssdii';
         $args = [
             $data['type'],
             $data['name'],

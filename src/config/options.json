@@ -91,7 +91,7 @@
       "type": ["default"]
     },
     "Orders": {
-      "type": ["default"],
+      "type": ["default", "basket"],
       "status": [0,1,2,3]
     },
     "Payments": {

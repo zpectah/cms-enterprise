@@ -2,7 +2,7 @@
     <div
             class="progress-bar"
             role="progressbar"
-            style="width: 25%"
+            style="width: {{ $val }}%"
             aria-valuenow="{{ $val }}"
             aria-valuemin="0"
             aria-valuemax="100"

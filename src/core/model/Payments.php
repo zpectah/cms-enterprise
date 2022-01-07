@@ -46,7 +46,7 @@ class Payments {
 
         // prepare
         $query = ('INSERT INTO payments (name, type, item_price, item_limit_weight, item_limit_units, active, deleted) VALUES (?,?,?,?,?,?,?)');
-        $types = 'ssiiiii';
+        $types = 'ssddiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -90,7 +90,7 @@ class Payments {
 
         // prepare
         $query = ('UPDATE payments SET name = ?, type = ?, item_price = ?, item_limit_weight = ?, item_limit_units = ?, active = ? WHERE id = ?');
-        $types = 'ssiiiii';
+        $types = 'ssddiii';
         $args = [
             $data['name'],
             $data['type'],

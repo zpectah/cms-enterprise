@@ -247,6 +247,24 @@ const ProductsDetailForm = ({
 									</Form.Row>
 								)}
 							/>
+							<Controller
+								name="in_stock"
+								control={control}
+								rules={{}}
+								render={({ field: { onChange, onBlur, value, ref, name } }) => (
+									<Form.Row errors={[]}>
+										<Input.SwitchControl
+											onChange={onChange}
+											onBlur={onBlur}
+											checked={value}
+											name={name}
+											id={`${formOptions.id}__in_stock`}
+											dataTestId={`${formOptions.id}.switch.in_stock`}
+											label={t('form:input.in_stock')}
+										/>
+									</Form.Row>
+								)}
+							/>
 						</Section>
 						<Section>
 							<Controller
@@ -549,7 +567,7 @@ const ProductsDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_price`}
 									required
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.1 },
 										startAdornment: (
 											<InputAdornment position="start">
 												{t(`units.${DEFAULT_UNITS.price}`)}
@@ -578,7 +596,7 @@ const ProductsDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_discount`}
 									required
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">%</InputAdornment>
 										),
@@ -605,7 +623,7 @@ const ProductsDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_weight`}
 									required={watchType == 'default'}
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
 												{t(`units.${DEFAULT_UNITS.weight}`)}
@@ -634,7 +652,7 @@ const ProductsDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_depth`}
 									required={watchType == 'default'}
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
 												{t(`units.${DEFAULT_UNITS.length}`)}
@@ -663,7 +681,7 @@ const ProductsDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_height`}
 									required={watchType == 'default'}
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
 												{t(`units.${DEFAULT_UNITS.length}`)}
@@ -692,7 +710,7 @@ const ProductsDetailForm = ({
 									dataTestId={`${formOptions.id}.input.item_width`}
 									required={watchType == 'default'}
 									InputProps={{
-										inputProps: { min: 0 },
+										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
 												{t(`units.${DEFAULT_UNITS.length}`)}

@@ -49,6 +49,8 @@ const BasketMixin = {
 					count: Number(pi[1]),
 					title: fit.lang[this.$root.lang].title,
 					price: Number(fit.item_price),
+					weight: Number(fit.item_weight),
+					in_stock: fit.in_stock,
 				};
 				tmp.push(no);
 			});
@@ -74,6 +76,8 @@ const BasketMixin = {
 					count: Number(count),
 					title: item.lang[this.$root.lang].title,
 					price: item.item_price,
+					weight: item.item_weight,
+					in_stock: item.in_stock,
 				});
 			}
 			this.basket_items = items;
@@ -101,6 +105,27 @@ const BasketMixin = {
 		clear_storage: function () {
 			storage.remove(STORAGE_KEY_BASKET_ITEMS);
 			storage.remove(STORAGE_KEY_BASKET_SUMMARY);
+		},
+		order_finish: async function (master, id, price, unit, url) {
+			await post('/api/create_orders', master).then((response) => {
+				if (response.data && response.data.id) {
+					//
+					// TODO -> Payment service request
+					//
+					const request = {
+						token: 'unknown',
+						email: master.email,
+						id: id,
+						price: price,
+						unit: unit,
+						url: url,
+					};
+					console.log('order request to payment gate', request);
+					setTimeout(() => {
+						window.location.href = `${url}?oid=${id}&order_status=success`;
+					}, 2500);
+				}
+			});
 		},
 	},
 };

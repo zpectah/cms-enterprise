@@ -1,19 +1,21 @@
 <template>
   <section>
-    ... message by status ...
+    <div v-if="status === 'success'">
+      Order #{{ oid }} was successfully created
+    </div>
+    <div v-if="status === 'error'">
+      Error while creating order or payment
+    </div>
   </section>
 </template>
 
 <script>
 module.exports = {
-  data: function () {
-    return {}
+  props: {
+    oid: String,
+    status: String,
   },
-  props: {},
   mounted: function () {
-    console.log('.... get parameter ...');
-
-    // if finish -->
     this.$parent.clear_storage();
   },
 };

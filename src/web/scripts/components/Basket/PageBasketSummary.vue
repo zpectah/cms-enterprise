@@ -219,7 +219,13 @@
       </div>
 
     </form>
+    <hr />
+    <h3>{{ t('title.basket.weight') }}</h3>
+    <div>
+      {{ t('label.weight_items') }}: {{ getItemsWeight() }} {{ weightUnit }}
+    </div>
     <br />
+    <hr />
     <div>
       {{ t('label.price_items') }}: {{ getItemsPrice() }} {{ priceUnit }}
       <br />
@@ -250,7 +256,7 @@
 <script>
 const { storage } = require('../../../../../utils/utils');
 const { get } = require('../../utils/http');
-const { STORAGE_KEY_BASKET_SUMMARY } = require('../../constants');
+const { STORAGE_KEY_BASKET_SUMMARY, EMAIL_REGEX } = require('../../constants');
 
 module.exports = {
   data: function () {
@@ -312,6 +318,7 @@ module.exports = {
   },
   props: {
     priceUnit: String,
+    weightUnit: String,
     btnNextLinkTarget: String,
     btnPrevLinkTarget: String,
   },
@@ -320,28 +327,61 @@ module.exports = {
       return this.$root.t(key);
     },
     formController: function (model) {
-      if (
-          model.user_name === ''
-          && model.payment === ''
-          && model.delivery === ''
-          && model.email === ''
-          && model.phone === ''
-          && model.country === ''
-          && model.city === ''
-          && model.address === ''
-          && model.zip === ''
-      ) {
-        this.formValid = false;
-      } else {
-        // TODO: ... valid email adress
-        this.formValid = true;
-        // TODO: ... set errors
-        // this.formError[key] = '';
+      let valid = true;
+      if (model.user_name === '' || model.user_name.length < 3) {
+        valid = false;
+        this.formError['user_name'] = this.t('msg.error.input.required');
       }
+      if (model.payment === '') {
+        valid = false;
+        this.formError['payment'] = this.t('msg.error.input.required');
+      }
+      if (model.delivery === '') {
+        valid = false;
+        this.formError['delivery'] = this.t('msg.error.input.required');
+      }
+      if (model.email === '' || model.email.length < 3 || !model.email.match(EMAIL_REGEX)) {
+        console.log('invalid email');
+        valid = false;
+        if (!model.email.match(EMAIL_REGEX)) {
+          this.formError['email'] = this.t('msg.error.input.email_format');
+        } else {
+          this.formError['email'] = this.t('msg.error.input.required');
+        }
+      }
+      if (model.phone === '' || model.phone.length < 3) {
+        valid = false;
+        this.formError['phone'] = this.t('msg.error.input.required');
+      }
+      if (model.country === '' || model.country.length < 3) {
+        valid = false;
+        this.formError['country'] = this.t('msg.error.input.required');
+      }
+      if (model.city === '' || model.city.length < 3) {
+        valid = false;
+        this.formError['city'] = this.t('msg.error.input.required');
+      }
+      if (model.address === '' || model.address.length < 3) {
+        valid = false;
+        this.formError['address'] = this.t('msg.error.input.required');
+      }
+      if (model.zip === '' || model.zip.length < 3) {
+        valid = false;
+        this.formError['zip'] = this.t('msg.error.input.required');
+      }
+      this.formValid = valid;
     },
     onChange: function (name, value) {
       const model_string = JSON.stringify(this.formModel);
       storage.set(STORAGE_KEY_BASKET_SUMMARY, model_string);
+    },
+    getItemsWeight: function () {
+      let weight = 0;
+      this.storage_items.map((item) => {
+        weight = weight + Number(item.weight) * Number(item.count);
+      });
+
+      return weight;
     },
     getItemsPrice: function () {
       let price = 0;

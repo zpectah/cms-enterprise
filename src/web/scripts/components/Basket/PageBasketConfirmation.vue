@@ -80,6 +80,12 @@
     </table>
     <br />
     <hr />
+    <h3>{{ t('title.basket.weight') }}</h3>
+    <div>
+      {{ t('label.weight_items') }}: {{ getItemsWeight() }} {{ weightUnit }}
+    </div>
+    <br />
+    <hr />
     <h3>{{ t('title.basket.price') }}</h3>
     <div>
       {{ t('label.price_items') }}: {{ getItemsPrice() }} {{ priceUnit }}
@@ -126,6 +132,7 @@ module.exports = {
   },
   props: {
     priceUnit: String,
+    weightUnit: String,
     btnNextLinkTarget: String,
     btnPrevLinkTarget: String,
   },
@@ -148,6 +155,14 @@ module.exports = {
   methods: {
     t: function (key) {
       return this.$root.t(key);
+    },
+    getItemsWeight: function () {
+      let weight = 0;
+      this.storage_items.map((item) => {
+        weight = weight + Number(item.weight) * Number(item.count);
+      });
+
+      return weight;
     },
     getItemsPrice: function () {
       let price = 0;
@@ -196,16 +211,13 @@ module.exports = {
           price_total: price_total,
           status: 1,
         };
-        await post('/api/create_orders', master).then((response) => {
-          if (response.data && response.data.id) {
-            this.$root.onFinishOrder(
-                id,
-                price_total,
-                this.priceUnit,
-                `${this.btnNextLinkTarget}?rid=${response.data.id}`,
-            );
-          }
-        });
+        await this.$parent.order_finish(
+            master,
+            id,
+            price_total,
+            this.priceUnit,
+            this.btnNextLinkTarget,
+        );
       }
     },
   },

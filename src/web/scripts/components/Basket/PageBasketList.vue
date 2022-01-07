@@ -24,6 +24,9 @@
             {{ item.count * item.price }} {{ priceUnit }}
           </td>
           <td>
+            {{ item.in_stock ? t('label.in_stock') : t('label.not_in_stock') }}
+          </td>
+          <td>
             <button
                 type="button"
                 @click="(e) => remove(e, item.id)"
@@ -97,9 +100,7 @@ module.exports = {
     nextLinkHandler: function (e) {
       e.preventDefault();
 
-      if (this.no_items) {
-        console.warn('No items!');
-      } else {
+      if (!this.no_items) {
         window.location.href = this.btnNextLinkTarget;
       }
     },

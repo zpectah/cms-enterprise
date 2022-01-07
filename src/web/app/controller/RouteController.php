@@ -21,6 +21,8 @@ class RouteController {
             'page' => $_GET['page'],
             'limit' => $_GET['limit'],
             'search' => $_GET['search'],
+            'oid' => $_GET['oid'],
+            'order_status' => $_GET['order_status'],
         ];
     }
 

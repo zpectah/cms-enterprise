@@ -255,6 +255,7 @@ export interface ProductsItemProps extends commonItemProps {
 	is_new: boolean;
 	is_used: boolean;
 	is_unboxed: boolean;
+	in_stock: boolean;
 	lang: {
 		[k: string]: ProductsItemLangProps;
 	};

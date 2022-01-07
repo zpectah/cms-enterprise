@@ -42,6 +42,7 @@ class Products {
                 $row['is_new'] = $row['is_new'] == 1; // Set value as boolean
                 $row['is_used'] = $row['is_used'] == 1; // Set value as boolean
                 $row['is_unboxed'] = $row['is_unboxed'] == 1; // Set value as boolean
+                $row['in_stock'] = $row['in_stock'] == 1; // Set value as boolean
                 $row['active'] = $row['active'] == 1; // Set value as boolean
                 unset($row['deleted']); // Unset deleted attribute
 
@@ -82,10 +83,11 @@ class Products {
                     is_new,
                     is_used,
                     is_unboxed,
+                    in_stock,
                     active, 
                     deleted
-                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'ssssiiiiiissssssssiiiiiiii';
+                      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'ssssddddddssssssssiiiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -111,6 +113,7 @@ class Products {
             $data['is_new'],
             $data['is_used'],
             $data['is_unboxed'],
+            $data['in_stock'],
             $data['active'],
             0
         ];
@@ -172,10 +175,11 @@ class Products {
                     template = ?,                    
                     is_new = ?, 
                     is_used = ?, 
-                    is_unboxed = ?,                 
+                    is_unboxed = ?,  
+                    in_stock = ?,
                     active = ? 
                 WHERE id = ?');
-        $types = 'ssssiiiiiissssssssiiiiiiii';
+        $types = 'ssssddddddssssssssiiiiiiiii';
         $args = [
             $data['name'],
             $data['type'],
@@ -201,6 +205,7 @@ class Products {
             $data['is_new'],
             $data['is_used'],
             $data['is_unboxed'],
+            $data['in_stock'],
             $data['active'],
             $data['id']
         ];

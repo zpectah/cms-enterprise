@@ -21,6 +21,8 @@
                     'detail_url' => '/' . $page_key . $detail_url_suffix . '/' . $item['name'],
                     'name' => $item['name'],
                     'thumbnail' => $item['img_thumbnail'],
+                    'price' => $item['item_price'],
+                    'in_stock' => $item['in_stock'],
                 ])
             @elseif($list_model == 'posts')
                 @include('component.list-item-post', [
