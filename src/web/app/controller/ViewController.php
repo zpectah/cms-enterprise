@@ -206,6 +206,65 @@ class ViewController {
 
         return $response;
     }
+    private function get_static_page_data ($pageName, $pageData, $detailData, $items): array {
+        if ($pageName == 'home') { // Static page: Home
+            $response = [
+                'name' => 'page.home',
+                'layout' => 'default',
+                'context' => 'page-static',
+            ];
+        } else if ($pageName == 'basket') { // Static page: Market basket
+            $response = [
+                'name' => 'page.basket',
+                'layout' => 'default',
+                'context' => 'page-basket',
+            ];
+        } else if ($pageName == 'search') { // Static page: Search results
+            $response = [
+                'name' => 'page.search-results',
+                'layout' => 'default',
+                'context' => 'page-search',
+            ];
+        } else if ($pageName == 'profile') { // Static page: Members profile
+            $response = [
+                'name' => 'page.members-profile',
+                'layout' => 'default',
+                'context' => 'page-profile',
+            ];
+        } else if ($pageName == 'registration') { // Static page: Members registration
+            $response = [
+                'name' => 'page.members-registration',
+                'layout' => 'default',
+                'context' => 'page-registration',
+            ];
+        } else if ($pageName == 'lost-password') { // Static page: Members lost password
+            $response = [
+                'name' => 'page.members-lostpassword',
+                'layout' => 'default',
+                'context' => 'page-lost-password',
+            ];
+        } else if ($pageName == 'detail' && $detailData['data']) { // Single detail (Posts, Products) without context
+            $response = [
+                'name' => 'page.detail-' . $detailData['model'],
+                'layout' => 'default',
+                'context' => 'page-single-detail',
+            ];
+        } else if ($items && $pageData['page_object']['detail']) { // Detail page (from category context)
+            $response = [
+                'name' => 'page.detail-' . $items['model'],
+                'layout' => 'default',
+                'context' => 'page-category-detail',
+            ];
+        } else { // Default page / page with list
+            $response = [
+                'name' => 'page.' . $pageData['page_layout'],
+                'layout' => 'default',
+                'context' => $items ? 'page-category' : 'page-default',
+            ];
+        }
+
+        return $response;
+    }
     private function get_static_meta (): array {
         $rc = new RouteController;
         $urlAttrs = $rc -> get_url_attrs();
@@ -296,10 +355,10 @@ class ViewController {
     public function render_page () {
         $utils = new \Utils;
         $pageData = self::get_page_data();
-        $layout_name = 'full';
-        $page_name = 'page.error-404';
         $lng = self::get_current_language();
         $items = $pageData['page_object']['page']['__items'];
+        $layout_name = 'full';
+        $page_name = 'page.error-404';
         $context = 'page-default';
         $singleDetailData = self::get_single_detail_data();
         $detail_model = $items['model'] ? $items['model'] : $singleDetailData['model'];
@@ -312,52 +371,20 @@ class ViewController {
             'last-posts' => true,
             'basket' => $pageData['page_name'] !== 'basket',
         ];
+
         if ($pageData['page_object']['page']
-            || $pageData['page_name'] == 'home'                                                  // Static page: Home
-            || $pageData['page_name'] == 'basket'                                                // Static page: Market basket
-            || $pageData['page_name'] == 'search'                                                // Static page: Search results
-            || $pageData['page_name'] == 'registration'                                          // Static page: Members profile
-            || $pageData['page_name'] == 'profile'                                               // Static page: Members registration
-            || $pageData['page_name'] == 'lost-password'                                         // Static page: Members lost password
-            || ($pageData['page_name'] == 'detail' && $singleDetailData['data'])                 // Single detail (Posts, Products) without context
+            || $pageData['page_name'] == 'home'
+            || $pageData['page_name'] == 'basket'
+            || $pageData['page_name'] == 'search'
+            || $pageData['page_name'] == 'registration'
+            || $pageData['page_name'] == 'profile'
+            || $pageData['page_name'] == 'lost-password'
+            || ($pageData['page_name'] == 'detail' && $singleDetailData['data'])
         ) {
-            if ($pageData['page_name'] == 'home') {                                              // Static page: Home
-                $page_name = 'page.home';
-                $layout_name = 'default';
-                $context = 'page-static';
-            } else if ($pageData['page_name'] == 'basket') {                                     // Static page: Market basket
-                $page_name = 'page.basket';
-                $layout_name = 'default';
-                $context = 'page-basket';
-            } else if ($pageData['page_name'] == 'search') {                                     // Static page: Search results
-                $page_name = 'page.search-results';
-                $layout_name = 'default';
-                $context = 'page-search';
-            } else if ($pageData['page_name'] == 'profile') {                                    // Static page: Members profile
-                $page_name = 'page.members-profile';
-                $layout_name = 'default';
-                $context = 'page-profile';
-            } else if ($pageData['page_name'] == 'registration') {                               // Static page: Members registration
-                $page_name = 'page.members-registration';
-                $layout_name = 'default';
-                $context = 'page-registration';
-            } else if ($pageData['page_name'] == 'lost-password') {                              // Static page: Members lost password
-                $page_name = 'page.members-lostpassword';
-                $layout_name = 'default';
-                $context = 'page-lost-password';
-            } else if ($pageData['page_name'] == 'detail' && $singleDetailData['data']) {        // Single detail (Posts, Products) without context
-                $page_name = 'page.detail-' . $singleDetailData['model'];
-                $layout_name = 'default';
-                $context = 'page-single-detail';
-            } else if ($items && $pageData['page_object']['detail']) {                           // Detail page (from category context)
-                $page_name = 'page.detail-' . $items['model'];
-                $layout_name = 'default';
-                $context = 'page-category-detail';
-            } else {                                                                             // Default page / page with list
-                $page_name = 'page.' . $pageData['page_layout'];
-                $layout_name = 'default';
-                $context = $items ? 'page-category' : 'page-default';
-            }
+            $pgd = self::get_static_page_data($pageData['page_name'], $pageData, $singleDetailData, $items);
+            $page_name = $pgd['name'];
+            $layout_name = $pgd['layout'];
+            $context = $pgd['context'];
         }
 
         echo $this -> $blade -> run($layout_name, [
@@ -373,12 +400,13 @@ class ViewController {
             'list_items' => $items['items'],
             'detail_model' => $detail_model,
             'detail_data' => $detail_data,
-            // ... available only when category is in context
+            'detail_url_suffix' => '/detail',
+            // ... available only when category is in context |-->
             'detail_not_found' => $pageData['page_object']['should_be_detail'],
             'detail_index' => $pageData['page_object']['detail_index'],
             'detail_prev' => $pageData['page_object']['detail_prev'],
             'detail_next' => $pageData['page_object']['detail_next'],
-            'detail_url_suffix' => '/detail',
+            // -->|
 
             // Search results
             'search_results' => self::get_search_result(),
