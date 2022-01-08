@@ -20,24 +20,23 @@ class CmsRequests {
         $stmt -> close();
 
         // request params
-        $rp_id = $data['id'] or $params['id'];
-        $rp_token = $data['token'] or $params['token'];
+        $rp_id = $data['id'];
+        if ($params['id']) $rp_id = $params['id'];
+        $rp_token = $data['token'];
+        if ($params['token']) $rp_token = $params['token'];
 
         if ($result -> num_rows > 0) {
-            // iterate by params
-            if ($rp_id) {
-                while($row = $result -> fetch_assoc()) {
+            while($row = $result -> fetch_assoc()) {
+                // iterate by params
+                if ($rp_id) {
                     if ($rp_id == $row['id']) $response = $row;
-                }
-            } else if ($rp_token) {
-                while($row = $result -> fetch_assoc()) {
+                } else if ($rp_token) {
                     if ($rp_token == $row['token']) $response = $row;
-                }
-            } else {
-                while($row = $result -> fetch_assoc()) {
+                } else {
                     $response[] = $row;
                 }
             }
+
         }
 
         return $response;

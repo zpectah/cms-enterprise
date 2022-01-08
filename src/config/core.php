@@ -22,20 +22,23 @@ define( "TMP_TOKEN",                                      $utils -> getRandomStr
 define( "CMS_NAME",                                       $JSON_PROJECT['admin']['name']);                              // App name (E-mails, ...etc)
 define( "CFG_ENV",                                        $JSON_ENV[ ENV ] );                                           // Config for each environment
 define( "CFG_DB_SQL",                                     $DATABASE[ ENV ]['SQL'] );                                    // Database config for each environment
-const CFG_DB_CONN = [
+const CFG_DB_CONN = [                                                                                                   // Database config object for each environment
     CFG_DB_SQL['server'],
     CFG_DB_SQL['user'],
     CFG_DB_SQL['password'],
     CFG_DB_SQL['name'],
     CFG_DB_SQL['port'],
-];                                                                                                                      // Database config object for each environment
+];
 const SESSION_USER_NAME_PREFIX =                          'cms_enterprise_user';                                        // Admin user session key
 const SESSION_USER_TOKEN_PREFIX =                         'cms_enterprise_token';                                       // Admin user token session key
+const SESSION_MEMBER_NAME_PREFIX =                        'cms_enterprise_member';                                      // Admin user session key
+const SESSION_MEMBER_TOKEN_PREFIX =                       'cms_enterprise_member_token';                                // Admin user token session key
 define( "PATH_UPLOADS",                                   PATH_ROOT . $JSON_PROJECT['path']['uploads'] );
 define( "PATH_LOGS",                                      PATH_ROOT . $JSON_PROJECT['path']['logs'] );
 define( "PATH_ASSETS",                                    PATH_ROOT . $JSON_PROJECT['path']['assets'] );
 define( "UPLOADS_IMAGE_FORMATS",                          $JSON_OPTIONS['model']['Uploads']['image']['format'] );
 const URL_USER_LOST_PASSWORD_TOKEN =                      CFG_ENV['root'] . 'admin/lost-password/token/';
+const URL_MEMBER_LOST_PASSWORD_TOKEN =                    CFG_ENV['root'] . 'lost-password/token/';
 define("ADMIN_VIEW", [
     'meta' => [
         'title' =>                                        $JSON_PROJECT['admin']['meta']['title'],

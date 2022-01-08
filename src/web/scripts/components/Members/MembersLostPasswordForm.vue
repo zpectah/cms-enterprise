@@ -1,8 +1,34 @@
 <template>
   <section>
-    members-lost-password-form
     <form name="MembersLostPasswordForm">
-
+      <div class="form-group mb-2">
+        <label
+            for="MembersLostPasswordForm_email"
+        >
+          {{ t('label.input.email') }} *
+        </label>
+        <input
+            type="email"
+            class="form-control"
+            id="MembersLostPasswordForm_email"
+            name="MembersLostPasswordForm_email"
+            v-model="formModel.email"
+            required
+            :placeholder="t('placeholder.input.email')"
+        >
+      </div>
+      <div>
+        <div v-if="formSubmitMessage !== ''">{{ formSubmitMessageContext }} | {{ formSubmitMessage }}</div>
+      </div>
+      <div>
+        <button
+            type="button"
+            :disabled="!formValid"
+            @click="onSubmit"
+        >
+          {{ t('btn.submit_form') }}
+        </button>
+      </div>
     </form>
   </section>
 </template>
@@ -21,7 +47,10 @@ module.exports = {
     return {
       formValid: false,
       formError: {},
-      formModel: {},
+      formSubmitMessage: '',
+      formSubmitMessageContext: 'error',
+      formModel: _.cloneDeep(blankModel),
+      processing: false,
     }
   },
   props: {
@@ -33,12 +62,48 @@ module.exports = {
     },
     formValidController: function (model) {
       let valid = true;
+      this.formSubmitMessage = '';
       this.formError = {};
-
+      if (model.email === '' || model.email.length < 3 || !model.email.match(EMAIL_REGEX)) {
+        valid = false;
+        if (!model.email.match(EMAIL_REGEX)) {
+          this.formError['email'] = this.t('msg.error.input.email_format');
+        } else {
+          this.formError['email'] = this.t('msg.error.input.required');
+        }
+      }
       this.formValid = valid;
     },
-    onChange: function (name, value) {
-      console.log('onChange', name, value);
+    onSubmit: async function (e) {
+      e.preventDefault();
+      this.processing = true;
+      this.formSubmitMessage = '';
+      const master = _.cloneDeep(this.formModel);
+      await get(`/api/get_members?email=${master.email}&check_exist=true`).then((response) => {
+        if (response.data && response.data.exist) {
+          post('/api/member_lost_password', master).then((response) => {
+            console.log('member_lost_password', response);
+            // { message, email, row }
+            // TODO: response messages
+            //
+            if (response.data && response.data.id !== 0) {
+              this.formSubmitMessageContext = 'success';
+              this.formSubmitMessage = 'Success: Your registration was successfully';
+
+
+              this.formModel = _.cloneDeep(blankModel);
+            } else {
+              this.formSubmitMessageContext = 'error';
+              this.formSubmitMessage = 'Error: Submitting unknown error, try again';
+            }
+            this.processing = false;
+          });
+        } else {
+          this.formSubmitMessageContext = 'error';
+          this.formSubmitMessage = 'Error: This user is not exist';
+          this.processing = false;
+        }
+      });
     },
   },
   watch: {

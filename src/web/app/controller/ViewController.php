@@ -324,6 +324,18 @@ class ViewController {
             'step' => $step_attr,    // list | summary | confirmation | finish = success/error
         ];
     }
+    private function get_member_options ($pageData): array {
+        $dc = new DataController;
+        $token = ($pageData['url_attrs'][1] == 'token' && $pageData['url_attrs'][2]) ? $pageData['url_attrs'][2] : null;
+        $request = $dc -> get('CmsRequests', [ 'token' => $token ], [])['data'];
+        $member_object = null;
+
+        return [
+            'lost_password_token' => $token,
+            'lost_password_request' => $request,
+            'member' => $member_object,
+        ];
+    }
 
 
     public function get_view_meta_data (): array {
@@ -364,16 +376,13 @@ class ViewController {
 
     public function render_page () {
         $utils = new \Utils;
-        $pageData = self::get_page_data();
         $lng = self::get_current_language();
+        $pageData = self::get_page_data();
+        $singleDetailData = self::get_single_detail_data();
         $items = $pageData['page_object']['page']['__items'];
         $layout_name = 'full';
         $page_name = 'page.error-404';
         $context = 'page-default';
-        $singleDetailData = self::get_single_detail_data();
-        $detail_model = $items['model'] ? $items['model'] : $singleDetailData['model'];
-        $detail_data = $pageData['page_object']['detail'] ? $pageData['page_object']['detail'] : $singleDetailData['data'];
-        $basket_data = $pageData['page_name'] == 'basket' ? self::get_basket_data() : null;
         $with_sidebar = true;
         $sidebar_widget = [
             'search' => true,
@@ -392,25 +401,23 @@ class ViewController {
             || $pageData['page_name'] == 'lost-password'
             || ($pageData['page_name'] == 'detail' && $singleDetailData['data'])
         ) {
-            $pgd = self::get_static_page_data($pageData['page_name'], $pageData, $singleDetailData, $items);
-            $page_name = $pgd['name'];
-            $layout_name = $pgd['layout'];
-            $context = $pgd['context'];
+            $pd = self::get_static_page_data($pageData['page_name'], $pageData, $singleDetailData, $items);
+            $page_name = $pd['name'];
+            $layout_name = $pd['layout'];
+            $context = $pd['context'];
         }
 
-        echo $this -> $blade -> run($layout_name, [
+        $render_data = [
             't' => function ($key) { return self::get_t($key); },                                 // Function with return key if no value exist
             'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
 
-            'view_with_sidebar' => $with_sidebar,
-
             // List from page defined category & Detail data from list or single
             'list_model' => $items['model'],
             'list_items' => $items['items'],
-            'detail_model' => $detail_model,
-            'detail_data' => $detail_data,
+            'detail_model' => $items['model'] ? $items['model'] : $singleDetailData['model'],
+            'detail_data' => $pageData['page_object']['detail'] ? $pageData['page_object']['detail'] : $singleDetailData['data'],
             'detail_url_suffix' => '/detail',
             // ... available only when category is in context |-->
             'detail_not_found' => $pageData['page_object']['should_be_detail'],
@@ -419,11 +426,14 @@ class ViewController {
             'detail_next' => $pageData['page_object']['detail_next'],
             // -->|
 
+            // Member options
+            'member_options' => self::get_member_options($pageData),
+
             // Search results
             'search_results' => self::get_search_result(),
 
             // Basket data
-            'basket_data' => $basket_data,
+            'basket_data' => $pageData['page_name'] == 'basket' ? self::get_basket_data() : null,
 
             // Project
             'project_name' => $pageData['settings']['project_name'],
@@ -440,12 +450,17 @@ class ViewController {
             'title' => $pageData['page_object']['page']['lang'][$lng]['title'],
             'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
             'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
+            'view_with_sidebar' => $with_sidebar,
 
             // Dynamic variables
             'url_params' => $pageData['url_params'],
             'url_attrs' => $pageData['url_attrs'],
 
-        ]);
+        ];
+
+        // TODO: dynamically merge data by detail or module options ...
+
+        echo $this -> $blade -> run($layout_name, $render_data);
     }
 
 }

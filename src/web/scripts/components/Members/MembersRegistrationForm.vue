@@ -288,7 +288,7 @@ module.exports = {
           // master['email_alt'] = [];
           // master['description'] = '';
           master['active'] = true;
-          post('/api/register_members', master).then((response) => {
+          post('/api/member_register', master).then((response) => {
             if (response.data && response.data.id !== 0) {
               this.formSubmitMessageContext = 'success';
               this.formSubmitMessage = 'Success: Your registration was successfully';

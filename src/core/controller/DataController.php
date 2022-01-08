@@ -25,6 +25,7 @@ use model\Users;
 use module\admin\Profile;
 use module\admin\Settings;
 use module\admin\System;
+use module\web\MemberProfile;
 use mysqli;
 
 class DataController {
@@ -745,7 +746,7 @@ class DataController {
         return $response;
     }
 
-    /********** Profile **********/
+    /********** User Profile **********/
     public function get_user_profile ($params) {
         $conn = new mysqli(...CFG_DB_CONN);
         $Profile = new Profile;
@@ -795,6 +796,61 @@ class DataController {
         $conn = new mysqli(...CFG_DB_CONN);
         $Profile = new Profile;
         $response = $Profile -> user_create_new_password($conn, $data);
+        $conn -> close();
+
+        return $response;
+    }
+
+    /********** Member Profile **********/
+    public function get_member_profile ($params): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $Profile = new MemberProfile;
+        $response = $Profile -> get_member_profile($conn, $params);
+        $conn -> close();
+
+        return $response;
+    }
+    public function member_update_profile ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $Profile = new MemberProfile;
+        $response = $Profile -> member_update_profile($conn, $data);
+        $conn -> close();
+
+        return $response;
+    }
+    public function member_login ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $Profile = new MemberProfile;
+        $response = $Profile -> member_login($conn, $data);
+        $conn -> close();
+
+        return $response;
+    }
+    public function member_logout (): array {
+        $Profile = new MemberProfile;
+
+        return $Profile -> member_logout();
+    }
+    public function member_lost_password ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $Profile = new MemberProfile;
+        $response = $Profile -> member_lost_password($conn, $data);
+        $conn -> close();
+
+        return $response;
+    }
+    public function member_lost_password_reset ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $Profile = new MemberProfile;
+        $response = $Profile -> member_lost_password_reset($conn, $data);
+        $conn -> close();
+
+        return $response;
+    }
+    public function member_create_new_password ($data): array {
+        $conn = new mysqli(...CFG_DB_CONN);
+        $Profile = new MemberProfile;
+        $response = $Profile -> member_create_new_password($conn, $data);
         $conn -> close();
 
         return $response;

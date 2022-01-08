@@ -41,7 +41,7 @@ new Vue({
 			if (this.to[key]) {
 				label = this.to[key];
 			} else {
-				console.warn(`Missing translation key: "${key}"`);
+				// console.warn(`Missing translation key: "${key}"`);
 			}
 
 			return label;

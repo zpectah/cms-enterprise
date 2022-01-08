@@ -130,6 +130,76 @@ class ApiRequest {
                     $response = $dc -> user_create_new_password($request_data);
                     break;
 
+                /********** Members (*) **********/
+                case 'get_members':
+                    $response = $dc -> get('Members', $request_data, $params);
+                    break;
+
+                case 'create_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> create('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'update_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> update('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'toggle_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> toggle('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'delete_members':
+                    if ($request_is_authorized) {
+                        $response = $dc -> delete('Members', $request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
+                    break;
+
+                case 'member_register':
+                    $response = $dc -> create('Members', $request_data, [ 'context' => 'registration' ]);
+                    break;
+
+                case 'get_member_profile':
+                    $response = $dc -> get_member_profile($params);
+                    break;
+
+                case 'update_member_profile':
+                    // TODO: conditions for member session
+                    $response = $dc -> member_update_profile($request_data);
+                    break;
+
+                case 'member_login':
+                    $response = $dc -> member_login($request_data);
+                    break;
+
+                case 'member_logout':
+                    $response = $dc -> member_logout();
+                    break;
+
+                case 'member_lost_password':
+                    $response = $dc -> member_lost_password($request_data);
+                    break;
+
+                case 'member_lost_password_reset':
+                    $response = $dc -> member_lost_password_reset($request_data);
+                    break;
+
+                case 'member_create_new_password':
+                    $response = $dc -> member_create_new_password($request_data);
+                    break;
+
                 /********** CmsRequests **********/
                 case 'get_cms_requests':
                     $response = $dc -> get('CmsRequests', $request_data, $params);
@@ -260,47 +330,6 @@ class ApiRequest {
                     } else {
                         $response['status'] = 'unauthorized';
                     }
-                    break;
-
-                /********** Members (*) **********/
-                case 'get_members':
-                    $response = $dc -> get('Members', $request_data, $params);
-                    break;
-
-                case 'create_members':
-                    if ($request_is_authorized) {
-                        $response = $dc -> create('Members', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                case 'update_members':
-                    if ($request_is_authorized) {
-                        $response = $dc -> update('Members', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                case 'toggle_members':
-                    if ($request_is_authorized) {
-                        $response = $dc -> toggle('Members', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                case 'delete_members':
-                    if ($request_is_authorized) {
-                        $response = $dc -> delete('Members', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
-                    break;
-
-                case 'register_members':
-                    $response = $dc -> create('Members', $request_data, [ 'context' => 'registration' ]);
                     break;
 
                 /********** Menu (*) **********/
