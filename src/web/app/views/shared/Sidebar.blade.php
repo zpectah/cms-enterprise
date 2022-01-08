@@ -13,4 +13,7 @@
     @if($sidebar_widget['last-posts'])
         @include('component.sidebar-last-posts')
     @endif
+    <members-subscription-form>
+        Loading members-subscription-form ...
+    </members-subscription-form>
 </aside>

@@ -7,6 +7,7 @@ import { DEFAULT_LANGUAGE } from './constants';
 
 // Mixins
 import BasketMixin from './mixins/BasketMixin';
+import MembersMixin from './mixins/Members.mixin';
 
 // Components
 import demoComponent from './components/demoComponent';
@@ -14,7 +15,7 @@ import demoComponent from './components/demoComponent';
 // Vue init
 new Vue({
 	el: '#vue-app',
-	mixins: [BasketMixin],
+	mixins: [BasketMixin, MembersMixin],
 	components: {
 		'demo-component': demoComponent,
 	},
