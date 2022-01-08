@@ -8,6 +8,14 @@
 </template>
 
 <script>
+const _ = require('lodash');
+const { EMAIL_REGEX } = require('../../constants');
+const { get, post } = require('../../utils/http');
+
+const blankModel = {
+  password: '',
+};
+
 module.exports = {
   data: function () {
     return {
@@ -23,7 +31,7 @@ module.exports = {
     t: function (key) {
       return this.$root.t(key);
     },
-    formController: function (model) {
+    formValidController: function (model) {
       let valid = true;
       this.formError = {};
 
@@ -36,7 +44,7 @@ module.exports = {
   watch: {
     'formModel': {
       handler: function (nv, ov) {
-        this.formController(nv);
+        this.formValidController(nv);
       },
       deep: true,
     },

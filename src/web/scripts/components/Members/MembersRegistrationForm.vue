@@ -283,10 +283,10 @@ module.exports = {
           this.processing = false;
         } else {
           master['type'] = 'customer';
-          master['position'] = '';
-          master['phone_alt'] = [];
-          master['email_alt'] = [];
-          master['description'] = '';
+          // master['position'] = '';
+          // master['phone_alt'] = [];
+          // master['email_alt'] = [];
+          // master['description'] = '';
           master['active'] = true;
           post('/api/register_members', master).then((response) => {
             if (response.data && response.data.id !== 0) {

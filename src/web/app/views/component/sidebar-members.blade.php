@@ -1,5 +1,5 @@
 <section>
-    <h4>User</h4>
+    <h4 class="widget-title">{{$t('title.widget.user')}}</h4>
     user data if logged in
     <br />
     <a

@@ -380,6 +380,7 @@ class ViewController {
             'user' => true,
             'last-posts' => true,
             'basket' => $pageData['page_name'] !== 'basket',
+            'subscription' => true,
         ];
 
         if ($pageData['page_object']['page']
