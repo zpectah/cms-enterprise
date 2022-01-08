@@ -155,7 +155,7 @@ class DataController {
         return $response;
     }
 
-    public function create ($model, $data): array {
+    public function create ($model, $data, $attrs = []): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
@@ -235,7 +235,7 @@ class DataController {
                 break;
 
             case 'Members':
-                $response['data'] = $module_crm_installed ? $Members -> create($conn, $data) : [];
+                $response['data'] = $module_crm_installed ? $Members -> create($conn, $data, $attrs) : [];
                 break;
 
             case 'Deliveries':
@@ -281,7 +281,7 @@ class DataController {
         return $response;
     }
 
-    public function update ($model, $data): array {
+    public function update ($model, $data, $attrs = []): array {
         $conn = new mysqli(...CFG_DB_CONN);
         $response = [
             'status' => 'ok',
@@ -361,7 +361,7 @@ class DataController {
                 break;
 
             case 'Members':
-                $response['data'] = $module_crm_installed ? $Members -> update($conn, $data) : [];
+                $response['data'] = $module_crm_installed ? $Members -> update($conn, $data, $attrs) : [];
                 break;
 
             case 'Deliveries':

@@ -328,6 +328,7 @@ module.exports = {
     },
     formController: function (model) {
       let valid = true;
+      this.formError = {};
       if (model.user_name === '' || model.user_name.length < 3) {
         valid = false;
         this.formError['user_name'] = this.t('msg.error.input.required');
@@ -341,7 +342,6 @@ module.exports = {
         this.formError['delivery'] = this.t('msg.error.input.required');
       }
       if (model.email === '' || model.email.length < 3 || !model.email.match(EMAIL_REGEX)) {
-        console.log('invalid email');
         valid = false;
         if (!model.email.match(EMAIL_REGEX)) {
           this.formError['email'] = this.t('msg.error.input.email_format');

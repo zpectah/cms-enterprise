@@ -28,17 +28,34 @@ class Users {
         $stmt -> close();
 
         // request params
-        $rp_id = $data['id'] or $params['id'];
-        $rp_email = $data['email'] or $params['email'];
-        $rp_withPassword = $data['withPassword'] or $params['withPassword'];
+        $rp_id = $data['id'];
+        if ($params['id']) $rp_id = $params['id'];
+        $rp_email = $data['email'];
+        if ($params['email']) $rp_email = $params['email'];
+        $rp_withPassword = $data['withPassword'];
+        if ($params['withPassword']) $rp_withPassword = $params['withPassword'];
+        $rp_checkExist = $data['check_exist'];
+        if ($params['check_exist']) $rp_checkExist = $params['check_exist'];
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
                 // iterate by params
                 if ($rp_id) {
-                    if ($rp_id == $row['id']) $response = self::getUpdatedRow($row, $rp_withPassword);
+                    if ($rp_id == $row['id']) {
+                        if ($rp_checkExist) {
+                            $response['exist'] = true;
+                        } else {
+                            $response = self::getUpdatedRow($row, $rp_withPassword);
+                        }
+                    }
                 } else if ($rp_email) {
-                    if ($rp_email == $row['email']) $response = self::getUpdatedRow($row, $rp_withPassword);
+                    if ($rp_email == $row['email']) {
+                        if ($rp_checkExist) {
+                            $response['exist'] = true;
+                        } else {
+                            $response = self::getUpdatedRow($row, $rp_withPassword);
+                        }
+                    }
                 } else {
                     $response[] = self::getUpdatedRow($row, $rp_withPassword);
                 }

@@ -43,6 +43,7 @@ class ApiRequest {
             'lang' => $_GET['lang'],
             'sub' => $_GET['sub'],
             'ids' => $_GET['ids'],
+            'check_exist' => $_GET['check_exist'],
         ];
 
         // Switching and executing
@@ -296,6 +297,10 @@ class ApiRequest {
                     } else {
                         $response['status'] = 'unauthorized';
                     }
+                    break;
+
+                case 'register_members':
+                    $response = $dc -> create('Members', $request_data, [ 'context' => 'registration' ]);
                     break;
 
                 /********** Menu (*) **********/

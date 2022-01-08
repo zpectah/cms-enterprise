@@ -6,7 +6,7 @@ import { DEFAULT_LANGUAGE } from './constants';
 // Standalone components
 
 // Mixins
-import BasketMixin from './mixins/BasketMixin';
+import BasketMixin from './mixins/Basket.mixin';
 import MembersMixin from './mixins/Members.mixin';
 
 // Components
