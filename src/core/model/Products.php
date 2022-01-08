@@ -4,9 +4,88 @@ namespace model;
 
 class Products {
 
+    private function getUpdatedRow ($conn, $row, $languages): array {
+        $utils = new \Utils;
+
+        foreach ($languages as $lang) {
+            $row['lang'][$lang] = $utils -> get_language_row(
+                $conn,
+                $row['id'],
+                'SELECT * FROM products__' . $lang . ' WHERE id = ?'
+            );
+        } // Set language object
+
+        $row['producers'] = $row['producers'] == '' ? [] : explode(",", $row['producers']); // Set value as array
+        $row['distributors'] = $row['distributors'] == '' ? [] : explode(",", $row['distributors']); // Set value as array
+        $row['related'] = $row['related'] == '' ? [] : explode(",", $row['related']); // Set value as array
+        $row['gallery'] = $row['gallery'] == '' ? [] : explode(",", $row['gallery']); // Set value as array
+        $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
+        $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
+        $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
+        $row['options'] = $row['options'] == '' ? [] : explode(",", $row['options']); // Set value as array
+        $row['template'] = $row['template'] == 1; // Set value as boolean
+        $row['is_new'] = $row['is_new'] == 1; // Set value as boolean
+        $row['is_used'] = $row['is_used'] == 1; // Set value as boolean
+        $row['is_unboxed'] = $row['is_unboxed'] == 1; // Set value as boolean
+        $row['in_stock'] = $row['in_stock'] == 1; // Set value as boolean
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        unset($row['deleted']); // Unset deleted attribute
+
+        return $row;
+    }
+
+    private function getRowSubData ($conn, $row, $languages) {
+        $row['sub_producers'] = [];
+        $row['sub_distributors'] = [];
+        $row['sub_related'] = [];
+        $row['sub_gallery'] = [];
+        $row['sub_attachments'] = [];
+        $row['sub_tags'] = [];
+        $row['sub_categories'] = [];
+        $row['sub_options'] = [];
+        $row['sub_manager'] = [];
+
+        if ($row['producers']) {
+            $producers = new Producers;
+            $row['sub_producers'] = $producers -> get($conn, [ 'ids' => $row['producers'] ], []);
+        }
+        if ($row['distributors']) {
+            $distributors = new Distributors;
+            $row['sub_distributors'] = $distributors -> get($conn, [ 'ids' => $row['distributors'] ], []);
+        }
+        if ($row['related']) {
+            $row['sub_related'] = self::get($conn, [ 'ids' => $row['related'] ], [], $languages);
+        }
+        if ($row['gallery']) {
+            $uploads = new Uploads;
+            $row['sub_gallery'] = $uploads -> get($conn, [ 'ids' => $row['gallery'] ], [], $languages);
+        }
+        if ($row['attachments']) {
+            $uploads = new Uploads;
+            $row['sub_attachments'] = $uploads -> get($conn, [ 'ids' => $row['attachments'] ], [], $languages);
+        }
+        if ($row['tags']) {
+            $tags = new Tags;
+            $row['sub_tags'] = $tags -> get($conn, [ 'ids' => $row['tags'] ], []);
+        }
+        if ($row['categories']) {
+            $categories = new Categories;
+            $row['sub_categories'] = $categories -> get($conn, [ 'ids' => $row['categories'] ], [], $languages);
+        }
+        if ($row['options']) {
+            $options = new ProductsOptions;
+            $row['sub_options'] = $options -> get($conn, [ 'ids' => $row['options'] ], [], $languages);
+        }
+        if ($row['manager']) {
+            $users = new Users;
+            $row['sub_manager'] = $users -> get($conn, [ 'id' => $row['manager'] ], []);
+        }
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params, $languages): array {
         $response = [];
-        $utils = new \Utils;
 
         // prepare
         $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM products WHERE deleted = ?');
@@ -20,33 +99,21 @@ class Products {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // request params
+        $rp_sub = $data['sub'];
+        if ($params['sub']) $rp_sub = $params['sub'];
+        $rp_ids = $data['ids'];
+        if ($params['ids']) $rp_ids = explode(",", $params['ids']);
+
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                foreach ($languages as $lang) {
-                    $row['lang'][$lang] = $utils -> get_language_row(
-                        $conn,
-                        $row['id'],
-                        'SELECT * FROM products__' . $lang . ' WHERE id = ?'
-                    );
-                } // Set language object
-
-                $row['producers'] = $row['producers'] == '' ? [] : explode(",", $row['producers']); // Set value as array
-                $row['distributors'] = $row['distributors'] == '' ? [] : explode(",", $row['distributors']); // Set value as array
-                $row['related'] = $row['related'] == '' ? [] : explode(",", $row['related']); // Set value as array
-                $row['gallery'] = $row['gallery'] == '' ? [] : explode(",", $row['gallery']); // Set value as array
-                $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
-                $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
-                $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
-                $row['options'] = $row['options'] == '' ? [] : explode(",", $row['options']); // Set value as array
-                $row['template'] = $row['template'] == 1; // Set value as boolean
-                $row['is_new'] = $row['is_new'] == 1; // Set value as boolean
-                $row['is_used'] = $row['is_used'] == 1; // Set value as boolean
-                $row['is_unboxed'] = $row['is_unboxed'] == 1; // Set value as boolean
-                $row['in_stock'] = $row['in_stock'] == 1; // Set value as boolean
-                $row['active'] = $row['active'] == 1; // Set value as boolean
-                unset($row['deleted']); // Unset deleted attribute
-
-                $response[] = $row;
+                if ($rp_sub) {
+                    $response[] = self::getRowSubData($conn, self::getUpdatedRow($conn, $row, $languages), $languages);
+                } else if ($rp_ids) {
+                    if (in_array($row['id'], $rp_ids)) $response[] = self::getUpdatedRow($conn, $row, $languages);
+                } else {
+                    $response[] = self::getUpdatedRow($conn, $row, $languages);
+                }
             }
         }
 

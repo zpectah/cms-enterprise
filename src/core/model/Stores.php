@@ -4,9 +4,27 @@ namespace model;
 
 class Stores {
 
+    private function getUpdatedRow ($conn, $row, $languages) {
+        $utils = new \Utils;
+        foreach ($languages as $lang) {
+            $row['lang'][$lang] = $utils -> get_language_row(
+                $conn,
+                $row['id'],
+                'SELECT * FROM stores__' . $lang . ' WHERE id = ?'
+            );
+        } // Set language object
+
+        $row['phone'] = $row['phone'] == '' ? [] : explode(",", $row['phone']); // Set value as array
+        $row['email'] = $row['email'] == '' ? [] : explode(",", $row['email']); // Set value as array
+        $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array//
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        unset($row['deleted']); // Unset deleted attribute
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params, $languages): array {
         $response = [];
-        $utils = new \Utils;
 
         // prepare
         $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM stores WHERE deleted = ?');
@@ -20,23 +38,17 @@ class Stores {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // request params
+        $rp_ids = $data['ids'];
+        if ($params['ids']) $rp_ids = explode(",", $params['ids']);
+
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                foreach ($languages as $lang) {
-                    $row['lang'][$lang] = $utils -> get_language_row(
-                        $conn,
-                        $row['id'],
-                        'SELECT * FROM stores__' . $lang . ' WHERE id = ?'
-                    );
-                } // Set language object
-
-                $row['phone'] = $row['phone'] == '' ? [] : explode(",", $row['phone']); // Set value as array
-                $row['email'] = $row['email'] == '' ? [] : explode(",", $row['email']); // Set value as array
-                $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array//
-                $row['active'] = $row['active'] == 1; // Set value as boolean
-                unset($row['deleted']); // Unset deleted attribute
-
-                $response[] = $row;
+                if ($rp_ids) {
+                    if (in_array($row['id'], $rp_ids)) $response[] = self::getUpdatedRow($conn, $row, $languages);
+                } else {
+                    $response[] = self::getUpdatedRow($conn, $row, $languages);
+                }
             }
         }
 

@@ -4,6 +4,13 @@ namespace model;
 
 class ProductsOptions {
 
+    private function getUpdatedRow ($row) {
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        unset($row['deleted']); // Unset deleted attribute
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params, $languages): array {
         $response = [];
 
@@ -19,12 +26,17 @@ class ProductsOptions {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // request params
+        $rp_ids = $data['ids'];
+        if ($params['ids']) $rp_ids = explode(",", $params['ids']);
+
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                $row['active'] = $row['active'] == 1; // Set value as boolean
-                unset($row['deleted']); // Unset deleted attribute
-
-                $response[] = $row;
+                if ($rp_ids) {
+                    if (in_array($row['id'], $rp_ids)) $response[] = self::getUpdatedRow($row);
+                } else {
+                    $response[] = self::getUpdatedRow($row);
+                }
             }
         }
 
@@ -33,7 +45,6 @@ class ProductsOptions {
 
     public function create ($conn, $data, $languages) {
         $response = [];
-        $utils = new \Utils;
 
         // prepare
         $query = ('INSERT INTO products_options (name, type, value, active, deleted) VALUES (?,?,?,?,?)');

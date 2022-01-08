@@ -15,6 +15,52 @@
             {!!$detail_data['lang'][$lng]['content']!!}
         </div>
         <div>
+            Related products
+            @foreach($detail_data['sub_related'] as $item)
+                <div>
+                    {{$item['name']}}
+                </div>
+            @endforeach
+        </div>
+        <div>sub_attachments
+            @foreach($detail_data['sub_attachments'] as $item)
+                <div>
+                    {{$item['name']}}
+                </div>
+            @endforeach
+        </div>
+        <div>gallery
+            @foreach($detail_data['sub_gallery'] as $item)
+                <div>
+                    {{$item['name']}}
+                </div>
+            @endforeach
+        </div>
+        <div>tags
+            @foreach($detail_data['sub_tags'] as $item)
+                <div>
+                    {{$item['name']}}
+                </div>
+            @endforeach
+        </div>
+        <div>categories
+            @foreach($detail_data['sub_categories'] as $item)
+                <div>
+                    {{$item['name']}}
+                </div>
+            @endforeach
+        </div>
+        <div>options
+            @foreach($detail_data['sub_options'] as $item)
+                <div>
+                    {{$item['name']}}
+                </div>
+            @endforeach
+        </div>
+        <div>
+            Manager: {{$detail_data['sub_manager']['email']}}
+        </div>
+        <div>
             {{$t('label.price')}} {{ $detail_data['item_price'] }} CZK
             |
             {{ $detail_data['in_stock'] ? $t('label.in_stock') : $t('label.not_in_stock') }}

@@ -42,6 +42,7 @@ class ApiRequest {
             'parsed' => $_GET['parsed'],
             'lang' => $_GET['lang'],
             'sub' => $_GET['sub'],
+            'ids' => $_GET['ids'],
         ];
 
         // Switching and executing

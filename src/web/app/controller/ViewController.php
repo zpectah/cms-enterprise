@@ -15,6 +15,8 @@ class ViewController {
                 PATH_ROOT . 'web/app/views',
                 PATH_ROOT . 'web/app/views/shared',
                 PATH_ROOT . 'web/app/views/content',
+                PATH_ROOT . 'web/app/views/component',
+                PATH_ROOT . 'web/app/views/component/ui',
             ],
             PATH_ROOT . 'web/app/compiles'
         );
@@ -87,17 +89,25 @@ class ViewController {
         $model = null;
         $detail = null;
         if ($model_attr == 'posts') {
-            $items = $dc -> get('Posts', [], [])['data'];
+            $items = $dc -> get('Posts', [ 'sub' => true ], [])['data'];
+            $today = strtotime(date('Y-m-d H:i:s'));
             foreach ($items as $item) {
-                if ($id_attr == $item['id'] || $id_attr == $item['name']) {
+                $published = strtotime($item['published']);
+                if (($id_attr == $item['id'] || $id_attr == $item['name'])
+                    && $item['active']
+                    && $item['approved']
+                    && ($today >= $published)
+                ) {
                     $model = $model_attr;
                     $detail = $item;
                 }
             }
         } else if ($model_attr == 'products') {
-            $items = $dc -> get('Products', [], [])['data'];
+            $items = $dc -> get('Products', [ 'sub' => true ], [])['data'];
             foreach ($items as $item) {
-                if ($id_attr == $item['id'] || $id_attr == $item['name']) {
+                if (($id_attr == $item['id'] || $id_attr == $item['name'])
+                    && $item['active']
+                ) {
                     $model = $model_attr;
                     $detail = $item;
                 }

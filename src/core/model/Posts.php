@@ -4,9 +4,67 @@ namespace model;
 
 class Posts {
 
+    private function getUpdatedRow ($conn, $row, $languages) {
+        $utils = new \Utils;
+
+        foreach ($languages as $lang) {
+            $row['lang'][$lang] = $utils -> get_language_row(
+                $conn,
+                $row['id'],
+                'SELECT * FROM posts__' . $lang . ' WHERE id = ?'
+            );
+        } // Set language object
+
+        $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']); // Set value as array
+        $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
+        $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
+        $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
+        $row['links'] = $row['links'] == '' ? [] : explode(",", $row['links']); // Set value as array
+        $row['template'] = $row['template'] == 1; // Set value as boolean
+        $row['approved'] = $row['approved'] == 1; // Set value as boolean
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        unset($row['deleted']); // Unset deleted attribute
+
+        return $row;
+    }
+
+    private function getRowSubData ($conn, $row, $languages) {
+        $row['sub_media'] = [];
+        $row['sub_attachments'] = [];
+        $row['sub_tags'] = [];
+        $row['sub_categories'] = [];
+        $row['sub_links'] = [];
+        $row['sub_author'] = [];
+
+        if ($row['media']) {
+            $uploads = new Uploads;
+            $row['sub_media'] = $uploads -> get($conn, [ 'ids' => $row['media'] ], [], $languages);
+        }
+        if ($row['attachments']) {
+            $uploads = new Uploads;
+            $row['sub_attachments'] = $uploads -> get($conn, [ 'ids' => $row['attachments'] ], [], $languages);
+        }
+        if ($row['tags']) {
+            $tags = new Tags;
+            $row['sub_tags'] = $tags -> get($conn, [ 'ids' => $row['tags'] ], []);
+        }
+        if ($row['categories']) {
+            $categories = new Categories;
+            $row['sub_categories'] = $categories -> get($conn, [ 'ids' => $row['categories'] ], [], $languages);
+        }
+        if ($row['links']) {
+            $row['sub_links'] = $row['links']; // TODO
+        }
+        if ($row['author']) {
+            $users = new Users;
+            $row['sub_author'] = $users -> get($conn, [ 'id' => $row['author'] ], []);
+        }
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params, $languages) {
         $response = [];
-        $utils = new \Utils;
 
         // prepare
         $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM posts WHERE deleted = ?');
@@ -20,27 +78,17 @@ class Posts {
         $result = $stmt -> get_result();
         $stmt -> close();
 
+        // request params
+        $rp_sub = $data['sub'];
+        if ($params['sub']) $rp_sub = $params['sub'];
+
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                foreach ($languages as $lang) {
-                    $row['lang'][$lang] = $utils -> get_language_row(
-                        $conn,
-                        $row['id'],
-                        'SELECT * FROM posts__' . $lang . ' WHERE id = ?'
-                    );
-                } // Set language object
-
-                $row['media'] = $row['media'] == '' ? [] : explode(",", $row['media']); // Set value as array
-                $row['attachments'] = $row['attachments'] == '' ? [] : explode(",", $row['attachments']); // Set value as array
-                $row['tags'] = $row['tags'] == '' ? [] : explode(",", $row['tags']); // Set value as array
-                $row['categories'] = $row['categories'] == '' ? [] : explode(",", $row['categories']); // Set value as array
-                $row['links'] = $row['links'] == '' ? [] : explode(",", $row['links']); // Set value as array
-                $row['template'] = $row['template'] == 1; // Set value as boolean
-                $row['approved'] = $row['approved'] == 1; // Set value as boolean
-                $row['active'] = $row['active'] == 1; // Set value as boolean
-                unset($row['deleted']); // Unset deleted attribute
-
-                $response[] = $row;
+                if ($rp_sub) {
+                    $response[] = self::getRowSubData($conn, self::getUpdatedRow($conn, $row, $languages), $languages);
+                } else {
+                    $response[] = self::getUpdatedRow($conn, $row, $languages);
+                }
             }
         }
 

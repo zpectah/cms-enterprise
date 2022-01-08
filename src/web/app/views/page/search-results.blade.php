@@ -7,7 +7,7 @@
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
                 'detail_url' => '/' . $result['name'],
-                'name' => $item['name'],
+                'name' => $result['name'],
             ])
             <br />
         @elseif($result['model'] == 'products')
@@ -16,7 +16,9 @@
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
                 'detail_url' => '/detail/products/' . $result['name'],
-                'name' => $item['name'],
+                'name' => $result['name'],
+                'price' => $result['item_price'],
+                'in_stock' => $result['in_stock'],
             ])
             <br />
         @elseif($result['model'] == 'posts')
@@ -25,7 +27,7 @@
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
                 'detail_url' => '/detail/posts/' . $result['name'],
-                'name' => $item['name'],
+                'name' => $result['name'],
             ])
             <br />
         @endif

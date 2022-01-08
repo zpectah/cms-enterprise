@@ -32,17 +32,18 @@ class RouteController {
         $model = $category['type'];
         $items = [];
         if ($model == 'posts') {
-            $posts = $dc -> get('Posts', [], [])['data'];
+            $posts = $dc -> get('Posts', [ 'sub' => true ], [])['data'];
             foreach ($posts as $post) {
                 $today = strtotime(date('Y-m-d H:i:s'));
                 $published = strtotime($post['published']);
                 if (in_array($category['id'], $post['categories'])
                     && $post['active']
+                    && $post['approved']
                     && ($today >= $published)
                 ) $items[] = $post;
             }
         } else if ($model == 'products') {
-            $products = $dc -> get('Products', [], [])['data'];
+            $products = $dc -> get('Products', [ 'sub' => true ], [])['data'];
             foreach ($products as $product) {
                 if (in_array($category['id'], $product['categories'])
                     && $product['active']
