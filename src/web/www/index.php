@@ -3,6 +3,7 @@ const PATH_ROOT = '../../';
 require PATH_ROOT . 'core/index.php';
 require PATH_ROOT . 'web/app/index.php';
 
+$as = new \service\AuthService;
 $view = new \app\controller\ViewController;
 ?>
 <!doctype html>
@@ -25,6 +26,7 @@ $view = new \app\controller\ViewController;
         window.APPENV = window.APPENV || '<?=(ENV)?>';
         window.APPTIMESTAMP = window.APPTIMESTAMP || '<?=(TIMESTAMP)?>';
         window.TMP_TOKEN = window.TMP_TOKEN || '<?=(TMP_TOKEN)?>';
+        window.MEMBER_TOKEN = window.MEMBER_TOKEN || '<?=($as -> get_member_token())?>';
     </script>
 </head>
 <body id="page">

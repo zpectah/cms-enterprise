@@ -7,12 +7,14 @@ class ApiRequest {
         $request_token = $_SERVER['HTTP_X_APP_TOKEN'];
         $user_token = $as -> get_user_token();
 
-        $is_valid = ($request_token !== '' && $request_token == $user_token);
+        return ($request_token !== '' && $request_token == $user_token);
+    }
+    private function is_request_member_authorized (): bool {
+        $as = new \service\AuthService;
+        $request_token = $_SERVER['HTTP_X_WEB_TOKEN'];
+        $member_token = $as -> get_member_token();
 
-        // TODO
-        // For web purpose should create another token
-
-        return $is_valid;
+        return ($request_token !== '' && $request_token == $member_token);
     }
 
     public function getResponse () {
@@ -24,6 +26,7 @@ class ApiRequest {
 
         // Request
         $request_is_authorized = self::is_request_authorized();
+        $request_is_member_authorized = self::is_request_member_authorized();
         $request_url_trimmed = ltrim( $_SERVER['REDIRECT_URL'], "/" );
         $request_url = explode( "/", $request_url_trimmed );
         $request_data_raw = json_decode(file_get_contents('php://input'));
@@ -172,12 +175,19 @@ class ApiRequest {
                     break;
 
                 case 'get_member_profile':
-                    $response = $dc -> get_member_profile($params);
+                    if ($request_is_member_authorized) {
+                        $response = $dc -> get_member_profile($params);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'update_member_profile':
-                    // TODO: conditions for member session
-                    $response = $dc -> member_update_profile($request_data);
+                    if ($request_is_member_authorized) {
+                        $response = $dc -> member_update_profile($request_data);
+                    } else {
+                        $response['status'] = 'unauthorized';
+                    }
                     break;
 
                 case 'member_login':
@@ -192,6 +202,7 @@ class ApiRequest {
                     $response = $dc -> member_lost_password($request_data);
                     break;
 
+                // Not used for now
                 case 'member_lost_password_reset':
                     $response = $dc -> member_lost_password_reset($request_data);
                     break;

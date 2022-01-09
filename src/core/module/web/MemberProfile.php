@@ -23,9 +23,13 @@ class MemberProfile {
 
     // Update profile data when user is logged in
     public function member_update_profile ($conn, $data): array {
+        $as = new AuthService;
+        $email = $as -> get_member_session();
         $Members = new Members;
+        $member = self::get_member_profile($conn, []);
+        $result = array_merge($member, $data, [ 'email' => $email ]);
 
-        return $Members -> update($conn, $data, []);
+        return $Members -> update($conn, $result, []);
     }
 
     // User check and log in

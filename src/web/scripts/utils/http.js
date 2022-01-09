@@ -1,6 +1,6 @@
 const init = {
 	headers: {
-		// 'X-App-Token': config.user_token,
+		'X-Web-Token': window.MEMBER_TOKEN,
 		'Content-Type': 'application/json',
 	},
 };

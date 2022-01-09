@@ -4,6 +4,7 @@ namespace app\controller;
 
 use controller\DataController;
 use eftec\bladeone\BladeOne;
+use service\AuthService;
 
 class ViewController {
 
@@ -326,6 +327,7 @@ class ViewController {
     }
     private function get_member_options ($pageData): array {
         $dc = new DataController;
+        $as = new AuthService;
         $token = ($pageData['url_attrs'][1] == 'token' && $pageData['url_attrs'][2]) ? $pageData['url_attrs'][2] : null;
         $request = $dc -> get('CmsRequests', [ 'token' => $token ], [])['data'];
         $member_object = $dc -> get_member_profile([]);
@@ -334,6 +336,7 @@ class ViewController {
         return [
             'lost_password_token' => $token,
             'lost_password_request' => $request,
+            'member_token' => $as -> get_member_token(),
             'member_logged_in' => $is_member_logged_in,
             'member' => $member_object,
         ];
@@ -446,6 +449,7 @@ class ViewController {
             'page_name' => $page_name,
             'page_url' => $utils -> getCurrentUrl(),
             'page_context' => $context,
+            'page_token_temporary' => TMP_TOKEN,
             'sidebar_widget' => $sidebar_widget,
 
             // Current page view

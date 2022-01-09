@@ -23,6 +23,8 @@ new Vue({
 		return {
 			lang: DEFAULT_LANGUAGE,
 			to: {},
+			tmpToken: window.TMP_TOKEN,
+			memberToken: window.MEMBER_TOKEN,
 		};
 	},
 	mounted: async function () {
