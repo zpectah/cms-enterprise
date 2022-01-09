@@ -4,6 +4,7 @@ import MembersLoginForm from '../components/Members/MembersLoginForm';
 import MembersLostPasswordForm from '../components/Members/MembersLostPasswordForm';
 import MembersLostPasswordConfirmForm from '../components/Members/MembersLostPasswordConfirmForm';
 import MembersProfileForm from '../components/Members/MembersProfileForm';
+import MemberLogoutButton from '../components/Members/MemberLogoutButton';
 
 const MembersMixin = {
 	components: {
@@ -13,6 +14,7 @@ const MembersMixin = {
 		'members-lost-password-form': MembersLostPasswordForm,
 		'members-lost-password-confirm-form': MembersLostPasswordConfirmForm,
 		'members-profile-form': MembersProfileForm,
+		'member-logout-button': MemberLogoutButton,
 	},
 	mounted: function () {},
 	methods: {},

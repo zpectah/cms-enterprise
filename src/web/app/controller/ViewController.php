@@ -328,11 +328,13 @@ class ViewController {
         $dc = new DataController;
         $token = ($pageData['url_attrs'][1] == 'token' && $pageData['url_attrs'][2]) ? $pageData['url_attrs'][2] : null;
         $request = $dc -> get('CmsRequests', [ 'token' => $token ], [])['data'];
-        $member_object = null;
+        $member_object = $dc -> get_member_profile([]);
+        $is_member_logged_in = $member_object['email'];
 
         return [
             'lost_password_token' => $token,
             'lost_password_request' => $request,
+            'member_logged_in' => $is_member_logged_in,
             'member' => $member_object,
         ];
     }

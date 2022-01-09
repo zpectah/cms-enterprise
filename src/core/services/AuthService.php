@@ -28,8 +28,8 @@ class AuthService {
         unset($_SESSION[SESSION_USER_NAME_PREFIX]);
 
         return [
-            // session_unset(),
-            // session_destroy()
+            $_SESSION[SESSION_USER_TOKEN_PREFIX],
+            $_SESSION[SESSION_USER_NAME_PREFIX],
         ];
     }
 
@@ -57,8 +57,8 @@ class AuthService {
         unset($_SESSION[SESSION_MEMBER_NAME_PREFIX]);
 
         return [
-            // session_unset(),
-            // session_destroy()
+            $_SESSION[SESSION_MEMBER_TOKEN_PREFIX],
+            $_SESSION[SESSION_MEMBER_NAME_PREFIX],
         ];
     }
 

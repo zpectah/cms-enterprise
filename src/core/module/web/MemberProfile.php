@@ -12,7 +12,7 @@ class MemberProfile {
 
     // Returns user profile object when logged in, else returns null
     public function get_member_profile ($conn, $params): array {
-        $response = false;
+        $response = [];
         $as = new AuthService;
         $email = $as -> get_member_session();
         $Members = new Members;
