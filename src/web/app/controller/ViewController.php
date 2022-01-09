@@ -18,6 +18,8 @@ class ViewController {
                 PATH_ROOT . 'web/app/views/content',
                 PATH_ROOT . 'web/app/views/component',
                 PATH_ROOT . 'web/app/views/component/ui',
+                PATH_ROOT . 'web/app/views/component/widget',
+                PATH_ROOT . 'web/app/views/component/list-item',
             ],
             PATH_ROOT . 'web/app/compiles'
         );
@@ -391,7 +393,7 @@ class ViewController {
         $with_sidebar = true;
         $sidebar_widget = [
             'search' => true,
-            'user' => true,
+            'member' => true,
             'last-posts' => true,
             'basket' => $pageData['page_name'] !== 'basket',
             'subscription' => true,
@@ -424,6 +426,7 @@ class ViewController {
             'detail_model' => $items['model'] ? $items['model'] : $singleDetailData['model'],
             'detail_data' => $pageData['page_object']['detail'] ? $pageData['page_object']['detail'] : $singleDetailData['data'],
             'detail_url_suffix' => '/detail',
+            'category_id' => $items['category_id'],
             // ... available only when category is in context |-->
             'detail_not_found' => $pageData['page_object']['should_be_detail'],
             'detail_index' => $pageData['page_object']['detail_index'],
@@ -464,8 +467,6 @@ class ViewController {
             'url_attrs' => $pageData['url_attrs'],
 
         ];
-
-        // TODO: dynamically merge data by detail or module options ...
 
         echo $this -> $blade -> run($layout_name, $render_data);
     }

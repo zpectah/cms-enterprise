@@ -53,4 +53,9 @@
     @if($page_context == 'page-category-detail')
         @include('component.detail-nav')
     @endif
+
+        @include('component.widget.comments-list', [
+            'model' => 'post',
+            'id' => $detail_data['id'],
+        ])
 </section>

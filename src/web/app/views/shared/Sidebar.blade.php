@@ -1,19 +1,19 @@
 <aside id="Sidebar">
     @if($sidebar_widget['search'])
-        @include('component.sidebar-search')
+        @include('component.widget.search-form')
     @endif
-    @if($sidebar_widget['user'])
-        @include('component.sidebar-members')
+    @if($sidebar_widget['member'])
+        @include('component.widget.member')
     @endif
     @if($sidebar_widget['basket'])
-        @include('component.sidebar-basket')
+        @include('component.widget.basket-list')
     @else
-        @include('component.sidebar-basket-tmp')
+        @include('component.widget.basket-temporary')
     @endif
     @if($sidebar_widget['last-posts'])
-        @include('component.sidebar-last-posts')
+        @include('component.widget.posts-last')
     @endif
     @if($sidebar_widget['subscription'])
-        @include('component.sidebar-members-subscribe')
+        @include('component.widget.member-subscribe')
     @endif
 </aside>

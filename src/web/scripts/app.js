@@ -6,6 +6,7 @@ import { DEFAULT_LANGUAGE } from './constants';
 // Mixins
 import BasketMixin from './mixins/Basket.mixin';
 import MembersMixin from './mixins/Members.mixin';
+import CommentsMixin from './mixins/Comments.mixin';
 
 // Components
 import demoComponent from './components/demoComponent';
@@ -14,7 +15,7 @@ import ContactForm from './components/ContactForm';
 // Vue init
 new Vue({
 	el: '#vue-app',
-	mixins: [BasketMixin, MembersMixin],
+	mixins: [BasketMixin, MembersMixin, CommentsMixin],
 	components: {
 		'demo-component': demoComponent,
 		'contact-form': ContactForm,

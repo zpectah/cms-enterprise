@@ -14,7 +14,7 @@
     <section>
         @foreach($list_items as $item)
             @if($list_model == 'products')
-                @include('component.list-item-product', [
+                @include('component.list-item.product', [
                     'id' => $item['id'],
                     'title' => $item['lang'][$lng]['title'],
                     'description' => $item['lang'][$lng]['description'],
@@ -26,7 +26,7 @@
                     'manager' => $item['sub_manager'],
                 ])
             @elseif($list_model == 'posts')
-                @include('component.list-item-post', [
+                @include('component.list-item.post', [
                     'id' => $item['id'],
                     'title' => $item['lang'][$lng]['title'],
                     'description' => $item['lang'][$lng]['description'],
@@ -38,4 +38,9 @@
             @endif
         @endforeach
     </section>
+
+    @include('component.widget.comments-list', [
+        'model' => 'category',
+        'id' => $category_id
+    ])
 @endif

@@ -54,6 +54,7 @@ class RouteController {
         return [
             'model' => $model,
             'items' => $items,
+            'category_id' => $category['id'],
         ];
     }
 

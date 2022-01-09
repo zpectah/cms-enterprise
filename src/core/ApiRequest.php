@@ -40,13 +40,16 @@ class ApiRequest {
             'id' => $_GET['id'],
             'name' => $_GET['name'],
             'email' => $_GET['email'],
-            'withPassword' => $_GET['withPassword'],
+            'withPassword' => $_GET['withPassword'], // TODO: rename globally to 'with_password'
             'token' => $_GET['token'],
             'parsed' => $_GET['parsed'],
             'lang' => $_GET['lang'],
             'sub' => $_GET['sub'],
             'ids' => $_GET['ids'],
             'check_exist' => $_GET['check_exist'],
+            'with_children' => $_GET['with_children'],
+            'assigned' => $_GET['assigned'],
+            'assigned_id' => $_GET['assigned_id'],
         ];
 
         // Switching and executing

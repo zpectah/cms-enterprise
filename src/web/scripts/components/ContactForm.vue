@@ -39,15 +39,14 @@
         >
           {{ t('label.input.content') }} *
         </label>
-        <input
-            type="text"
+        <textarea
             class="form-control"
             id="ContactForm_content"
             name="ContactForm_content"
             v-model="formModel.content"
             required
             :placeholder="t('placeholder.input.content')"
-        >
+        ></textarea>
       </div>
       <div>
         <div v-if="formSubmitMessage !== ''">{{ formSubmitMessageContext }} | {{ formSubmitMessage }}</div>

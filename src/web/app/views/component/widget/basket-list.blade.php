@@ -5,5 +5,3 @@
             btn-basket-target="/basket/list{{$lang['link_url_param']}}"
     ></basket-widget>
 </section>
-
-

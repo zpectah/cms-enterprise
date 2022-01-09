@@ -4,6 +4,16 @@ namespace model;
 
 class Comments {
 
+    private function getChildrenItem (): array {
+
+        return [];
+    }
+    private function getItemsChildren ($row, $items): array {
+
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params) {
         $response = [];
 
@@ -20,18 +30,36 @@ class Comments {
         $stmt -> close();
 
         // request params
-        $rp_assigned = $data['assigned'] or $params['assigned'];
-        $rp_assigned_id = $data['assigned_id'] or $params['assigned_id'];
+        $rp_assigned = $data['assigned'];
+        if ($params['assigned']) $rp_assigned = $params['assigned'];
+        $rp_assigned_id = $data['assigned_id'];
+        if ($params['assigned_id']) $rp_assigned_id = $params['assigned_id'];
+        $rp_with_children = $data['with_children'];
+        if ($params['with_children']) $rp_with_children = $params['with_children'];
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
                 // iterate by params
+
+                // TODO
+                $row['children'] = '...item children...';
+
                 if ($rp_assigned && $rp_assigned_id) {
-                    if ($rp_assigned == $row['assigned'] && $rp_assigned_id == $row['assigned_id']) $response[] = $row;
+                    if ($rp_assigned == $row['assigned'] && $rp_assigned_id == $row['assigned_id']) {
+                        $response[] = $row;
+                    }
                 } else {
                     $response[] = $row;
                 }
             }
+        }
+
+        if ($rp_with_children) {
+
+            // TODO
+            // iterate again and find children ...
+            // $response = $row;
+
         }
 
         return $response;

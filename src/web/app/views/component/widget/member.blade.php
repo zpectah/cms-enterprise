@@ -11,8 +11,8 @@
             </a>
             |
             <member-logout-button
-                label="{{$t('btn.log_out')}}"
-                target-path="{{$page_url}}"
+                    label="{{$t('btn.log_out')}}"
+                    target-path="{{$page_url}}"
             >
                 Loading member-logout-button...
             </member-logout-button>

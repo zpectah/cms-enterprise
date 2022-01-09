@@ -75,4 +75,9 @@
                     class="btn-sm btn-outline-success"
             ></basket-add-button>
     </div>
+
+            @include('component.widget.comments-list', [
+                'model' => 'product',
+                'id' => $detail_data['id'],
+            ])
 </section>

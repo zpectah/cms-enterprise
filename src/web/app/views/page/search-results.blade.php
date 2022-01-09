@@ -2,7 +2,7 @@
     <h1>Results for: {{$url_params['search']}}</h1>
     @foreach($search_results as $result)
         @if($result['model'] == 'pages')
-            @include('component.list-item-page', [
+            @include('component.list-item.page', [
                 'id' => $result['id'],
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
@@ -11,7 +11,7 @@
             ])
             <br />
         @elseif($result['model'] == 'products')
-            @include('component.list-item-product', [
+            @include('component.list-item.product', [
                 'id' => $result['id'],
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
@@ -22,7 +22,7 @@
             ])
             <br />
         @elseif($result['model'] == 'posts')
-            @include('component.list-item-post', [
+            @include('component.list-item.post', [
                 'id' => $result['id'],
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
