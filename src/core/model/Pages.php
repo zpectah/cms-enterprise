@@ -4,9 +4,24 @@ namespace model;
 
 class Pages {
 
+    private function getUpdatedRow ($conn, $row, $languages): array {
+        $utils = new \Utils;
+        foreach ($languages as $lang) {
+            $row['lang'][$lang] = $utils -> get_language_row(
+                $conn,
+                $row['id'],
+                'SELECT * FROM pages__' . $lang . ' WHERE id = ?'
+            );
+        } // Set language object
+        $row['page_elements'] = $row['page_elements'] == '' ? [] : explode(",", $row['page_elements']); // Set value as array
+        $row['active'] = $row['active'] == 1; // Set value as boolean
+        unset($row['deleted']); // Unset deleted attribute
+
+        return $row;
+    }
+
     public function get ($conn, $data, $params, $languages) {
         $response = [];
-        $utils = new \Utils;
 
         // prepare
         $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM pages WHERE deleted = ?');
@@ -22,18 +37,7 @@ class Pages {
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
-                foreach ($languages as $lang) {
-                    $row['lang'][$lang] = $utils -> get_language_row(
-                        $conn,
-                        $row['id'],
-                        'SELECT * FROM pages__' . $lang . ' WHERE id = ?'
-                    );
-                } // Set language object
-
-                $row['active'] = $row['active'] == 1; // Set value as boolean
-                unset($row['deleted']); // Unset deleted attribute
-
-                $response[] = $row;
+                $response[] = self::getUpdatedRow($conn, $row, $languages);
             }
         }
 
@@ -45,13 +49,14 @@ class Pages {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO pages (name, type, type_id, meta_robots, active, deleted) VALUES (?,?,?,?,?,?)');
-        $types = 'ssssii';
+        $query = ('INSERT INTO pages (name, type, type_id, meta_robots, page_elements, active, deleted) VALUES (?,?,?,?,?,?,?)');
+        $types = 'sssssii';
         $args = [
             $data['name'],
             $data['type'],
             $data['type_id'],
             $data['meta_robots'],
+            $data['page_elements'] ? implode(",", $data['page_elements']) : '',
             $data['active'],
             0
         ];
@@ -89,13 +94,14 @@ class Pages {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE pages SET name = ?, type = ?, type_id = ?, meta_robots = ?, active = ? WHERE id = ?');
-        $types = 'ssssii';
+        $query = ('UPDATE pages SET name = ?, type = ?, type_id = ?, meta_robots = ?, page_elements = ?, active = ? WHERE id = ?');
+        $types = 'sssssii';
         $args = [
             $data['name'],
             $data['type'],
             $data['type_id'],
             $data['meta_robots'],
+            $data['page_elements'] ? implode(",", $data['page_elements']) : '',
             $data['active'],
             $data['id']
         ];

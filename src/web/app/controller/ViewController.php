@@ -457,6 +457,7 @@ class ViewController {
             'description' => $pageData['page_object']['page']['lang'][$lng]['description'],
             'content' => $pageData['page_object']['page']['lang'][$lng]['content'],
             'view_with_sidebar' => $with_sidebar,
+            'elements' => $pageData['page_object']['page']['page_elements'],
 
             // Dynamic variables
             'url_params' => $pageData['url_params'],

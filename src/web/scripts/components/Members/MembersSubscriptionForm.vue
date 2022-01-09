@@ -62,7 +62,7 @@ module.exports = {
     },
     formValidController: function (model) {
       let valid = true;
-      this.formSubmitMessage = '';
+      // this.formSubmitMessage = '';
       this.formError = {};
       if (model.email === '' || model.email.length < 3 || !model.email.match(EMAIL_REGEX)) {
         valid = false;
@@ -82,7 +82,7 @@ module.exports = {
       await get(`/api/get_members?email=${master.email}&check_exist=true`).then((response) => {
         if (response.data && response.data.exist) {
           this.formSubmitMessageContext = 'error';
-          this.formSubmitMessage = 'Error: This user is already exist';
+          this.formSubmitMessage = this.t('msg.error.member_already_exist');
           this.processing = false;
         } else {
           master['type'] = 'subscriber';
@@ -91,11 +91,11 @@ module.exports = {
           post('/api/member_register', master).then((response) => {
             if (response.data && response.data.id !== 0) {
               this.formSubmitMessageContext = 'success';
-              this.formSubmitMessage = 'Success: Your registration was successfully';
+              this.formSubmitMessage = this.t('msg.success.registration_success');
               this.formModel = _.cloneDeep(blankModel);
             } else {
               this.formSubmitMessageContext = 'error';
-              this.formSubmitMessage = 'Error: Submitting unknown error, try again';
+              this.formSubmitMessage = this.t('msg.error.registration_error');
             }
             this.processing = false;
           });

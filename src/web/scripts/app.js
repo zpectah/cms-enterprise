@@ -3,14 +3,13 @@ import Vue from 'vue';
 import { get } from './utils/http';
 import { DEFAULT_LANGUAGE } from './constants';
 
-// Standalone components
-
 // Mixins
 import BasketMixin from './mixins/Basket.mixin';
 import MembersMixin from './mixins/Members.mixin';
 
 // Components
 import demoComponent from './components/demoComponent';
+import ContactForm from './components/ContactForm';
 
 // Vue init
 new Vue({
@@ -18,6 +17,7 @@ new Vue({
 	mixins: [BasketMixin, MembersMixin],
 	components: {
 		'demo-component': demoComponent,
+		'contact-form': ContactForm,
 	},
 	data: function () {
 		return {
@@ -29,11 +29,11 @@ new Vue({
 	},
 	mounted: async function () {
 		this.lang = this.$el.dataset.lang;
-		await get(
-			`/api/get_translations?parsed=true&lang=${this.$el.dataset.lang}`,
-		).then((response) => {
-			if (response.data) this.to = response.data;
-		});
+		await get(`/api/get_translations?parsed=true&lang=${this.lang}`).then(
+			(response) => {
+				if (response.data) this.to = response.data;
+			},
+		);
 	},
 	computed: {},
 	methods: {

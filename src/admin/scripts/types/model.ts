@@ -64,6 +64,7 @@ export interface PagesItemProps extends commonItemProps {
 	name: string;
 	type_id?: string;
 	meta_robots: string;
+	page_elements?: [];
 	lang: {
 		[k: string]: PagesItemLangProps;
 	};

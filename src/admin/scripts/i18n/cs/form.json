@@ -69,7 +69,8 @@
     "template": "Šablona",
     "subscription": "Odběr",
     "position": "Pozice",
-    "in_stock": "Je skladem"
+    "in_stock": "Je skladem",
+    "page_elements": "Prvky stránky"
   },
   "label": {
     "no_parent": "Bez rodiče",

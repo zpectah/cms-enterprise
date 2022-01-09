@@ -1,17 +1,17 @@
 <template>
   <section>
-    <form name="MembersLoginForm">
+    <form name="ContactForm">
       <div class="form-group mb-2">
         <label
-            for="MembersLoginForm_email"
+            for="ContactForm_email"
         >
           {{ t('label.input.email') }} *
         </label>
         <input
             type="email"
             class="form-control"
-            id="MembersLoginForm_email"
-            name="MembersLoginForm_email"
+            id="ContactForm_email"
+            name="ContactForm_email"
             v-model="formModel.email"
             required
             :placeholder="t('placeholder.input.email')"
@@ -19,18 +19,34 @@
       </div>
       <div class="form-group mb-2">
         <label
-            for="MembersLoginForm_password"
+            for="ContactForm_title"
         >
-          {{ t('label.input.password') }} *
+          {{ t('label.input.title') }} *
         </label>
         <input
-            type="password"
+            type="text"
             class="form-control"
-            id="MembersLoginForm_password"
-            name="MembersLoginForm_password"
-            v-model="formModel.password"
+            id="ContactForm_title"
+            name="ContactForm_title"
+            v-model="formModel.title"
             required
-            :placeholder="t('placeholder.input.password')"
+            :placeholder="t('placeholder.input.title')"
+        >
+      </div>
+      <div class="form-group mb-2">
+        <label
+            for="ContactForm_content"
+        >
+          {{ t('label.input.content') }} *
+        </label>
+        <input
+            type="text"
+            class="form-control"
+            id="ContactForm_content"
+            name="ContactForm_content"
+            v-model="formModel.content"
+            required
+            :placeholder="t('placeholder.input.content')"
         >
       </div>
       <div>
@@ -51,12 +67,13 @@
 
 <script>
 const _ = require('lodash');
-const { EMAIL_REGEX } = require('../../constants');
-const { get, post } = require('../../utils/http');
+const { EMAIL_REGEX } = require('../constants');
+const { post } = require('../utils/http');
 
 const blankModel = {
   email: '',
-  password: '',
+  title: '',
+  content: '',
 };
 
 module.exports = {
@@ -68,11 +85,16 @@ module.exports = {
       formSubmitMessageContext: 'error',
       formModel: _.cloneDeep(blankModel),
       processing: false,
-    }
+    };
   },
   props: {
     language: String,
-    targetPath: String,
+    profileEmail: String,
+  },
+  mounted: function () {
+    if (this.profileEmail) {
+      this.formModel.email = this.profileEmail;
+    }
   },
   methods: {
     t: function (key) {
@@ -90,43 +112,38 @@ module.exports = {
           this.formError['email'] = this.t('msg.error.input.required');
         }
       }
-      if (model.password === '' || model.password.length < 3) {
+      if (model.title === '' || model.title.length < 3) {
         valid = false;
-        this.formError['password'] = this.t('msg.error.input.required');
+        this.formError['title'] = this.t('msg.error.input.required');
+      }
+      if (model.content === '' || model.content.length < 3) {
+        valid = false;
+        this.formError['content'] = this.t('msg.error.input.required');
       }
       this.formValid = valid;
     },
-    onSubmit: function (e) {
+    onSubmit: async function (e) {
       e.preventDefault();
       this.processing = true;
       this.formSubmitMessage = '';
       const master = _.cloneDeep(this.formModel);
-      post('/api/member_login', master).then((response) => {
+      await post('/api/contact_form', master).then((response) => {
         switch (response.message) {
-          case 'member_login_success':
+          case 'message_sent':
+            this.formSubmitMessageContext = 'success';
+            this.formSubmitMessage = this.t(`msg.success.message_sent`);
             this.formModel = _.cloneDeep(blankModel);
-            window.location.href = this.targetPath;
             break;
 
-          case 'member_is_deleted':
+          case 'invalid_request':
             this.formSubmitMessageContext = 'error';
-            this.formSubmitMessage = this.t(`msg.error.member_is_deleted`);
-            break;
-
-          case 'member_password_not_match':
-            this.formSubmitMessageContext = 'error';
-            this.formSubmitMessage = this.t(`msg.error.member_password_not_match`);
-            break;
-
-          case 'member_not_active':
-            this.formSubmitMessageContext = 'error';
-            this.formSubmitMessage = this.t(`msg.error.member_not_active`);
+            this.formSubmitMessage = this.t(`msg.error.invalid_request`);
             break;
 
           default:
-          case 'member_not_found':
+          case 'unknown_error':
             this.formSubmitMessageContext = 'error';
-            this.formSubmitMessage = this.t(`msg.error.member_not_found`);
+            this.formSubmitMessage = this.t(`msg.error.unknown_error`);
             break;
 
         }

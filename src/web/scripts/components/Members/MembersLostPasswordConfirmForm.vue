@@ -66,7 +66,7 @@ module.exports = {
     },
     formValidController: function (model) {
       let valid = true;
-      this.formSubmitMessage = '';
+      // this.formSubmitMessage = '';
       this.formError = {};
       if (model.password === '' || model.password.length < 3) {
         valid = false;
@@ -85,31 +85,46 @@ module.exports = {
         await get(`/api/get_members?email=${master.email}&check_exist=true`).then((response) => {
           if (response.data && response.data.exist) {
             post('/api/member_create_new_password', master).then((response) => {
-              console.log('member_create_new_password', response);
-              // { message, email, row }
-              // TODO: response messages
-              //
-              if (response.data && response.data.id !== 0) {
-                this.formSubmitMessageContext = 'success';
-                this.formSubmitMessage = 'Success: Your registration was successfully';
+              switch(response.message) {
+                case 'member_password_reset_success':
+                  this.formSubmitMessageContext = 'success';
+                  this.formSubmitMessage = this.t('msg.success.member_password_reset_success');
+                  this.formModel = _.cloneDeep(blankModel);
+                  break;
 
+                case 'member_password_already_reset':
+                  this.formSubmitMessageContext = 'info';
+                  this.formSubmitMessage = this.t('msg.info.member_password_already_reset');
+                  break;
 
-                this.formModel = _.cloneDeep(blankModel);
-              } else {
-                this.formSubmitMessageContext = 'error';
-                this.formSubmitMessage = 'Error: Submitting unknown error, try again';
+                case 'token_not_found':
+                  this.formSubmitMessageContext = 'error';
+                  this.formSubmitMessage = this.t('msg.error.token_not_found');
+                  break;
+
+                case 'request_not_found':
+                  this.formSubmitMessageContext = 'error';
+                  this.formSubmitMessage = this.t('msg.error.request_not_found');
+                  break;
+
+                default:
+                case 'member_password_reset_error':
+                  this.formSubmitMessageContext = 'error';
+                  this.formSubmitMessage = this.t('msg.error.member_password_reset_error');
+                  break;
+
               }
               this.processing = false;
             });
           } else {
             this.formSubmitMessageContext = 'error';
-            this.formSubmitMessage = 'Error: This user is not exist';
+            this.formSubmitMessage = this.t('msg.error.member_not_exist');
             this.processing = false;
           }
         });
       } else {
         this.formSubmitMessageContext = 'error';
-        this.formSubmitMessage = 'Error: Unknown request';
+        this.formSubmitMessage = this.t('msg.error.unknown_request');
         this.processing = false;
       }
     },

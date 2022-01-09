@@ -5,6 +5,7 @@ namespace module\web;
 use model\CmsRequests;
 use model\Users;
 use model\Members;
+use module\admin\Settings;
 use service\AuthService;
 use service\EmailService;
 
@@ -81,7 +82,11 @@ class MemberProfile {
         $es = new EmailService;
         $Members = new Members;
         $CmsRequests = new CmsRequests;
+        $Settings = new Settings;
         $utils = new \Utils;
+
+        // Sender from settings
+        $sender = $Settings['form_email_sender'];
 
         // Form data
         $email = $data['email'];
@@ -102,7 +107,8 @@ class MemberProfile {
                     "Lost password request",
                     "<div>Confirm password reset<br /><a href='" . $confirm_url ."' target='_blank'>this link</a></div>",
                     null,
-                    'lost_password'
+                    'lost_password',
+                    $sender
                 );
                 $response['row'] = $CmsRequests -> create($conn, [
                     'type' => 'member',
@@ -167,7 +173,11 @@ class MemberProfile {
         $es = new EmailService;
         $Members = new Members;
         $CmsRequests = new CmsRequests;
+        $Settings = new Settings;
         $utils = new \Utils;
+
+        // Sender from settings
+        $sender = $Settings['form_email_sender'];
 
         // Form data
         $token = $data['token'];
@@ -186,7 +196,8 @@ class MemberProfile {
                             "New password",
                             "<div>This is your new password: <b>" . $tmp_password .  "</b><br /> Keep it safe, or change after login</div>",
                             null,
-                            'password_reset'
+                            'password_reset',
+                            $sender // TODO
                         );
                         $response['request'] = $CmsRequests -> update($conn, [
                             'status' => 2,

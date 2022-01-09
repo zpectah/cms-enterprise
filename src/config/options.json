@@ -10,7 +10,8 @@
       "type": ["page", "local", "external"]
     },
     "Pages": {
-      "type": ["default", "category"]
+      "type": ["default", "category"],
+      "elements": ["contact_form", "subscribe_form"]
     },
     "Posts": {
       "type": ["article", "blog", "media", "gallery", "event", "reference", "testimonial"]

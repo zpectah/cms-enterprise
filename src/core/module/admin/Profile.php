@@ -76,7 +76,11 @@ class Profile {
         $es = new EmailService;
         $Users = new Users;
         $CmsRequests = new CmsRequests;
+        $Settings = new Settings;
         $utils = new \Utils;
+
+        // Sender from settings
+        $sender = $Settings['form_email_sender'];
 
         // Form data
         $email = $data['email'];
@@ -97,7 +101,8 @@ class Profile {
                     "Lost password request",
                     "<div>Confirm password reset<br /><a href='" . $confirm_url ."' target='_blank'>this link</a></div>",
                     null,
-                    'lost_password'
+                    'lost_password',
+                    $sender
                 );
                 $response['row'] = $CmsRequests -> create($conn, [
                     'type' => 'user',
@@ -162,7 +167,11 @@ class Profile {
         $es = new EmailService;
         $Users = new Users;
         $CmsRequests = new CmsRequests;
+        $Settings = new Settings;
         $utils = new \Utils;
+
+        // Sender from settings
+        $sender = $Settings['form_email_sender'];
 
         // Form data
         $token = $data['token'];
@@ -181,7 +190,8 @@ class Profile {
                             "New password",
                             "<div>This is your new password: <b>" . $tmp_password .  "</b><br /> Keep it safe, or change after login</div>",
                             null,
-                            'password_reset'
+                            'password_reset',
+                            $sender
                         );
                         $response['request'] = $CmsRequests -> update($conn, [
                             'status' => 2,

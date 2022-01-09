@@ -104,6 +104,10 @@ const PagesDetailForm = ({
 		() => getOptionsList(config.options.common.meta_robots, t),
 		[detailData],
 	);
+	const getPageElementOptions = useCallback(
+		() => getOptionsList(config.options.model.Pages.elements, t),
+		[detailData],
+	);
 
 	const watchType = watch('type');
 
@@ -354,6 +358,29 @@ const PagesDetailForm = ({
 						);
 					})}
 					{/*  ============ \\ Language part section ============ */}
+				</Section>
+				<Section>
+					<Controller
+						name="page_elements"
+						control={control}
+						rules={{ required: true }}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Select
+									id={`${formOptions.id}__type.page_elements`}
+									labelId={`${formOptions.id}__type.page_elements`}
+									label={t('form:input.page_elements')}
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									options={getPageElementOptions()}
+									dataTestId={`${formOptions.id}.select.page_elements`}
+									multiple
+								/>
+							</Form.Row>
+						)}
+					/>
 				</Section>
 				{/*  ============ \\ Main form body ============ */}
 			</Form.Layout>

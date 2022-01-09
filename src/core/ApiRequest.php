@@ -883,11 +883,7 @@ class ApiRequest {
                     break;
 
                 case 'create_comments':
-                    if ($request_is_authorized) {
-                        $response = $dc -> create('Comments', $request_data);
-                    } else {
-                        $response['status'] = 'unauthorized';
-                    }
+                    $response = $dc -> create('Comments', $request_data);
                     break;
 
                 case 'update_comments':
@@ -928,6 +924,11 @@ class ApiRequest {
                     } else {
                         $response['status'] = 'unauthorized';
                     }
+                    break;
+
+                /********** Contact form (*) **********/
+                case 'contact_form':
+                    $response = $dc -> contact_form($request_data);
                     break;
 
             }

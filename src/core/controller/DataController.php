@@ -27,6 +27,7 @@ use module\admin\Settings;
 use module\admin\System;
 use module\web\MemberProfile;
 use mysqli;
+use service\EmailService;
 
 class DataController {
 
@@ -912,6 +913,35 @@ class DataController {
         }
 
         return $results;
+    }
+
+    /********** Contact form **********/
+    public function contact_form ($data): array {
+        $response = [
+            'email' => null,
+            'message' => 'unknown_error',
+        ];
+        $email = new EmailService;
+        $Settings = self::get_cms_settings([]);
+        $sender = $Settings['form_email_sender'];
+        $recipients = $Settings['form_email_recipients'];
+        if ($data['email'] && $data['title'] && $data['content']) {
+            foreach ($recipients as $recipient) {
+                $response['email'][] = $email -> sendStyledMessage(
+                    $recipient,
+                    $data['email'] . ": " . $data['title'],
+                    "<div>" . $data['content'] . "</div>",
+                    null,
+                    'contact_form',
+                    $sender,
+                );
+            }
+            $response['message'] = 'message_sent';
+        } else {
+            $response['message'] = 'invalid_request';
+        }
+
+        return $response;
     }
 
 }

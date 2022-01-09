@@ -242,7 +242,7 @@ module.exports = {
     },
     formValidController: function (model) {
       let valid = true;
-      this.formSubmitMessage = '';
+      // this.formSubmitMessage = '';
       this.formError = {};
       if (model.phone === '' || model.phone.length < 3) {
         valid = false;
@@ -268,7 +268,16 @@ module.exports = {
       this.formSubmitMessage = '';
       const master = _.cloneDeep(this.formModel);
       await post('/api/update_member_profile', master).then((response) => {
-        console.log('onSubmit', master, response);
+        if (response.rows === 1) {
+          this.formSubmitMessage = this.t('msg.success.update_success');
+          this.formSubmitMessageContext = 'success';
+        } else if (response.rows === 0) {
+          this.formSubmitMessage = this.t('msg.info.nothing_to_update');
+          this.formSubmitMessageContext = 'info';
+        } else {
+          this.formSubmitMessage = this.t('msg.error.process_error');
+          this.formSubmitMessageContext = 'error';
+        }
       });
     },
   },
