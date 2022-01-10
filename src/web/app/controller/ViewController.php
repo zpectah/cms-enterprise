@@ -14,12 +14,6 @@ class ViewController {
         $this -> $blade = new BladeOne(
             [
                 PATH_ROOT . 'web/app/views',
-                PATH_ROOT . 'web/app/views/shared',
-                PATH_ROOT . 'web/app/views/content',
-                PATH_ROOT . 'web/app/views/component',
-                PATH_ROOT . 'web/app/views/component/ui',
-                PATH_ROOT . 'web/app/views/component/widget',
-                PATH_ROOT . 'web/app/views/component/list-item',
             ],
             PATH_ROOT . 'web/app/compiles'
         );

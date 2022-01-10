@@ -4,17 +4,19 @@ namespace model;
 
 class Comments {
 
-    private function getChildrenItem (): array {
+    private function getItemsChildren ($parentId, $items): array {
+        $children = [];
+        foreach ($items as $item) {
+            if ($parentId == $item['parent']) {
+                $item['children'] = self::getItemsChildren($item['id'], $items);
+                $children[] = $item;
+            }
+        }
 
-        return [];
+        return $children;
     }
-    private function getItemsChildren ($row, $items): array {
 
-
-        return $row;
-    }
-
-    public function get ($conn, $data, $params) {
+    public function get ($conn, $data, $params): array {
         $response = [];
 
         // prepare
@@ -40,10 +42,6 @@ class Comments {
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
                 // iterate by params
-
-                // TODO
-                $row['children'] = '...item children...';
-
                 if ($rp_assigned && $rp_assigned_id) {
                     if ($rp_assigned == $row['assigned'] && $rp_assigned_id == $row['assigned_id']) {
                         $response[] = $row;
@@ -55,11 +53,14 @@ class Comments {
         }
 
         if ($rp_with_children) {
-
-            // TODO
-            // iterate again and find children ...
-            // $response = $row;
-
+            $response_new = [];
+            foreach ($response as $item) {
+                if ($item['parent'] == 0) {
+                    $item['children'] = self::getItemsChildren($item['id'], $response);
+                    $response_new[] = $item;
+                }
+            }
+            $response = $response_new;
         }
 
         return $response;
