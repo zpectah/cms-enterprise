@@ -14,49 +14,37 @@
         <div>
             {!!$detail_data['lang'][$lng]['content']!!}
         </div>
-        <div>
-            Related products
-            @foreach($detail_data['sub_related'] as $item)
-                <div>
-                    {{$item['name']}}
-                </div>
-            @endforeach
-        </div>
-        <div>sub_attachments
-            @foreach($detail_data['sub_attachments'] as $item)
-                <div>
-                    {{$item['name']}}
-                </div>
-            @endforeach
-        </div>
-        <div>gallery
-            @foreach($detail_data['sub_gallery'] as $item)
-                <div>
-                    {{$item['name']}}
-                </div>
-            @endforeach
-        </div>
-        <div>tags
-            @foreach($detail_data['sub_tags'] as $item)
-                <div>
-                    {{$item['name']}}
-                </div>
-            @endforeach
-        </div>
-        <div>categories
-            @foreach($detail_data['sub_categories'] as $item)
-                <div>
-                    {{$item['name']}}
-                </div>
-            @endforeach
-        </div>
-        <div>options
-            @foreach($detail_data['sub_options'] as $item)
-                <div>
-                    {{$item['name']}}
-                </div>
-            @endforeach
-        </div>
+
+            @include('component.widget.products-list', [
+                'widgetTitle' => 'Related products',
+                'widgetList' => $detail_data['sub_related'],
+            ])
+
+            @include('component.widget.uploads-list', [
+                'widgetTitle' => 'Sub attachments',
+                'widgetList' => $detail_data['sub_attachments'],
+            ])
+
+            @include('component.widget.image-list', [
+                'widgetTitle' => 'Sub gallery',
+                'widgetList' => $detail_data['sub_gallery'],
+            ])
+
+            @include('component.widget.tags-list', [
+                'widgetTitle' => 'Tags',
+                'widgetList' => $detail_data['sub_tags'],
+            ])
+
+            @include('component.widget.tags-list', [
+                'widgetTitle' => 'Categories',
+                'widgetList' => $detail_data['sub_categories'],
+            ])
+
+            @include('component.widget.product-options-list', [
+                'widgetTitle' => 'Product options',
+                'widgetList' => $detail_data['sub_options'],
+            ])
+
         <div>
             Manager: {{$detail_data['sub_manager']['email']}}
         </div>

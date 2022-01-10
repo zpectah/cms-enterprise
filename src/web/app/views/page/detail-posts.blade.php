@@ -12,52 +12,35 @@
         <div>
             {!!$detail_data['lang'][$lng]['content']!!}
         </div>
-            <div>sub_media
-                   @foreach($detail_data['sub_media'] as $item)
-                           <div>
-                               <img src="{{'/uploads/image/thumbnail/' . $item['file_name']}}" alt="{{$item['name']}}" style="max-width: 100%;height: auto;" />
-                           </div>
-                    @endforeach
-            </div>
-            <div>sub_attachments
-                <ul>
-                    @foreach($detail_data['sub_attachments'] as $item)
-                        <li>
-                            {{$item['file_name']}}
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <div>tags
-                <ul>
-                    @foreach($detail_data['sub_tags'] as $item)
-                        <li>
-                            {{$item['name']}}
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <div>categories
-                <ul>
-                    @foreach($detail_data['sub_categories'] as $item)
-                        <li>
-                            {{$item['name']}}
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <div>links
-                <ul>
-                    @foreach($detail_data['sub_links'] as $item)
-                        <li>
-                            {{$item}}
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <div>
-                    Author: {{$detail_data['sub_author']['email']}}
-            </div>
+
+        @include('component.widget.image-list', [
+            'widgetTitle' => 'Sub media',
+            'widgetList' => $detail_data['sub_media'],
+        ])
+
+        @include('component.widget.uploads-list', [
+            'widgetTitle' => 'Sub attachments',
+            'widgetList' => $detail_data['sub_attachments'],
+        ])
+
+        @include('component.widget.tags-list', [
+            'widgetTitle' => 'Tags',
+            'widgetList' => $detail_data['sub_tags'],
+        ])
+
+        @include('component.widget.tags-list', [
+            'widgetTitle' => 'Categories',
+            'widgetList' => $detail_data['sub_categories'],
+        ])
+
+        @include('component.widget.links-list', [
+            'widgetTitle' => 'Links',
+            'widgetList' => $detail_data['sub_links'],
+        ])
+
+        <div>
+                Author: {{$detail_data['sub_author']['email']}}
+        </div>
     @if($page_context == 'page-category-detail')
         @include('component.detail-nav')
     @endif
