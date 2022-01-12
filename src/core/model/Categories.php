@@ -4,7 +4,7 @@ namespace model;
 
 class Categories {
 
-    private function getUpdatedRow ($conn, $row, $languages) {
+    private function getUpdatedRow ($conn, $row, $languages): array {
         $utils = new \Utils;
         foreach ($languages as $lang) {
             $row['lang'][$lang] = $utils -> get_language_row(
@@ -21,9 +21,8 @@ class Categories {
         return $row;
     }
 
-    public function get ($conn, $data, $params, $languages) {
+    public function get ($conn, $data, $params, $languages): array {
         $response = [];
-        $utils = new \Utils;
 
         // prepare
         $query = ('/*' . MYSQLND_QC_ENABLE_SWITCH . '*/' . 'SELECT * FROM categories WHERE deleted = ?');
@@ -38,12 +37,17 @@ class Categories {
         $stmt -> close();
 
         // request params
-        $rp_id = $data['id'] or $params['id'];
+        $rp_id = $data['id'];
+        if ($params['id']) $rp_id = $params['id'];
+        $rp_ids = $data['ids'];
+        if ($params['ids']) $rp_ids = explode(",", $params['ids']);
 
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
                 if ($rp_id) {
                     if ($rp_id == $row['id']) $response = self::getUpdatedRow($conn, $row, $languages);
+                } else if ($rp_ids) {
+                    if (in_array($row['id'], $rp_ids)) $response[] = self::getUpdatedRow($conn, $row, $languages);
                 } else {
                     $response[] = self::getUpdatedRow($conn, $row, $languages);
                 }

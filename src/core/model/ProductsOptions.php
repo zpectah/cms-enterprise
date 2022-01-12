@@ -29,11 +29,28 @@ class ProductsOptions {
         // request params
         $rp_ids = $data['ids'];
         if ($params['ids']) $rp_ids = explode(",", $params['ids']);
-
+        $rp_ids_parsed = [];
+        if ($rp_ids) {
+            foreach ($rp_ids as $tem) {
+                $v = preg_split("/:/", $tem);
+                $rp_ids_parsed[] = [
+                    'id' => $v[0],
+                    'value' => $v[1],
+                ];
+            }
+        }
         if ($result -> num_rows > 0) {
             while($row = $result -> fetch_assoc()) {
                 if ($rp_ids) {
-                    if (in_array($row['id'], $rp_ids)) $response[] = self::getUpdatedRow($row);
+                    if (in_array($row['id'], $rp_ids)) {
+                        foreach ($rp_ids_parsed as $item) {
+                            if ($row['id'] == $item['id']) {
+                                $_row = self::getUpdatedRow($row);
+                                $_row['value'] = substr($item['value'], 1, -1);
+                                $response[] = $_row;
+                            }
+                        }
+                    }
                 } else {
                     $response[] = self::getUpdatedRow($row);
                 }

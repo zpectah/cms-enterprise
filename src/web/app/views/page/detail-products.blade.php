@@ -16,32 +16,33 @@
         </div>
 
             @include('component.widget.products-list', [
-                'widgetTitle' => 'Related products',
+                'widgetTitle' => $t('title.widget.products_related'),
                 'widgetList' => $detail_data['sub_related'],
             ])
 
             @include('component.widget.uploads-list', [
-                'widgetTitle' => 'Sub attachments',
+                'widgetTitle' => $t('title.widget.attachments'),
                 'widgetList' => $detail_data['sub_attachments'],
             ])
 
             @include('component.widget.image-list', [
-                'widgetTitle' => 'Sub gallery',
+                'widgetTitle' => $t('title.widget.gallery'),
                 'widgetList' => $detail_data['sub_gallery'],
             ])
 
             @include('component.widget.tags-list', [
-                'widgetTitle' => 'Tags',
+                'widgetTitle' => $t('title.widget.tags'),
                 'widgetList' => $detail_data['sub_tags'],
             ])
 
             @include('component.widget.tags-list', [
-                'widgetTitle' => 'Categories',
+                'widgetTitle' => $t('title.widget.categories'),
                 'widgetList' => $detail_data['sub_categories'],
+                'label' => 'title',
             ])
 
             @include('component.widget.product-options-list', [
-                'widgetTitle' => 'Product options',
+                'widgetTitle' => $t('title.widget.product_options'),
                 'widgetList' => $detail_data['sub_options'],
             ])
 

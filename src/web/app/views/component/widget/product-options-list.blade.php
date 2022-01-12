@@ -3,8 +3,9 @@
     <div>
         <ul>
             @foreach($widgetList as $item)
+                @set($key='option.' . $item['name'])
                 <li>
-                    {{$item['name']}} {{$item['value']}}
+                    {{$t($key)}}: <b>{{$item['value']}}</b>
                 </li>
             @endforeach
         </ul>

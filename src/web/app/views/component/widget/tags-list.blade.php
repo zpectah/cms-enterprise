@@ -4,7 +4,11 @@
         <ul>
             @foreach($widgetList as $item)
                 <li>
-                    {{$item['name']}}
+                    @if($label === 'title')
+                        {{$item['lang'][$lng]['title']}}
+                    @else
+                        {{$item['name']}}
+                    @endif
                 </li>
             @endforeach
         </ul>

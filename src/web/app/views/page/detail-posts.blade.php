@@ -14,27 +14,28 @@
         </div>
 
         @include('component.widget.image-list', [
-            'widgetTitle' => 'Sub media',
+            'widgetTitle' => $t('title.widget.media'),
             'widgetList' => $detail_data['sub_media'],
         ])
 
         @include('component.widget.uploads-list', [
-            'widgetTitle' => 'Sub attachments',
+            'widgetTitle' => $t('title.widget.attachments'),
             'widgetList' => $detail_data['sub_attachments'],
         ])
 
         @include('component.widget.tags-list', [
-            'widgetTitle' => 'Tags',
+            'widgetTitle' => $t('title.widget.tags'),
             'widgetList' => $detail_data['sub_tags'],
         ])
 
         @include('component.widget.tags-list', [
-            'widgetTitle' => 'Categories',
+            'widgetTitle' => $t('title.widget.categories'),
             'widgetList' => $detail_data['sub_categories'],
+            'label' => 'title',
         ])
 
         @include('component.widget.links-list', [
-            'widgetTitle' => 'Links',
+            'widgetTitle' => $t('title.widget.links'),
             'widgetList' => $detail_data['sub_links'],
         ])
 
