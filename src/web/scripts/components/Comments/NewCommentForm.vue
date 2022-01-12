@@ -58,7 +58,7 @@
         <button
             type="button"
             :disabled="!formValid"
-            @click="onSubmit"
+            @click="submitHandler"
         >
           {{ t('btn.submit_form') }}
         </button>
@@ -77,7 +77,7 @@ const blankModel = {
   title: '',
   content: '',
   assigned: '',
-  assigned_id: '',
+  assigned_id: 0,
   parent: 0,
   status: 1,
 };
@@ -98,6 +98,25 @@ module.exports = {
     profileEmail: String,
     assigned: String,
     assignedId: String,
+    parent: Number,
+    onSubmit: Function,
+    afterSubmit: Function,
+    parentTitle: String,
+  },
+  mounted: function () {
+    if (this.profileEmail) this.formModel.email = this.profileEmail;
+    if (this.parentTitle) this.formModel.title = `RE: ${this.parentTitle}`
+    this.formModel.parent = this.parent;
+    this.formModel.assigned = this.assigned;
+    this.formModel.assigned_id = Number(this.assignedId);
+  },
+  watch: {
+    'formModel': {
+      handler: function (nv, ov) {
+        this.formValidController(nv);
+      },
+      deep: true,
+    },
   },
   methods: {
     t: function (key) {
@@ -124,6 +143,21 @@ module.exports = {
         this.formError['content'] = this.t('msg.error.input.required');
       }
       this.formValid = valid;
+    },
+    submitHandler: function (e) {
+      this.processing = true;
+      this.formSubmitMessage = '';
+      const master = _.cloneDeep(this.formModel);
+      this.onSubmit(master).then((response) => {
+        if (response.data.id) {
+          this.formModel = _.cloneDeep(blankModel);
+        } else {
+          this.formSubmitMessageContext = 'error';
+          this.formSubmitMessage = this.t(`msg.error.request_error`);
+        }
+        this.processing = false;
+        this.afterSubmit(response);
+      });
     },
   },
 }
