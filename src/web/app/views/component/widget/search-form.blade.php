@@ -4,6 +4,9 @@
             method="get"
             class="d-flex"
     >
+        @if($lang['default'] !== $lng)
+            <input type="hidden" name="lang" value="{{$lng}}" />
+        @endif
         <input
                 type="search"
                 name="search"

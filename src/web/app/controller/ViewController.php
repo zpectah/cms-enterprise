@@ -283,7 +283,7 @@ class ViewController {
             $response['robots'] = 'none';
         } else if ($urlAttrs[0] == WEB_PAGE_KEYS['search']) {
             $response['title'] = self::get_t('page.title.search') . ' | ' . $pageData['settings']['web_meta_title'];
-            if ($pageData['url_params']['search']) $response['title'] = self::get_t('title.page.search-results') . ': ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
+            if ($pageData['url_params']['search']) $response['title'] = self::get_t('page.title.search_results') . ': ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
         } else if ($urlAttrs[0] == WEB_PAGE_KEYS['registration']) {
             $response['title'] = self::get_t('page.title.registration') . ' | ' . $pageData['settings']['web_meta_title'];

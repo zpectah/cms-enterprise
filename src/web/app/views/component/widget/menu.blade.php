@@ -17,14 +17,14 @@
                 @elseif($mi['type'] == 'local')
                     <a
                             class="nav-link {{$mi['is_selected'] ? 'active' : ''}}"
-                            href="{{$mi['path_url']}}{{$lang['link_url_param']}}"
+                            href="{{$mi['path_url']}}{{$urlPar}}"
                     >
                         {{$mi['lang'][$lang['current']]['label']}}
                     </a>
                 @else
                     <a
                             class="nav-link {{$mi['is_selected'] ? 'active' : ''}}"
-                            href="{{$mi['__path']}}{{$lang['link_url_param']}}"
+                            href="{{$mi['__path']}}{{$urlPar}}"
                     >
                         {{$mi['lang'][$lang['current']]['label']}}
                     </a>

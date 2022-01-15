@@ -2,7 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                display footer {{$project_name}}
+                display footer
+                <a
+                        class=""
+                        href="/{{$lang['link_url_param']}}"
+                >
+                    {{$project_name}}
+                </a>
             </div>
         </div>
     </div>

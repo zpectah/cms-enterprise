@@ -3,7 +3,7 @@
     <div>
         @foreach($get_posts_list(5) as $item)
         <div>
-            <a href="{{'/' . $common_options['page_keys']['detail'] . '/posts/' . $item['name']}}{{$lang['link_url_param']}}">
+            <a href="{{'/' . $common_options['page_keys']['detail'] . '/posts/' . $item['name']}}{{$urlPar}}">
                 {{$item['lang'][$lng]['title']}}
             </a>
         </div>

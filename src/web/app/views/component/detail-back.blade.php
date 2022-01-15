@@ -1,5 +1,5 @@
 <a
-        href="/{{$page_key}}{{$lang['link_url_param']}}"
+        href="/{{$page_key}}{{$urlPar}}"
 >
     {{$t('btn.back_to_list')}}
 </a>
