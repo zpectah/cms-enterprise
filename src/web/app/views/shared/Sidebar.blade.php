@@ -16,4 +16,11 @@
     @if($sidebar_widget['subscription'])
         @include('component.widget.member-subscribe')
     @endif
+    @if($sidebar_widget['menu'])
+        <!-- DEMO -->
+        @include('component.widget.menu', [
+            'menuTitle' => $menu['custom']['sidebar-menu']['lang'][$lng]['label'],
+            'menuItems' => $menu['custom']['sidebar-menu']['menu_items']
+        ])
+    @endif
 </aside>

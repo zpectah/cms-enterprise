@@ -53,7 +53,7 @@ class RouteController {
 
         return [
             'model' => $model,
-            'items' => $items,
+            'items' => array_reverse($items),
             'category_id' => $category['id'],
         ];
     }

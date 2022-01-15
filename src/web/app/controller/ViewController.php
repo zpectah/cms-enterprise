@@ -337,6 +337,27 @@ class ViewController {
             'member' => $member_object,
         ];
     }
+    private function get_posts_list ($limit, $offset): array {
+        $dc = new DataController;
+        $posts = $dc -> get('Posts', [], [])['data'];
+        $response_tmp = [];
+        $today = strtotime(date('Y-m-d H:i:s'));
+        foreach ($posts as $item) {
+            $published = strtotime($item['published']);
+            if ($item['active']
+                && $item['approved']
+                && ($today >= $published)
+            ) $response_tmp[] = $item;
+        }
+        $response_tmp = array_reverse($response_tmp);
+        if ($limit === 0) {
+            $response = $response_tmp;
+        } else {
+            $response = array_slice($response_tmp, $offset, $limit);
+        }
+
+        return $response;
+    }
 
 
     public function get_view_meta_data (): array {
@@ -391,6 +412,7 @@ class ViewController {
             'last-posts' => true,
             'basket' => $pageData['page_name'] !== 'basket',
             'subscription' => true,
+            'menu' => true,
         ];
 
         if ($pageData['page_object']['page']
@@ -414,6 +436,7 @@ class ViewController {
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
 
+            'get_posts_list' => function ($limit = 0, $offset = 0) { return self::get_posts_list($limit, $offset); },
             // List from page defined category & Detail data from list or single
             'list_model' => $items['model'],
             'list_items' => $items['items'],
