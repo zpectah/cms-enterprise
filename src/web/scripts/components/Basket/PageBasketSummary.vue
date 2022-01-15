@@ -17,11 +17,37 @@
             name="BasketSummaryForm_user_name"
             v-model="formModel.user_name"
             required
-            @keydown="(e) => onChange('user_name', e.target.value)"
-            @keyup="(e) => onChange('user_name', e.target.value)"
-            @change="(e) => onChange('user_name', e.target.value)"
-            @paste="(e) => onChange('user_name', e.target.value)"
             :placeholder="t('placeholder.input.user_name')"
+        >
+      </div>
+      <div class="form-group mb-2">
+        <label
+            for="BasketSummaryForm_company_name"
+        >
+          {{ t('label.input.company_name') }}
+        </label>
+        <input
+            type="text"
+            class="form-control"
+            id="BasketSummaryForm_company_name"
+            name="BasketSummaryForm_company_name"
+            v-model="formModel.company_name"
+            :placeholder="t('placeholder.input.company_name')"
+        >
+      </div>
+      <div class="form-group mb-2">
+        <label
+            for="BasketSummaryForm_company_id"
+        >
+          {{ t('label.input.company_id') }}
+        </label>
+        <input
+            type="text"
+            class="form-control"
+            id="BasketSummaryForm_company_id"
+            name="BasketSummaryForm_company_id"
+            v-model="formModel.company_id"
+            :placeholder="t('placeholder.input.company_id')"
         >
       </div>
 
@@ -38,10 +64,6 @@
             name="BasketSummaryForm_email"
             v-model="formModel.email"
             required
-            @keydown="(e) => onChange('email', e.target.value)"
-            @keyup="(e) => onChange('email', e.target.value)"
-            @change="(e) => onChange('email', e.target.value)"
-            @paste="(e) => onChange('email', e.target.value)"
             :placeholder="t('placeholder.input.email')"
         >
       </div>
@@ -59,98 +81,144 @@
             name="BasketSummaryForm_phone"
             v-model="formModel.phone"
             required
-            @keydown="(e) => onChange('phone', e.target.value)"
-            @keyup="(e) => onChange('phone', e.target.value)"
-            @change="(e) => onChange('phone', e.target.value)"
-            @paste="(e) => onChange('phone', e.target.value)"
             :placeholder="t('placeholder.input.phone')"
         >
       </div>
 
-      <div class="form-group mb-2">
-        <label
-            for="BasketSummaryForm_country"
-        >
-          {{ t('label.input.country') }} *
-        </label>
-        <input
-            type="text"
-            class="form-control"
-            id="BasketSummaryForm_country"
-            name="BasketSummaryForm_country"
-            v-model="formModel.country"
-            required
-            @keydown="(e) => onChange('country', e.target.value)"
-            @keyup="(e) => onChange('country', e.target.value)"
-            @change="(e) => onChange('country', e.target.value)"
-            @paste="(e) => onChange('country', e.target.value)"
-            :placeholder="t('placeholder.input.country')"
-        >
+      <div>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_country"
+          >
+            {{ t('label.input.country') }} *
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_country"
+              name="BasketSummaryForm_country"
+              v-model="formModel.country"
+              required
+              :placeholder="t('placeholder.input.country')"
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_city"
+          >
+            {{ t('label.input.city') }} *
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_city"
+              name="BasketSummaryForm_city"
+              v-model="formModel.city"
+              required
+              :placeholder="t('placeholder.input.city')"
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_address"
+          >
+            {{ t('label.input.address') }} *
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_address"
+              name="BasketSummaryForm_address"
+              v-model="formModel.address"
+              required
+              :placeholder="t('placeholder.input.address')"
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_zip"
+          >
+            {{ t('label.input.zip') }} *
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_zip"
+              name="BasketSummaryForm_zip"
+              v-model="formModel.zip"
+              required
+              :placeholder="t('placeholder.input.zip')"
+          >
+        </div>
       </div>
-
-      <div class="form-group mb-2">
-        <label
-            for="BasketSummaryForm_city"
-        >
-          {{ t('label.input.city') }} *
-        </label>
-        <input
-            type="text"
-            class="form-control"
-            id="BasketSummaryForm_city"
-            name="BasketSummaryForm_city"
-            v-model="formModel.city"
-            required
-            @keydown="(e) => onChange('city', e.target.value)"
-            @keyup="(e) => onChange('city', e.target.value)"
-            @change="(e) => onChange('city', e.target.value)"
-            @paste="(e) => onChange('city', e.target.value)"
-            :placeholder="t('placeholder.input.city')"
-        >
+      <br />
+      <hr />
+      <div>
+        <h3>{{ t('title.basket.delivery_information') }}</h3>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_delivery_country"
+          >
+            {{ t('label.input.country') }}
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_delivery_country"
+              name="BasketSummaryForm_delivery_country"
+              v-model="formModel.delivery_country"
+              :placeholder="t('placeholder.input.country')"
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_delivery_city"
+          >
+            {{ t('label.input.city') }}
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_delivery_city"
+              name="BasketSummaryForm_delivery_city"
+              v-model="formModel.delivery_city"
+              :placeholder="t('placeholder.input.city')"
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_delivery_address"
+          >
+            {{ t('label.input.address') }}
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_delivery_address"
+              name="BasketSummaryForm_delivery_address"
+              v-model="formModel.delivery_address"
+              :placeholder="t('placeholder.input.address')"
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label
+              for="BasketSummaryForm_delivery_zip"
+          >
+            {{ t('label.input.zip') }}
+          </label>
+          <input
+              type="text"
+              class="form-control"
+              id="BasketSummaryForm_delivery_zip"
+              name="BasketSummaryForm_delivery_zip"
+              v-model="formModel.delivery_zip"
+              :placeholder="t('placeholder.input.zip')"
+          >
+        </div>
       </div>
-
-      <div class="form-group mb-2">
-        <label
-            for="BasketSummaryForm_address"
-        >
-          {{ t('label.input.address') }} *
-        </label>
-        <input
-            type="text"
-            class="form-control"
-            id="BasketSummaryForm_address"
-            name="BasketSummaryForm_address"
-            v-model="formModel.address"
-            required
-            @keydown="(e) => onChange('address', e.target.value)"
-            @keyup="(e) => onChange('address', e.target.value)"
-            @change="(e) => onChange('address', e.target.value)"
-            @paste="(e) => onChange('address', e.target.value)"
-            :placeholder="t('placeholder.input.address')"
-        >
-      </div>
-
-      <div class="form-group mb-2">
-        <label
-            for="BasketSummaryForm_zip"
-        >
-          {{ t('label.input.zip') }} *
-        </label>
-        <input
-            type="text"
-            class="form-control"
-            id="BasketSummaryForm_zip"
-            name="BasketSummaryForm_zip"
-            v-model="formModel.zip"
-            required
-            @keydown="(e) => onChange('zip', e.target.value)"
-            @keyup="(e) => onChange('zip', e.target.value)"
-            @change="(e) => onChange('zip', e.target.value)"
-            @paste="(e) => onChange('zip', e.target.value)"
-            :placeholder="t('placeholder.input.zip')"
-        >
-      </div>
-
+      <br />
+      <hr />
+      <br />
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_description"
@@ -162,14 +230,9 @@
             id="BasketSummaryForm_description"
             v-model="formModel.description"
             rows="5"
-            @keydown="(e) => onChange('description', e.target.value)"
-            @keyup="(e) => onChange('description', e.target.value)"
-            @change="(e) => onChange('description', e.target.value)"
-            @paste="(e) => onChange('description', e.target.value)"
             :placeholder="t('placeholder.input.description')"
         ></textarea>
       </div>
-
       <br />
       <hr />
       <h3>{{ t('title.basket.payment_delivery') }}</h3>
@@ -187,7 +250,7 @@
             required
             @change="(e) => onChange('payment', e.target.value)"
         >
-          <option selected disabled value="''">{{ t('placeholder.input.payment') }}</option>
+          <option selected disabled value="">{{ t('placeholder.input.payment') }}</option>
           <option
               v-for="item in options.payments"
               v-bind:key="item.value"
@@ -209,7 +272,7 @@
             required
             @change="(e) => onChange('delivery', e.target.value)"
         >
-          <option selected disabled value="''">{{ t('placeholder.input.delivery') }}</option>
+          <option selected disabled value="">{{ t('placeholder.input.delivery') }}</option>
           <option
               v-for="item in options.deliveries"
               v-bind:key="item.value"
@@ -254,9 +317,32 @@
 </template>
 
 <script>
+const _ = require('lodash');
 const { storage } = require('../../../../../utils/utils');
 const { get } = require('../../utils/http');
 const { STORAGE_KEY_BASKET_SUMMARY, EMAIL_REGEX } = require('../../constants');
+
+const blankModel = {
+  payment: '',
+  delivery: '',
+  user_name: '',
+  email: '',
+  phone: '',
+  country: '',
+  city: '',
+  address: '',
+  zip: '',
+  description: '',
+  //
+  //
+  company_name: '',
+  company_id: '',
+
+  delivery_country: '',
+  delivery_city: '',
+  delivery_address: '',
+  delivery_zip: '',
+};
 
 module.exports = {
   data: function () {
@@ -267,18 +353,7 @@ module.exports = {
       },
       formValid: false,
       formError: {},
-      formModel: {
-        payment: '',
-        delivery: '',
-        user_name: '',
-        email: '',
-        phone: '',
-        country: '',
-        city: '',
-        address: '',
-        zip: '',
-        description: '',
-      },
+      formModel: _.cloneDeep(blankModel),
       storage_items: this.$parent.basket_items,
       no_items: this.$parent.basket_items.length === 0,
       _deliveries: [],
@@ -328,6 +403,7 @@ module.exports = {
     },
     formController: function (model) {
       let valid = true;
+      let touched = false;
       this.formError = {};
       if (model.user_name === '' || model.user_name.length < 3) {
         valid = false;
@@ -370,10 +446,10 @@ module.exports = {
         this.formError['zip'] = this.t('msg.error.input.required');
       }
       this.formValid = valid;
-    },
-    onChange: function (name, value) {
-      const model_string = JSON.stringify(this.formModel);
-      storage.set(STORAGE_KEY_BASKET_SUMMARY, model_string);
+
+      const old_state = storage.get(STORAGE_KEY_BASKET_SUMMARY);
+      const new_state = JSON.stringify(this.formModel);
+      if (old_state !== new_state) storage.set(STORAGE_KEY_BASKET_SUMMARY, new_state);
     },
     getItemsWeight: function () {
       let weight = 0;

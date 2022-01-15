@@ -261,7 +261,49 @@ const OrdersDetailForm = ({
 						)}
 					/>
 				</Section>
-				<Section>
+				<Section title={t('form:section.title.company')}>
+					<Controller
+						name="company_name"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__company_name`}
+									label={t('form:input.company_name')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.company_name`}
+									disabled={is_closed}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="company_id"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__company_id`}
+									label={t('form:input.company_id')}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.company_id`}
+									disabled={is_closed}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section title={t('form:section.title.contactInformation')}>
 					<Controller
 						name="country"
 						control={control}
@@ -337,6 +379,88 @@ const OrdersDetailForm = ({
 									label={t('form:input.zip')}
 									responsiveWidth={'35%'}
 									dataTestId={`${formOptions.id}.input.zip`}
+									disabled={is_closed}
+								/>
+							</Form.Row>
+						)}
+					/>
+				</Section>
+				<Section title={t('form:section.title.deliveryInformation')}>
+					<Controller
+						name="delivery_country"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__delivery_country`}
+									label={t('form:input.country')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.delivery_country`}
+									disabled={is_closed}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="delivery_city"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__delivery_city`}
+									label={t('form:input.city')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.delivery_city`}
+									disabled={is_closed}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="delivery_address"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__delivery_address`}
+									label={t('form:input.address')}
+									responsiveWidth={'75%'}
+									dataTestId={`${formOptions.id}.input.delivery_address`}
+									disabled={is_closed}
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name="delivery_zip"
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Input.Text
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__delivery_zip`}
+									label={t('form:input.zip')}
+									responsiveWidth={'35%'}
+									dataTestId={`${formOptions.id}.input.delivery_zip`}
 									disabled={is_closed}
 								/>
 							</Form.Row>

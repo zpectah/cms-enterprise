@@ -47,11 +47,17 @@ class Orders {
                     delivery,
                     payment,
                     description,
+                    company_name,
+                    company_id,
+                    delivery_country,
+                    delivery_city,
+                    delivery_address,
+                    delivery_zip,
                     items,
                     price_total,
                     status
-                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $types = 'sssssssssssssdi';
+                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $types = 'sssssssssssssssssssdi';
         $args = [
             $data['type'],
             $data['name'],
@@ -65,6 +71,12 @@ class Orders {
             $data['delivery'],
             $data['payment'],
             $data['description'],
+            $data['company_name'],
+            $data['company_id'],
+            $data['delivery_country'],
+            $data['delivery_city'],
+            $data['delivery_address'],
+            $data['delivery_zip'],
             $data['items'] ? implode(",", $data['items']) : '',
             $data['price_total'],
             1
@@ -101,11 +113,17 @@ class Orders {
                     delivery = ?, 
                     payment = ?, 
                     description = ?, 
+                    company_name = ?, 
+                    company_id = ?, 
+                    delivery_country = ?, 
+                    delivery_city = ?, 
+                    delivery_address = ?, 
+                    delivery_zip = ?, 
                     items = ?, 
                     price_total = ?, 
                     status = ?
                 WHERE id = ?');
-        $types = 'sssssssssssssdii';
+        $types = 'sssssssssssssssssssdii';
         $args = [
             $data['type'],
             $data['name'],
@@ -119,6 +137,12 @@ class Orders {
             $data['delivery'],
             $data['payment'],
             $data['description'],
+            $data['company_name'],
+            $data['company_id'],
+            $data['delivery_country'],
+            $data['delivery_city'],
+            $data['delivery_address'],
+            $data['delivery_zip'],
             $data['items'] ? implode(",", $data['items']) : '',
             $data['price_total'],
             $data['status'],

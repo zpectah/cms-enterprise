@@ -70,7 +70,9 @@
     "subscription": "Odběr",
     "position": "Pozice",
     "in_stock": "Je skladem",
-    "page_elements": "Prvky stránky"
+    "page_elements": "Prvky stránky",
+    "company_name": "Název společnosti",
+    "company_id": "ID společnosti"
   },
   "label": {
     "no_parent": "Bez rodiče",
@@ -85,7 +87,10 @@
       "linksAndSources": "Odkazy a zdroje",
       "details": "Podrobnosti",
       "products": "Produkty",
-      "productsOptions": "Možnosti produktu"
+      "productsOptions": "Možnosti produktu",
+      "company": "Firma",
+      "contactInformation": "Kontaktní údaje",
+      "deliveryInformation": "Dodací údaje"
     }
   },
   "messages": {

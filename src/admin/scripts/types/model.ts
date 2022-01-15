@@ -201,6 +201,14 @@ export interface OrdersItemProps {
 	delivery: string;
 	payment: string;
 	description: string;
+	//
+	company_name: string;
+	company_id: string;
+	delivery_country: string;
+	delivery_city: string;
+	delivery_address: string;
+	delivery_zip: string;
+	//
 	items: string[];
 	price_total: number;
 	status: number;
