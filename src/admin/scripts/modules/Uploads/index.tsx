@@ -86,22 +86,60 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	};
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-	const detailSubmitHandler = (data: UploadsItemProps) => {
+	// const detailSubmitHandler = (data: UploadsItemProps, count?: number) => {
+	// 	const master: UploadsItemProps = _.cloneDeep(data);
+	// 	setProcessing(true);
+	// 	if (master.id == 'new') {
+	// 		// reformat data before save
+	// 		master.name = master.name.split(' ').join('-');
+	// 		createUploads(master).then((response) => {
+	// 			reloadUploads();
+	// 			createToasts({
+	// 				title: t('messages:success.itemCreated'),
+	// 				context: 'success',
+	// 				timeout: TOASTS_TIMEOUT_DEFAULT,
+	// 			});
+	// 			setProcessing(false);
+	// 		});
+	// 	} else {
+	// 		updateUploads(master).then((response) => {
+	// 			reloadUploads();
+	// 			closeDetailHandler();
+	// 			createToasts({
+	// 				title: t('messages:success.itemUpdated', { count: 1 }),
+	// 				context: 'success',
+	// 				timeout: TOASTS_TIMEOUT_DEFAULT,
+	// 			});
+	// 			setProcessing(false);
+	// 		});
+	// 	}
+	// };
+	const detailSubmitHandler = (data: UploadsItemProps, count?: number) => {
 		const master: UploadsItemProps = _.cloneDeep(data);
+		const counter = count;
 		setProcessing(true);
-		if (master.id == 'new') {
+		if (count && master.id == 'new') {
 			// reformat data before save
 			master.name = master.name.split(' ').join('-');
+			console.log('count', count);
 			createUploads(master).then((response) => {
-				reloadUploads();
 				createToasts({
 					title: t('messages:success.itemCreated'),
 					context: 'success',
 					timeout: TOASTS_TIMEOUT_DEFAULT,
 				});
-				setProcessing(false);
+				if (count === 1) {
+					reloadUploads();
+					setProcessing(false);
+					if (counter > 1)
+						createToasts({
+							title: t('messages:success.itemsCreated'),
+							context: 'success',
+							timeout: TOASTS_TIMEOUT_DEFAULT,
+						});
+				}
 			});
-		} else {
+		} else if (master.id > 0) {
 			updateUploads(master).then((response) => {
 				reloadUploads();
 				closeDetailHandler();
@@ -198,6 +236,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 									languageList={Settings?.language_active}
 									languageDefault={Settings?.language_default}
 									onCreateCallback={createNewCallback}
+									isProcessing={isProcessing}
 								/>
 							) : (
 								<UploadsDetailForm

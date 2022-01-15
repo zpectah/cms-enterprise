@@ -23,13 +23,14 @@ import checkInputDuplicates from '../../utils/checkInputDuplicates';
 
 interface UploadsDetailNewFormProps {
 	detailData: UploadsItemProps;
-	onSubmit: (data: UploadsItemProps, e: any) => void;
+	onSubmit: (data: UploadsItemProps, count?: number) => void;
 	onSubmitError: (error: any, e: any) => void;
 	detailOptions: {};
 	onCancel: (dirty: boolean) => void;
 	languageList: string[];
 	languageDefault: string;
 	onCreateCallback: () => void;
+	isProcessing: boolean;
 }
 
 const UploadsDetailNewForm = ({
@@ -41,6 +42,7 @@ const UploadsDetailNewForm = ({
 	languageList = config.tmp.languageList,
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
+	isProcessing,
 }: UploadsDetailNewFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
@@ -55,8 +57,10 @@ const UploadsDetailNewForm = ({
 	};
 	const submitQueue = () => {
 		let length = sources.length;
+		let counter = length;
 		sources.map((source, index) => {
-			onSubmit(source, null);
+			onSubmit(source, counter);
+			counter = counter - 1;
 			if (index == length - 1) {
 				setSources([]);
 				cancelHandler();

@@ -1,6 +1,7 @@
 {
   "success": {
     "itemCreated": "Položka byla vytvořena",
+    "itemsCreated": "Všechny položky byly vtvořeny",
     "itemUpdated_one": "Položka byla aktualizována",
     "itemUpdated_few": "{{count}} Položky byly aktualizovány",
     "itemUpdated_other": "{{count}} Položek bylo aktualizováno",

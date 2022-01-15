@@ -254,8 +254,11 @@ const Uploader: React.FC<UploaderProps> = ({
 	};
 	const removeFromQueue = (index: number) => {
 		let tmp = [...fileList];
+		let tmp_raw = [...rawFileList];
 		tmp.splice(index, 1);
+		tmp_raw.splice(index, 1);
 		setFileList(tmp);
+		setRawFileList(tmp_raw);
 		onChange(tmp, formsValid);
 	};
 	const renderForm = (file: any, index: number) => (
