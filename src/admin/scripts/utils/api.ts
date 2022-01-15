@@ -13,7 +13,7 @@ export const get = async (url: string) => {
 		method: 'GET',
 		...init,
 	});
-	return response.json();
+	return response?.json();
 };
 
 export const post = async (url: string, data: any) => {
@@ -24,7 +24,7 @@ export const post = async (url: string, data: any) => {
 		body: JSON.stringify(data),
 	});
 
-	return response.json();
+	return response?.json();
 };
 
 export const postRaw = async (url: string, data: any) => {
@@ -36,4 +36,4 @@ export const postRaw = async (url: string, data: any) => {
 	});
 };
 
-export const fetcher = (url) => fetch(url, init).then((res) => res.json());
+export const fetcher = (url) => fetch(url, init).then((res) => res?.json());

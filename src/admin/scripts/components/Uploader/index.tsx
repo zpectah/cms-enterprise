@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import Stack from '@mui/material/Stack';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styled from 'styled-components';
@@ -12,6 +13,8 @@ import { Button } from '../ui';
 import ImageCropper from './ImageCropper';
 import UploadsItemForm from './UploadsItemForm';
 import { getLanguagesFields } from '../../utils/detail';
+import { useToasts } from '../../hooks/common';
+import { UPLOAD_IMAGE_LIMIT_B, UPLOAD_FILE_LIMIT_B } from '../../constants';
 
 const HiddenDropWrapper = styled.label`
 	width: 100%;
@@ -84,7 +87,6 @@ interface UploaderProps {
 	onChange: (sources: any[], valid: boolean) => void;
 	onReset?: () => void;
 	onSubmit?: () => void;
-	accept?: string;
 	aspect?: number;
 	withForm?: boolean;
 	language?: string;
@@ -98,7 +100,6 @@ const Uploader: React.FC<UploaderProps> = ({
 	onChange,
 	onReset,
 	onSubmit,
-	accept,
 	aspect,
 	withForm,
 	language = config.tmp.languageDefault,
@@ -106,7 +107,9 @@ const Uploader: React.FC<UploaderProps> = ({
 	widthHeading = true,
 	multiple = true,
 }) => {
-	const { t } = useTranslation(['common', 'component', 'message']);
+	const { t } = useTranslation(['common', 'component', 'messages']);
+	const dispatch = useDispatch();
+	const { createErrorToast } = useToasts(dispatch);
 	const [dragOver, setDragOver] = useState(false);
 	const [rawFileList, setRawFileList] = useState([]);
 	const [fileList, setFileList] = useState([]);
@@ -116,14 +119,32 @@ const Uploader: React.FC<UploaderProps> = ({
 		type: 'file',
 		name: 'FileUploaderInput',
 		id: 'FileUploaderInput',
-		accept: accept,
 		ref: inputFileRef,
 		multiple: multiple,
 		onChange: (e: any) => {
 			let tmp,
 				files = [...e.target?.files];
 			if (files) {
-				tmp = files.map((file) => getBlobSource(file));
+				tmp = [];
+				files.map((file) => {
+					const ext = file.name.split('.').pop().toLowerCase();
+					const type = getFileType(ext);
+					if (type !== 'undefined') {
+						if (type == 'image') {
+							if (file.size <= UPLOAD_IMAGE_LIMIT_B) {
+								tmp.push(getBlobSource(file));
+							} else {
+								createErrorToast(t('messages:error.fileOverSizeLimit'));
+							}
+						} else if (file.size <= UPLOAD_FILE_LIMIT_B) {
+							tmp.push(getBlobSource(file));
+						} else {
+							createErrorToast(t('messages:error.fileOverSizeLimit'));
+						}
+					} else {
+						createErrorToast(t('messages:error.fileNotAccepted'));
+					}
+				});
 				setRawFileList(tmp);
 			}
 		},
@@ -136,7 +157,26 @@ const Uploader: React.FC<UploaderProps> = ({
 				files = [...e.dataTransfer.files];
 			setDragOver(false);
 			if (files) {
-				tmp = files.map((file) => getBlobSource(file));
+				tmp = [];
+				files.map((file) => {
+					const ext = file.name.split('.').pop().toLowerCase();
+					const type = getFileType(ext);
+					if (type !== 'undefined') {
+						if (type == 'image') {
+							if (file.size <= UPLOAD_IMAGE_LIMIT_B) {
+								tmp.push(getBlobSource(file));
+							} else {
+								createErrorToast(t('messages:error.fileOverSizeLimit'));
+							}
+						} else if (file.size <= UPLOAD_FILE_LIMIT_B) {
+							tmp.push(getBlobSource(file));
+						} else {
+							createErrorToast(t('messages:error.fileOverSizeLimit'));
+						}
+					} else {
+						createErrorToast(t('messages:error.fileNotAccepted'));
+					}
+				});
 				if (!multiple) {
 					let n_tmp = [tmp[0]];
 					setRawFileList(n_tmp);
@@ -194,18 +234,7 @@ const Uploader: React.FC<UploaderProps> = ({
 	};
 	const getBlobSource = async (file) => {
 		const blob = await fileUtils.toBase64(file);
-		let tmp_file;
-		if (accept) {
-			if (file.type.includes(accept.replace('*', ''))) {
-				tmp_file = getFileObject(blob, file);
-			} else {
-				console.warn(t('message:error.fileNotAccepted'));
-			}
-		} else {
-			tmp_file = getFileObject(blob, file);
-		}
-
-		return tmp_file;
+		return getFileObject(blob, file);
 	};
 	const resetHandler = () => {
 		setRawFileList([]);
@@ -247,6 +276,7 @@ const Uploader: React.FC<UploaderProps> = ({
 		window.removeEventListener('drop', dragEvents.onDrop);
 	};
 	const handleSources = () => {
+		console.log('rawFileList', rawFileList);
 		Promise.all(rawFileList).then((result) => {
 			setFileList(result);
 			onChange(result, formsValid);

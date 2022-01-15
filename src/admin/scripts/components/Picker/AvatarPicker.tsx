@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -10,6 +11,9 @@ import Stack from '@mui/material/Stack';
 import ImageCropper from '../Uploader/ImageCropper';
 import { file as fileUtils } from '../../../../../utils/utils';
 import { getElTestAttr } from '../../utils/tests';
+import { getFileType } from '../../utils/getFileType';
+import { useToasts } from '../../hooks/common';
+import { UPLOAD_IMAGE_LIMIT_B } from '../../constants';
 
 const OuterWrapper = styled.div<{ size: string; isValue: boolean }>`
 	width: ${(props) => props.size};
@@ -97,7 +101,9 @@ const AvatarPicker = ({
 	onChange,
 	size = '100px',
 }: NewAvatarPickerProps) => {
-	const { t } = useTranslation(['common', 'component', 'message']);
+	const { t } = useTranslation(['common', 'components', 'messages']);
+	const dispatch = useDispatch();
+	const { createErrorToast } = useToasts(dispatch);
 	const [valueInit, setValueInit] = useState<unknown>(value);
 	const [newValue, setNewValue] = useState<unknown>(null);
 	const [tmpValue, setTmpValue] = useState<unknown>(null);
@@ -112,11 +118,23 @@ const AvatarPicker = ({
 		accept: 'image/*',
 		ref: inputFileRef,
 		onChange: (e: any) => {
-			let tmp,
+			let tmp = [],
 				files = [...e.target?.files];
 			if (files) {
-				tmp = files.map((file) => getBlobSource(file));
-				setRawFile(tmp);
+				files.map((file) => {
+					const ext = file.name.split('.').pop().toLowerCase();
+					const type = getFileType(ext);
+					if (type == 'image') {
+						if (file.size <= UPLOAD_IMAGE_LIMIT_B) {
+							tmp.push(getBlobSource(file));
+						} else {
+							createErrorToast(t('messages:error.fileOverSizeLimit'));
+						}
+					} else {
+						createErrorToast(t('messages:error.fileNotAccepted'));
+					}
+				});
+				if (tmp.length > 0) setRawFile(tmp);
 			}
 		},
 	};
@@ -124,12 +142,24 @@ const AvatarPicker = ({
 		onDrop: (e: any) => {
 			e.stopPropagation();
 			e.preventDefault();
-			let tmp,
+			let tmp = [],
 				files = [...e.dataTransfer.files];
 			setDragOver(false);
 			if (files) {
-				tmp = files.map((file) => getBlobSource(file));
-				setRawFile(tmp);
+				files.map((file) => {
+					const ext = file.name.split('.').pop().toLowerCase();
+					const type = getFileType(ext);
+					if (type == 'image') {
+						if (file.size <= UPLOAD_IMAGE_LIMIT_B) {
+							tmp.push(getBlobSource(file));
+						} else {
+							createErrorToast(t('messages:error.fileOverSizeLimit'));
+						}
+					} else {
+						createErrorToast(t('messages:error.fileNotAccepted'));
+					}
+				});
+				if (tmp.length > 0) setRawFile(tmp);
 			}
 		},
 		onDragOver: (e: any) => {
@@ -155,17 +185,7 @@ const AvatarPicker = ({
 	};
 
 	const getBlobSource = async (file) => {
-		const blob = await fileUtils.toBase64(file);
-		let tmp_file;
-		if (!file.type.includes('image')) {
-			console.warn(t('message:error.fileNotAccepted'));
-
-			return;
-		} else {
-			tmp_file = blob;
-		}
-
-		return tmp_file;
+		return await fileUtils.toBase64(file);
 	};
 
 	const openDialogHandler = () => {
@@ -227,6 +247,7 @@ const AvatarPicker = ({
 			<Dialog
 				isOpen={dialogOpen}
 				onClose={cancelHandler}
+				titleChildren={<>{t('components:AvatarPicker.title')}</>}
 				footerChildren={
 					<>
 						<Button

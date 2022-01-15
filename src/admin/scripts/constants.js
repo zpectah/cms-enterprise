@@ -41,6 +41,8 @@ export const ORDER_STATUS_NUMS = {
 	2: 'confirmed',
 	3: 'deleted',
 };
+export const UPLOAD_IMAGE_LIMIT_B = 10000000;
+export const UPLOAD_FILE_LIMIT_B = 25000000;
 export const IMAGE_CROP_OPTIONS = [
 	{
 		label: '1:1',

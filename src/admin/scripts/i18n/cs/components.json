@@ -47,5 +47,8 @@
       "openComments": "Otevřít komentáře",
       "closeComments": "Zavřít komentáře"
     }
+  },
+  "AvatarPicker": {
+    "title": "Nový avatar"
   }
 }

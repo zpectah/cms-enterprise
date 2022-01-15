@@ -31,6 +31,7 @@ interface UploadsDetailNewFormProps {
 	languageDefault: string;
 	onCreateCallback: () => void;
 	isProcessing: boolean;
+	uploadCounter: number;
 }
 
 const UploadsDetailNewForm = ({
@@ -43,6 +44,7 @@ const UploadsDetailNewForm = ({
 	languageDefault = config.tmp.languageDefault,
 	onCreateCallback,
 	isProcessing,
+	uploadCounter,
 }: UploadsDetailNewFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);

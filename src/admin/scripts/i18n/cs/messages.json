@@ -13,7 +13,9 @@
   },
   "error": {
     "unauthorizedAccess": "Neautorizovaný přístup",
-    "profileUpdateError": "Došlo k chybě při ukládání profilu, pravděpodobně je obrázek příliš velký, zkuste prosím znovu"
+    "profileUpdateError": "Došlo k chybě při ukládání profilu, pravděpodobně je obrázek příliš velký, zkuste prosím znovu",
+    "fileNotAccepted": "Nepodporovaný soubor",
+    "fileOverSizeLimit": "Soubor je příliš veliký"
   },
   "info": {
     "menuMustBeCreated": "Pro vytváření položek musí být menu nejdříve uloženo"

@@ -39,6 +39,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	const [confirmDialogData, setConfirmDialogData] =
 		useState<selectedArrayProps>([]);
 	const [isProcessing, setProcessing] = useState<boolean>(false);
+	const [uploadCounter, setUploadCounter] = useState<number>(0);
 	const { createToasts, createErrorToast } = useToasts(dispatch);
 	const { Settings } = useSettings();
 	const { Profile } = useProfile();
@@ -86,34 +87,6 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 	};
 	const itemSelectHandler = (selected: readonly string[]) =>
 		setSelectedItems(selected);
-	// const detailSubmitHandler = (data: UploadsItemProps, count?: number) => {
-	// 	const master: UploadsItemProps = _.cloneDeep(data);
-	// 	setProcessing(true);
-	// 	if (master.id == 'new') {
-	// 		// reformat data before save
-	// 		master.name = master.name.split(' ').join('-');
-	// 		createUploads(master).then((response) => {
-	// 			reloadUploads();
-	// 			createToasts({
-	// 				title: t('messages:success.itemCreated'),
-	// 				context: 'success',
-	// 				timeout: TOASTS_TIMEOUT_DEFAULT,
-	// 			});
-	// 			setProcessing(false);
-	// 		});
-	// 	} else {
-	// 		updateUploads(master).then((response) => {
-	// 			reloadUploads();
-	// 			closeDetailHandler();
-	// 			createToasts({
-	// 				title: t('messages:success.itemUpdated', { count: 1 }),
-	// 				context: 'success',
-	// 				timeout: TOASTS_TIMEOUT_DEFAULT,
-	// 			});
-	// 			setProcessing(false);
-	// 		});
-	// 	}
-	// };
 	const detailSubmitHandler = (data: UploadsItemProps, count?: number) => {
 		const master: UploadsItemProps = _.cloneDeep(data);
 		const counter = count;
@@ -121,7 +94,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 		if (count && master.id == 'new') {
 			// reformat data before save
 			master.name = master.name.split(' ').join('-');
-			console.log('count', count);
+			setUploadCounter(count);
 			createUploads(master).then((response) => {
 				createToasts({
 					title: t('messages:success.itemCreated'),
@@ -237,6 +210,7 @@ const UploadsModule = ({}: UploadsModuleProps) => {
 									languageDefault={Settings?.language_default}
 									onCreateCallback={createNewCallback}
 									isProcessing={isProcessing}
+									uploadCounter={uploadCounter}
 								/>
 							) : (
 								<UploadsDetailForm

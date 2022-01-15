@@ -9,8 +9,18 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import styled from 'styled-components';
 
 import { getElTestAttr } from '../../../utils/tests';
+
+const CloseButton = styled(IconButton)`
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	color: ${(props) => props.theme.palette.anthracite};
+`;
 
 export interface DialogProps {
 	isOpen?: boolean;
@@ -70,20 +80,14 @@ const Dialog: React.FC<DialogProps> = ({
 					)}
 					<DialogContent dividers={dividers}>{children}</DialogContent>
 					{footerChildren && <DialogActions>{footerChildren}</DialogActions>}
-					<IconButton
-						aria-label="close"
-						onClick={onClose}
-						sx={{
-							position: 'absolute',
-							right: 8,
-							top: 8,
-							color: (theme) => theme.palette.grey[500],
-						}}
-						{...getElTestAttr('dialog.close')}
-					>
-						<CloseIcon />
-					</IconButton>
 				</div>
+				<CloseButton
+					aria-label="close"
+					onClick={onClose}
+					{...getElTestAttr('dialog.close')}
+				>
+					<CloseIcon />
+				</CloseButton>
 			</MuiDialog>
 		</>
 	);
