@@ -34,6 +34,7 @@ const SESSION_USER_TOKEN_PREFIX =                         'cms_enterprise_token'
 const SESSION_MEMBER_NAME_PREFIX =                        'cms_enterprise_member';                                      // Admin user session key
 const SESSION_MEMBER_TOKEN_PREFIX =                       'cms_enterprise_member_token';                                // Admin user token session key
 define( "PATH_UPLOADS",                                   PATH_ROOT . $JSON_PROJECT['path']['uploads'] );
+define( "UPLOADS_PATH",                                   '/' . $JSON_PROJECT['path']['uploads'] );
 define( "PATH_LOGS",                                      PATH_ROOT . $JSON_PROJECT['path']['logs'] );
 define( "PATH_ASSETS",                                    PATH_ROOT . $JSON_PROJECT['path']['assets'] );
 define( "UPLOADS_IMAGE_FORMATS",                          $JSON_OPTIONS['model']['Uploads']['image']['format'] );
@@ -70,3 +71,8 @@ define("WEB_VIEW", [
     'scripts' =>                                          CFG_ENV['web']['scripts'],
     'hash' =>                                             $utils -> getRandomString(16, 'lower'),
 ]);
+define("TEMPLATE_ROOT_PATH",                              PATH_ROOT . $JSON_PROJECT['web']['templates_root']);
+define("TEMPLATE_COMPILED_PATH",                          PATH_ROOT . $JSON_PROJECT['web']['templates_compiled']);
+define("DEFAULT_UNITS",                                   $JSON_PROJECT['units']);
+define("WEB_PAGE_KEYS",                                   $JSON_PROJECT['web']['page_keys']);
+define("WEB_PAGE_BASKET_KEYS",                            $JSON_PROJECT['web']['page_basket_keys']);

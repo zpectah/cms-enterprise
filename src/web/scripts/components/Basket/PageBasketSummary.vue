@@ -159,7 +159,7 @@
           <label
               for="BasketSummaryForm_delivery_country"
           >
-            {{ t('label.input.country') }}
+            {{ t('label.input.country') }} *
           </label>
           <input
               type="text"
@@ -168,13 +168,14 @@
               name="BasketSummaryForm_delivery_country"
               v-model="formModel.delivery_country"
               :placeholder="t('placeholder.input.country')"
+              required
           >
         </div>
         <div class="form-group mb-2">
           <label
               for="BasketSummaryForm_delivery_city"
           >
-            {{ t('label.input.city') }}
+            {{ t('label.input.city') }} *
           </label>
           <input
               type="text"
@@ -183,13 +184,14 @@
               name="BasketSummaryForm_delivery_city"
               v-model="formModel.delivery_city"
               :placeholder="t('placeholder.input.city')"
+              required
           >
         </div>
         <div class="form-group mb-2">
           <label
               for="BasketSummaryForm_delivery_address"
           >
-            {{ t('label.input.address') }}
+            {{ t('label.input.address') }} *
           </label>
           <input
               type="text"
@@ -198,13 +200,14 @@
               name="BasketSummaryForm_delivery_address"
               v-model="formModel.delivery_address"
               :placeholder="t('placeholder.input.address')"
+              required
           >
         </div>
         <div class="form-group mb-2">
           <label
               for="BasketSummaryForm_delivery_zip"
           >
-            {{ t('label.input.zip') }}
+            {{ t('label.input.zip') }} *
           </label>
           <input
               type="text"
@@ -213,6 +216,7 @@
               name="BasketSummaryForm_delivery_zip"
               v-model="formModel.delivery_zip"
               :placeholder="t('placeholder.input.zip')"
+              required
           >
         </div>
       </div>
@@ -248,7 +252,6 @@
             id="BasketSummaryForm_payment"
             v-model="formModel.payment"
             required
-            @change="(e) => onChange('payment', e.target.value)"
         >
           <option selected disabled value="">{{ t('placeholder.input.payment') }}</option>
           <option
@@ -270,7 +273,6 @@
             id="BasketSummaryForm_delivery"
             v-model="formModel.delivery"
             required
-            @change="(e) => onChange('delivery', e.target.value)"
         >
           <option selected disabled value="">{{ t('placeholder.input.delivery') }}</option>
           <option
@@ -333,11 +335,8 @@ const blankModel = {
   address: '',
   zip: '',
   description: '',
-  //
-  //
   company_name: '',
   company_id: '',
-
   delivery_country: '',
   delivery_city: '',
   delivery_address: '',
@@ -359,6 +358,18 @@ module.exports = {
       _deliveries: [],
       _payments: [],
     };
+  },
+  props: {
+    priceUnit: String,
+    weightUnit: String,
+    btnNextLinkTarget: String,
+    btnPrevLinkTarget: String,
+    memberEmail: String,
+    memberName: String,
+    memberAddress: String,
+    memberCity: String,
+    memberCountry: String,
+    memberZip: String,
   },
   mounted: async function () {
     const storage_model = storage.get(STORAGE_KEY_BASKET_SUMMARY);
@@ -388,14 +399,26 @@ module.exports = {
         this.options.payments = tmp;
       }
     });
+    if (this.memberEmail) this.formModel.email = this.memberEmail;
+    if (this.memberName) this.formModel.user_name = this.memberName;
+    if (this.memberAddress) {
+      this.formModel.address = this.memberAddress;
+      this.formModel.delivery_address = this.memberAddress;
+    }
+    if (this.memberCity) {
+      this.formModel.city = this.memberCity;
+      this.formModel.delivery_city = this.memberCity;
+    }
+    if (this.memberCountry) {
+      this.formModel.country = this.memberCountry;
+      this.formModel.delivery_country = this.memberCountry;
+    }
+    if (this.memberZip) {
+      this.formModel.zip = this.memberZip;
+      this.formModel.delivery_zip = this.memberZip;
+    }
     if (storage_model) this.formModel = JSON.parse(storage_model);
     if (this.formModel) this.formController(this.formModel);
-  },
-  props: {
-    priceUnit: String,
-    weightUnit: String,
-    btnNextLinkTarget: String,
-    btnPrevLinkTarget: String,
   },
   methods: {
     t: function (key) {
@@ -403,7 +426,6 @@ module.exports = {
     },
     formController: function (model) {
       let valid = true;
-      let touched = false;
       this.formError = {};
       if (model.user_name === '' || model.user_name.length < 3) {
         valid = false;
@@ -445,6 +467,24 @@ module.exports = {
         valid = false;
         this.formError['zip'] = this.t('msg.error.input.required');
       }
+
+      if (model.delivery_country === '' || model.delivery_country.length < 3) {
+        valid = false;
+        this.formError['delivery_country'] = this.t('msg.error.input.required');
+      }
+      if (model.delivery_city === '' || model.delivery_city.length < 3) {
+        valid = false;
+        this.formError['delivery_city'] = this.t('msg.error.input.required');
+      }
+      if (model.delivery_address === '' || model.delivery_address.length < 3) {
+        valid = false;
+        this.formError['delivery_address'] = this.t('msg.error.input.required');
+      }
+      if (model.delivery_zip === '' || model.delivery_zip.length < 3) {
+        valid = false;
+        this.formError['delivery_zip'] = this.t('msg.error.input.required');
+      }
+
       this.formValid = valid;
 
       const old_state = storage.get(STORAGE_KEY_BASKET_SUMMARY);

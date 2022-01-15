@@ -15,7 +15,7 @@
                 'id' => $result['id'],
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
-                'detail_url' => '/detail/products/' . $result['name'],
+                'detail_url' => '/' . $common_options['page_keys']['detail'] . '/products/' . $result['name'],
                 'name' => $result['name'],
                 'price' => $result['item_price'],
                 'in_stock' => $result['in_stock'],
@@ -26,7 +26,7 @@
                 'id' => $result['id'],
                 'title' => $result['lang'][$lng]['title'],
                 'description' => $result['lang'][$lng]['description'],
-                'detail_url' => '/detail/posts/' . $result['name'],
+                'detail_url' => '/' . $common_options['page_keys']['detail'] . '/posts/' . $result['name'],
                 'name' => $result['name'],
             ])
             <br />

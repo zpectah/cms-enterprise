@@ -5,7 +5,7 @@
         <br />
         @foreach($get_posts_list(5) as $item)
         <div>
-            <a href="{{'/detail/posts/' . $item['name']}}{{$lang['link_url_param']}}">
+            <a href="{{'/' . $common_options['page_keys']['detail'] . '/posts/' . $item['name']}}{{$lang['link_url_param']}}">
                 {{$item['lang'][$lng]['title']}}
             </a>
         </div>

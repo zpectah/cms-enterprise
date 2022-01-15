@@ -1,6 +1,6 @@
 <section>
     <form
-            action="/search"
+            action="/{{$common_options['page_keys']['search']}}"
             method="get"
             class="d-flex"
     >

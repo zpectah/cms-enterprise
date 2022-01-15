@@ -6,12 +6,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-import {
-	ROUTES,
-	ROUTE_SUFFIX,
-	DEFAULT_UNITS,
-	ORDER_STATUS_NUMS,
-} from '../../constants';
+import config from '../../config';
+import { ROUTES, ROUTE_SUFFIX, ORDER_STATUS_NUMS } from '../../constants';
 import TileBase from './TileBase';
 import { useOrders } from '../../hooks/model';
 import { OrdersItemProps } from '../../types/model';
@@ -26,7 +22,7 @@ const OrdersLastTile = ({ itemsShow = 4 }: OrdersLastTileProps) => {
 	const { t } = useTranslation(['common', 'types', 'units']);
 	const history = useHistory();
 	const [listItems, setListItems] = useState<OrdersItemProps[]>([]);
-
+	const defaultUnits = config.project.units;
 	const setItemsListData = () => {
 		let tmp = Orders ? Orders.slice(itemsShow * -1) : [];
 		setListItems(tmp.reverse());
@@ -53,7 +49,7 @@ const OrdersLastTile = ({ itemsShow = 4 }: OrdersLastTileProps) => {
 									<ListItemText
 										primary={item.name}
 										secondary={`${item.price_total} ${t(
-											`units.${DEFAULT_UNITS.price}`,
+											`units.${defaultUnits.price}`,
 										)} | ${t(`status.${ORDER_STATUS_NUMS[item.status]}`)}`}
 									/>
 								</ListItemButton>

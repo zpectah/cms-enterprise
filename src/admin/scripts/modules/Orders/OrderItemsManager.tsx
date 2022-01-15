@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { DEFAULT_UNITS } from '../../constants';
+import config from '../../config';
 import { useProducts } from '../../hooks/model';
 import { Form, Input, IconButton } from '../../components/ui';
 import Picker from '../../components/Picker';
@@ -65,6 +65,7 @@ const OrderItemsManager = ({
 	const [newProduct, setNewProduct] = useState(newProductModel);
 	const [totalItems, setTotalItems] = useState(0);
 	const [totalPrice, setTotalPrice] = useState(0);
+	const defaultUnits = config.project.units;
 
 	const findProductDetail = (id: number | string) => {
 		return Products?.find((item) => item.id == id);
@@ -177,7 +178,7 @@ const OrderItemsManager = ({
 							inputProps: { min: 0 },
 							startAdornment: (
 								<InputAdornment position="start">
-									{t(`units.${DEFAULT_UNITS.price}`)}
+									{t(`units.${defaultUnits.price}`)}
 								</InputAdornment>
 							),
 						}}
@@ -281,7 +282,7 @@ const OrderItemsManager = ({
 					<Stack spacing={2} direction="row" alignItems="top">
 						<span>{t('components:OrderItemsManager.label.price')}</span>
 						<StyledTotalPrice>
-							{totalPrice} <span>{t(`units.${DEFAULT_UNITS.price}`)}</span>
+							{totalPrice} <span>{t(`units.${defaultUnits.price}`)}</span>
 						</StyledTotalPrice>
 					</Stack>
 				</Stack>

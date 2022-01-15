@@ -12,10 +12,8 @@ class ViewController {
 
     function __construct () {
         $this -> $blade = new BladeOne(
-            [
-                PATH_ROOT . 'web/app/views',
-            ],
-            PATH_ROOT . 'web/app/compiles'
+            TEMPLATE_ROOT_PATH,
+            TEMPLATE_COMPILED_PATH
         );
     }
 
@@ -52,7 +50,7 @@ class ViewController {
         $cms_settings = $dc -> get_cms_settings([]);
         $page_attr = $urlAttrs[0];
         $page_object = null;
-        $page_name = $page_attr ? $page_attr : 'error-404';
+        $page_name = $page_attr ? $page_attr : WEB_PAGE_KEYS['error-404'];
         $page_layout = 'default';
         $model_name = null;
         if ($page_attr) {
@@ -64,7 +62,7 @@ class ViewController {
                 if ($route_object['page']['type'] == 'product') $model_name = 'Products';
             }
         } else {
-            $page_name = 'home';
+            $page_name = WEB_PAGE_KEYS['home'];
         }
 
         return [
@@ -214,43 +212,43 @@ class ViewController {
         return $response;
     }
     private function get_static_page_data ($pageName, $pageData, $detailData, $items): array {
-        if ($pageName == 'home') { // Static page: Home
+        if ($pageName == WEB_PAGE_KEYS['home']) { // Static page: Home
             $response = [
                 'name' => 'page.home',
                 'layout' => 'default',
                 'context' => 'page-static',
             ];
-        } else if ($pageName == 'basket') { // Static page: Market basket
+        } else if ($pageName == WEB_PAGE_KEYS['basket']) { // Static page: Market basket
             $response = [
                 'name' => 'page.basket',
                 'layout' => 'default',
                 'context' => 'page-basket',
             ];
-        } else if ($pageName == 'search') { // Static page: Search results
+        } else if ($pageName == WEB_PAGE_KEYS['search']) { // Static page: Search results
             $response = [
                 'name' => 'page.search-results',
                 'layout' => 'default',
                 'context' => 'page-search',
             ];
-        } else if ($pageName == 'profile') { // Static page: Members profile
+        } else if ($pageName == WEB_PAGE_KEYS['profile']) { // Static page: Members profile
             $response = [
                 'name' => 'page.members-profile',
                 'layout' => 'default',
                 'context' => 'page-profile',
             ];
-        } else if ($pageName == 'registration') { // Static page: Members registration
+        } else if ($pageName == WEB_PAGE_KEYS['registration']) { // Static page: Members registration
             $response = [
                 'name' => 'page.members-registration',
                 'layout' => 'default',
                 'context' => 'page-registration',
             ];
-        } else if ($pageName == 'lost-password') { // Static page: Members lost password
+        } else if ($pageName == WEB_PAGE_KEYS['lost-password']) { // Static page: Members lost password
             $response = [
                 'name' => 'page.members-lostpassword',
                 'layout' => 'default',
                 'context' => 'page-lost-password',
             ];
-        } else if ($pageName == 'detail' && $detailData['data']) { // Single detail (Posts, Products) without context
+        } else if ($pageName == WEB_PAGE_KEYS['detail'] && $detailData['data']) { // Single detail (Posts, Products) without context
             $response = [
                 'name' => 'page.detail-' . $detailData['model'],
                 'layout' => 'default',
@@ -280,20 +278,20 @@ class ViewController {
             'title' => $pageData['settings']['web_meta_title'],
             'robots' => $pageData['settings']['web_meta_robots'],
         ];
-        if ($urlAttrs[0] == 'basket') {
+        if ($urlAttrs[0] == WEB_PAGE_KEYS['basket']) {
             $response['title'] = self::get_t('title.page.basket') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
-        } else if ($urlAttrs[0] == 'search') {
+        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['search']) {
             $response['title'] = self::get_t('title.page.search') . ' | ' . $pageData['settings']['web_meta_title'];
             if ($pageData['url_params']['search']) $response['title'] = self::get_t('title.page.search-results') . ': ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
-        } else if ($urlAttrs[0] == 'registration') {
+        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['registration']) {
             $response['title'] = self::get_t('title.page.registration') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
-        } else if ($urlAttrs[0] == 'profile') {
+        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['profile']) {
             $response['title'] = self::get_t('title.page.profile') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
-        } else if ($urlAttrs[0] == 'lost-password') {
+        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['lost-password']) {
             $response['title'] = self::get_t('title.page.lost-password') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         }
@@ -324,7 +322,7 @@ class ViewController {
     private function get_member_options ($pageData): array {
         $dc = new DataController;
         $as = new AuthService;
-        $token = ($pageData['url_attrs'][1] == 'token' && $pageData['url_attrs'][2]) ? $pageData['url_attrs'][2] : null;
+        $token = ($pageData['url_attrs'][1] == WEB_PAGE_KEYS['token'] && $pageData['url_attrs'][2]) ? $pageData['url_attrs'][2] : null;
         $request = $dc -> get('CmsRequests', [ 'token' => $token ], [])['data'];
         $member_object = $dc -> get_member_profile([]);
         $is_member_logged_in = $member_object['email'];
@@ -358,7 +356,13 @@ class ViewController {
 
         return $response;
     }
+    private function get_link_url_params (): string {
+        $lngOptions = self::get_language_options();
+        $params = '';
+        if ($lngOptions['link_url_param']) $params .= $lngOptions['link_url_param'];
 
+        return $params;
+    }
 
     public function get_view_meta_data (): array {
         $utils = new \Utils;
@@ -410,19 +414,24 @@ class ViewController {
             'search' => true,
             'member' => true,
             'last-posts' => true,
-            'basket' => $pageData['page_name'] !== 'basket',
+            'basket' => $pageData['page_name'] !== WEB_PAGE_KEYS['basket'],
             'subscription' => true,
             'menu' => true,
         ];
+        $common_options = [
+            'units' => DEFAULT_UNITS,
+            'page_keys' => WEB_PAGE_KEYS,
+            'page_basket_keys' => WEB_PAGE_BASKET_KEYS,
+        ];
 
         if ($pageData['page_object']['page']
-            || $pageData['page_name'] == 'home'
-            || $pageData['page_name'] == 'basket'
-            || $pageData['page_name'] == 'search'
-            || $pageData['page_name'] == 'registration'
-            || $pageData['page_name'] == 'profile'
-            || $pageData['page_name'] == 'lost-password'
-            || ($pageData['page_name'] == 'detail' && $singleDetailData['data'])
+            || $pageData['page_name'] == WEB_PAGE_KEYS['home']
+            || $pageData['page_name'] == WEB_PAGE_KEYS['basket']
+            || $pageData['page_name'] == WEB_PAGE_KEYS['search']
+            || $pageData['page_name'] == WEB_PAGE_KEYS['registration']
+            || $pageData['page_name'] == WEB_PAGE_KEYS['profile']
+            || $pageData['page_name'] == WEB_PAGE_KEYS['lost-password']
+            || ($pageData['page_name'] == WEB_PAGE_KEYS['detail'] && $singleDetailData['data'])
         ) {
             $pd = self::get_static_page_data($pageData['page_name'], $pageData, $singleDetailData, $items);
             $page_name = $pd['name'];
@@ -434,6 +443,8 @@ class ViewController {
             't' => function ($key) { return self::get_t($key); },                                 // Function with return key if no value exist
             'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
+            'urlPar' => self::get_link_url_params(),
+            'uploadsPfx' => UPLOADS_PATH,
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
 
             'get_posts_list' => function ($limit = 0, $offset = 0) { return self::get_posts_list($limit, $offset); },
@@ -442,7 +453,7 @@ class ViewController {
             'list_items' => $items['items'],
             'detail_model' => $items['model'] ? $items['model'] : $singleDetailData['model'],
             'detail_data' => $pageData['page_object']['detail'] ? $pageData['page_object']['detail'] : $singleDetailData['data'],
-            'detail_url_suffix' => '/detail',
+            'detail_url_suffix' => '/' . WEB_PAGE_KEYS['detail'],
             'category_id' => $items['category_id'],
             // ... available only when category is in context |-->
             'detail_not_found' => $pageData['page_object']['should_be_detail'],
@@ -450,6 +461,9 @@ class ViewController {
             'detail_prev' => $pageData['page_object']['detail_prev'],
             'detail_next' => $pageData['page_object']['detail_next'],
             // -->|
+
+            // Common options
+            'common_options' => $common_options,
 
             // Member options
             'member_options' => self::get_member_options($pageData),

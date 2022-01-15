@@ -4,7 +4,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../config';
-import { ROUTES, ROUTE_SUFFIX, DEFAULT_UNITS } from '../../constants';
+import { ROUTES, ROUTE_SUFFIX } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
 import { DeliveriesItemProps } from '../../types/model';
 import {
@@ -52,6 +52,7 @@ const DeliveriesDetailForm = ({
 }: DeliveriesDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
+	const defaultUnits = config.project.units;
 	const formOptions: formLayoutObjectProps = {
 		model: 'Deliveries',
 		id: 'DeliveriesDetailForm',
@@ -302,7 +303,7 @@ const DeliveriesDetailForm = ({
 										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
-												{t(`units.${DEFAULT_UNITS.price}`)}
+												{t(`units.${defaultUnits.price}`)}
 											</InputAdornment>
 										),
 									}}
@@ -331,7 +332,7 @@ const DeliveriesDetailForm = ({
 										inputProps: { min: 0, step: 0.01 },
 										startAdornment: (
 											<InputAdornment position="start">
-												{t(`units.${DEFAULT_UNITS.weight}`)}
+												{t(`units.${defaultUnits.weight}`)}
 											</InputAdornment>
 										),
 									}}
@@ -360,7 +361,7 @@ const DeliveriesDetailForm = ({
 										inputProps: { min: 0 },
 										startAdornment: (
 											<InputAdornment position="start">
-												{t(`units.${DEFAULT_UNITS.units}`)}
+												{t(`units.${defaultUnits.units}`)}
 											</InputAdornment>
 										),
 									}}

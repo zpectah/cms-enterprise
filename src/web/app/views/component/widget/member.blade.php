@@ -6,13 +6,13 @@
             <br />
             E-mail: {{$member_options['member']['email']}}
             <br />
-            <a href="/profile">
+            <a href="/{{$common_options['page_keys']['profile']}}{{$lang['link_url_param']}}">
                 My profile
             </a>
             |
             <member-logout-button
                     label="{{$t('btn.log_out')}}"
-                    target-path="{{$page_url}}"
+                    target-path="{{$page_url}}{{$lang['link_url_param']}}"
             >
                 Loading member-logout-button...
             </member-logout-button>
@@ -28,13 +28,13 @@
         </div>
         <div>
             <a
-                    href="/registration{{$lang['link_url_param']}}"
+                    href="/{{$common_options['page_keys']['registration']}}{{$lang['link_url_param']}}"
                     class="btn btn-outline-secondary"
             >
                 {{$t('btn.sign_in')}}
             </a>
             <a
-                    href="/lost-password{{$lang['link_url_param']}}"
+                    href="/{{$common_options['page_keys']['lost-password']}}{{$lang['link_url_param']}}"
                     class="btn btn-outline-secondary"
             >
                 {{$t('btn.lost_password')}}

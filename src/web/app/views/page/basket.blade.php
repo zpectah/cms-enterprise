@@ -5,39 +5,45 @@
             @include('component.basket-progress', [ 'val' => 25 ])
             <br />
             <page-basket-list
-                    price-unit="CZK"
-                    btn-next-link-target="/{{$page_key}}/summary{{$lang['link_url_param']}}"
+                    price-unit="{{$common_options['units']['price']}}"
+                    btn-next-link-target="/{{$page_key}}/{{$common_options['page_basket_keys']['summary']}}{{$urlPar}}"
             >Loading page-basket-list ...</page-basket-list>
         @break
         @case('summary')
             @include('component.basket-progress', [ 'val' => 50 ])
             <br />
             <page-basket-summary
-                    price-unit="CZK"
-                    weight-unit="Kg"
-                    btn-prev-link-target="/{{$page_key}}/list{{$lang['link_url_param']}}"
-                    btn-next-link-target="/{{$page_key}}/confirmation{{$lang['link_url_param']}}"
+                    price-unit="{{$common_options['units']['price']}}"
+                    weight-unit="{{$common_options['units']['weight']}}"
+                    btn-prev-link-target="/{{$page_key}}/{{$common_options['page_basket_keys']['list']}}{{$urlPar}}"
+                    btn-next-link-target="/{{$page_key}}/{{$common_options['page_basket_keys']['confirmation']}}{{$urlPar}}"
+                    member-email="{{$member_options['member']['email']}}"
+                    member-name="{{($member_options['member']['first_name'] && $member_options['member']['last_name']) ? $member_options['member']['first_name'] . ' ' . $member_options['member']['last_name'] : ''}}"
+                    member-address="{{$member_options['member']['address']}}"
+                    member-city="{{$member_options['member']['city']}}"
+                    member-country="{{$member_options['member']['country']}}"
+                    member-zip="{{$member_options['member']['zip']}}"
             >Loading page-basket-summary ...</page-basket-summary>
         @break
         @case('confirmation')
             @include('component.basket-progress', [ 'val' => 75 ])
             <br />
             <page-basket-confirmation
-                    price-unit="CZK"
-                    weight-unit="Kg"
-                    btn-prev-link-target="/{{$page_key}}/summary{{$lang['link_url_param']}}"
-                    btn-next-link-target="/{{$page_key}}/finish{{$lang['link_url_param']}}"
+                    price-unit="{{$common_options['units']['price']}}"
+                    weight-unit="{{$common_options['units']['weight']}}"
+                    btn-prev-link-target="/{{$page_key}}/{{$common_options['page_basket_keys']['summary']}}{{$urlPar}}"
+                    btn-next-link-target="/{{$page_key}}/{{$common_options['page_basket_keys']['finish']}}{{$urlPar}}"
             >Loading page-basket-confirmation ...</page-basket-confirmation>
         @break
         @case('finish')
             @include('component.basket-progress', [ 'val' => 100 ])
-                <page-basket-finish
-                        oid="{{$url_params['oid']}}"
-                        status="{{$url_params['order_status']}}"
-                >Loading page-basket-finish ...</page-basket-finish>
-    <a href="/">
-        Return to home
-    </a>
+            <page-basket-finish
+                    oid="{{$url_params['oid']}}"
+                    status="{{$url_params['order_status']}}"
+            >Loading page-basket-finish ...</page-basket-finish>
+            <a href="/{{$lang['link_url_param']}}">
+                {{$t('btn.return_home')}}
+            </a>
         @break
     @endswitch
 </section>

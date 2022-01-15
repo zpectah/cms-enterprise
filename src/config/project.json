@@ -36,7 +36,32 @@
     "language": {
       "default": "en",
       "list": ["en"]
-    }
+    },
+    "page_keys": {
+      "detail": "detail",
+      "token": "token",
+      "home": "home",
+      "basket": "basket",
+      "search": "search",
+      "profile": "profile",
+      "registration": "registration",
+      "lost-password": "lost-password",
+      "error-404": "error-404"
+    },
+    "page_basket_keys": {
+      "list": "list",
+      "summary": "summary",
+      "confirmation": "confirmation",
+      "finish": "finish"
+    },
+    "templates_root": "web/app/views",
+    "templates_compiled": "web/app/compiles"
+  },
+  "units": {
+    "price": "czk",
+    "weight": "kg",
+    "length": "mm",
+    "units": "pcs"
   },
   "path": {
     "admin": "admin/",

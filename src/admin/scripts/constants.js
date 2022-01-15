@@ -12,12 +12,6 @@ export const TOASTS_TIMEOUT_ERROR = 5000;
 export const UI_VIEW_TOLERANCE = 50;
 export const EMAIL_REGEX =
 	/^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$/;
-export const DEFAULT_UNITS = {
-	price: 'czk',
-	weight: 'kg',
-	length: 'mm',
-	units: 'pcs',
-};
 export const FORM_INPUT_MIN_LENGTH = 3;
 export const FORM_INPUT_MAX_LENGTH = 500;
 export const ELEMENT_DATA_TEST_ATTR = 'data-test-id';
