@@ -3,12 +3,12 @@
     <form
         name="BasketSummaryForm"
     >
-      <h3>{{ t('title.basket.contact_information') }}</h3>
+      <h3>{{ t('basket.title.contact_information') }}</h3>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_user_name"
         >
-          {{ t('label.input.user_name') }} *
+          {{ t('input.label.user_name') }} *
         </label>
         <input
             type="text"
@@ -17,14 +17,14 @@
             name="BasketSummaryForm_user_name"
             v-model="formModel.user_name"
             required
-            :placeholder="t('placeholder.input.user_name')"
+            :placeholder="t('input.placeholder.user_name')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_company_name"
         >
-          {{ t('label.input.company_name') }}
+          {{ t('input.label.company_name') }}
         </label>
         <input
             type="text"
@@ -32,14 +32,14 @@
             id="BasketSummaryForm_company_name"
             name="BasketSummaryForm_company_name"
             v-model="formModel.company_name"
-            :placeholder="t('placeholder.input.company_name')"
+            :placeholder="t('input.placeholder.company_name')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_company_id"
         >
-          {{ t('label.input.company_id') }}
+          {{ t('input.label.company_id') }}
         </label>
         <input
             type="text"
@@ -47,7 +47,7 @@
             id="BasketSummaryForm_company_id"
             name="BasketSummaryForm_company_id"
             v-model="formModel.company_id"
-            :placeholder="t('placeholder.input.company_id')"
+            :placeholder="t('input.placeholder.company_id')"
         >
       </div>
 
@@ -55,7 +55,7 @@
         <label
             for="BasketSummaryForm_email"
         >
-          {{ t('label.input.email') }} *
+          {{ t('input.label.email') }} *
         </label>
         <input
             type="email"
@@ -64,7 +64,7 @@
             name="BasketSummaryForm_email"
             v-model="formModel.email"
             required
-            :placeholder="t('placeholder.input.email')"
+            :placeholder="t('input.placeholder.email')"
         >
       </div>
 
@@ -72,7 +72,7 @@
         <label
             for="BasketSummaryForm_phone"
         >
-          {{ t('label.input.phone') }} *
+          {{ t('input.label.phone') }} *
         </label>
         <input
             type="tel"
@@ -81,7 +81,7 @@
             name="BasketSummaryForm_phone"
             v-model="formModel.phone"
             required
-            :placeholder="t('placeholder.input.phone')"
+            :placeholder="t('input.placeholder.phone')"
         >
       </div>
 
@@ -90,7 +90,7 @@
           <label
               for="BasketSummaryForm_country"
           >
-            {{ t('label.input.country') }} *
+            {{ t('input.label.country') }} *
           </label>
           <input
               type="text"
@@ -99,14 +99,14 @@
               name="BasketSummaryForm_country"
               v-model="formModel.country"
               required
-              :placeholder="t('placeholder.input.country')"
+              :placeholder="t('input.placeholder.country')"
           >
         </div>
         <div class="form-group mb-2">
           <label
               for="BasketSummaryForm_city"
           >
-            {{ t('label.input.city') }} *
+            {{ t('input.label.city') }} *
           </label>
           <input
               type="text"
@@ -115,14 +115,14 @@
               name="BasketSummaryForm_city"
               v-model="formModel.city"
               required
-              :placeholder="t('placeholder.input.city')"
+              :placeholder="t('input.placeholder.city')"
           >
         </div>
         <div class="form-group mb-2">
           <label
               for="BasketSummaryForm_address"
           >
-            {{ t('label.input.address') }} *
+            {{ t('input.label.address') }} *
           </label>
           <input
               type="text"
@@ -131,14 +131,14 @@
               name="BasketSummaryForm_address"
               v-model="formModel.address"
               required
-              :placeholder="t('placeholder.input.address')"
+              :placeholder="t('input.placeholder.address')"
           >
         </div>
         <div class="form-group mb-2">
           <label
               for="BasketSummaryForm_zip"
           >
-            {{ t('label.input.zip') }} *
+            {{ t('input.label.zip') }} *
           </label>
           <input
               type="text"
@@ -147,19 +147,19 @@
               name="BasketSummaryForm_zip"
               v-model="formModel.zip"
               required
-              :placeholder="t('placeholder.input.zip')"
+              :placeholder="t('input.placeholder.zip')"
           >
         </div>
       </div>
       <br />
       <hr />
       <div>
-        <h3>{{ t('title.basket.delivery_information') }}</h3>
+        <h3>{{ t('basket.title.delivery_information') }}</h3>
         <div class="form-group mb-2">
           <label
               for="BasketSummaryForm_delivery_country"
           >
-            {{ t('label.input.country') }} *
+            {{ t('input.label.country') }} *
           </label>
           <input
               type="text"
@@ -167,7 +167,7 @@
               id="BasketSummaryForm_delivery_country"
               name="BasketSummaryForm_delivery_country"
               v-model="formModel.delivery_country"
-              :placeholder="t('placeholder.input.country')"
+              :placeholder="t('input.placeholder.country')"
               required
           >
         </div>
@@ -175,7 +175,7 @@
           <label
               for="BasketSummaryForm_delivery_city"
           >
-            {{ t('label.input.city') }} *
+            {{ t('input.label.city') }} *
           </label>
           <input
               type="text"
@@ -183,7 +183,7 @@
               id="BasketSummaryForm_delivery_city"
               name="BasketSummaryForm_delivery_city"
               v-model="formModel.delivery_city"
-              :placeholder="t('placeholder.input.city')"
+              :placeholder="t('input.placeholder.city')"
               required
           >
         </div>
@@ -191,7 +191,7 @@
           <label
               for="BasketSummaryForm_delivery_address"
           >
-            {{ t('label.input.address') }} *
+            {{ t('input.label.address') }} *
           </label>
           <input
               type="text"
@@ -199,7 +199,7 @@
               id="BasketSummaryForm_delivery_address"
               name="BasketSummaryForm_delivery_address"
               v-model="formModel.delivery_address"
-              :placeholder="t('placeholder.input.address')"
+              :placeholder="t('input.placeholder.address')"
               required
           >
         </div>
@@ -207,7 +207,7 @@
           <label
               for="BasketSummaryForm_delivery_zip"
           >
-            {{ t('label.input.zip') }} *
+            {{ t('input.label.zip') }} *
           </label>
           <input
               type="text"
@@ -215,7 +215,7 @@
               id="BasketSummaryForm_delivery_zip"
               name="BasketSummaryForm_delivery_zip"
               v-model="formModel.delivery_zip"
-              :placeholder="t('placeholder.input.zip')"
+              :placeholder="t('input.placeholder.zip')"
               required
           >
         </div>
@@ -227,24 +227,24 @@
         <label
             for="BasketSummaryForm_description"
         >
-          {{ t('label.input.description') }}
+          {{ t('input.label.description') }}
         </label>
         <textarea
             class="form-control"
             id="BasketSummaryForm_description"
             v-model="formModel.description"
             rows="5"
-            :placeholder="t('placeholder.input.description')"
+            :placeholder="t('input.placeholder.description')"
         ></textarea>
       </div>
       <br />
       <hr />
-      <h3>{{ t('title.basket.payment_delivery') }}</h3>
+      <h3>{{ t('basket.title.payment_delivery') }}</h3>
       <div class="form-group mb-2">
         <label
             for="BasketSummaryForm_payment"
         >
-          {{ t('label.input.payment') }} *
+          {{ t('input.label.payment') }} *
         </label>
         <select
             class="form-select"
@@ -253,7 +253,7 @@
             v-model="formModel.payment"
             required
         >
-          <option selected disabled value="">{{ t('placeholder.input.payment') }}</option>
+          <option selected disabled value="">{{ t('input.placeholder.payment') }}</option>
           <option
               v-for="item in options.payments"
               v-bind:key="item.value"
@@ -265,7 +265,7 @@
         <label
             for="BasketSummaryForm_delivery"
         >
-          {{ t('label.input.delivery') }} *
+          {{ t('input.label.delivery') }} *
         </label>
         <select
             class="form-select"
@@ -274,7 +274,7 @@
             v-model="formModel.delivery"
             required
         >
-          <option selected disabled value="">{{ t('placeholder.input.delivery') }}</option>
+          <option selected disabled value="">{{ t('input.placeholder.delivery') }}</option>
           <option
               v-for="item in options.deliveries"
               v-bind:key="item.value"
@@ -285,12 +285,13 @@
 
     </form>
     <hr />
-    <h3>{{ t('title.basket.weight') }}</h3>
+    <h3>{{ t('basket.title.weight') }}</h3>
     <div>
       {{ t('label.weight_items') }}: {{ getItemsWeight() }} {{ weightUnit }}
     </div>
     <br />
     <hr />
+    <h3>{{ t('basket.title.price') }}</h3>
     <div>
       {{ t('label.price_items') }}: {{ getItemsPrice() }} {{ priceUnit }}
       <br />
@@ -399,25 +400,25 @@ module.exports = {
         this.options.payments = tmp;
       }
     });
-    if (this.memberEmail) this.formModel.email = this.memberEmail;
-    if (this.memberName) this.formModel.user_name = this.memberName;
-    if (this.memberAddress) {
+    if (storage_model) this.formModel = JSON.parse(storage_model);
+    if (this.memberEmail && this.formModel.email === '') this.formModel.email = this.memberEmail;
+    if (this.memberName && this.formModel.user_name === '') this.formModel.user_name = this.memberName;
+    if (this.memberAddress && this.formModel.address === '') {
       this.formModel.address = this.memberAddress;
       this.formModel.delivery_address = this.memberAddress;
     }
-    if (this.memberCity) {
+    if (this.memberCity && this.formModel.city === '') {
       this.formModel.city = this.memberCity;
       this.formModel.delivery_city = this.memberCity;
     }
-    if (this.memberCountry) {
+    if (this.memberCountry && this.formModel.country === '') {
       this.formModel.country = this.memberCountry;
       this.formModel.delivery_country = this.memberCountry;
     }
-    if (this.memberZip) {
+    if (this.memberZip && this.formModel.zip === '') {
       this.formModel.zip = this.memberZip;
       this.formModel.delivery_zip = this.memberZip;
     }
-    if (storage_model) this.formModel = JSON.parse(storage_model);
     if (this.formModel) this.formController(this.formModel);
   },
   methods: {

@@ -7,9 +7,9 @@
         <input
                 type="search"
                 name="search"
-                class="form-control me-2"
-                placeholder="{{$t('label.search')}}"
-                aria-label="{{$t('label.search')}}"
+                class="form-control mb-2"
+                placeholder="{{$t('input.label.search')}}"
+                aria-label="{{$t('input.label.search')}}"
                 value="{{$url_params['search'] ? $url_params['search'] : ''}}"
         >
         <button

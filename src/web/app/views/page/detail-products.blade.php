@@ -16,33 +16,33 @@
         </div>
 
             @include('component.widget.products-list', [
-                'widgetTitle' => $t('title.widget.products_related'),
+                'widgetTitle' => $t('widget.title.products_related'),
                 'widgetList' => $detail_data['sub_related'],
             ])
 
             @include('component.widget.uploads-list', [
-                'widgetTitle' => $t('title.widget.attachments'),
+                'widgetTitle' => $t('widget.title.attachments'),
                 'widgetList' => $detail_data['sub_attachments'],
             ])
 
             @include('component.widget.image-list', [
-                'widgetTitle' => $t('title.widget.gallery'),
+                'widgetTitle' => $t('widget.title.gallery'),
                 'widgetList' => $detail_data['sub_gallery'],
             ])
 
             @include('component.widget.tags-list', [
-                'widgetTitle' => $t('title.widget.tags'),
+                'widgetTitle' => $t('widget.title.tags'),
                 'widgetList' => $detail_data['sub_tags'],
             ])
 
             @include('component.widget.tags-list', [
-                'widgetTitle' => $t('title.widget.categories'),
+                'widgetTitle' => $t('widget.title.categories'),
                 'widgetList' => $detail_data['sub_categories'],
                 'label' => 'title',
             ])
 
             @include('component.widget.product-options-list', [
-                'widgetTitle' => $t('title.widget.product_options'),
+                'widgetTitle' => $t('widget.title.product_options'),
                 'widgetList' => $detail_data['sub_options'],
             ])
 
@@ -50,7 +50,7 @@
             Manager: {{$detail_data['sub_manager']['email']}}
         </div>
         <div>
-            {{$t('label.price')}} {{ $detail_data['item_price'] }} CZK
+            {{$t('label.price')}} {{ $detail_data['item_price'] }} {{$common_options['units']['price']}}
             |
             {{ $detail_data['in_stock'] ? $t('label.in_stock') : $t('label.not_in_stock') }}
         </div>
@@ -60,7 +60,7 @@
     <div>
             <basket-add-button
                     id="{{$detail_data['id']}}"
-                    label="{{$t('btn.add-to-basket')}}"
+                    label="{{$t('btn.add_to_basket')}}"
                     class="btn-sm btn-outline-success"
             ></basket-add-button>
     </div>

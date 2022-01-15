@@ -7,5 +7,5 @@
     <div>
         {{$author['email']}}
     </div>
-    <a href="{{$detail_url}}{{$lang['link_url_param']}}">{{$t('btn.detail-post')}}</a>
+    <a href="{{$detail_url}}{{$urlPar}}">{{$t('btn.detail')}}</a>
 </article>

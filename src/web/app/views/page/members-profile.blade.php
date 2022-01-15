@@ -1,5 +1,5 @@
 <section>
-    <h1>{{$t('title.page.profile')}}</h1>
+    <h1>{{$t('page.title.profile')}}</h1>
     <div>
         @if($member_options['member_logged_in'])
             <members-profile-form

@@ -1,10 +1,12 @@
 <template>
   <section>
     <div v-if="status === 'success'">
-      Order #{{ oid }} was successfully created
+      <h3>{{ t('basket.title.new_order_id') }} #{{ oid }}</h3>
+      <p>{{ t('basket.message.finish.success') }}</p>
     </div>
     <div v-if="status === 'error'">
-      Error while creating order or payment
+      <h3>{{ t('basket.title.new_order_error') }}</h3>
+      <p>{{ t('basket.message.finish.success') }}</p>
     </div>
   </section>
 </template>
@@ -17,6 +19,11 @@ module.exports = {
   },
   mounted: function () {
     this.$parent.clear_storage();
+  },
+  methods: {
+    t: function (key) {
+      return this.$root.t(key);
+    },
   },
 };
 </script>

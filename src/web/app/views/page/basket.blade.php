@@ -1,5 +1,5 @@
 <section class="section section-page section-page--basket section-page--basket--{{$basket_data['step']}}">
-    <h1 class="title title-page">{{$t('title.page.basket')}}: {{$basket_data['step']}}</h1>
+    <h1 class="title title-page">{{$t('page.title.basket')}}: {{$basket_data['step']}}</h1>
     @switch($basket_data['step'])
         @case('list')
             @include('component.basket-progress', [ 'val' => 25 ])
@@ -41,8 +41,8 @@
                     oid="{{$url_params['oid']}}"
                     status="{{$url_params['order_status']}}"
             >Loading page-basket-finish ...</page-basket-finish>
-            <a href="/{{$lang['link_url_param']}}">
-                {{$t('btn.return_home')}}
+            <a href="/{{$urlPar}}">
+                {{$t('btn.back_to_home')}}
             </a>
         @break
     @endswitch

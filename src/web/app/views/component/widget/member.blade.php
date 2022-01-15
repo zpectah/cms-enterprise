@@ -1,5 +1,5 @@
 <section>
-    <h4 class="widget-title">{{$t('title.widget.user')}}</h4>
+    <h4 class="widget-title">{{$t('widget.title.user')}}</h4>
     @if($member_options['member_logged_in'])
         <div>
             ID: {{$member_options['member']['id']}}

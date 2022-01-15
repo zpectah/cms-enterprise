@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h3>{{ t('title.basket.products') }}</h3>
+    <h3>{{ t('basket.title.products') }}</h3>
     <table>
       <tbody>
       <tr
@@ -24,16 +24,16 @@
     </table>
     <br />
     <hr />
-    <h3>{{ t('title.basket.payment_delivery') }}</h3>
+    <h3>{{ t('basket.title.payment_delivery') }}</h3>
     <table>
       <tbody>
       <tr>
-        <th>{{ t('label.input.payment') }}</th>
+        <th>{{ t('input.label.payment') }}</th>
         <td>{{ selected_delivery.lang && selected_delivery.lang[this.$root.lang].title }}</td>
         <td>{{ selected_delivery.item_price }} {{ priceUnit }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.delivery') }}</th>
+        <th>{{ t('input.label.delivery') }}</th>
         <td>{{ selected_payment.lang && selected_payment.lang[this.$root.lang].title }}</td>
         <td>{{ selected_payment.item_price }} {{ priceUnit }}</td>
       </tr>
@@ -41,52 +41,52 @@
     </table>
     <br />
     <hr />
-    <h3>{{ t('title.basket.contact_information') }}</h3>
+    <h3>{{ t('basket.title.contact_information') }}</h3>
     <table>
       <tbody>
       <tr>
-        <th>{{ t('label.input.user_name') }}</th>
+        <th>{{ t('input.label.user_name') }}</th>
         <td>{{ basket_summary.user_name }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.email') }}</th>
+        <th>{{ t('input.label.email') }}</th>
         <td>{{ basket_summary.email }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.phone') }}</th>
+        <th>{{ t('input.label.phone') }}</th>
         <td>{{ basket_summary.phone }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.country') }}</th>
+        <th>{{ t('input.label.country') }}</th>
         <td>{{ basket_summary.country }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.city') }}</th>
+        <th>{{ t('input.label.city') }}</th>
         <td>{{ basket_summary.city }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.address') }}</th>
+        <th>{{ t('input.label.address') }}</th>
         <td>{{ basket_summary.address }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.zip') }}</th>
+        <th>{{ t('input.label.zip') }}</th>
         <td>{{ basket_summary.zip }}</td>
       </tr>
       <tr>
-        <th>{{ t('label.input.description') }}</th>
+        <th>{{ t('input.label.description') }}</th>
         <td>{{ basket_summary.description }}</td>
       </tr>
       </tbody>
     </table>
     <br />
     <hr />
-    <h3>{{ t('title.basket.weight') }}</h3>
+    <h3>{{ t('basket.title.weight') }}</h3>
     <div>
       {{ t('label.weight_items') }}: {{ getItemsWeight() }} {{ weightUnit }}
     </div>
     <br />
     <hr />
-    <h3>{{ t('title.basket.price') }}</h3>
+    <h3>{{ t('basket.title.price') }}</h3>
     <div>
       {{ t('label.price_items') }}: {{ getItemsPrice() }} {{ priceUnit }}
       <br />

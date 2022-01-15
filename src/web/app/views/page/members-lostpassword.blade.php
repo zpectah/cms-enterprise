@@ -1,5 +1,5 @@
 <section>
-    <h1>{{$t('title.page.lost-password')}}</h1>
+    <h1>{{$t('page.title.lost-password')}}</h1>
     @if($member_options['lost_password_token'])
         @if($member_options['lost_password_request']['status'] == 1)
             <members-lost-password-confirm-form

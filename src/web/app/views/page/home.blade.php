@@ -1,4 +1,9 @@
 <!-- Static content -->
-<h1>{{$t('title.page.home')}}</h1>
-display 'home' content
-<demo-component dv-label="bla bla bla"></demo-component>
+<section>
+    <h1>{{$t('page.title.home')}}</h1>
+    <div>
+        display 'home' content
+        <br />
+        <demo-component dv-label="bla bla bla"></demo-component>
+    </div>
+</section>

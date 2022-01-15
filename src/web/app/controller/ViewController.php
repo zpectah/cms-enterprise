@@ -279,20 +279,20 @@ class ViewController {
             'robots' => $pageData['settings']['web_meta_robots'],
         ];
         if ($urlAttrs[0] == WEB_PAGE_KEYS['basket']) {
-            $response['title'] = self::get_t('title.page.basket') . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('page.title.basket') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         } else if ($urlAttrs[0] == WEB_PAGE_KEYS['search']) {
-            $response['title'] = self::get_t('title.page.search') . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('page.title.search') . ' | ' . $pageData['settings']['web_meta_title'];
             if ($pageData['url_params']['search']) $response['title'] = self::get_t('title.page.search-results') . ': ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
         } else if ($urlAttrs[0] == WEB_PAGE_KEYS['registration']) {
-            $response['title'] = self::get_t('title.page.registration') . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('page.title.registration') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
         } else if ($urlAttrs[0] == WEB_PAGE_KEYS['profile']) {
-            $response['title'] = self::get_t('title.page.profile') . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('page.title.profile') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         } else if ($urlAttrs[0] == WEB_PAGE_KEYS['lost-password']) {
-            $response['title'] = self::get_t('title.page.lost-password') . ' | ' . $pageData['settings']['web_meta_title'];
+            $response['title'] = self::get_t('page.title.lost-password') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         }
 

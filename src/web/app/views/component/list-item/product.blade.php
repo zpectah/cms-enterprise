@@ -13,7 +13,7 @@
         |
         {{ $in_stock ? $t('label.in_stock') : $t('label.not_in_stock') }}
     </div>
-    <a href="{{$detail_url}}{{$lang['link_url_param']}}">{{$t('btn.detail-product')}}</a>
+    <a href="{{$detail_url}}{{$urlPar}}">{{$t('btn.detail')}}</a>
     <basket-add-button
             id="{{$id}}"
             label="{{$t('btn.add-to-basket')}}"

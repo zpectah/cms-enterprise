@@ -1,5 +1,11 @@
 <section>
-    <h1>Results for: {{$url_params['search']}}</h1>
+    @if($url_params['search'])
+        <h1>{{$t('page.title.search_results')}}: {{$url_params['search']}}</h1>
+    @else
+        <h1>{{$t('page.title.search')}}</h1>
+    @endif
+
+
     @foreach($search_results as $result)
         @if($result['model'] == 'pages')
             @include('component.list-item.page', [

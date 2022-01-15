@@ -6,7 +6,7 @@
         <label
             for="MembersLostPasswordConfirmForm_password"
         >
-          {{ t('label.input.password') }} *
+          {{ t('input.label.password') }} *
         </label>
         <input
             type="password"
@@ -15,7 +15,7 @@
             name="MembersLostPasswordConfirmForm_password"
             v-model="formModel.password"
             required
-            :placeholder="t('placeholder.input.password')"
+            :placeholder="t('input.placeholder.password')"
         >
       </div>
       <div>

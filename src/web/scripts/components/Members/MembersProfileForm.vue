@@ -5,7 +5,7 @@
         <label
             for="MembersProfileForm_first_name"
         >
-          {{ t('label.input.first_name') }} *
+          {{ t('input.label.first_name') }} *
         </label>
         <input
             type="text"
@@ -14,14 +14,14 @@
             name="MembersProfileForm_first_name"
             v-model="formModel.first_name"
             required
-            :placeholder="t('placeholder.input.first_name')"
+            :placeholder="t('input.placeholder.first_name')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_middle_name"
         >
-          {{ t('label.input.middle_name') }}
+          {{ t('input.label.middle_name') }}
         </label>
         <input
             type="text"
@@ -29,14 +29,14 @@
             id="MembersProfileForm_middle_name"
             name="MembersProfileForm_middle_name"
             v-model="formModel.middle_name"
-            :placeholder="t('placeholder.input.middle_name')"
+            :placeholder="t('input.placeholder.middle_name')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_last_name"
         >
-          {{ t('label.input.last_name') }} *
+          {{ t('input.label.last_name') }} *
         </label>
         <input
             type="text"
@@ -45,14 +45,14 @@
             name="MembersProfileForm_last_name"
             v-model="formModel.last_name"
             required
-            :placeholder="t('placeholder.input.last_name')"
+            :placeholder="t('input.placeholder.last_name')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_nick_name"
         >
-          {{ t('label.input.nick_name') }}
+          {{ t('input.label.nick_name') }}
         </label>
         <input
             type="text"
@@ -60,14 +60,14 @@
             id="MembersProfileForm_nick_name"
             name="MembersProfileForm_nick_name"
             v-model="formModel.nick_name"
-            :placeholder="t('placeholder.input.nick_name')"
+            :placeholder="t('input.placeholder.nick_name')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_phone"
         >
-          {{ t('label.input.phone') }} *
+          {{ t('input.label.phone') }} *
         </label>
         <input
             type="tel"
@@ -76,14 +76,14 @@
             name="MembersProfileForm_phone"
             v-model="formModel.phone"
             required
-            :placeholder="t('placeholder.input.phone')"
+            :placeholder="t('input.placeholder.phone')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_password"
         >
-          {{ t('label.input.password') }}
+          {{ t('input.label.password') }}
         </label>
         <input
             type="password"
@@ -91,14 +91,14 @@
             id="MembersProfileForm_password"
             name="MembersProfileForm_password"
             v-model="formModel.password"
-            :placeholder="t('placeholder.input.password')"
+            :placeholder="t('input.placeholder.password')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_country"
         >
-          {{ t('label.input.country') }}
+          {{ t('input.label.country') }}
         </label>
         <input
             type="text"
@@ -106,14 +106,14 @@
             id="MembersProfileForm_country"
             name="MembersProfileForm_country"
             v-model="formModel.country"
-            :placeholder="t('placeholder.input.country')"
+            :placeholder="t('input.placeholder.country')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_city"
         >
-          {{ t('label.input.city') }}
+          {{ t('input.label.city') }}
         </label>
         <input
             type="text"
@@ -121,14 +121,14 @@
             id="MembersProfileForm_city"
             name="MembersProfileForm_city"
             v-model="formModel.city"
-            :placeholder="t('placeholder.input.city')"
+            :placeholder="t('input.placeholder.city')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_address"
         >
-          {{ t('label.input.address') }}
+          {{ t('input.label.address') }}
         </label>
         <input
             type="text"
@@ -136,14 +136,14 @@
             id="MembersProfileForm_address"
             name="MembersProfileForm_address"
             v-model="formModel.address"
-            :placeholder="t('placeholder.input.address')"
+            :placeholder="t('input.placeholder.address')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersProfileForm_zip"
         >
-          {{ t('label.input.zip') }}
+          {{ t('input.label.zip') }}
         </label>
         <input
             type="text"
@@ -151,7 +151,7 @@
             id="MembersProfileForm_zip"
             name="MembersProfileForm_zip"
             v-model="formModel.zip"
-            :placeholder="t('placeholder.input.zip')"
+            :placeholder="t('input.placeholder.zip')"
         >
       </div>
       <div class="form-group mb-2">
@@ -166,7 +166,7 @@
               class="form-check-label"
               for="MembersProfileForm_subscription"
           >
-            {{ t('label.input.subscription') }}
+            {{ t('input.label.subscription') }}
           </label>
         </div>
       </div>

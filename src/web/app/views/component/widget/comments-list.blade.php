@@ -1,6 +1,6 @@
 <section>
     <h3 class="title-widget">
-        {{$t('title.widget.comments_list')}}
+        {{$t('widget.title.comments_list')}}
     </h3>
     <div>
         <comments-list

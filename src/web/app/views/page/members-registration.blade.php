@@ -1,5 +1,5 @@
 <section>
-    <h1>{{$t('title.page.registration')}}</h1>
+    <h1>{{$t('page.title.registration')}}</h1>
     <br />
     members registration
     <br />

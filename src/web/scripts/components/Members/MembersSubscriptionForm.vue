@@ -5,7 +5,7 @@
         <label
             for="MembersSubscriptionForm_email"
         >
-          {{ t('label.input.email') }} *
+          {{ t('input.label.email') }} *
         </label>
         <input
             type="email"
@@ -14,7 +14,7 @@
             name="MembersSubscriptionForm_email"
             v-model="formModel.email"
             required
-            :placeholder="t('placeholder.input.email')"
+            :placeholder="t('input.placeholder.email')"
         >
       </div>
       <div>

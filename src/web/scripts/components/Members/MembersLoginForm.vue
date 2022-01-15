@@ -5,7 +5,7 @@
         <label
             for="MembersLoginForm_email"
         >
-          {{ t('label.input.email') }} *
+          {{ t('input.label.email') }} *
         </label>
         <input
             type="email"
@@ -14,14 +14,14 @@
             name="MembersLoginForm_email"
             v-model="formModel.email"
             required
-            :placeholder="t('placeholder.input.email')"
+            :placeholder="t('input.placeholder.email')"
         >
       </div>
       <div class="form-group mb-2">
         <label
             for="MembersLoginForm_password"
         >
-          {{ t('label.input.password') }} *
+          {{ t('input.label.password') }} *
         </label>
         <input
             type="password"
@@ -30,7 +30,7 @@
             name="MembersLoginForm_password"
             v-model="formModel.password"
             required
-            :placeholder="t('placeholder.input.password')"
+            :placeholder="t('input.placeholder.password')"
         >
       </div>
       <div>

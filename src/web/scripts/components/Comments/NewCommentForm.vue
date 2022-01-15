@@ -5,7 +5,7 @@
         <label
             for="NewCommentForm_email"
         >
-          {{ t('label.input.email') }} *
+          {{ t('input.label.email') }} *
         </label>
         <input
             type="email"
@@ -14,14 +14,14 @@
             name="NewCommentForm_email"
             v-model="formModel.email"
             required
-            :placeholder="t('placeholder.input.email')"
+            :placeholder="t('input.placeholder.email')"
         />
       </div>
       <div class="form-group mb-2">
         <label
             for="NewCommentForm_title"
         >
-          {{ t('label.input.title') }} *
+          {{ t('input.label.title') }} *
         </label>
         <input
             type="text"
@@ -30,14 +30,14 @@
             name="NewCommentForm_title"
             v-model="formModel.title"
             required
-            :placeholder="t('placeholder.input.title')"
+            :placeholder="t('input.placeholder.title')"
         />
       </div>
       <div class="form-group mb-2">
         <label
             for="NewCommentForm_content"
         >
-          {{ t('label.input.content') }} *
+          {{ t('input.label.content') }} *
         </label>
         <textarea
             type="email"
@@ -46,7 +46,7 @@
             name="NewCommentForm_content"
             v-model="formModel.content"
             required
-            :placeholder="t('placeholder.input.content')"
+            :placeholder="t('input.placeholder.content')"
         ></textarea>
       </div>
 

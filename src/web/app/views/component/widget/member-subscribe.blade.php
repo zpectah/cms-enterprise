@@ -1,5 +1,5 @@
 <section>
-    <h4 class="widget-title">{{$t('title.widget.subscribe')}}</h4>
+    <h4 class="widget-title">{{$t('widget.title.subscribe')}}</h4>
     <members-subscription-form
             language="{{$lng}}"
     >
