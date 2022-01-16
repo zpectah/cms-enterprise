@@ -452,8 +452,7 @@ const SettingsForm = ({
 												id={`${formOptions.id}__company_bank`}
 												placeholder={t('form:form.Settings.input.company_bank')}
 												dataTestId={`${formOptions.id}.input.company_bank`}
-												multiline
-												rows={3}
+												responsiveWidth={'75%'}
 											/>
 										</Form.Row>
 									)}

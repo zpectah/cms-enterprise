@@ -133,7 +133,7 @@ class System {
           `first_name` text NOT NULL,
           `middle_name` text NOT NULL,
           `last_name` text NOT NULL,
-          `position` text NOT NULL, 
+          `position` text NOT NULL,
           `country` text NOT NULL,
           `city` text NOT NULL,
           `address` text NOT NULL,
@@ -182,6 +182,12 @@ class System {
           `delivery` text NOT NULL,
           `payment` text NOT NULL,
           `description` text NOT NULL,
+          `company_name` text NOT NULL,
+          `company_id` text NOT NULL,
+          `delivery_country` text NOT NULL,
+          `delivery_city` text NOT NULL,
+          `delivery_address` text NOT NULL,
+          `delivery_zip` text NOT NULL,
           `items` text NOT NULL,
           `price_total` float NOT NULL,
           `status` int(11) NOT NULL,
@@ -229,11 +235,11 @@ class System {
           `options` text NOT NULL,
           `rating` int(11) NOT NULL,
           `manager` int(11) NOT NULL,
-          `template` int(11) NOT NULL,          
+          `template` int(11) NOT NULL,
           `is_new` int(11) NOT NULL,
           `is_used` int(11) NOT NULL,
           `is_unboxed` int(11) NOT NULL,
-          `in_stock` int(11) NOT NULL,          
+          `in_stock` int(11) NOT NULL,
           `active` int(11) NOT NULL,
           `deleted` int(11) NOT NULL,
           PRIMARY KEY (`id`)
@@ -242,6 +248,7 @@ class System {
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `type` varchar(32) NOT NULL,
           `name` text NOT NULL,
+          `value` text NOT NULL,
           `active` int(11) NOT NULL,
           `deleted` int(11) NOT NULL,
           PRIMARY KEY (`id`)
@@ -281,7 +288,7 @@ class System {
               `id` int(11) NOT NULL,
               `title` text NOT NULL,
               `description` text NOT NULL,
-              `content` text NOT NULL 
+              `content` text NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
             $queries_market[] = "CREATE TABLE `stores__$lang` (
               `id` int(11) NOT NULL,
