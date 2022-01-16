@@ -16,6 +16,7 @@
 - widget.title.products_related
 - widget.title.gallery
 - widget.title.product_options
+- widget.title.last_products
 
 
 - widget.content.basket_tmp.list
@@ -47,6 +48,10 @@
 - page.title.search
 - page.title.search_results
 - page.title.basket
+
+
+- page.content.lead.home
+- page.content.main.home
 
 
 - basket.title.products

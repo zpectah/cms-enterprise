@@ -17,6 +17,21 @@ class ViewController {
         );
     }
 
+    private function get_modules_options (): array {
+        $dc = new DataController;
+        $cms_settings = $dc -> get_cms_settings([]);
+
+        return [
+            // 'crm_installed' => $cms_settings['module_crm_installed'],
+            // 'market_installed' => $cms_settings['module_market_installed'],
+            'crm_active' => $cms_settings['module_crm_active'],
+            'market_active' => $cms_settings['module_market_active'],
+            'members_register_active' => $cms_settings['members_register_active'],
+            'members_login_active' => $cms_settings['members_login_active'],
+            'members_lostPassword_active' => $cms_settings['members_lostPassword_active'],
+            'members_profile_active' => $cms_settings['members_profile_active'],
+        ];
+    }
     private function get_current_language (): string {
         $rc = new RouteController;
         $dc = new DataController;
@@ -212,13 +227,17 @@ class ViewController {
         return $response;
     }
     private function get_static_page_data ($pageName, $pageData, $detailData, $items): array {
+        $modules = self::get_modules_options();
+
         if ($pageName == WEB_PAGE_KEYS['home']) { // Static page: Home
             $response = [
                 'name' => 'page.home',
                 'layout' => 'default',
                 'context' => 'page-static',
             ];
-        } else if ($pageName == WEB_PAGE_KEYS['basket']) { // Static page: Market basket
+        } else if ($pageName == WEB_PAGE_KEYS['basket']
+            && $modules['market_active']
+        ) { // Static page: Market basket
             $response = [
                 'name' => 'page.basket',
                 'layout' => 'default',
@@ -230,25 +249,36 @@ class ViewController {
                 'layout' => 'default',
                 'context' => 'page-search',
             ];
-        } else if ($pageName == WEB_PAGE_KEYS['profile']) { // Static page: Members profile
+        } else if ($pageName == WEB_PAGE_KEYS['profile']
+            && $modules['crm_active']
+            && $modules['members_profile_active']
+        ) { // Static page: Members profile
             $response = [
                 'name' => 'page.members-profile',
                 'layout' => 'default',
                 'context' => 'page-profile',
             ];
-        } else if ($pageName == WEB_PAGE_KEYS['registration']) { // Static page: Members registration
+        } else if ($pageName == WEB_PAGE_KEYS['registration']
+            && $modules['crm_active']
+            && $modules['members_register_active']
+        ) { // Static page: Members registration
             $response = [
                 'name' => 'page.members-registration',
                 'layout' => 'default',
                 'context' => 'page-registration',
             ];
-        } else if ($pageName == WEB_PAGE_KEYS['lost-password']) { // Static page: Members lost password
+        } else if ($pageName == WEB_PAGE_KEYS['lost-password']
+            && $modules['crm_active']
+            && $modules['members_lostPassword_active']
+        ) { // Static page: Members lost password
             $response = [
                 'name' => 'page.members-lostpassword',
                 'layout' => 'default',
                 'context' => 'page-lost-password',
             ];
-        } else if ($pageName == WEB_PAGE_KEYS['detail'] && $detailData['data']) { // Single detail (Posts, Products) without context
+        } else if ($pageName == WEB_PAGE_KEYS['detail']
+            && $detailData['data']
+        ) { // Single detail (Posts, Products) without context
             $response = [
                 'name' => 'page.detail-' . $detailData['model'],
                 'layout' => 'default',
@@ -274,24 +304,35 @@ class ViewController {
         $rc = new RouteController;
         $urlAttrs = $rc -> get_url_attrs();
         $pageData = self::get_page_data();
+        $modules = self::get_modules_options();
+        $pageAttr = $urlAttrs[0];
         $response = [
             'title' => $pageData['settings']['web_meta_title'],
             'robots' => $pageData['settings']['web_meta_robots'],
         ];
-        if ($urlAttrs[0] == WEB_PAGE_KEYS['basket']) {
+        if ($pageAttr == WEB_PAGE_KEYS['basket'] && $modules['market_active']) {
             $response['title'] = self::get_t('page.title.basket') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
-        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['search']) {
+        } else if ($pageAttr == WEB_PAGE_KEYS['search']) {
             $response['title'] = self::get_t('page.title.search') . ' | ' . $pageData['settings']['web_meta_title'];
             if ($pageData['url_params']['search']) $response['title'] = self::get_t('page.title.search_results') . ': ' . $pageData['url_params']['search'] . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
-        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['registration']) {
+        } else if ($pageAttr == WEB_PAGE_KEYS['registration']
+            && $modules['crm_active']
+            && $modules['members_register_active']
+        ) {
             $response['title'] = self::get_t('page.title.registration') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'all';
-        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['profile']) {
+        } else if ($pageAttr == WEB_PAGE_KEYS['profile']
+            && $modules['crm_active']
+            && $modules['members_profile_active']
+        ) {
             $response['title'] = self::get_t('page.title.profile') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
-        } else if ($urlAttrs[0] == WEB_PAGE_KEYS['lost-password']) {
+        } else if ($pageAttr == WEB_PAGE_KEYS['lost-password']
+            && $modules['crm_active']
+            && $modules['members_lostPassword_active']
+        ) {
             $response['title'] = self::get_t('page.title.lost-password') . ' | ' . $pageData['settings']['web_meta_title'];
             $response['robots'] = 'none';
         }
@@ -326,16 +367,27 @@ class ViewController {
         $request = $dc -> get('CmsRequests', [ 'token' => $token ], [])['data'];
         $member_object = $dc -> get_member_profile([]);
         $is_member_logged_in = $member_object['email'];
-
-        return [
-            'lost_password_token' => $token,
-            'lost_password_request' => $request,
-            'member_token' => $as -> get_member_token(),
-            'member_logged_in' => $is_member_logged_in,
-            'member' => $member_object,
+        $modules = self::get_modules_options();
+        $response = [
+            'lost_password_token' => null,
+            'lost_password_request' => null,
+            'member_token' => null,
+            'member_logged_in' => false,
+            'member' => null,
         ];
+        if ($modules['crm_active']) {
+            $response = [
+                'lost_password_token' => $token,
+                'lost_password_request' => $request,
+                'member_token' => $as -> get_member_token(),
+                'member_logged_in' => $is_member_logged_in,
+                'member' => $member_object,
+            ];
+        }
+
+        return $response;
     }
-    private function get_posts_list ($limit, $offset): array {
+    private function get_posts_list ($limit, $offset, $type): array {
         $dc = new DataController;
         $posts = $dc -> get('Posts', [], [])['data'];
         $response_tmp = [];
@@ -345,7 +397,9 @@ class ViewController {
             if ($item['active']
                 && $item['approved']
                 && ($today >= $published)
-            ) $response_tmp[] = $item;
+            ) {
+                if ($type === 'all') $response_tmp[] = $item;
+            }
         }
         $response_tmp = array_reverse($response_tmp);
         if ($limit === 0) {
@@ -356,12 +410,56 @@ class ViewController {
 
         return $response;
     }
+    private function get_products_list ($limit, $offset, $type): array {
+        $dc = new DataController;
+        $products = $dc -> get('Products', [], [])['data'];
+        $modules = self::get_modules_options();
+        $response_tmp = [];
+        if ($modules['market_active']) {
+            foreach ($products as $item) {
+                if ($item['active']) {
+                    if ($type === 'all') $response_tmp[] = $item;
+                }
+            }
+            $response_tmp = array_reverse($response_tmp);
+            if ($limit === 0) {
+                $response = $response_tmp;
+            } else {
+                $response = array_slice($response_tmp, $offset, $limit);
+            }
+        } else {
+            $response = $response_tmp;
+        }
+
+        return $response;
+    }
     private function get_link_url_params (): string {
         $lngOptions = self::get_language_options();
         $params = '';
         if ($lngOptions['link_url_param']) $params .= $lngOptions['link_url_param'];
 
         return $params;
+    }
+    private function get_sidebar_widget (): array {
+        $pageData = self::get_page_data();
+        $modules = self::get_modules_options();
+        $response = [
+            'search' => true,
+            'member' => false,
+            'last-posts' => true,
+            'basket' => false,
+            'subscription' => false,
+            'menu' => true,
+        ];
+        if ($modules['crm_active']) {
+            $response['member'] = true;
+            $response['subscription'] = true;
+        }
+        if ($modules['market_active']) {
+            $response['basket'] = $pageData['page_name'] !== WEB_PAGE_KEYS['basket'];
+        }
+
+        return $response;
     }
 
     public function get_view_meta_data (): array {
@@ -406,18 +504,12 @@ class ViewController {
         $pageData = self::get_page_data();
         $singleDetailData = self::get_single_detail_data();
         $items = $pageData['page_object']['page']['__items'];
+        $modules = self::get_modules_options();
+        $sidebar_widget = self::get_sidebar_widget();
+        $with_sidebar = true;
         $layout_name = 'full';
         $page_name = 'page.error-404';
         $context = 'page-default';
-        $with_sidebar = true;
-        $sidebar_widget = [
-            'search' => true,
-            'member' => true,
-            'last-posts' => true,
-            'basket' => $pageData['page_name'] !== WEB_PAGE_KEYS['basket'],
-            'subscription' => true,
-            'menu' => true,
-        ];
         $common_options = [
             'units' => DEFAULT_UNITS,
             'page_keys' => WEB_PAGE_KEYS,
@@ -426,11 +518,11 @@ class ViewController {
 
         if ($pageData['page_object']['page']
             || $pageData['page_name'] == WEB_PAGE_KEYS['home']
-            || $pageData['page_name'] == WEB_PAGE_KEYS['basket']
+            || ($pageData['page_name'] == WEB_PAGE_KEYS['basket'] && $modules['market_active'] )
             || $pageData['page_name'] == WEB_PAGE_KEYS['search']
-            || $pageData['page_name'] == WEB_PAGE_KEYS['registration']
-            || $pageData['page_name'] == WEB_PAGE_KEYS['profile']
-            || $pageData['page_name'] == WEB_PAGE_KEYS['lost-password']
+            || ($pageData['page_name'] == WEB_PAGE_KEYS['registration'] && $modules['crm_active'] && $modules['members_register_active'])
+            || ($pageData['page_name'] == WEB_PAGE_KEYS['profile'] && $modules['crm_active'] && $modules['members_profile_active'])
+            || ($pageData['page_name'] == WEB_PAGE_KEYS['lost-password'] && $modules['crm_active'] && $modules['members_lostPassword_active'])
             || ($pageData['page_name'] == WEB_PAGE_KEYS['detail'] && $singleDetailData['data'])
         ) {
             $pd = self::get_static_page_data($pageData['page_name'], $pageData, $singleDetailData, $items);
@@ -443,11 +535,13 @@ class ViewController {
             't' => function ($key) { return self::get_t($key); },                                 // Function with return key if no value exist
             'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
-            'urlPar' => self::get_link_url_params(),
-            'uploadsPfx' => UPLOADS_PATH,
+            'urlPar' => self::get_link_url_params(),                                              // String with link url params, like ?lang=...
+            'uploadsPfx' => UPLOADS_PATH,                                                         // Uploads root path prefix
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
 
-            'get_posts_list' => function ($limit = 0, $offset = 0) { return self::get_posts_list($limit, $offset); },
+            // Dynamic lists
+            'get_posts_list' => function ($limit = 0, $offset = 0, $type = 'all') { return self::get_posts_list($limit, $offset, $type); },
+            'get_products_list' => function ($limit = 0, $offset = 0, $type = 'all') { return self::get_products_list($limit, $offset, $type); },
             // List from page defined category & Detail data from list or single
             'list_model' => $items['model'],
             'list_items' => $items['items'],
@@ -464,6 +558,7 @@ class ViewController {
 
             // Common options
             'common_options' => $common_options,
+            'modules_options' => $modules,
 
             // Member options
             'member_options' => self::get_member_options($pageData),

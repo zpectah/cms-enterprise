@@ -861,15 +861,19 @@ class DataController {
     public function search ($data): array {
         $results = [];
         $string = strtolower($data['search']);
+        $settings = self::get_cms_settings([]);
         if ($data['lang']) {
             $lng = $data['lang'];
         } else {
-            $settings = self::get_cms_settings([]);
             $lng = $settings['language_default'];
         }
+        $market_active = $settings['module_market_active'];
         $pages = self::get('Pages', [], [])['data'];
         $posts = self::get('Posts', [], [])['data'];
-        $products = self::get('Products', [], [])['data'];
+        $products = [];
+        if ($market_active) {
+            $products = self::get('Products', [], [])['data'];
+        }
         $today = strtotime(date('Y-m-d H:i:s'));
 
         foreach ($pages as $item) {
@@ -899,16 +903,18 @@ class DataController {
                 }
             }
         }
-        foreach ($products as $item) {
-            if (
-                preg_match( "/{$string}/i", strtolower($item['name']))
-                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
-                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
-                || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
-                && $item['active']
-            ) {
-                $item['model'] = 'products';
-                $results[] = $item;
+        if ($market_active) {
+            foreach ($products as $item) {
+                if (
+                    preg_match( "/{$string}/i", strtolower($item['name']))
+                    || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['title']))
+                    || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['description']))
+                    || preg_match( "/{$string}/i", strtolower($item['lang'][$lng]['content']))
+                    && $item['active']
+                ) {
+                    $item['model'] = 'products';
+                    $results[] = $item;
+                }
             }
         }
 

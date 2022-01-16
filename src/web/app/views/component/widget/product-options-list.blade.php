@@ -1,3 +1,4 @@
+@if($member_options['market_active'])
 <section>
     <h3>{{$widgetTitle}}</h3>
     <div>
@@ -11,3 +12,4 @@
         </ul>
     </div>
 </section>
+@endif

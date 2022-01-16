@@ -9,7 +9,6 @@ import MembersMixin from './mixins/Members.mixin';
 import CommentsMixin from './mixins/Comments.mixin';
 
 // Components
-import demoComponent from './components/demoComponent';
 import ContactForm from './components/ContactForm';
 
 // Vue init
@@ -17,7 +16,6 @@ new Vue({
 	el: '#vue-app',
 	mixins: [BasketMixin, MembersMixin, CommentsMixin],
 	components: {
-		'demo-component': demoComponent,
 		'contact-form': ContactForm,
 	},
 	data: function () {
