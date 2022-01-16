@@ -1,3 +1,4 @@
+@if($content_options['comments']['active'])
 <section>
     <h3 class="title-widget">
         {{$t('widget.title.comments_list')}}
@@ -8,8 +9,10 @@
             profile-email="{{$member_options['member']['email']}}"
             assigned="{{$model}}"
             assigned-id="{{$id}}"
+            anonymous-active="{{$content_options['comments']['anonymous_active']}}"
         >
             Loading comments-list ...
         </comments-list>
     </div>
 </section>
+@endif

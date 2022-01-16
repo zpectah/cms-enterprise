@@ -19,4 +19,10 @@
         </div>
     </main>
     @include('shared.Footer')
+    @if($content_options['mode']['debug'])
+        @include('component.page-mode-message', [ 'viewType' => 'debug' ])
+    @endif
+    @if($content_options['mode']['maintenance'])
+        @include('component.page-mode-message', [ 'viewType' => 'maintenance' ])
+    @endif
 </div>

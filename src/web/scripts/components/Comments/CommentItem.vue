@@ -9,11 +9,12 @@
     <button
         @click="toggle"
         class="btn btn-sm btn-outline-success"
+        v-if="userShouldComment"
     >
       {{isOpen ? t('btn.close') : replyLabel}}
     </button>
     <br />
-    <div v-if="isOpen">
+    <div v-if="isOpen && userShouldComment">
       <new-comment-form
           :language="language"
           :profile-email="profileEmail"
@@ -44,6 +45,7 @@
           :profile-email="profileEmail"
           :assigned="assigned"
           :assigned-id="assignedId"
+          :user-should-comment="userShouldComment"
       ></comment-item>
     </div>
   </article>
@@ -75,6 +77,7 @@ module.exports = {
     content: String,
     children: Array,
     replyLabel: String,
+    userShouldComment: Boolean,
   },
   methods: {
     t: function (key) {

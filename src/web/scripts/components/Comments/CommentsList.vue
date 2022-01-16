@@ -9,6 +9,7 @@
           :parent="0"
           :onSubmit="onSubmit"
           :afterSubmit="afterSubmit"
+          v-if="userShouldComment"
       ></new-comment-form>
     </div>
     <br />
@@ -28,6 +29,7 @@
           :profile-email="profileEmail"
           :assigned="assigned"
           :assigned-id="assignedId"
+          :user-should-comment="userShouldComment"
       ></comment-item>
     </div>
   </div>
@@ -49,6 +51,7 @@ module.exports = {
     return {
       loading: false,
       commentsList: [],
+      userShouldComment: false,
     };
   },
   props: {
@@ -56,9 +59,11 @@ module.exports = {
     profileEmail: String,
     assigned: String,
     assignedId: String,
+    anonymousActive: String,
   },
   mounted: function () {
     this.loadList();
+    if (this.anonymousActive == '1' || this.profileEmail) this.userShouldComment = true;
   },
   methods: {
     t: function (key) {

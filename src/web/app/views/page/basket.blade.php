@@ -1,6 +1,6 @@
-<section class="section section-page section-page--basket section-page--basket--{{$basket_data['step']}}">
-    <h1 class="title title-page">{{$t('page.title.basket')}}: {{$basket_data['step']}}</h1>
-    @switch($basket_data['step'])
+<section class="section section-page section-page--basket section-page--basket--{{$basket_options['step']}}">
+    <h1 class="title title-page">{{$t('page.title.basket')}}: {{$basket_options['step']}}</h1>
+    @switch($basket_options['step'])
         @case('list')
             @include('component.basket-progress', [ 'val' => 25 ])
             <br />

@@ -363,7 +363,7 @@ class ViewController {
 
         return $results;
     }
-    private function get_basket_data (): array {
+    private function get_basket_options (): array {
         $rc = new RouteController;
         $urlAttrs = $rc -> get_url_attrs();
         $step_attr = $urlAttrs[1];
@@ -412,7 +412,11 @@ class ViewController {
                 && $item['approved']
                 && ($today >= $published)
             ) {
-                if ($type === 'all') $response_tmp[] = $item;
+                if ($type === 'all') {
+                    $response_tmp[] = $item;
+                } else if ($type == $item['type']) {
+                    $response_tmp[] = $item;
+                }
             }
         }
         $response_tmp = array_reverse($response_tmp);
@@ -432,7 +436,11 @@ class ViewController {
         if ($modules['market_active']) {
             foreach ($products as $item) {
                 if ($item['active']) {
-                    if ($type === 'all') $response_tmp[] = $item;
+                    if ($type === 'all') {
+                        $response_tmp[] = $item;
+                    } else if ($type == $item['type']) {
+                        $response_tmp[] = $item;
+                    }
                 }
             }
             $response_tmp = array_reverse($response_tmp);
@@ -474,6 +482,21 @@ class ViewController {
         }
 
         return $response;
+    }
+    private function get_content_options (): array {
+        $dc = new DataController;
+        $cms_settings = $dc -> get_cms_settings([]);
+
+        return [
+            'mode' => [
+                'debug' => $cms_settings['web_mode_debug'],
+                'maintenance' => $cms_settings['web_mode_maintenance'],
+            ],
+            'comments' => [
+                'active' => $cms_settings['comments_global_active'],
+                'anonymous_active' => $cms_settings['comments_anonymous_active'],
+            ]
+        ];
     }
 
     public function get_view_meta_data (): array {
@@ -575,12 +598,11 @@ class ViewController {
             'common_options' => $common_options,
             'modules_options' => $modules,
             'member_options' => self::get_member_options(),
+            'content_options' => self::get_content_options(),
+            'basket_options' => $pageData['page_name'] == 'basket' ? self::get_basket_options() : null,
 
             // Search results
             'search_results' => self::get_search_result(),
-
-            // Basket data
-            'basket_data' => $pageData['page_name'] == 'basket' ? self::get_basket_data() : null,
 
             // Project
             'project_name' => $pageData['settings']['project_name'],
