@@ -75,4 +75,5 @@ define("TEMPLATE_ROOT_PATH",                              PATH_ROOT . $JSON_PROJ
 define("TEMPLATE_COMPILED_PATH",                          PATH_ROOT . $JSON_PROJECT['web']['templates_compiled']);
 define("DEFAULT_UNITS",                                   $JSON_PROJECT['units']);
 define("WEB_PAGE_KEYS",                                   $JSON_PROJECT['web']['page_keys']);
+define("WEB_PAGE_DETAIL_KEYS",                            $JSON_PROJECT['web']['page_detail_keys']);
 define("WEB_PAGE_BASKET_KEYS",                            $JSON_PROJECT['web']['page_basket_keys']);

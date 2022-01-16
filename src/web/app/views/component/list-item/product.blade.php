@@ -4,7 +4,7 @@
         data-product-id="{{$id}}"
 >
     @if($thumbnail)
-        <img src="{{'/uploads/image/thumbnail/' . $thumbnail}}" alt="{{$name}}" />
+        <img src="{{$uploadsPfx . 'image/thumbnail/' . $thumbnail}}" alt="{{$name}}" />
     @endif
     <h3>{{$title}}</h3>
     <p>{{$description}}</p>

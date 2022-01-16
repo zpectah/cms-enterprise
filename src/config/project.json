@@ -48,6 +48,10 @@
       "lost-password": "lost-password",
       "error-404": "error-404"
     },
+    "page_detail_keys": {
+      "posts": "posts",
+      "products": "products"
+    },
     "page_basket_keys": {
       "list": "list",
       "summary": "summary",

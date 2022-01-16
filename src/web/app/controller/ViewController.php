@@ -110,7 +110,7 @@ class ViewController {
         $id_attr = $urlAttrs[2];
         $model = null;
         $detail = null;
-        if ($model_attr == 'posts') {
+        if ($model_attr == WEB_PAGE_DETAIL_KEYS['posts']) {
             $items = $dc -> get('Posts', [ 'sub' => true ], [])['data'];
             $today = strtotime(date('Y-m-d H:i:s'));
             foreach ($items as $item) {
@@ -124,7 +124,7 @@ class ViewController {
                     $detail = $item;
                 }
             }
-        } else if ($model_attr == 'products') {
+        } else if ($model_attr == WEB_PAGE_DETAIL_KEYS['products']) {
             $items = $dc -> get('Products', [ 'sub' => true ], [])['data'];
             foreach ($items as $item) {
                 if (($id_attr == $item['id'] || $id_attr == $item['name'])
@@ -240,7 +240,6 @@ class ViewController {
     }
     private function get_static_page_data ($pageName, $pageData, $detailData, $items): array {
         $modules = self::get_modules_options();
-
         if ($pageName == WEB_PAGE_KEYS['home']) { // Static page: Home
             $response = [
                 'name' => 'page.home',
@@ -368,13 +367,16 @@ class ViewController {
         $rc = new RouteController;
         $urlAttrs = $rc -> get_url_attrs();
         $step_attr = $urlAttrs[1];
+
         return [
-            'step' => $step_attr,    // list | summary | confirmation | finish = success/error
+            // list | summary | confirmation | finish = success/error
+            'step' => $step_attr,
         ];
     }
-    private function get_member_options ($pageData): array {
+    private function get_member_options (): array {
         $dc = new DataController;
         $as = new AuthService;
+        $pageData = self::get_page_data();
         $token = ($pageData['url_attrs'][1] == WEB_PAGE_KEYS['token'] && $pageData['url_attrs'][2]) ? $pageData['url_attrs'][2] : null;
         $request = $dc -> get('CmsRequests', [ 'token' => $token ], [])['data'];
         $member_object = $dc -> get_member_profile([]);
@@ -525,6 +527,7 @@ class ViewController {
         $common_options = [
             'units' => DEFAULT_UNITS,
             'page_keys' => WEB_PAGE_KEYS,
+            'page_detail_keys' => WEB_PAGE_DETAIL_KEYS,
             'page_basket_keys' => WEB_PAGE_BASKET_KEYS,
         ];
 
@@ -545,8 +548,8 @@ class ViewController {
 
         $render_data = [
             't' => function ($key) { return self::get_t($key); },                                 // Function with return key if no value exist
-            'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'lang' => self::get_language_options(),                                               // Language options object { current, default, list, link_url_param }
+            'lng' => self::get_language_options()['current'],                                     // Current language ... for content conditions
             'urlPar' => self::get_link_url_params(),                                              // String with link url params, like ?lang=...
             'uploadsPfx' => UPLOADS_PATH,                                                         // Uploads root path prefix
             'menu' => self::get_menu_data(),                                                      // Object of arrays with menu defined in system { primary, secondary, tertiary, custom }
@@ -568,12 +571,10 @@ class ViewController {
             'detail_next' => $pageData['page_object']['detail_next'],
             // -->|
 
-            // Common options
+            // Options object
             'common_options' => $common_options,
             'modules_options' => $modules,
-
-            // Member options
-            'member_options' => self::get_member_options($pageData),
+            'member_options' => self::get_member_options(),
 
             // Search results
             'search_results' => self::get_search_result(),

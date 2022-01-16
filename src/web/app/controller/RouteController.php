@@ -31,7 +31,7 @@ class RouteController {
         $category = $dc -> get('Categories', [ 'id' => $typeId ], [])['data'];
         $model = $category['type'];
         $items = [];
-        if ($model == 'posts') {
+        if ($model == WEB_PAGE_DETAIL_KEYS['posts']) {
             $posts = $dc -> get('Posts', [ 'sub' => true ], [])['data'];
             foreach ($posts as $post) {
                 $today = strtotime(date('Y-m-d H:i:s'));
@@ -42,7 +42,7 @@ class RouteController {
                     && ($today >= $published)
                 ) $items[] = $post;
             }
-        } else if ($model == 'products') {
+        } else if ($model == WEB_PAGE_DETAIL_KEYS['products']) {
             $products = $dc -> get('Products', [ 'sub' => true ], [])['data'];
             foreach ($products as $product) {
                 if (in_array($category['id'], $product['categories'])
