@@ -145,6 +145,7 @@ const UploadsItemForm = ({
 								name={`lang.${lng}.label`}
 								control={control}
 								rules={{}}
+								defaultValue={''}
 								render={({ field: { onChange, onBlur, value, ref, name } }) => (
 									<Form.Row errors={[]}>
 										<Input.Text

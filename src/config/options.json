@@ -54,6 +54,13 @@
             "crop": true
           },
           {
+            "key": "small",
+            "width": 500,
+            "height": 500,
+            "quality": 80,
+            "crop": true
+          },
+          {
             "key": "medium",
             "width": 1280,
             "height": 720,

@@ -211,7 +211,6 @@ class Utils {
 
     public function put_file($fileName, $fileData, $filePath) {
         $file = $filePath . $fileName;
-
         if (!file_exists($filePath)) mkdir($filePath, 0777, true);
 
         return file_put_contents($file, $fileData);
@@ -219,13 +218,11 @@ class Utils {
 
     public function put_custom_image($width, $height, $key, $imageData, $pathPrefix, $fileName, $quality, $crop = false) {
         $image = ImageResize::createFromString($imageData);
-
         if ($crop) {
             $image -> crop($width, $height, true, ImageResize::CROPCENTER);
         } else {
             $image -> resizeToBestFit($width, $height);
         }
-
         $image -> quality_jpg = $quality;
         $file_path = $pathPrefix . $key . '/';
         $response[$key] = self::put_file($fileName, $image, $file_path);
@@ -235,26 +232,17 @@ class Utils {
 
     public function upload_file($file_object, $cropped_file_object, $name, $ext, $type) {
         $response = null;
-
         $file_path = null;
         $file_parts = explode(";base64,", $file_object);
         $file_base64 = base64_decode($file_parts[1]);
-
         if ($type !== 'unknown') $file_path = PATH_UPLOADS . $type . '/';
-
         if ($file_path) {
-
-            // Save original file
             $response['original'] = self::put_file($name . '.' . $ext, $file_base64, $file_path);
-
             if ($type == 'image') {
-
-                // Save cropped image
-                if ($cropped_file_object) {
-                    $file_cropped_parts = explode(";base64,", $cropped_file_object);
-                    $file_cropped_base64 = base64_decode($file_cropped_parts[1]);
-                    $response['cropped'] = self::put_file($name . '.' . $ext, $file_cropped_base64, $file_path . 'cropped/');
-                }
+                $file_cropped_parts = explode(";base64,", $cropped_file_object);
+                $file_cropped_base64 = base64_decode($file_cropped_parts[1]);
+                $imageData = $file_cropped_base64;
+                if (!$imageData) $imageData = $file_base64;
 
                 // Save by defined sizes and options
                 foreach (UPLOADS_IMAGE_FORMATS as $v) {
@@ -262,16 +250,14 @@ class Utils {
                         $v['width'],
                         $v['height'],
                         $v['key'],
-                        $file_base64,
+                        $imageData,
                         $file_path,
                         $name . '.' . $ext,
                         $v['quality'],
                         $v['crop']
                     );
                 }
-
             }
-
         }
 
         return $response;
