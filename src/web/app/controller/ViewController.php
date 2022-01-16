@@ -47,13 +47,25 @@ class ViewController {
         $dc = new DataController;
         $cms_settings = $dc -> get_cms_settings([]);
         $language = self::get_current_language();
-        $url_param = $language !== $cms_settings['language_default'] ? '?lang=' . $language : '';
+        $default_language = $cms_settings['language_default'];
+        $url_param = $language !== $default_language ? '?lang=' . $language : '';
+        $current_url = explode("?", $_SERVER['REQUEST_URI']);
+        $menu = [];
+        foreach ($cms_settings['language_active'] as $lang) {
+            $params = $lang !== $default_language ? '?lang=' . $lang : '';
+            $menu[] = [
+                'key' => $lang,
+                'path' => $current_url[0] . $params,
+                'active' => $lang == $language,
+            ];
+        }
 
         return [
             'current' => $language,
             'default' => $cms_settings['language_default'],
             'list' => $cms_settings['language_active'],
             'link_url_param' => $url_param,
+            'menu' => $menu
         ];
     }
     private function get_page_data (): array {

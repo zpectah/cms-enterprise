@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18next';
 import { useParams } from 'react-router-dom';
 import { default as MuiBreadcrumbs } from '@mui/material/Breadcrumbs';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +23,7 @@ const Breadcrumbs = ({ pageObject }: BreadcrumbsProps) => {
 
 	return (
 		<MuiBreadcrumbs aria-label="breadcrumbs">
+			<StyledText small>{i18n.language.toUpperCase()}</StyledText>
 			<StyledText small>{config.project.admin.name}</StyledText>
 			{pageObject.app !== 'app' && (
 				<StyledText small>{t(`app.${pageObject.app}`)}</StyledText>

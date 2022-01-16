@@ -15,7 +15,7 @@ import {
 	Typography,
 	Chip,
 } from '../../components/ui';
-
+import LanguageToggle from '../../components/LanguageToggle';
 import Picker from '../../components/Picker';
 
 const AvatarHeadingWrapper = styled.div`
@@ -149,6 +149,11 @@ const ProfileForm = ({
 							</Form.Row>
 						)}
 					/>
+				</Section>
+				<Section>
+					<Form.Row id={`${formOptions.id}__language`} blankLabel>
+						<LanguageToggle />
+					</Form.Row>
 				</Section>
 				<Section>
 					<Controller

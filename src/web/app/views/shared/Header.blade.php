@@ -86,6 +86,16 @@
                     @endforeach
                 </ul>
             </div>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+                @foreach($lang['menu'] as $item)
+                    <a
+                            href="{{$item['path']}}"
+                            class="btn btn-outline-secondary {{$item['active'] ? 'active' : ''}}"
+                    >
+                        {{$item['key']}}
+                    </a>
+                @endforeach
+            </div>
         </div>
     </nav>
 </header>
