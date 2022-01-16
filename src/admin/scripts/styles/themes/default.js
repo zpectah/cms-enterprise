@@ -129,6 +129,7 @@ export default {
 			},
 			output: {
 				bg: alpha(palette.anthracite, 0.9),
+				color: palette.light,
 				mobile: {
 					size: '35vw',
 				},

@@ -282,6 +282,7 @@ const AvatarPicker = ({
 							<ImageCropper
 								src={newValue as Blob}
 								onChange={(blob) => setTmpValue(blob)}
+								aspect={1 / 1}
 								avatarOnly
 							/>
 						</div>

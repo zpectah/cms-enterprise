@@ -11,14 +11,13 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	background-color: transparent;
-	color: inherit;
 `;
 
 interface BlockPreloaderProps {}
 
 const BlockPreloader = ({}: BlockPreloaderProps) => {
 	return (
-		<Wrapper>
+		<Wrapper className="preloader-block">
 			<CircularProgress color="inherit" />
 		</Wrapper>
 	);

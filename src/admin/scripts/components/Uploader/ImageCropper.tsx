@@ -8,6 +8,7 @@ import { IMAGE_CROP_OPTIONS } from '../../constants';
 import { getCroppedImg } from '../../utils/image';
 import media from '../../styles/responsive';
 import { Button, Input, Preloader } from '../ui';
+import { number } from '../../../../../utils/utils';
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -42,6 +43,7 @@ const CropperOutput = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: ${(props) => props.theme.uploader.cropper.output.color};
 	background-color: ${(props) => props.theme.uploader.cropper.output.bg};
 
 	& img {
@@ -49,6 +51,14 @@ const CropperOutput = styled.div`
 		height: auto;
 		max-height: 100%;
 		display: block;
+	}
+
+	& .preloader-block {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 
 	${media.min.md} {
@@ -91,7 +101,7 @@ interface ImageCropperProps {
 const ImageCropper = ({
 	onChange,
 	src,
-	aspect = 1 / 1,
+	aspect,
 	avatarOnly,
 	onConfirm,
 	onCancel,
@@ -105,7 +115,7 @@ const ImageCropper = ({
 	const [croppedImage, setCroppedImage] = useState(null);
 	const [area, setArea] = useState({ width: 0, height: 0 });
 	const [tmpSrc, setTmpSrc] = useState(null);
-	const [tmpAspect, setTmpAspect] = useState(aspect);
+	const [tmpAspect, setTmpAspect] = useState(aspect | (1 / 1));
 	const [process, setProcess] = useState(false);
 	const [mediaDimensions, setMediaDimensions] = useState({ w: 0, h: 0 });
 	const onCropFinish = useCallback((croppedArea, croppedAreaPixels) => {
@@ -215,8 +225,8 @@ const ImageCropper = ({
 				</CropperOptionsBlock>
 			</CropperOptions>
 			<CropperOutput>
-				{process && <Preloader.Block />}
 				{croppedImage && <img src={croppedImage} alt={'cropped image'} />}
+				{process && <Preloader.Block />}
 			</CropperOutput>
 		</Wrapper>
 	);

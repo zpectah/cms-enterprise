@@ -276,7 +276,6 @@ const Uploader: React.FC<UploaderProps> = ({
 		window.removeEventListener('drop', dragEvents.onDrop);
 	};
 	const handleSources = () => {
-		console.log('rawFileList', rawFileList);
 		Promise.all(rawFileList).then((result) => {
 			setFileList(result);
 			onChange(result, formsValid);
@@ -365,7 +364,6 @@ const Uploader: React.FC<UploaderProps> = ({
 									onChange={(fileBase64) =>
 										cropChangeHandler(fileBase64, index)
 									}
-									aspect={aspect}
 									onConfirm={() => {}}
 									onCancel={() => removeFromQueue(index)}
 								/>
