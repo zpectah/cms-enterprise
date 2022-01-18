@@ -38,6 +38,11 @@
 - btn.order_finish
 - btn.close
 - btn.submit_form
+- btn.confirm
+
+
+- cookiesBar.title
+- cookiesBar.content
 
 
 - page.title.error404

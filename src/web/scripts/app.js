@@ -9,6 +9,7 @@ import MembersMixin from './mixins/Members.mixin';
 import CommentsMixin from './mixins/Comments.mixin';
 
 // Components
+import CookiesBar from './components/CookiesBar';
 import ContactForm from './components/ContactForm';
 
 // Vue init
@@ -16,6 +17,7 @@ new Vue({
 	el: '#vue-app',
 	mixins: [BasketMixin, MembersMixin, CommentsMixin],
 	components: {
+		'cookies-bar': CookiesBar,
 		'contact-form': ContactForm,
 	},
 	data: function () {

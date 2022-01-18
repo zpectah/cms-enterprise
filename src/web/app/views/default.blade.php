@@ -25,4 +25,5 @@
     @if($content_options['mode']['maintenance'])
         @include('component.page-mode-message', [ 'viewType' => 'maintenance' ])
     @endif
+    <cookies-bar></cookies-bar>
 </div>
