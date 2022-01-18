@@ -22,6 +22,7 @@ import getOptionsList from '../../utils/getOptionsList';
 import DetailFormActions from '../../components/DetailFormActions';
 import inputErrorHandler from '../../utils/inputErrorHandler';
 import checkInputDuplicates from '../../utils/checkInputDuplicates';
+import Picker from '../../components/Picker';
 
 interface DeliveriesDetailFormProps {
 	allItems: DeliveriesItemProps[];
@@ -108,6 +109,8 @@ const DeliveriesDetailForm = ({
 		'name',
 		watch('name'),
 	);
+
+	const watchType = watch('type');
 
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
 
@@ -220,6 +223,25 @@ const DeliveriesDetailForm = ({
 									responsiveWidth={'75%'}
 									dataTestId={`${formOptions.id}.input.name`}
 									required
+								/>
+							</Form.Row>
+						)}
+					/>
+					<Controller
+						name={`store_id`}
+						control={control}
+						rules={{}}
+						render={({ field: { onChange, onBlur, value, ref, name } }) => (
+							<Form.Row errors={[]}>
+								<Picker.Stores
+									onChange={onChange}
+									value={value}
+									name={name}
+									id={`${formOptions.id}__store_id`}
+									label={`${t('form:input.store')}`}
+									responsiveWidth={'50%'}
+									dataTestId={`${formOptions.id}.input.store_id`}
+									disabled={!(watchType == 'store')}
 								/>
 							</Form.Row>
 						)}

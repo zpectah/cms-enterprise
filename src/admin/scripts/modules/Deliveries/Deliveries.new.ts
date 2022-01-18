@@ -7,6 +7,7 @@ export default {
 	item_price: 0,
 	item_limit_weight: 0,
 	item_limit_units: 0,
+	store_id: 0,
 	active: true,
 	lang: {},
 } as DeliveriesItemProps;

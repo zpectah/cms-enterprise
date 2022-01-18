@@ -72,7 +72,8 @@
     "in_stock": "Je skladem",
     "page_elements": "Prvky stránky",
     "company_name": "Název společnosti",
-    "company_id": "ID společnosti"
+    "company_id": "ID společnosti",
+    "store": "Obchod"
   },
   "label": {
     "no_parent": "Bez rodiče",

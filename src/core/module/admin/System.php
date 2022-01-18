@@ -155,6 +155,7 @@ class System {
           `item_price` float NOT NULL,
           `item_limit_weight` float NOT NULL,
           `item_limit_units` int(11) NOT NULL,
+          `store_id` int(11) NOT NULL,          
           `active` int(11) NOT NULL,
           `deleted` int(11) NOT NULL,
           PRIMARY KEY (`id`)

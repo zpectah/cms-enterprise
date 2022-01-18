@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next';
 import config from '../../config';
 import { ROUTES, ROUTE_SUFFIX, ORDER_STATUS_NUMS } from '../../constants';
 import { formLayoutObjectProps } from '../../types/app';
-import { OrdersItemProps } from '../../types/model';
+import {
+	OrdersItemProps,
+	DeliveriesItemProps,
+	PaymentsItemProps,
+} from '../../types/model';
+import { useDeliveries, usePayments } from '../../hooks/model';
 import {
 	Form,
 	Button,
@@ -49,6 +54,10 @@ const OrdersDetailForm = ({
 }: OrdersDetailFormProps) => {
 	const { t } = useTranslation(['common', 'form']);
 	const [lang, setLang] = useState(languageDefault);
+	const [tmpDelivery, setTmpDelivery] = useState<DeliveriesItemProps>(null);
+	const [tmpPayment, setTmpPayment] = useState<PaymentsItemProps>(null);
+	const { Deliveries } = useDeliveries();
+	const { Payments } = usePayments();
 	const is_closed = detailData.status !== 1;
 	const formOptions: formLayoutObjectProps = {
 		model: 'Orders',
@@ -63,6 +72,7 @@ const OrdersDetailForm = ({
 		register,
 		formState: { isDirty, isValid },
 		setValue,
+		watch,
 	} = useForm({
 		mode: 'all',
 		defaultValues: {
@@ -95,7 +105,6 @@ const OrdersDetailForm = ({
 	// Model options list
 	const getStatusOptions = () => {
 		let options = [];
-
 		config.options.model.Orders.status?.map((item) => {
 			options.push({
 				label: t(`status.${ORDER_STATUS_NUMS[item]}`),
@@ -112,7 +121,25 @@ const OrdersDetailForm = ({
 		[detailData],
 	);
 
+	const watchDelivery = watch('delivery');
+	const watchPayment = watch('payment');
+
 	useEffect(() => reset(detailData), [detailData, reset]); // Important useEffect, must be for reloading form model !!!
+
+	useEffect(() => {
+		if (Deliveries && Number(watchDelivery) !== 0) {
+			setTmpDelivery(Deliveries.find((item) => item.id == watchDelivery));
+		} else {
+			setTmpDelivery(null);
+		}
+	}, [Deliveries, watchDelivery]);
+	useEffect(() => {
+		if (Payments && Number(watchPayment) !== 0) {
+			setTmpPayment(Payments.find((item) => item.id == watchPayment));
+		} else {
+			setTmpPayment(null);
+		}
+	}, [Payments, watchPayment]);
 
 	return (
 		<>
@@ -540,9 +567,15 @@ const OrdersDetailForm = ({
 									onChange={onChange}
 									value={value}
 									updateDisabled={is_closed}
-									onPriceChange={(price) =>
-										detailData.status == 1 && setValue('price_total', price)
-									}
+									priceDelivery={tmpDelivery ? tmpDelivery.item_price : 0}
+									pricePayment={tmpPayment ? tmpPayment.item_price : 0}
+									onPriceChange={(price) => {
+										let pt =
+											(tmpDelivery ? tmpDelivery.item_price : 0) +
+											(tmpPayment ? tmpPayment.item_price : 0) +
+											price;
+										detailData.status == 1 && setValue('price_total', pt);
+									}}
 								/>
 							</Form.Row>
 						)}

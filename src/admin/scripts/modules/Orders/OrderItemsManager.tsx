@@ -33,6 +33,8 @@ interface OrderItemsManagerProps {
 	onChange: (value: string[]) => void;
 	updateDisabled?: boolean;
 	onPriceChange: (price: number) => void;
+	priceDelivery: number;
+	pricePayment: number;
 }
 
 interface newProductItemProps {
@@ -58,6 +60,8 @@ const OrderItemsManager = ({
 	onChange,
 	updateDisabled,
 	onPriceChange,
+	priceDelivery,
+	pricePayment,
 }: OrderItemsManagerProps) => {
 	const { t } = useTranslation(['common', 'form', 'components']);
 	const { Products } = useProducts();
@@ -279,10 +283,16 @@ const OrderItemsManager = ({
 						<b>{tmpSelected.length}</b> |{' '}
 						{t('components:OrderItemsManager.label.items')}: <b>{totalItems}</b>
 					</div>
+					<div>
+						{priceDelivery + pricePayment} {t(`units.${defaultUnits.price}`)}
+						{' + '}
+						{totalPrice} {t(`units.${defaultUnits.price}`)}
+					</div>
 					<Stack spacing={2} direction="row" alignItems="top">
 						<span>{t('components:OrderItemsManager.label.price')}</span>
 						<StyledTotalPrice>
-							{totalPrice} <span>{t(`units.${defaultUnits.price}`)}</span>
+							{priceDelivery + pricePayment + totalPrice}{' '}
+							<span>{t(`units.${defaultUnits.price}`)}</span>
 						</StyledTotalPrice>
 					</Stack>
 				</Stack>

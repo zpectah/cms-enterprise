@@ -57,14 +57,15 @@ class Deliveries {
         $utils = new \Utils;
 
         // prepare
-        $query = ('INSERT INTO deliveries (name, type, item_price, item_limit_weight, item_limit_units, active, deleted) VALUES (?,?,?,?,?,?,?)');
-        $types = 'ssddiii';
+        $query = ('INSERT INTO deliveries (name, type, item_price, item_limit_weight, item_limit_units, store_id, active, deleted) VALUES (?,?,?,?,?,?,?,?)');
+        $types = 'ssddiiii';
         $args = [
             $data['name'],
             $data['type'],
             $data['item_price'],
             $data['item_limit_weight'],
             $data['item_limit_units'],
+            $data['store_id'],
             $data['active'],
             0
         ];
@@ -101,14 +102,15 @@ class Deliveries {
         $utils = new \Utils;
 
         // prepare
-        $query = ('UPDATE deliveries SET name = ?, type = ?, item_price = ?, item_limit_weight = ?, item_limit_units = ?, active = ? WHERE id = ?');
-        $types = 'ssddiii';
+        $query = ('UPDATE deliveries SET name = ?, type = ?, item_price = ?, item_limit_weight = ?, item_limit_units = ?, store_id = ?, active = ? WHERE id = ?');
+        $types = 'ssddiiii';
         $args = [
             $data['name'],
             $data['type'],
             $data['item_price'],
             $data['item_limit_weight'],
             $data['item_limit_units'],
+            $data['store_id'],
             $data['active'],
             $data['id']
         ];

@@ -177,6 +177,7 @@ export interface DeliveriesItemProps extends commonItemProps {
 	item_price: number;
 	item_limit_weight: number;
 	item_limit_units: number;
+	store_id: number;
 	lang: {
 		[k: string]: DeliveriesItemLangProps;
 	};
