@@ -157,5 +157,7 @@
 - msg.error.registration_error
 - msg.error.invalid_request
 - msg.error.unknown_error
+- msg.error.basket_max_items
+- msg.error.basket_max_weight
 
 

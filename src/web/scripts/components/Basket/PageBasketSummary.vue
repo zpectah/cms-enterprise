@@ -287,7 +287,9 @@
     <hr />
     <h3>{{ t('basket.title.weight') }}</h3>
     <div>
-      {{ t('label.weight_items') }}: {{ getItemsWeight() }} {{ weightUnit }}
+      {{ t('label.weight_items') }}: {{ itemsWeight }} {{ weightUnit }}
+      <br />
+      limit weight: {{ limitWeight }} {{ weightUnit }} | limit items: {{ limitItems }} ... {{ itemsCount }}
     </div>
     <br />
     <hr />
@@ -300,6 +302,10 @@
       {{ t('label.price_total') }}: {{ getItemsPrice() + getPaymentDeliveryPrice() }} {{ priceUnit }}
     </div>
     <br />
+    <div>
+      <div v-if="errorOverLimitItems">{{ t('msg.error.basket_max_items') }}</div>
+      <div v-if="errorOverLimitWeight">{{ t('msg.error.basket_max_weight') }}</div>
+    </div>
     <br />
     <div>
       <button
@@ -311,7 +317,7 @@
       <button
           class="btn btn-outline-secondary"
           @click="nextLinkHandler"
-          v-bind:disabled="no_items || !formValid"
+          v-bind:disabled="no_items || !formValid || errorOverLimitItems || errorOverLimitWeight"
       >
         {{ t('btn.next_step') }}
       </button>
@@ -358,6 +364,12 @@ module.exports = {
       no_items: this.$parent.basket_items.length === 0,
       _deliveries: [],
       _payments: [],
+      itemsCount: 0,
+      itemsWeight: 0,
+      limitItems: 0,
+      limitWeight: 0,
+      errorOverLimitItems: false,
+      errorOverLimitWeight: false,
     };
   },
   props: {
@@ -508,6 +520,14 @@ module.exports = {
 
       return price;
     },
+    getItemsCount: function () {
+      let count = 0;
+      this.storage_items.map((item) => {
+        count = count + Number(item.count);
+      });
+
+      return count;
+    },
     getPaymentDeliveryPrice: function () {
       const fd = this._deliveries && this._deliveries.find((item) => Number(item.id) === Number(this.formModel.delivery));
       const fp = this._payments && this._payments.find((item) => Number(item.id) === Number(this.formModel.payment));
@@ -516,6 +536,26 @@ module.exports = {
       if (fp) price = price + Number(fp.item_price);
 
       return price;
+    },
+    checkPaymentDeliveryLimits: function (items, weight) {
+      const fd = this._deliveries && this._deliveries.find((item) => Number(item.id) === Number(this.formModel.delivery));
+      const fp = this._payments && this._payments.find((item) => Number(item.id) === Number(this.formModel.payment));
+      const lmt = {
+        weight: 0,
+        items: 0,
+      };
+      if (fd) {
+        if (fd.item_limit_weight !== 0) lmt.weight = fd.item_limit_weight;
+        if (fd.item_limit_units !== 0) lmt.items = fd.item_limit_units;
+      }
+      if (fp) {
+        if (fp.item_limit_weight !== 0 || lmt.weight < fp.item_limit_weight) lmt.weight = fp.item_limit_weight;
+        if (fp.item_limit_units !== 0 || lmt.items < fp.item_limit_units) lmt.items = fp.item_limit_units;
+      }
+      this.limitWeight = lmt.weight;
+      this.limitItems = lmt.items;
+      this.errorOverLimitItems = (lmt.items > 0 && items > lmt.items);
+      this.errorOverLimitWeight = (lmt.weight > 0 && weight > lmt.weight);
     },
     prevLinkHandler: function (e) {
       e.preventDefault();
@@ -537,6 +577,9 @@ module.exports = {
     'formModel': {
       handler: function (nv, ov) {
         this.formController(nv);
+        this.itemsCount = this.getItemsCount();
+        this.itemsWeight = this.getItemsWeight();
+        this.checkPaymentDeliveryLimits(this.getItemsCount(), this.getItemsWeight());
       },
       deep: true,
     },
