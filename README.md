@@ -1,9 +1,8 @@
-# Enterprise CMS
-
-**!!! In development !!!**
+# Enterprise CMS v.1
 
 ## Description
-Simple content managing system with common content features with Crm and Market options.
+Simple content managing system with common content features with Crm and Market options. All features should work, but it needs to polish with each project.
+Database dump should be found in ``sql/``
 
 ## Requirements
 * Must be installed globally on machine:
